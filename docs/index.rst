@@ -25,7 +25,7 @@ Contents
    :maxdepth: 3
 
    users
-   devs
+   dev-guide/index
 
 
 Indices and tables

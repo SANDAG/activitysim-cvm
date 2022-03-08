@@ -20,9 +20,10 @@ Contents
 .. toctree::
    :maxdepth: 3
 
-   development
-   models
-   core
+   install
+   ../development
+   ../models
+   ../core
 
 
 Indices and tables

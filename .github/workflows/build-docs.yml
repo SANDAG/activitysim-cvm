@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  docbuild:
+    if: ${{ github.repository }} == "camsys/activitysim"
     name: ubuntu-latest py3.9
     runs-on: ubuntu-latest
     defaults:

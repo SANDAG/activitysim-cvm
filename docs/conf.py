@@ -36,7 +36,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
     'numpydoc',
-    'sphinx.ext.autosummary'
+    'sphinx.ext.autosummary',
+    'myst_parser',
 ]
 
 numpydoc_show_class_members = False
@@ -45,7 +46,11 @@ numpydoc_show_class_members = False
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
 
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
