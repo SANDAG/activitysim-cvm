@@ -24,14 +24,8 @@ Contents
 .. toctree::
    :maxdepth: 3
 
-   gettingstarted
-   examples
-   models
-   core
-   cli
-   estimation
-   howitworks
-   development
+   users
+   devs
 
 
 Indices and tables

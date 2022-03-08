@@ -1,230 +1,423 @@
 
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Models &mdash; ActivitySim 1.0.4 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Models &#8212; ActivitySim 1.0.4 documentation</title>
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Core Components" href="core.html" />
-    <link rel="prev" title="Examples" href="examples.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
-   
-  <div class="wy-grid-for-nav">
+    <link rel="prev" title="Software Development" href="development.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="index.html" class="icon icon-home"> ActivitySim
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                1.0.4
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Models</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#initialize">Initialize</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#initialize-tvpb">Initialize LOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accessibility">Accessibility</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#work-from-home">Work From Home</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#work-location">School Location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">Work Location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shadow-pricing">Shadow Pricing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#transit-pass-subsidy">Transit Pass Subsidy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#transit-pass-ownership">Transit Pass Ownership</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#auto-ownership">Auto Ownership</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#telecommute-frequency">Telecommute Frequency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#free-parking-eligibility">Free Parking Eligibility</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#coordinated-daily-activity-pattern">Coordinated Daily Activity Pattern</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mandatory-tour-frequency">Mandatory Tour Frequency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#representative-logsums">Mandatory Tour Scheduling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#joint-tour-frequency">Joint Tour Frequency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#joint-tour-composition">Joint Tour Composition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#joint-tour-participation">Joint Tour Participation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#joint-tour-destination-choice">Joint Tour Destination Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#joint-tour-scheduling">Joint Tour Scheduling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#non-mandatory-tour-frequency">Non-Mandatory Tour Frequency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#non-mandatory-tour-destination-choice">Non-Mandatory Tour Destination Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#non-mandatory-tour-scheduling">Non-Mandatory Tour Scheduling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tour-mode-choice">Tour Mode Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#at-work-subtours-frequency">At-work Subtours Frequency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#at-work-subtours-destination-choice">At-work Subtours Destination Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#at-work-subtour-scheduling">At-work Subtour Scheduling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#at-work-subtour-mode">At-work Subtour Mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#intermediate-stop-frequency">Intermediate Stop Frequency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-purpose">Trip Purpose</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-destination-choice">Trip Destination Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-purpose-and-destination">Trip Purpose and Destination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-scheduling-probablistic">Trip Scheduling (Probablistic)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-scheduling-choice-logit-choice">Trip Scheduling Choice (Logit Choice)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-departure-choice-logit-choice">Trip Departure Choice (Logit Choice)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#trip-mode-choice">Trip Mode Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#parking-location-choice">Parking Location Choice</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#write-trip-matrices">Write Trip Matrices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#util">Util</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id30">CDAP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#estimation">Estimation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.logsums">Logsums</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.mode">Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.overlap">Overlap</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.tour_destination">Tour Destination</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.tour_frequency">Tour Frequency</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.trip">Trip</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-activitysim.abm.models.util.vectorize_tour_scheduling">Vectorize Tour Scheduling</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="core.html">Core Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimation.html">Estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="howitworks.html">How the System Works</a></li>
-<li class="toctree-l1"><a class="reference internal" href="development.html">Software Development</a></li>
-</ul>
-
-            
-          
-        </div>
-        
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ActivitySim</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
+    <!-- Google Analytics -->
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Models</li>
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
     
     
-      <li class="wy-breadcrumbs-aside">
-        
-          
-            <a href="_sources/models.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
+<a class="navbar-brand" href="index.html">
+<p class="title">ActivitySim</p>
+</a>
+
     
-  </ul>
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
   
-  <hr/>
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="users.html">
+  Users Guide
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="devs.html">
+  Developers
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
             
-  <section id="models">
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="development.html">
+   Software Development
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="core.html">
+   Core Components
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initialize">
+   Initialize
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initialize-tvpb">
+   Initialize LOS
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accessibility">
+   Accessibility
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#work-from-home">
+   Work From Home
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#work-location">
+   School Location
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   Work Location
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shadow-pricing">
+   Shadow Pricing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transit-pass-subsidy">
+   Transit Pass Subsidy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transit-pass-ownership">
+   Transit Pass Ownership
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auto-ownership">
+   Auto Ownership
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#telecommute-frequency">
+   Telecommute Frequency
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#free-parking-eligibility">
+   Free Parking Eligibility
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coordinated-daily-activity-pattern">
+   Coordinated Daily Activity Pattern
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mandatory-tour-frequency">
+   Mandatory Tour Frequency
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#representative-logsums">
+   Mandatory Tour Scheduling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#joint-tour-frequency">
+   Joint Tour Frequency
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#joint-tour-composition">
+   Joint Tour Composition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#joint-tour-participation">
+   Joint Tour Participation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#joint-tour-destination-choice">
+   Joint Tour Destination Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#joint-tour-scheduling">
+   Joint Tour Scheduling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-mandatory-tour-frequency">
+   Non-Mandatory Tour Frequency
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-mandatory-tour-destination-choice">
+   Non-Mandatory Tour Destination Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-mandatory-tour-scheduling">
+   Non-Mandatory Tour Scheduling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tour-mode-choice">
+   Tour Mode Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#at-work-subtours-frequency">
+   At-work Subtours Frequency
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#at-work-subtours-destination-choice">
+   At-work Subtours Destination Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#at-work-subtour-scheduling">
+   At-work Subtour Scheduling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#at-work-subtour-mode">
+   At-work Subtour Mode
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intermediate-stop-frequency">
+   Intermediate Stop Frequency
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-purpose">
+   Trip Purpose
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-destination-choice">
+   Trip Destination Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-purpose-and-destination">
+   Trip Purpose and Destination
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-scheduling-probablistic">
+   Trip Scheduling (Probablistic)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-scheduling-choice-logit-choice">
+   Trip Scheduling Choice (Logit Choice)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-departure-choice-logit-choice">
+   Trip Departure Choice (Logit Choice)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trip-mode-choice">
+   Trip Mode Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parking-location-choice">
+   Parking Location Choice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#write-trip-matrices">
+   Write Trip Matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#util">
+   Util
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     CDAP
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimation">
+     Estimation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.logsums">
+     Logsums
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.mode">
+     Mode
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.overlap">
+     Overlap
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.tour_destination">
+     Tour Destination
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.tour_frequency">
+     Tour Frequency
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.trip">
+     Trip
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#module-activitysim.abm.models.util.vectorize_tour_scheduling">
+     Vectorize Tour Scheduling
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tests">
+   Tests
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="models">
 <span id="index-0"></span><span id="id1"></span><h1>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h1>
 <p>The currently implemented example ActivitySim AB models are described below.  See the example
 model <a class="reference internal" href="examples.html#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>, <a class="reference internal" href="examples.html#arc-sub-model-spec-files"><span class="std std-ref">Example ARC Sub-Model Specification Files</span></a>, and <a class="reference internal" href="examples.html#semcog-sub-model-spec-files"><span class="std std-ref">Example SEMCOG Sub-Model Specification Files</span></a> for more information.</p>
-<section id="initialize">
+<div class="section" id="initialize">
 <span id="initialize-tours"></span><span id="initialize-households"></span><span id="initialize-landuse"></span><h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
 <p>The initialize model isn’t really a model, but rather a few data processing steps in the data pipeline.
 The initialize data processing steps code variables used in downstream models, such as household and person
@@ -241,8 +434,8 @@ function.  These functions are registered as Inject steps in the example Pipelin
 <dd><p>preload bulky injectables up front - stuff that isn’t inserted into the pipeline</p>
 </dd></dl>
 
-<span class="target" id="module-activitysim.abm.models.initialize_tours"></span></section>
-<section id="initialize-tvpb">
+<span class="target" id="module-activitysim.abm.models.initialize_tours"></span></div>
+<div class="section" id="initialize-tvpb">
 <span id="initialize-los"></span><span id="id2"></span><h2>Initialize LOS<a class="headerlink" href="#initialize-tvpb" title="Permalink to this headline">¶</a></h2>
 <p>The initialize LOS model isn’t really a model, but rather a series of data processing steps in the data pipeline.
 The initialize LOS model does two things:</p>
@@ -279,8 +472,8 @@ populated before returning, and the locutor process writes the results.</p>
 <p>FIXME - if we did not close this, we could avoid having to reload it from mmap when single-process?</p>
 </dd></dl>
 
-</section>
-<section id="accessibility">
+</div>
+<div class="section" id="accessibility">
 <span id="id3"></span><h2>Accessibility<a class="headerlink" href="#accessibility" title="Permalink to this headline">¶</a></h2>
 <p>The accessibilities model is an aggregate model that calculates multiple origin-based accessibility
 measures by origin zone to all destination zones.</p>
@@ -331,8 +524,8 @@ product mutes large differences.  The decay function on the walk accessibility m
 steeper than automobile or transit.  The minimum accessibility is zero.</p>
 </dd></dl>
 
-</section>
-<section id="work-from-home">
+</div>
+<div class="section" id="work-from-home">
 <span id="id4"></span><h2>Work From Home<a class="headerlink" href="#work-from-home" title="Permalink to this headline">¶</a></h2>
 <p>Telecommuting is defined as workers who work from home instead of going
 to work. It only applies to workers with a regular workplace outside of home.
@@ -357,8 +550,8 @@ function is registered as an Inject step in the example Pipeline.</p>
 from this model is TRUE (if works from home) or FALSE (works away from home).</p>
 </dd></dl>
 
-</section>
-<section id="work-location">
+</div>
+<div class="section" id="work-location">
 <span id="school-location"></span><span id="id5"></span><h2>School Location<a class="headerlink" href="#work-location" title="Permalink to this headline">¶</a></h2>
 <p>The usual school location choice models assign a usual school location for the primary
 mandatory activity of each child and university student in the
@@ -382,8 +575,8 @@ destination.</p>
 <p>The main interfaces to the model is the <a class="reference internal" href="#activitysim.abm.models.location_choice.school_location" title="activitysim.abm.models.location_choice.school_location"><code class="xref py py-func docutils literal notranslate"><span class="pre">school_location()</span></code></a> function.
 This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="examples.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how to write logsums for estimation.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">persons</span></code> | Result Field: <code class="docutils literal notranslate"><span class="pre">school_taz</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">TAZ,</span> <span class="pre">alt_dest,</span> <span class="pre">AM</span> <span class="pre">time</span> <span class="pre">period,</span> <span class="pre">MD</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
-</section>
-<section id="id6">
+</div>
+<div class="section" id="id6">
 <h2>Work Location<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>The usual work location choice models assign a usual work location for the primary
 mandatory activity of each employed person in the
@@ -475,7 +668,7 @@ or max_iterations reached.</p>
 <dd><p>add logsum column to existing location_sample table</p>
 <p>logsum is calculated by running the mode_choice model for each sample (person, dest_zone_id) pair
 in location_sample, and computing the logsum of all the utilities</p>
-<table class="docutils align-default">
+<table class="table">
 <colgroup>
 <col style="width: 16%" />
 <col style="width: 20%" />
@@ -590,8 +783,8 @@ logsum : float logsum of choice utilities across alternatives</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="shadow-pricing">
+</div>
+<div class="section" id="shadow-pricing">
 <span id="index-1"></span><span id="id7"></span><h2>Shadow Pricing<a class="headerlink" href="#shadow-pricing" title="Permalink to this headline">¶</a></h2>
 <p>The shadow pricing calculator used by work and school location choice.</p>
 <p><strong>Turning on and saving shadow prices</strong></p>
@@ -685,8 +878,8 @@ the numpy-wrapped RawArray.)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>data_buffers</strong><span class="classifier">dict {&lt;model_selector&gt;</span></dt><dd><p>dict of multiprocessing.Array keyed by model_selector</p>
-</dd>
+<dt><strong>data_buffers</strong><span class="classifier">dict {&lt;model_selector&gt;</span><span class="classifier">&lt;shared_data_buffer&gt;}</span></dt><dd></dd>
+<dt>dict of multiprocessing.Array keyed by model_selector</dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -755,7 +948,7 @@ different utility coefficients in models’s location and location_sample csv ex
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>data_buffers</strong><span class="classifier">dict of {&lt;model_selector&gt;</span></dt><dd><p>multiprocessing.Array is simply a convenient way to bundle Array and Lock
+<dt><strong>data_buffers</strong><span class="classifier">dict of {&lt;model_selector&gt;</span><span class="classifier">&lt;multiprocessing.Array&gt;}</span></dt><dd><p>multiprocessing.Array is simply a convenient way to bundle Array and Lock
 we extract the lock and wrap the RawArray in a numpy array for convenience in indexing
 The shared data buffer has shape (&lt;num_zones, &lt;num_segments&gt; + 1)
 extra column is for reverse semaphores with TALLY_CHECKIN and TALLY_CHECKOUT</p>
@@ -801,8 +994,8 @@ shared_data_lock : numpy array wrapping multiprocessing.RawArray or None (if sin
 </dl>
 </dd></dl>
 
-</section>
-<section id="transit-pass-subsidy">
+</div>
+<div class="section" id="transit-pass-subsidy">
 <span id="id8"></span><h2>Transit Pass Subsidy<a class="headerlink" href="#transit-pass-subsidy" title="Permalink to this headline">¶</a></h2>
 <p>The transit fare discount model is defined as persons who purchase or are
 provided a transit pass.  The transit fare discount consists of two submodels - this
@@ -820,8 +1013,8 @@ function is registered as an Inject step in the example Pipeline.</p>
 <dd><p>Transit pass subsidy model.</p>
 </dd></dl>
 
-</section>
-<section id="transit-pass-ownership">
+</div>
+<div class="section" id="transit-pass-ownership">
 <span id="id9"></span><h2>Transit Pass Ownership<a class="headerlink" href="#transit-pass-ownership" title="Permalink to this headline">¶</a></h2>
 <p>The transit fare discount is defined as persons who purchase or are
 provided a transit pass.  The transit fare discount consists of two submodels - this
@@ -838,8 +1031,8 @@ function is registered as an Inject step in the example Pipeline.</p>
 <dd><p>Transit pass ownership model.</p>
 </dd></dl>
 
-</section>
-<section id="auto-ownership">
+</div>
+<div class="section" id="auto-ownership">
 <span id="id10"></span><h2>Auto Ownership<a class="headerlink" href="#auto-ownership" title="Permalink to this headline">¶</a></h2>
 <p>The auto ownership model selects a number of autos for each household in the simulation.
 The primary model components are household demographics, zonal density, and accessibility.</p>
@@ -854,8 +1047,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 with given characteristics owns</p>
 </dd></dl>
 
-</section>
-<section id="telecommute-frequency">
+</div>
+<div class="section" id="telecommute-frequency">
 <span id="id11"></span><h2>Telecommute Frequency<a class="headerlink" href="#telecommute-frequency" title="Permalink to this headline">¶</a></h2>
 <p>Telecommuting is defined as workers who work from home instead of going to work. It only applies to
 workers with a regular workplace outside of home. The telecommute model consists of two
@@ -877,8 +1070,8 @@ reflects the choices of people who prefer a combination of working from home and
 office during a week.</p>
 </dd></dl>
 
-</section>
-<section id="free-parking-eligibility">
+</div>
+<div class="section" id="free-parking-eligibility">
 <span id="freeparking"></span><h2>Free Parking Eligibility<a class="headerlink" href="#free-parking-eligibility" title="Permalink to this headline">¶</a></h2>
 <p>The Free Parking Eligibility model predicts the availability of free parking at a person’s
 workplace.  It is applied for people who work in zones that have parking charges, which are
@@ -893,8 +1086,8 @@ as an Inject step in the example Pipeline.</p>
 <span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.free_parking.</span></span><span class="sig-name descname"><span class="pre">free_parking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">persons_merged</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_hh_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.free_parking.free_parking" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</section>
-<section id="coordinated-daily-activity-pattern">
+</div>
+<div class="section" id="coordinated-daily-activity-pattern">
 <span id="cdap"></span><h2>Coordinated Daily Activity Pattern<a class="headerlink" href="#coordinated-daily-activity-pattern" title="Permalink to this headline">¶</a></h2>
 <p>The Coordinated Daily Activity Pattern (CDAP) model predicts the choice of daily activity pattern (DAP)
 for each member in the household, simultaneously. The DAP is categorized in to three types as
@@ -932,8 +1125,8 @@ routines in the cdap directory of activitysim for this purpose.  This module
 simply applies those utilities using the simulation framework.</p>
 </dd></dl>
 
-</section>
-<section id="mandatory-tour-frequency">
+</div>
+<div class="section" id="mandatory-tour-frequency">
 <span id="id12"></span><h2>Mandatory Tour Frequency<a class="headerlink" href="#mandatory-tour-frequency" title="Permalink to this headline">¶</a></h2>
 <p>The individual mandatory tour frequency model predicts the number of work and school tours
 taken by each person with a mandatory DAP. The primary drivers of mandatory tour frequency
@@ -950,8 +1143,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 alternatives above) - these trips include work and school in some combination.</p>
 </dd></dl>
 
-</section>
-<section id="representative-logsums">
+</div>
+<div class="section" id="representative-logsums">
 <span id="mandatory-tour-scheduling"></span><span id="id13"></span><h2>Mandatory Tour Scheduling<a class="headerlink" href="#representative-logsums" title="Permalink to this headline">¶</a></h2>
 <p>The mandatory tour scheduling model selects a tour departure and duration period (and therefore a
 start and end period as well) for each mandatory tour.   The primary drivers in the model are
@@ -980,8 +1173,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 <dd><p>This model predicts the departure time and duration of each activity for mandatory tours</p>
 </dd></dl>
 
-</section>
-<section id="joint-tour-frequency">
+</div>
+<div class="section" id="joint-tour-frequency">
 <span id="id14"></span><h2>Joint Tour Frequency<a class="headerlink" href="#joint-tour-frequency" title="Permalink to this headline">¶</a></h2>
 <p>The joint tour generation models are divided into three sub-models: the joint tour frequency
 model, the party composition model, and the person participation model. In the joint tour
@@ -998,8 +1191,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 alternatives above).</p>
 </dd></dl>
 
-</section>
-<section id="joint-tour-composition">
+</div>
+<div class="section" id="joint-tour-composition">
 <span id="id15"></span><h2>Joint Tour Composition<a class="headerlink" href="#joint-tour-composition" title="Permalink to this headline">¶</a></h2>
 <p>In the joint tour party composition model, the makeup of the travel party (adults, children, or
 mixed - adults and children) is determined for each joint tour.  The party composition determines the
@@ -1016,8 +1209,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 <dd><p>This model predicts the makeup of the travel party (adults, children, or mixed).</p>
 </dd></dl>
 
-</section>
-<section id="joint-tour-participation">
+</div>
+<div class="section" id="joint-tour-participation">
 <span id="id16"></span><h2>Joint Tour Participation<a class="headerlink" href="#joint-tour-participation" title="Permalink to this headline">¶</a></h2>
 <p>In the joint tour person participation model, each eligible person sequentially makes a
 choice to participate or not participate in each joint tour.  Since the party composition model
@@ -1072,8 +1265,8 @@ indicating that the participant has been chosen to participate in the tour</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="joint-tour-destination-choice">
+</div>
+<div class="section" id="joint-tour-destination-choice">
 <span id="id17"></span><h2>Joint Tour Destination Choice<a class="headerlink" href="#joint-tour-destination-choice" title="Permalink to this headline">¶</a></h2>
 <p>The joint tour destination choice model operate similarly to the usual work and
 school location choice model, selecting the primary destination for travel tours. The only
@@ -1110,8 +1303,8 @@ destination, so in this case tours are the choosers (with the associated
 person that’s making the tour)</p>
 </dd></dl>
 
-</section>
-<section id="joint-tour-scheduling">
+</div>
+<div class="section" id="joint-tour-scheduling">
 <span id="id18"></span><h2>Joint Tour Scheduling<a class="headerlink" href="#joint-tour-scheduling" title="Permalink to this headline">¶</a></h2>
 <p>The joint tour scheduling model selects a tour departure and duration period (and therefore a start and end
 period as well) for each joint tour.  This model uses person <a class="reference internal" href="core.html#time-windows"><span class="std std-ref">Person Time Windows</span></a>. The primary drivers in the
@@ -1129,8 +1322,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 <dd><p>This model predicts the departure time and duration of each joint tour</p>
 </dd></dl>
 
-</section>
-<section id="non-mandatory-tour-frequency">
+</div>
+<div class="section" id="non-mandatory-tour-frequency">
 <span id="id19"></span><h2>Non-Mandatory Tour Frequency<a class="headerlink" href="#non-mandatory-tour-frequency" title="Permalink to this headline">¶</a></h2>
 <p>The non-mandatory tour frequency model selects the number of non-mandatory tours made by each person on the simulation day.
 It also adds non-mandatory tours to the tours in the data pipeline. The individual non-mandatory tour frequency model
@@ -1189,8 +1382,8 @@ configured by the user) - these trips include escort, shopping, othmaint,
 othdiscr, eatout, and social trips in various combination.</p>
 </dd></dl>
 
-</section>
-<section id="non-mandatory-tour-destination-choice">
+</div>
+<div class="section" id="non-mandatory-tour-destination-choice">
 <span id="id20"></span><h2>Non-Mandatory Tour Destination Choice<a class="headerlink" href="#non-mandatory-tour-destination-choice" title="Permalink to this headline">¶</a></h2>
 <p>The non-mandatory tour destination choice model chooses a destination zone for
 non-mandatory tours.  The three step (sample, logsums, final choice) process also used for
@@ -1209,8 +1402,8 @@ destination, so in this case tours are the choosers (with the associated
 person that’s making the tour)</p>
 </dd></dl>
 
-</section>
-<section id="non-mandatory-tour-scheduling">
+</div>
+<div class="section" id="non-mandatory-tour-scheduling">
 <span id="id21"></span><h2>Non-Mandatory Tour Scheduling<a class="headerlink" href="#non-mandatory-tour-scheduling" title="Permalink to this headline">¶</a></h2>
 <p>The non-mandatory tour scheduling model selects a tour departure and duration period (and therefore a start and end
 period as well) for each non-mandatory tour.  This model uses person <a class="reference internal" href="core.html#time-windows"><span class="std std-ref">Person Time Windows</span></a>.  Includes support
@@ -1225,8 +1418,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 <dd><p>This model predicts the departure time and duration of each activity for non-mandatory tours</p>
 </dd></dl>
 
-</section>
-<section id="tour-mode-choice">
+</div>
+<div class="section" id="tour-mode-choice">
 <span id="id22"></span><h2>Tour Mode Choice<a class="headerlink" href="#tour-mode-choice" title="Permalink to this headline">¶</a></h2>
 <p>The mandatory, non-mandatory, and joint tour mode choice model assigns to each tour the “primary” mode that
 is used to get from the origin to the primary destination. The tour-based modeling approach requires a reconsideration
@@ -1353,8 +1546,8 @@ will be used for the tour</p>
 <dd><p>Tour mode choice simulate</p>
 </dd></dl>
 
-</section>
-<section id="at-work-subtours-frequency">
+</div>
+<div class="section" id="at-work-subtours-frequency">
 <span id="atwork-subtour-frequency"></span><h2>At-work Subtours Frequency<a class="headerlink" href="#at-work-subtours-frequency" title="Permalink to this headline">¶</a></h2>
 <p>The at-work subtour frequency model selects the number of at-work subtours made for each work tour.
 It also creates at-work subtours by adding them to the tours table in the data pipeline.
@@ -1378,8 +1571,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 configured by the user).</p>
 </dd></dl>
 
-</section>
-<section id="at-work-subtours-destination-choice">
+</div>
+<div class="section" id="at-work-subtours-destination-choice">
 <span id="atwork-subtour-destination"></span><h2>At-work Subtours Destination Choice<a class="headerlink" href="#at-work-subtours-destination-choice" title="Permalink to this headline">¶</a></h2>
 <p>The at-work subtours destination choice model is made up of three model steps:</p>
 <blockquote>
@@ -1395,8 +1588,8 @@ configured by the user).</p>
 <code class="xref py py-func docutils literal notranslate"><span class="pre">atwork_subtour_destination()</span></code>
 function.  This function is registered as an Inject step in the example Pipeline.
 See <a class="reference internal" href="examples.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how to write logsums for estimation.</p>
-<span class="target" id="module-activitysim.abm.models.atwork_subtour_destination"></span></section>
-<section id="at-work-subtour-scheduling">
+<span class="target" id="module-activitysim.abm.models.atwork_subtour_destination"></span></div>
+<div class="section" id="at-work-subtour-scheduling">
 <span id="atwork-subtour-scheduling"></span><h2>At-work Subtour Scheduling<a class="headerlink" href="#at-work-subtour-scheduling" title="Permalink to this headline">¶</a></h2>
 <p>The at-work subtours scheduling model selects a tour departure and duration period (and therefore a start and end
 period as well) for each at-work subtour.  This model uses person <a class="reference internal" href="core.html#time-windows"><span class="std std-ref">Person Time Windows</span></a>.</p>
@@ -1418,8 +1611,8 @@ function.  This function is registered as an Inject step in the example Pipeline
 <dd><p>This model predicts the departure time and duration of each activity for at work subtours tours</p>
 </dd></dl>
 
-</section>
-<section id="at-work-subtour-mode">
+</div>
+<div class="section" id="at-work-subtour-mode">
 <span id="atwork-subtour-mode-choice"></span><h2>At-work Subtour Mode<a class="headerlink" href="#at-work-subtour-mode" title="Permalink to this headline">¶</a></h2>
 <p>The at-work subtour mode choice model assigns a travel mode to each at-work subtour using the <a class="reference internal" href="#tour-mode-choice"><span class="std std-ref">Tour Mode Choice</span></a> model.</p>
 <p>The main interface to the at-work subtour mode choice model is the
@@ -1434,8 +1627,8 @@ See <a class="reference internal" href="examples.html#writing-logsums"><span cla
 <dd><p>At-work subtour mode choice simulate</p>
 </dd></dl>
 
-</section>
-<section id="intermediate-stop-frequency">
+</div>
+<div class="section" id="intermediate-stop-frequency">
 <span id="id23"></span><h2>Intermediate Stop Frequency<a class="headerlink" href="#intermediate-stop-frequency" title="Permalink to this headline">¶</a></h2>
 <p>The stop frequency model assigns to each tour the number of intermediate destinations a person
 will travel to on each leg of the tour from the origin to tour primary destination and back.
@@ -1477,8 +1670,8 @@ and four corresponding trips: three outbound, and one inbound.</p>
 </div>
 </dd></dl>
 
-</section>
-<section id="trip-purpose">
+</div>
+<div class="section" id="trip-purpose">
 <span id="id24"></span><h2>Trip Purpose<a class="headerlink" href="#trip-purpose" title="Permalink to this headline">¶</a></h2>
 <p>For trip other than the last trip outbound or inbound, assign a purpose based on an
 observed frequency distribution.  The distribution is segmented by tour purpose, tour
@@ -1531,8 +1724,8 @@ and depart time ranges are specified in the probability lookup table.</p>
 <p>adds purpose column to trips</p>
 </dd></dl>
 
-</section>
-<section id="trip-destination-choice">
+</div>
+<div class="section" id="trip-destination-choice">
 <span id="id25"></span><h2>Trip Destination Choice<a class="headerlink" href="#trip-destination-choice" title="Permalink to this headline">¶</a></h2>
 <p>The trip (or stop) location choice model predicts the location of trips (or stops) along the tour other than the primary
 destination. The stop-location model is structured as a multinomial logit model using a zone
@@ -1627,6 +1820,8 @@ for each alternative since we need out-of-direction logsum
 <dt><strong>trace_label</strong></dt><dd></dd>
 </dl>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
 </dl>
 </dd></dl>
 
@@ -1675,8 +1870,8 @@ and columns dest_zone_id, prob, and pick_count</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="trip-purpose-and-destination">
+</div>
+<div class="section" id="trip-purpose-and-destination">
 <span id="id26"></span><h2>Trip Purpose and Destination<a class="headerlink" href="#trip-purpose-and-destination" title="Permalink to this headline">¶</a></h2>
 <p>After running trip purpose and trip destination separately, the two model can be ran together in an iterative fashion on
 the remaining failed trips (i.e. trips that cannot be assigned a destination).  Each iteration uses new random numbers.</p>
@@ -1684,8 +1879,8 @@ the remaining failed trips (i.e. trips that cannot be assigned a destination).  
 <code class="xref py py-func docutils literal notranslate"><span class="pre">trip_purpose_and_destination()</span></code>
 function.  This function is registered as an Inject step in the example Pipeline.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">trips</span></code> | Result Field: <code class="docutils literal notranslate"><span class="pre">purpose,</span> <span class="pre">destination</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">origin,</span> <span class="pre">(tour</span> <span class="pre">primary)</span> <span class="pre">destination,</span> <span class="pre">dest_taz,</span> <span class="pre">trip_period</span></code></p>
-<span class="target" id="module-activitysim.abm.models.trip_purpose_and_destination"></span></section>
-<section id="trip-scheduling-probablistic">
+<span class="target" id="module-activitysim.abm.models.trip_purpose_and_destination"></span></div>
+<div class="section" id="trip-scheduling-probablistic">
 <span id="trip-scheduling"></span><h2>Trip Scheduling (Probablistic)<a class="headerlink" href="#trip-scheduling-probablistic" title="Permalink to this headline">¶</a></h2>
 <p>For each trip, assign a departure hour based on an input lookup table of percents by tour purpose,
 direction (inbound/outbound), tour hour, and trip index.</p>
@@ -1830,8 +2025,8 @@ zero probs)</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="trip-scheduling-choice-logit-choice">
+</div>
+<div class="section" id="trip-scheduling-choice-logit-choice">
 <span id="trip-scheduling-choice"></span><h2>Trip Scheduling Choice (Logit Choice)<a class="headerlink" href="#trip-scheduling-choice-logit-choice" title="Permalink to this headline">¶</a></h2>
 <p>This model uses a logit-based formulation to determine potential trip windows for the three
 main components of a tour.</p>
@@ -1859,8 +2054,8 @@ main components of a tour.</p>
 </dl>
 </li>
 </ul>
-</section>
-<section id="trip-departure-choice-logit-choice">
+</div>
+<div class="section" id="trip-departure-choice-logit-choice">
 <span id="trip-departure-choice"></span><h2>Trip Departure Choice (Logit Choice)<a class="headerlink" href="#trip-departure-choice-logit-choice" title="Permalink to this headline">¶</a></h2>
 <p>Used in conjuction with Trip Scheduling Choice (Logit Choice), this model chooses departure
 time periods consistent with the time windows for the appropriate leg of the trip.</p>
@@ -1883,8 +2078,8 @@ time periods consistent with the time windows for the appropriate leg of the tri
 </dl>
 </li>
 </ul>
-</section>
-<section id="trip-mode-choice">
+</div>
+<div class="section" id="trip-mode-choice">
 <span id="id27"></span><h2>Trip Mode Choice<a class="headerlink" href="#trip-mode-choice" title="Permalink to this headline">¶</a></h2>
 <p>The trip mode choice model assigns a travel mode for each trip on a given tour. It
 operates similarly to the tour mode choice model, but only certain trip modes are available for
@@ -1914,8 +2109,8 @@ coefficient values (stored in trip_mode_choice_coefficients.csv coefficient file
 <p>Adds trip_mode column to trip table</p>
 </dd></dl>
 
-</section>
-<section id="parking-location-choice">
+</div>
+<div class="section" id="parking-location-choice">
 <span id="id28"></span><h2>Parking Location Choice<a class="headerlink" href="#parking-location-choice" title="Permalink to this headline">¶</a></h2>
 <p>The parking location choice model selects a parking location for specified trips. While the model does not
 require parking location be applied to any specific set of trips, it is usually applied for drive trips to
@@ -2046,8 +2241,8 @@ dp_skims - SkimDictWrapper: trip alt_dest, trip primary_dest</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="write-trip-matrices">
+</div>
+<div class="section" id="write-trip-matrices">
 <span id="id29"></span><h2>Write Trip Matrices<a class="headerlink" href="#write-trip-matrices" title="Permalink to this headline">¶</a></h2>
 <p>Write open matrix (OMX) trip matrices for assignment.  Reads the trips table post preprocessor and run expressions
 to code additional data fields, with one data fields for each matrix specified.  The matrices are scaled by a
@@ -2096,11 +2291,11 @@ For three zone system, uses the taz skim zone names for the set of possible tazs
 and uses the tap skim zone names for the set of possible taps.</p>
 </dd></dl>
 
-</section>
-<section id="util">
+</div>
+<div class="section" id="util">
 <span id="utility-steps"></span><h2>Util<a class="headerlink" href="#util" title="Permalink to this headline">¶</a></h2>
 <p>Additional helper classes</p>
-<section id="id30">
+<div class="section" id="id30">
 <h3>CDAP<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-activitysim.abm.models.util.cdap"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.cdap.add_interaction_column">
@@ -2126,6 +2321,8 @@ p_tup = (1,3) means persons with cdap_rank 1 and 3</p>
 </dd>
 </dl>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
 </dl>
 </dd></dl>
 
@@ -2434,12 +2631,12 @@ e.g. ‘MNHH’ for a 4 person household with activities Mandatory, NonMandatory
 </dl>
 </dd></dl>
 
-</section>
-<section id="estimation">
+</div>
+<div class="section" id="estimation">
 <span id="table-annotation"></span><span id="index-2"></span><h3>Estimation<a class="headerlink" href="#estimation" title="Permalink to this headline">¶</a></h3>
 <p>See <a class="reference internal" href="estimation.html#estimation"><span class="std std-ref">Estimation</span></a> for more information.</p>
-<span class="target" id="module-activitysim.abm.models.util.estimation"></span></section>
-<section id="module-activitysim.abm.models.util.logsums">
+<span class="target" id="module-activitysim.abm.models.util.estimation"></span></div>
+<div class="section" id="module-activitysim.abm.models.util.logsums">
 <span id="logsums"></span><h3>Logsums<a class="headerlink" href="#module-activitysim.abm.models.util.logsums" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.logsums.compute_logsums">
@@ -2466,8 +2663,8 @@ e.g. ‘MNHH’ for a 4 person household with activities Mandatory, NonMandatory
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-activitysim.abm.models.util.mode">
+</div>
+<div class="section" id="module-activitysim.abm.models.util.mode">
 <span id="mode"></span><h3>Mode<a class="headerlink" href="#module-activitysim.abm.models.util.mode" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.mode.mode_choice_simulate">
@@ -2489,6 +2686,8 @@ e.g. ‘MNHH’ for a 4 person household with activities Mandatory, NonMandatory
 <dt><strong>estimator</strong></dt><dd></dd>
 </dl>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
 </dl>
 </dd></dl>
 
@@ -2501,8 +2700,8 @@ the Skim object, the spec to evaluate with, and any additional expressions
 you want to use in the evaluation of variables.</p>
 </dd></dl>
 
-</section>
-<section id="module-activitysim.abm.models.util.overlap">
+</div>
+<div class="section" id="module-activitysim.abm.models.util.overlap">
 <span id="overlap"></span><h3>Overlap<a class="headerlink" href="#module-activitysim.abm.models.util.overlap" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.overlap.p2p_time_window_overlap">
@@ -2514,6 +2713,8 @@ you want to use in the evaluation of variables.</p>
 <dt><strong>p2_ids</strong></dt><dd></dd>
 </dl>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
 </dl>
 </dd></dl>
 
@@ -2544,8 +2745,8 @@ runs of any values. (Might prove useful in future?…)</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-activitysim.abm.models.util.tour_destination">
+</div>
+<div class="section" id="module-activitysim.abm.models.util.tour_destination">
 <span id="tour-destination"></span><h3>Tour Destination<a class="headerlink" href="#module-activitysim.abm.models.util.tour_destination" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.tour_destination.SizeTermCalculator">
@@ -2581,7 +2782,7 @@ choose MAZ probabilistically (proportionally by size_term) from set of MAZ zones
 <dd><p>add logsum column to existing tour_destination_sample table</p>
 <p>logsum is calculated by running the mode_choice model for each sample (person, dest_zone_id) pair
 in destination_sample, and computing the logsum of all the utilities</p>
-<table class="docutils align-default">
+<table class="table">
 <colgroup>
 <col style="width: 16%" />
 <col style="width: 20%" />
@@ -2641,8 +2842,8 @@ in destination_sample, and computing the logsum of all the utilities</p>
 annotated with mode_choice logsum to select a destination from sample alternatives</p>
 </dd></dl>
 
-</section>
-<section id="module-activitysim.abm.models.util.tour_frequency">
+</div>
+<div class="section" id="module-activitysim.abm.models.util.tour_frequency">
 <span id="tour-frequency"></span><h3>Tour Frequency<a class="headerlink" href="#module-activitysim.abm.models.util.tour_frequency" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.tour_frequency.create_tours">
@@ -2849,8 +3050,8 @@ tours.tour_category   - one of ‘mandatory’, ‘non_mandatory’, ‘atwork�
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-activitysim.abm.models.util.trip">
+</div>
+<div class="section" id="module-activitysim.abm.models.util.trip">
 <span id="trip"></span><h3>Trip<a class="headerlink" href="#module-activitysim.abm.models.util.trip" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.trip.cleanup_failed_trips">
@@ -2902,8 +3103,8 @@ to the leg.
 tour origin, tour destination.</p>
 </dd></dl>
 
-</section>
-<section id="module-activitysim.abm.models.util.vectorize_tour_scheduling">
+</div>
+<div class="section" id="module-activitysim.abm.models.util.vectorize_tour_scheduling">
 <span id="vectorize-tour-scheduling"></span><h3>Vectorize Tour Scheduling<a class="headerlink" href="#module-activitysim.abm.models.util.vectorize_tour_scheduling" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.vectorize_tour_scheduling.compute_logsums">
@@ -3134,60 +3335,59 @@ DataFrame and the values are the index of the alts DataFrame.</p>
 </dl>
 </dd></dl>
 
-</section>
-</section>
-<section id="tests">
+</div>
+</div>
+<div class="section" id="tests">
 <h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
 <p>See <code class="docutils literal notranslate"><span class="pre">activitysim.abm.test</span></code> and <code class="docutils literal notranslate"><span class="pre">activitysim.abm.models.util.test</span></code></p>
-</section>
-</section>
+</div>
+</div>
 
 
-           </div>
-           
-          </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="core.html" class="btn btn-neutral float-right" title="Core Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &#169; Copyright contributing authors.
-
-    </p>
-  </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="development.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Software Development</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="core.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Core Components</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
       </div>
-
-    </section>
-
-  </div>
+    </div>
   
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
-  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
     
-   
-
-</body>
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright contributing authors.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
 </html>
