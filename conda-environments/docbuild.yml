@@ -24,6 +24,7 @@ dependencies:
 - gh
 - bump2version
 - jupyter-book
+- numpydoc
 
 - pip:
   - -e ..
