@@ -23,7 +23,7 @@ dependencies:
 - git
 - gh
 - bump2version
-- jupyterbook
+- jupyter-book
 
 - pip:
   - -e ..
