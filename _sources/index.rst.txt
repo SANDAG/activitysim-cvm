@@ -1,8 +1,4 @@
-.. ActivitySim documentation master file, created by
-   sphinx-quickstart on Tue May 26 14:13:47 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
+===========
 ActivitySim
 ===========
 
@@ -17,20 +13,9 @@ the consortium. All member agencies help make decisions about development priori
 and benefit from contributions of other agency partners.  Additional information about 
 the development and management of the ActivitySim is on the `project site <http://www.activitysim.org>`__.
 
-
-Contents
---------
-
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    users
    dev-guide/index
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

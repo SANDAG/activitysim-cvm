@@ -160,11 +160,6 @@
    Environment
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dependencies">
-   Dependencies
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -216,39 +211,27 @@ Jupyter Notebook/Lab/Etc.</p>
 and git repository.  Assuming you have <code class="docutils literal notranslate"><span class="pre">mamba</span></code> installed, you can do so
 by starting where ActivitySim is not yet cloned (e.g. in an empty
 directory) and running:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mamba create -n ASIM-DEV <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9 git gh -c conda-forge --override-channels
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mamba env create -n ASIM-DEV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
 conda activate ASIM-DEV
 gh auth login   <span class="c1"># &lt;--- (only needed if gh is not logged in)</span>
-gh repo clone ActivitySim/activitysim
 gh repo clone ActivitySim/sharrow
-<span class="nb">cd</span> activitysim
+python -m pip install -e ./sharrow
+gh repo clone ActivitySim/activitysim
+python -m pip install -e ./activitysim
 </pre></div>
 </div>
-<p>Note the above commands will clone both ActivitySim and sharrow, so that
-you can potentially edit and commit changes to both libraries.</p>
-</div>
-<div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>You can install all the dependencies except <code class="docutils literal notranslate"><span class="pre">sharrow</span></code> and <code class="docutils literal notranslate"><span class="pre">activitysim</span></code>
-itself using the pre-made environment definition file here:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mamba env update --file<span class="o">=</span>conda-environments/activitysim-dev-2.yml
-</pre></div>
-</div>
+<p>Note the above commands will create an environment with all the
+necessary dependencies, clone both ActivitySim and sharrow from GitHub,
+and <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> eoch of these libraries in editable mode, which
+will allow your code changes to be reflected when running ActivitySim
+in this environment.</p>
+<p>Now your environment should be ready to use.  Happy coding!</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If you add to the ActivitySim dependencies, make sure to also update
 the environments in <code class="docutils literal notranslate"><span class="pre">conda-environments</span></code>, which are used for testing
-and development.  If they are not updated, these environments will end
-up with dependencies loaded from <em>pip</em> instead of <em>conda-forge</em>.</p>
+and development.</p>
 </div>
-<p>Then, use pip to install the last libraries in editable mode, which
-will allow your code changes to be reflected when running ActivitySim
-in this environment.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -m pip install -e ./sharrow
-python -m pip install -e ./activitysim
-</pre></div>
-</div>
-<p>Now your environment should be ready to use.  Happy coding!</p>
 </div>
 </div>
 
