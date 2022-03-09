@@ -36,40 +36,26 @@ by starting where ActivitySim is not yet cloned (e.g. in an empty
 directory) and running:
 
 ```sh
-mamba create -n ASIM-DEV python=3.9 git gh -c conda-forge --override-channels
+mamba env create -n ASIM-DEV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
 conda activate ASIM-DEV
 gh auth login   # <--- (only needed if gh is not logged in)
-gh repo clone ActivitySim/activitysim
 gh repo clone ActivitySim/sharrow
-cd activitysim
+python -m pip install -e ./sharrow
+gh repo clone ActivitySim/activitysim
+python -m pip install -e ./activitysim
 ```
 
-Note the above commands will clone both ActivitySim and sharrow, so that
-you can potentially edit and commit changes to both libraries.
-    
-## Dependencies
+Note the above commands will create an environment with all the 
+necessary dependencies, clone both ActivitySim and sharrow from GitHub, 
+and `pip install` eoch of these libraries in editable mode, which
+will allow your code changes to be reflected when running ActivitySim
+in this environment.
 
-You can install all the dependencies except `sharrow` and `activitysim`
-itself using the pre-made environment definition file here: 
-
-```sh
-mamba env update --file=conda-environments/activitysim-dev-2.yml
-```
+Now your environment should be ready to use.  Happy coding!
 
 ```{important}
 If you add to the ActivitySim dependencies, make sure to also update 
 the environments in `conda-environments`, which are used for testing 
-and development.  If they are not updated, these environments will end 
-up with dependencies loaded from *pip* instead of *conda-forge*.
+and development. 
 ```
 
-Then, use pip to install the last libraries in editable mode, which
-will allow your code changes to be reflected when running ActivitySim
-in this environment.
-
-```sh
-python -m pip install -e ./sharrow
-python -m pip install -e ./activitysim
-```
-
-Now your environment should be ready to use.  Happy coding!
