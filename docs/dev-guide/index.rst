@@ -21,6 +21,7 @@ Contents
    :maxdepth: 3
 
    install
+   using-sharrow
    ../development
    ../models
    ../core
