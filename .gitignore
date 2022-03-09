@@ -9,6 +9,7 @@ sandbox/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+__sharrowcache__/
 
 # C extensions
 *.so
