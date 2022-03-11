@@ -1,0 +1,6 @@
+activitysim.configs.InputTable.filename
+=======================================
+
+.. currentmodule:: activitysim.configs
+
+.. autoattribute:: InputTable.filename

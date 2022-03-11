@@ -25,15 +25,10 @@ Contents
    :maxdepth: 3
 
    gettingstarted
+   configs
    examples
    cli
    estimation
    howitworks
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

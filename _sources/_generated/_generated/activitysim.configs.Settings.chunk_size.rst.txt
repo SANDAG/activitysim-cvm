@@ -1,0 +1,6 @@
+activitysim.configs.Settings.chunk\_size
+========================================
+
+.. currentmodule:: activitysim.configs
+
+.. autoattribute:: Settings.chunk_size

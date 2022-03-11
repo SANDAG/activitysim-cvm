@@ -1,0 +1,6 @@
+activitysim.configs.InputTable.rename\_columns
+==============================================
+
+.. currentmodule:: activitysim.configs
+
+.. autoattribute:: InputTable.rename_columns

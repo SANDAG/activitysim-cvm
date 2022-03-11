@@ -187,7 +187,7 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="developer-installation">
-<h1>Developer Installation<a class="headerlink" href="#developer-installation" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Developer Installation<a class="headerlink" href="#developer-installation" title="Permalink to this headline">¶</a></h1>
 <p>Installing ActivitySim as a developer is almost as easy as just using it,
 but making some tweaks to the processes enables live code development and
 testing.</p>
@@ -213,11 +213,12 @@ Jupyter Notebook/Lab/Etc.</p>
 <div class="section" id="environment">
 <h2>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h2>
 <p>It’s convenient to start from a completely clean conda environment
-and git repository.  Assuming you have <code class="docutils literal notranslate"><span class="pre">mamba</span></code> installed, you can do so
-by starting where ActivitySim is not yet cloned (e.g. in an empty
-directory) and running:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mamba env create -n ASIM-DEV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
-conda activate ASIM-DEV
+and git repository. Assuming you have <code class="docutils literal notranslate"><span class="pre">mamba</span></code> installed, and you
+want to install in a new directory called “workspace” run:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir workspace
+<span class="nb">cd</span> workspace
+mamba env create -p ASIM-ENV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
+conda activate ./ASIM-DEV
 gh auth login   <span class="c1"># &lt;--- (only needed if gh is not logged in)</span>
 gh repo clone ActivitySim/sharrow
 python -m pip install -e ./sharrow

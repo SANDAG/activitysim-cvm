@@ -1,0 +1,6 @@
+activitysim.configs.Settings.create\_input\_store
+=================================================
+
+.. currentmodule:: activitysim.configs
+
+.. autoattribute:: Settings.create_input_store

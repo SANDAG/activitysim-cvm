@@ -161,13 +161,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-install-the-mtc-test-scale-example">
-   Create / install the MTC test scale example
+  <a class="reference internal nav-link" href="#mtc-test-example">
+   MTC Test Example
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-install-the-mtc-full-scale-example">
-   Create / install the MTC full scale example
+  <a class="reference internal nav-link" href="#mtc-full-example">
+   MTC Full Example
   </a>
  </li>
 </ul>
@@ -197,20 +197,39 @@
 <div class="section" id="getting-the-code">
 <h2>Getting the Code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
 <p>We’ll assume that activitysim and sharrow have been installed in editable
-mode, per the [developer install instructions](Developer Installation).</p>
+mode, per the <a class="reference internal" href="install.html"><span class="doc std std-doc">developer install instructions</span></a>.</p>
 <p>The code to implement <code class="docutils literal notranslate"><span class="pre">sharrow</span></code> in <code class="docutils literal notranslate"><span class="pre">activitysim</span></code> is in pull request
-(#542)[https://github.com/ActivitySim/activitysim/pull/542]</p>
+<a class="reference external" href="https://github.com/ActivitySim/activitysim/pull/542">#542</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> activitysim
+gh pr checkout <span class="m">542</span>
+<span class="nb">cd</span> ..
+</pre></div>
 </div>
-<div class="section" id="create-install-the-mtc-test-scale-example">
-<h2>Create / install the MTC test scale example<a class="headerlink" href="#create-install-the-mtc-test-scale-example" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="mtc-test-example">
+<h2>MTC Test Example<a class="headerlink" href="#mtc-test-example" title="Permalink to this headline">¶</a></h2>
 <p>Testing with sharrow requires two steps: test mode and production mode.</p>
 <p>In test mode, the code is run to compile all the spec files and
 ascertain whether the functions are working correctly.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim create -e example_mtc -d example_mtc_mini
+<span class="nb">cd</span> example_mtc_mini
+activitysim run -c configs_sh_compile -c configs -d data -o output
+</pre></div>
 </div>
-<div class="section" id="create-install-the-mtc-full-scale-example">
-<h2>Create / install the MTC full scale example<a class="headerlink" href="#create-install-the-mtc-full-scale-example" title="Permalink to this headline">¶</a></h2>
+<p>The same code can then be run without the compile/test flags.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim run -c configs_sh -c configs -d data -o output
+</pre></div>
+</div>
+</div>
+<div class="section" id="mtc-full-example">
+<h2>MTC Full Example<a class="headerlink" href="#mtc-full-example" title="Permalink to this headline">¶</a></h2>
 <p>Running the bigger models with sharrow now requires three steps:
 compiling, chunk training, and production.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim create -e example_mtc -d example_mtc_full
+<span class="nb">cd</span> example_mtc_full
+activitysim run -c configs_sh_compile -c configs -d data -o output
+</pre></div>
+</div>
 <p>Then go into <code class="docutils literal notranslate"><span class="pre">configs_chunktrain/settings.yaml</span></code> and adjust chunk sizes, processors, etc.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>households_sample_size: 40000
 chunk_size: 40_000_000_000
@@ -218,7 +237,13 @@ num_processes: 8
 </pre></div>
 </div>
 <p>before then running the training cycle:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim run -c configs_sh -c configs_chunktrain -c configs -d data -o output
+</pre></div>
+</div>
 <p>Lastly, do the same for the production cycle:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim run -c configs_sh -c configs_production -c configs -d data -o output
+</pre></div>
+</div>
 </div>
 </div>
 

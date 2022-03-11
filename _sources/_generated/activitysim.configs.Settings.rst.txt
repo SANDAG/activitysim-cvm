@@ -1,0 +1,25 @@
+﻿activitysim.configs.Settings
+============================
+
+.. currentmodule:: activitysim.configs
+
+.. autoclass:: Settings
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree: _generated
+      :template: configsetting.rst
+   
+      ~Settings.check_for_variability
+      ~Settings.chunk_size
+      ~Settings.create_input_store
+      ~Settings.households_sample_size
+      ~Settings.input_table_list
+      ~Settings.models
+      ~Settings.resume_after
+      ~Settings.use_shadow_pricing
+   
+   

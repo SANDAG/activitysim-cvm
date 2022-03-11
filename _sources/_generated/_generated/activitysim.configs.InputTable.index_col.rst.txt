@@ -1,0 +1,6 @@
+activitysim.configs.InputTable.index\_col
+=========================================
+
+.. currentmodule:: activitysim.configs
+
+.. autoattribute:: InputTable.index_col
