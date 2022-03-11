@@ -18,7 +18,7 @@ gh pr checkout 542
 cd ..
 ```
 
-## Create / install the MTC test scale example
+## MTC Test Example
 
 Testing with sharrow requires two steps: test mode and production mode.
 
@@ -26,18 +26,20 @@ In test mode, the code is run to compile all the spec files and
 ascertain whether the functions are working correctly.
 
 ```sh
-
-SET MKL_NUM_THREADS=1
-
-
-
 activitysim create -e example_mtc -d example_mtc_mini
 cd example_mtc_mini
 activitysim run -c configs_sh_compile -c configs -d data -o output
 ```
 
+The same code can then be run without the compile/test flags.
 
-## Create / install the MTC full scale example
+```sh
+activitysim run -c configs_sh -c configs -d data -o output
+```
+
+
+
+## MTC Full Example
 
 Running the bigger models with sharrow now requires three steps: 
 compiling, chunk training, and production.
