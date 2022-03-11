@@ -25,6 +25,7 @@ Contents
    :maxdepth: 3
 
    gettingstarted
+   configs
    examples
    cli
    estimation
