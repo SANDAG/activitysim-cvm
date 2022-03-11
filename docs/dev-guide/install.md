@@ -1,4 +1,4 @@
-
+(developer-installation)=
 # Developer Installation
 
 Installing ActivitySim as a developer is almost as easy as just using it,
@@ -31,13 +31,14 @@ Jupyter Notebook/Lab/Etc.
 ## Environment
 
 It's convenient to start from a completely clean conda environment 
-and git repository.  Assuming you have `mamba` installed, you can do so 
-by starting where ActivitySim is not yet cloned (e.g. in an empty 
-directory) and running:
+and git repository. Assuming you have `mamba` installed, and you
+want to install in a new directory called "workspace" run:
 
 ```sh
-mamba env create -n ASIM-DEV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
-conda activate ASIM-DEV
+mkdir workspace
+cd workspace
+mamba env create -p ASIM-ENV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
+conda activate ./ASIM-DEV
 gh auth login   # <--- (only needed if gh is not logged in)
 gh repo clone ActivitySim/sharrow
 python -m pip install -e ./sharrow
