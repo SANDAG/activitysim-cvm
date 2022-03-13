@@ -69,3 +69,19 @@ Lastly, do the same for the production cycle:
 activitysim run -c configs_sh -c configs_production -c configs -d data -o output
 ```
 
+
+
+## ARC Test Example
+
+```sh
+activitysim create -e example_arc -d example_arc_mini
+cd example_arc_mini
+activitysim run -c configs_sh_compile -c configs -d data -o output
+```
+
+The same code can then be run without the compile/test flags.
+
+```sh
+activitysim run -c configs_sh -c configs -d data -o output
+```
+

@@ -170,6 +170,11 @@
    MTC Full Example
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#arc-test-example">
+   ARC Test Example
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -242,6 +247,18 @@ num_processes: 8
 </div>
 <p>Lastly, do the same for the production cycle:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim run -c configs_sh -c configs_production -c configs -d data -o output
+</pre></div>
+</div>
+</div>
+<div class="section" id="arc-test-example">
+<h2>ARC Test Example<a class="headerlink" href="#arc-test-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim create -e example_arc -d example_arc_mini
+<span class="nb">cd</span> example_arc_mini
+activitysim run -c configs_sh_compile -c configs -d data -o output
+</pre></div>
+</div>
+<p>The same code can then be run without the compile/test flags.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim run -c configs_sh -c configs -d data -o output
 </pre></div>
 </div>
 </div>
