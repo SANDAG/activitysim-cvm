@@ -40,7 +40,7 @@ Running the bigger models with sharrow now requires three steps:
 compiling, chunk training, and production.
 
 ```sh
-activitysim create -e example_mtc -d example_mtc_full
+activitysim create -e example_mtc_full -d example_mtc_full
 cd example_mtc_full
 activitysim run -c configs_sh_compile -c configs -d data -o output
 ```
