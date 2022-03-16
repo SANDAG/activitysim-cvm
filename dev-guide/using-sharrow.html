@@ -215,14 +215,11 @@ gh pr checkout <span class="m">542</span>
 <h2>MTC Test Example<a class="headerlink" href="#mtc-test-example" title="Permalink to this headline">¶</a></h2>
 <p>Testing with sharrow requires two steps: test mode and production mode.</p>
 <p>In test mode, the code is run to compile all the spec files and
-ascertain whether the functions are working correctly.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim create -e example_mtc -d example_mtc_mini
-<span class="nb">cd</span> example_mtc_mini
-activitysim run -c configs_sh_compile -c configs -d data -o output
-</pre></div>
-</div>
-<p>The same code can then be run without the compile/test flags.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim run -c configs_sh -c configs -d data -o output
+ascertain whether the functions are working correctly.  Production mode
+can then just run the pre-compiled functions with sharrow, which is much
+faster.</p>
+<p>You can run both, plus the legacy ActivitySim, all together in one workflow:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim workflow example_runner example_mtc
 </pre></div>
 </div>
 </div>
