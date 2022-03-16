@@ -23,20 +23,15 @@ cd ..
 Testing with sharrow requires two steps: test mode and production mode.
 
 In test mode, the code is run to compile all the spec files and 
-ascertain whether the functions are working correctly.
+ascertain whether the functions are working correctly.  Production mode
+can then just run the pre-compiled functions with sharrow, which is much 
+faster.
+
+You can run both, plus the legacy ActivitySim, all together in one workflow:
 
 ```sh
-activitysim create -e example_mtc -d example_mtc_mini
-cd example_mtc_mini
-activitysim run -c configs_sh_compile -c configs -d data -o output
+activitysim workflow example_runner example_mtc
 ```
-
-The same code can then be run without the compile/test flags.
-
-```sh
-activitysim run -c configs_sh -c configs -d data -o output
-```
-
 
 
 ## MTC Full Example
