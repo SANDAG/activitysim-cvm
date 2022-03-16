@@ -26,6 +26,7 @@ dependencies:
 - jupyter-book
 - numpydoc
 - myst-parser
+- sphinx-argparse
 
 - pip:
   - -e ..
