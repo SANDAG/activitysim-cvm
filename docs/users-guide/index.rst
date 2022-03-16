@@ -24,11 +24,12 @@ Contents
 .. toctree::
    :maxdepth: 3
 
-   gettingstarted
-   configs
-   examples
-   cli
-   estimation
-   howitworks
+   ../gettingstarted
+   cli-tools
+   ../configs
+   ../examples
+   ../cli
+   ../estimation
+   ../howitworks
 
 

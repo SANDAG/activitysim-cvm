@@ -16,7 +16,7 @@ the development and management of the ActivitySim is on the `project site <http:
 .. toctree::
    :maxdepth: 1
 
-   users
+   users-guide/index
    dev-guide/index
 
 

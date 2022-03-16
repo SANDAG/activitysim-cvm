@@ -27,37 +27,42 @@ def add_run_args(parser, multiprocess=True):
     parser.add_argument('-w', '--working_dir',
                         type=str,
                         metavar='PATH',
-                        help='path to example/project directory (default: %s)' % os.getcwd())
+                        help='Path to example/project directory (defaults to the current working directory).')
     parser.add_argument('-c', '--config',
                         type=str,
                         action='append',
                         metavar='PATH',
-                        help='path to config dir')
+                        help='Relative path from the project directory to config dir. '
+                             'If none is given, this is assumed to be `config`. '
+                             'It is valid and often appropriate to provide more than one '
+                             '-c option, which will allow for cascading settings.')
     parser.add_argument('-o', '--output',
                         type=str,
                         metavar='PATH',
-                        help='path to output dir')
+                        help='Relative path from the project directory to the output directory. '
+                             'There can be only one output directory.')
     parser.add_argument('-d', '--data',
                         type=str,
                         action='append',
                         metavar='PATH',
-                        help='path to data dir')
+                        help='Relative path from the project directory to the data directory. '
+                             'There can be only one data directory.')
     parser.add_argument('-r', '--resume',
                         type=str,
                         metavar='STEPNAME',
-                        help='resume after step')
+                        help='Resume after this step.')
     parser.add_argument('-p', '--pipeline',
                         type=str,
                         metavar='FILE',
-                        help='pipeline file name')
+                        help='Pipeline file name.')
     parser.add_argument('-s', '--settings_file',
                         type=str,
                         metavar='FILE',
-                        help='settings file name')
+                        help='Settings file name.')
     parser.add_argument('-g', '--chunk_size',
                         type=int,
                         metavar='BYTES',
-                        help='chunk size')
+                        help='Chunk size in bytes.')
 
     if multiprocess:
         parser.add_argument('-m', '--multiprocess',
@@ -66,7 +71,7 @@ def add_run_args(parser, multiprocess=True):
                             metavar='(N)',
                             nargs='?',
                             type=int,
-                            help='run multiprocess. Adds configs_mp settings'
+                            help='Run multiprocess. Activating this also adds configs_mp settings'
                                  ' by default. Optionally give a number of processes,'
                                  ' which will override the settings file.')
 

@@ -38,6 +38,7 @@ extensions = [
     'numpydoc',
     'sphinx.ext.autosummary',
     'myst_parser',
+    'sphinxarg.ext',
 ]
 
 numpydoc_show_class_members = False
