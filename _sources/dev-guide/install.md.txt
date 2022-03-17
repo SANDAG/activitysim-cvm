@@ -15,7 +15,14 @@ container like docker, instructions for that are coming soon.
 
 Note that if you are installing `mamba`, you only should install `mamba` 
 in the *base* environment. If you install `mamba` itself in other environments, 
-it will not function correctly.
+it will not function correctly.  If you've got an existing conda installation
+and you want to install mamba into it, you can install mamba into the *base* 
+environment like this:
+
+```sh
+conda update conda -n base
+conda install -n base -c conda-forge mamba
+```
 
 While you are at it, if you are a Jupyter user you might want to also install 
 `nb_conda_kernels` in your base conda environment alongside any other `jupyter` 

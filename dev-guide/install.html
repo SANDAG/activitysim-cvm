@@ -200,7 +200,13 @@ Depending on your security settings, you might need to install in a
 container like docker, instructions for that are coming soon.</p>
 <p>Note that if you are installing <code class="docutils literal notranslate"><span class="pre">mamba</span></code>, you only should install <code class="docutils literal notranslate"><span class="pre">mamba</span></code>
 in the <em>base</em> environment. If you install <code class="docutils literal notranslate"><span class="pre">mamba</span></code> itself in other environments,
-it will not function correctly.</p>
+it will not function correctly.  If you’ve got an existing conda installation
+and you want to install mamba into it, you can install mamba into the <em>base</em>
+environment like this:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda update conda -n base
+conda install -n base -c conda-forge mamba
+</pre></div>
+</div>
 <p>While you are at it, if you are a Jupyter user you might want to also install
 <code class="docutils literal notranslate"><span class="pre">nb_conda_kernels</span></code> in your base conda environment alongside any other <code class="docutils literal notranslate"><span class="pre">jupyter</span></code>
 libraries:</p>
