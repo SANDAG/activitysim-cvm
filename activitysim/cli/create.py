@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import requests
@@ -6,6 +7,7 @@ import glob
 import pkg_resources
 import yaml
 import hashlib
+from pathlib import Path
 
 PACKAGE = 'activitysim'
 EXAMPLES_DIR = 'examples'
@@ -48,6 +50,10 @@ def add_create_args(parser):
                         default=os.getcwd(),
                         help="path to new project directory (default: %(default)s)")
 
+    parser.add_argument('--link',
+                        action='store_true',
+                        help="cache and reuse downloaded files via symlinking")
+
 
 def create(args):
     """
@@ -64,8 +70,11 @@ def create(args):
         sys.exit(0)
 
     if args.example:
-
-        get_example(args.example, args.destination)
+        try:
+            get_example(args.example, args.destination, link=args.link)
+        except Exception:
+            logging.getLogger().exception("failure in activitysim create")
+            sys.exit(101)
         sys.exit(0)
 
 
@@ -81,7 +90,7 @@ def list_examples():
     return ret
 
 
-def get_example(example_name, destination, benchmarking=False, optimize=True):
+def get_example(example_name, destination, benchmarking=False, optimize=True, link=True):
     """
     Copy project data to user-specified directory.
 
@@ -89,8 +98,6 @@ def get_example(example_name, destination, benchmarking=False, optimize=True):
     YAML file. Each example contains at least a `name` and
     `include` field which is a list of files/folders to include
     in the copied example.
-
-
 
     Parameters
     ----------
@@ -103,6 +110,12 @@ def get_example(example_name, destination, benchmarking=False, optimize=True):
         as the example
     benchmarking: bool
     optimize: bool
+    link: bool or path-like
+        Files downloaded via http pointers will be cached in
+        this location.  If a path is not given but just a truthy
+        value, then a cache directory is created using in a location
+        selected by the appdirs library (or, if not installed,
+        linking is skipped.)
     """
     if example_name not in EXAMPLES:
         sys.exit(f"error: could not find example '{example_name}'")
@@ -133,7 +146,7 @@ def get_example(example_name, destination, benchmarking=False, optimize=True):
             sha256 = None
 
         if assets.startswith('http'):
-            download_asset(assets, target_path, sha256)
+            download_asset(assets, target_path, sha256, link=link)
 
         else:
             for asset_path in glob.glob(_example_path(assets)):
@@ -172,41 +185,69 @@ def copy_asset(asset_path, target_path, dirs_exist_ok=False):
         shutil.copy(asset_path, target_path)
 
 
-def download_asset(url, target_path, sha256=None):
+def download_asset(url, target_path, sha256=None, link=True):
+    if link:
+        if not isinstance(link, (str, Path)):
+            try:
+                import appdirs
+            except ImportError:
+                link = False
+            else:
+                link = appdirs.user_data_dir("ActivitySim")
+        original_target_path = target_path
+        target_path = os.path.join(link, target_path)
     os.makedirs(os.path.dirname(target_path), exist_ok=True)
     if url.endswith(".gz") and not target_path.endswith(".gz"):
         target_path_dl = target_path + ".gz"
     else:
         target_path_dl = target_path
+    download = True
     if sha256 and os.path.isfile(target_path):
         computed_sha256 = sha256_checksum(target_path)
         if sha256 == computed_sha256:
             print(f'not re-downloading existing {os.path.basename(target_path)} ...')
-            return
+            download = False
         else:
             print(f're-downloading existing {os.path.basename(target_path)} ...')
             print(f'   expected checksum {sha256}')
             print(f'   computed checksum {computed_sha256}')
     else:
         print(f'downloading {os.path.basename(target_path)} ...')
-    with requests.get(url, stream=True) as r:
-        r.raise_for_status()
-        with open(target_path_dl, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=None):
-                f.write(chunk)
-    if target_path_dl != target_path:
-        import gzip
-        with gzip.open(target_path_dl, 'rb') as f_in:
-            with open(target_path, 'wb') as f_out:
-                shutil.copyfileobj(f_in, f_out)
-        os.remove(target_path_dl)
-    computed_sha256 = sha256_checksum(target_path)
-    if sha256 and sha256 != computed_sha256:
-        raise ValueError(
-            f"downloaded {os.path.basename(target_path)} has incorrect checksum\n"
-            f"   expected checksum {sha256}\n"
-            f"   computed checksum {computed_sha256}"
+    if download:
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(target_path_dl, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=None):
+                    f.write(chunk)
+        if target_path_dl != target_path:
+            import gzip
+            with gzip.open(target_path_dl, 'rb') as f_in:
+                with open(target_path, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+            os.remove(target_path_dl)
+        computed_sha256 = sha256_checksum(target_path)
+        if sha256 and sha256 != computed_sha256:
+            raise ValueError(
+                f"downloaded {os.path.basename(target_path)} has incorrect checksum\n"
+                f"   expected checksum {sha256}\n"
+                f"   computed checksum {computed_sha256}"
+            )
+    if link:
+        os.makedirs(
+            os.path.dirname(os.path.normpath(original_target_path)),
+            exist_ok=True,
         )
+        try:
+            os.symlink(
+                os.path.normpath(target_path),
+                os.path.normpath(original_target_path),
+            )
+        except OSError:
+            # permission errors likely foil symlinking on windows
+            shutil.copy(
+                os.path.normpath(target_path),
+                os.path.normpath(original_target_path),
+            )
 
 
 def sha256_checksum(filename, block_size=65536):
