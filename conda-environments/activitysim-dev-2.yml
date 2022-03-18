@@ -21,6 +21,7 @@ dependencies:
   - matplotlib
   - myst-parser  # allows markdown in sphinx
   - numba >=0.51.2
+  - numexpr
   - numpy >=1.16.1,<=1.21
   - numpydoc
   - openmatrix >=0.3.4.1
@@ -30,6 +31,7 @@ dependencies:
   - psutil >=4.1
   - pyarrow >=2.0
   - pycodestyle
+  - pypyr
   - pytables >=3.5.1,<3.7
   - pytest
   - pytest-cov
@@ -40,3 +42,4 @@ dependencies:
   - sphinx_rtd_theme
   - pydata-sphinx-theme
   - sphinx-argparse
+  - xarray >= 0.21
