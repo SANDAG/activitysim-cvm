@@ -22,9 +22,9 @@ multiprocess: True
 strict: False
 use_shadow_pricing: False
 
-households_sample_size: 0
+households_sample_size: 20000
 chunk_size: 0
-num_processes: 2
+num_processes: 5
 
 # - -------------------------
 

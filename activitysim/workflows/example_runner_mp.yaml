@@ -1,0 +1,143 @@
+context_parser: pypyr.parser.keyvaluepairs
+steps:
+
+- description: Default to testing example_mtc if no other example is named
+  name: pypyr.steps.default
+  in:
+    defaults:
+      example_name: example_mtc_full
+      workspace: workspace
+      legacy: True
+      tag:
+
+- description: Make {workspace} directory if it does not exist
+  name: pypyr.steps.py
+  in:
+    py: |
+      import os
+      os.makedirs(f"{workspace}", exist_ok=True)
+      os.makedirs(f"{workspace}/{example_name}/configs_local_mp", exist_ok=True)
+
+#- pypyr.steps.debug
+
+- description: Generate a tag based on datetime if tag is not given
+  name: pypyr.steps.py
+  in:
+    py: |
+      import time
+      if tag is None:
+        tag = time.strftime("%Y-%m-%d-%H%M%S")
+      save(tag=tag)
+
+#- pypyr.steps.debug
+
+- description: Create (download as needed) the example to be tested
+  name: activitysim.workflows.cmd
+  in:
+    cmd:
+      run: activitysim create -e {example_name} -d .
+      cwd: "{workspace}"
+
+- description: Make archive directory for this tag
+  name: pypyr.steps.py
+  in:
+    py: |
+      import os
+      from pathlib import Path
+      archive_dir = f"{workspace}/{example_name}/archive-{tag}"
+      os.makedirs(archive_dir)
+      save(archive_dir=archive_dir)
+
+- description: write.configs_sh_compile
+  name: pypyr.steps.filewriteyaml
+  in:
+    fileWriteYaml:
+      path: "{workspace}/{example_name}/configs_sh_compile/settings.yaml"
+      payload:
+        inherit_settings: True
+        sharrow: test
+        chunk_training_mode: disabled
+        households_sample_size: 100
+
+- description: write.configs_local_mp
+  name: pypyr.steps.filewriteyaml
+  in:
+    fileWriteYaml:
+      path: "{workspace}/{example_name}/configs_local_mp/settings.yaml"
+      payload:
+        inherit_settings: True
+        chunk_training_mode: disabled
+        households_sample_size: 30000
+        chunk_size: 0
+        num_processes: 5
+
+- description: Run activitysim to compile and test sharrow-enabled model
+  name: activitysim.workflows.cmd
+  in:
+    cmd:
+      run: activitysim run -c configs_sh_compile -c configs -d data -o output
+      cwd: "{workspace}/{example_name}"
+
+- description: Archive outputs of compile
+  name: activitysim.workflows.archive_outputs
+  in:
+    source: "output"
+    destination: "{archive_dir}/output-sh-compile"
+
+- description: write.configs_sh
+  name: pypyr.steps.filewriteyaml
+  in:
+    fileWriteYaml:
+      path: "{workspace}/{example_name}/configs_sh/settings.yaml"
+      payload:
+        inherit_settings: True
+        sharrow: require
+
+- description: Run activitysim to evaluate sharrow-enabled model
+  name: activitysim.workflows.cmd
+  in:
+    cmd:
+      run: activitysim run -c configs_sh -c configs_local_mp -c configs_mp -c configs -d data -o output
+      cwd: "{workspace}/{example_name}"
+
+- description: Archive outputs of sharrow run
+  name: activitysim.workflows.archive_outputs
+  in:
+    source: "output"
+    destination: "{archive_dir}/output-sh-mp"
+
+- description: Run activitysim to evaluate legacy model
+  name: activitysim.workflows.cmd
+  run: '{legacy}'
+  in:
+    cmd:
+      run: activitysim run -c configs_local_mp -c configs_mp -c configs -d data -o output
+      cwd: "{workspace}/{example_name}"
+
+- description: Archive outputs of legacy run
+  name: activitysim.workflows.archive_outputs
+  run: '{legacy}'
+  in:
+    source: "output"
+    destination: "{archive_dir}/output-legacy-mp"
+
+
+
+- description: Generate composite timing log
+  name: pypyr.steps.py
+  run: False
+  in:
+    py: |
+      import pandas as pd
+      timings = {}
+      for t in ['sh-compile', 'sh', 'legacy']:
+        df = pd.read_csv(f"{workspace}/{example_name}/{archive_dir}/output-{t}/log/timing_log.csv")
+        timings[t] = df.set_index("model_name")['seconds']
+      composite_timing = pd.concat(timings, axis=1)
+      composite_timing.to_csv(f"{workspace}/{example_name}/{archive_dir}/combined_timing_log-{tag}.csv")
+      mems = {}
+      for t in ['sh-compile', 'sh', 'legacy']:
+          df = pd.read_csv(f"{workspace}/{example_name}/{archive_dir}/output-{t}/log/mem.csv")
+          mems[t] = df.set_index('event')[['rss', 'full_rss', 'uss']]
+      composite_mem = pd.concat(mems, axis=1)
+      composite_mem.to_csv(f"{workspace}/{example_name}/{archive_dir}/combined_mem_log-{tag}.csv")
