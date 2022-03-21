@@ -39,6 +39,7 @@ dependencies:
   - pyyaml >=5.1
   - requests >=2.7
   - rich
+  - simwrapper >=1.7
   - sphinx
   - sphinx_rtd_theme
   - pydata-sphinx-theme

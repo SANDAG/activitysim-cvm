@@ -39,5 +39,6 @@ setup(
         'numba >= 0.51.2',
         'orca >= 1.6',
         'cfgy',
+        'simwrapper >= 1.7',
     ]
 )

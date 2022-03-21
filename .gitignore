@@ -74,3 +74,4 @@ _test_est
 *_local.*
 
 **/output/
+docs/_generated
