@@ -116,7 +116,7 @@ def eval_interaction_utilities(spec, df, locals_d, trace_label, trace_rows, esti
                     spec.iloc[n, 0] = 0.0
 
             for i1, i2 in zip(exprs, labels):
-                logger.info(f"        - expr: {i1}: {i2}")
+                logger.debug(f"        - expr: {i1}: {i2}")
 
             timelogger.mark("sharrow preamble", True, logger, trace_label)
 
@@ -317,7 +317,7 @@ def eval_interaction_utilities(spec, df, locals_d, trace_label, trace_rows, esti
                 trace_eval_results = pd.concat([
                     sh_utility_fat,
                     sh_utility_fat_coef,
-                    utilities.utility[trace_rows].rename('total utility'),
+                    utilities.utility[trace_rows].rename('total utility').to_frame().set_index(sh_utility_fat.index),
                 ], axis=1)
                 trace_eval_results.index = df[trace_rows].index
                 chunk.log_df(trace_label, 'eval.trace_eval_results', trace_eval_results)

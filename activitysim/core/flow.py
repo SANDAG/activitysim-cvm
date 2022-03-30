@@ -22,6 +22,7 @@ except ModuleNotFoundError:
 from .simulate_consts import SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME
 from . import inject, config
 from .. import __version__
+from ..core import tracing
 
 logger = logging.getLogger(__name__)
 
@@ -113,10 +114,12 @@ def get_flow(spec, local_d, trace_label=None, choosers=None, interacts=None):
     orig_col_name = local_d.get('orig_col_name', None)
     dest_col_name = local_d.get('dest_col_name', None)
     stop_col_name = None
+    parking_col_name = None
     timeframe = local_d.get('timeframe', 'tour')
     if timeframe == 'trip':
         orig_col_name = local_d.get('ORIGIN', orig_col_name)
         dest_col_name = local_d.get('DESTINATION', dest_col_name)
+        parking_col_name = local_d.get('PARKING', parking_col_name)
         if orig_col_name is None and 'od_skims' in local_d:
             orig_col_name = local_d['od_skims'].orig_key
         if dest_col_name is None and 'od_skims' in local_d:
@@ -133,6 +136,7 @@ def get_flow(spec, local_d, trace_label=None, choosers=None, interacts=None):
         timeframe=timeframe,
         choosers=choosers,
         stop_col_name=stop_col_name,
+        parking_col_name=parking_col_name,
         size_term_mapping=size_term_mapping,
         interacts=interacts,
     )
@@ -178,14 +182,14 @@ def skim_dataset():
     omx_file_paths = config.expand_input_file_list(
         network_los_preload.omx_file_names(skim_tag),
     )
-    zarr_file = config.data_file_path(
-        network_los_preload.zarr_file_name(skim_tag),
-        mandatory=False,
-        allow_glob=False,
-    )
+    zarr_file = network_los_preload.zarr_file_name(skim_tag)
+    if zarr_file is not None:
+        zarr_file = os.path.join(config.get_cache_dir(), zarr_file)
+
     max_float_precision = network_los_preload.skim_max_float_precision(skim_tag)
 
     skim_digital_encoding = network_los_preload.skim_digital_encoding(skim_tag)
+    zarr_digital_encoding = network_los_preload.zarr_pre_encoding(skim_tag)
 
     # The backing can be plain shared_memory, or a memmap
     backing = network_los_preload.skim_backing_store(skim_tag)
@@ -234,24 +238,50 @@ def skim_dataset():
             if zarr_file and os.path.exists(zarr_file):
                 # load skims from zarr.zip
                 logger.info(f"found zarr skims, loading them")
-                d = sh.dataset.from_zarr(zarr_file).max_float_precision(max_float_precision)
+                d = sh.dataset.from_zarr_with_attr(zarr_file).max_float_precision(max_float_precision)
             else:
+                if zarr_file:
+                    logger.info(f"did not find zarr skims, loading omx")
                 d = sh.dataset.from_omx_3d(
-                    [openmatrix.open_file(f) for f in omx_file_paths],
+                    [openmatrix.open_file(f, mode='r') for f in omx_file_paths],
                     time_periods=time_periods,
                     max_float_precision=max_float_precision,
                 )
                 if zarr_file:
+                    if zarr_digital_encoding:
+                        import zarr # ensure zarr is available before we do all this work.
+                        # apply once, before saving to zarr, will stick around in cache
+                        for encoding in zarr_digital_encoding:
+                            logger.info(f"applying zarr digital-encoding: {encoding}")
+                            regex = encoding.pop('regex', None)
+                            joint_dict = encoding.pop('joint_dict', None)
+                            if joint_dict:
+                                joins = []
+                                for k in d.variables:
+                                    if re.match(regex, k):
+                                        joins.append(k)
+                                d = d.digital_encoding.set(joins, joint_dict=joint_dict, **encoding)
+                            elif regex:
+                                if 'name' in encoding:
+                                    raise ValueError("cannot give both name and regex for digital_encoding")
+                                for k in d.variables:
+                                    if re.match(regex, k):
+                                        d = d.digital_encoding.set(k, **encoding)
+                            else:
+                                d = d.digital_encoding.set(**encoding)
+
                     logger.info(f"writing zarr skims to {zarr_file}")
                     # save skims to zarr
                     try:
-                        d.to_zarr(zarr_file)
+                        d.to_zarr_with_attr(zarr_file)
                     except ModuleNotFoundError:
                         logger.warning("the 'zarr' package is not installed")
             logger.info(f"scanning for unused skims")
             tokens = set(d.variables.keys()) - set(d.coords.keys())
             unused_tokens = scan_for_unused_names(tokens)
             if unused_tokens:
+                baggage = d.digital_encoding.baggage(None)
+                unused_tokens -= baggage
                 logger.info(f"dropping unused skims: {unused_tokens}")
                 d = d.drop_vars(unused_tokens)
             else:
@@ -265,9 +295,9 @@ def skim_dataset():
                             raise ValueError("cannot give both name and regex for digital_encoding")
                         for k in d.variables:
                             if re.match(regex, k):
-                                d = d.set_digital_encoding(k, **encoding)
+                                d = d.digital_encoding.set(k, **encoding)
                     else:
-                        d = d.set_digital_encoding(**encoding)
+                        d = d.digital_encoding.set(**encoding)
 
         # check alignment of TAZs that it matches land_use table
         logger.info(f"checking skims alignment with land_use")
@@ -348,13 +378,13 @@ def skim_dataset_dict(skim_dataset):
     return SkimDataset(skim_dataset)
 
 
-def skims_mapping(orig_col_name, dest_col_name, timeframe='tour', stop_col_name=None):
+def skims_mapping(orig_col_name, dest_col_name, timeframe='tour', stop_col_name=None, parking_col_name=None):
     logger.info(f"loading skims_mapping")
     logger.info(f"- orig_col_name: {orig_col_name}")
     logger.info(f"- dest_col_name: {dest_col_name}")
     logger.info(f"- stop_col_name: {stop_col_name}")
     skim_dataset = inject.get_injectable('skim_dataset')
-    if orig_col_name is not None and dest_col_name is not None and stop_col_name is None:
+    if orig_col_name is not None and dest_col_name is not None and stop_col_name is None and parking_col_name is None:
         if timeframe == 'timeless':
             return dict(
                 skims=skim_dataset,
@@ -446,6 +476,46 @@ def skims_mapping(orig_col_name, dest_col_name, timeframe='tour', stop_col_name=
                 f"df.trip_period     -> pdt_skims.time_period",
             ),
         )
+    elif parking_col_name is not None: # parking location
+        return dict(
+            od_skims=skim_dataset,
+            do_skims=skim_dataset,
+            op_skims=skim_dataset,
+            pd_skims=skim_dataset,
+            odt_skims=skim_dataset,
+            dot_skims=skim_dataset,
+            opt_skims=skim_dataset,
+            pdt_skims=skim_dataset,
+            relationships=(
+                f"df._orig_col_name -> od_skims.otaz",
+                f"df._dest_col_name -> od_skims.dtaz",
+
+                f"df._dest_col_name -> do_skims.otaz",
+                f"df._orig_col_name -> do_skims.dtaz",
+
+                f"df._orig_col_name -> op_skims.otaz",
+                f"df._park_col_name -> op_skims.dtaz",
+
+                f"df._park_col_name -> pd_skims.otaz",
+                f"df._dest_col_name -> pd_skims.dtaz",
+
+                f"df._orig_col_name -> odt_skims.otaz",
+                f"df._dest_col_name -> odt_skims.dtaz",
+                f"df.trip_period    -> odt_skims.time_period",
+
+                f"df._dest_col_name -> dot_skims.otaz",
+                f"df._orig_col_name -> dot_skims.dtaz",
+                f"df.trip_period    -> dot_skims.time_period",
+
+                f"df._orig_col_name -> opt_skims.otaz",
+                f"df._park_col_name -> opt_skims.dtaz",
+                f"df.trip_period    -> opt_skims.time_period",
+
+                f"df._park_col_name -> pdt_skims.otaz",
+                f"df._dest_col_name -> pdt_skims.dtaz",
+                f"df.trip_period    -> pdt_skims.time_period",
+            ),
+        )
     else:
         return {}
 
@@ -460,6 +530,7 @@ def new_flow(
         timeframe='tour',
         choosers=None,
         stop_col_name=None,
+        parking_col_name=None,
         size_term_mapping=None,
         interacts=None
 ):
@@ -476,7 +547,7 @@ def new_flow(
         )
         os.makedirs(cache_dir, exist_ok=True)
         logger.debug(f"flow.cache_dir: {cache_dir}")
-        skims_mapping_ = skims_mapping(orig_col_name, dest_col_name, timeframe, stop_col_name)
+        skims_mapping_ = skims_mapping(orig_col_name, dest_col_name, timeframe, stop_col_name, parking_col_name=parking_col_name)
         if size_term_mapping is None:
             size_term_mapping = {}
 
@@ -492,16 +563,8 @@ def new_flow(
                 rename_dataset_cols[dest_col_name] = '_dest_col_name'
             if stop_col_name is not None:
                 rename_dataset_cols[stop_col_name] = '_stop_col_name'
-            # ds = flow_tree.root_dataset.rename(
-            #     rename_dataset_cols
-            # ).ensure_integer(
-            #     ['_orig_col_name', '_dest_col_name', '_stop_col_name']
-            # )
-            # # copy back the names of the renamed dims so they can be used in spec files.
-            # # note this doesn't copy the *data* just makes another named reference to the
-            # # same data.
-            # for _k, _v in rename_dataset_cols.items():
-            #     ds[_k] = ds[_v]
+            if parking_col_name is not None:
+                rename_dataset_cols[parking_col_name] = '_park_col_name'
 
             def _apply_filter(_dataset, renames:dict):
                 ds = _dataset.rename(
@@ -528,12 +591,14 @@ def new_flow(
             }
             if stop_col_name is not None:
                 rename_dataset_cols[stop_col_name] = '_stop_col_name'
+            if parking_col_name is not None:
+                rename_dataset_cols[parking_col_name] = '_park_col_name'
             choosers_ = sh.dataset.construct(
                 choosers
             ).rename_or_ignore(
                 rename_dataset_cols
             ).ensure_integer(
-                ['_orig_col_name', '_dest_col_name', '_stop_col_name']
+                ['_orig_col_name', '_dest_col_name', '_stop_col_name', '_park_col_name']
             )
             for _k, _v in rename_dataset_cols.items():
                 if _v in choosers_:
@@ -660,6 +725,7 @@ def apply_flow(spec, choosers, locals_d=None, trace_label=None, required=False, 
                 flow_result = flow.dot(
                     coefficients=spec.values.astype(np.float32),
                     dtype=np.float32,
+                    compile_watch=True,
                 )
                 # TODO: are there remaining internal arrays in dot that need to be
                 #  passed out to be seen by the dynamic chunker before they are freed?
@@ -675,4 +741,6 @@ def apply_flow(spec, choosers, locals_d=None, trace_label=None, required=False, 
                 # index_keys = self.shared_data.meta_match_names_idx.keys()
                 # logger.debug(f"Flow._get_indexes: {index_keys}")
                 raise
+            if flow.compiled_recently:
+                tracing.timing_notes.add(f"compiled:{flow.name}")
             return flow_result, flow

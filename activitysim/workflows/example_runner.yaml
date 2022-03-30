@@ -3,14 +3,18 @@
 context_parser: pypyr.parser.keyvaluepairs
 steps:
 
-- description: Default to testing example_mtc if no other example is named
+- description: Setting default workflow parameters
   name: pypyr.steps.default
   in:
     defaults:
       example_name: example_mtc
       workspace: workspace
       legacy: True
+      compile: True
+      sharrow: True
       tag:
+      resume_after:
+      fast: False
 
 - name: activitysim.workflows.steps.title
   in:
@@ -30,8 +34,28 @@ steps:
       import time
       if tag is None:
         tag = time.strftime("%Y-%m-%d-%H%M%S")
-        print(f"{tag=}")
+      compile = (compile and sharrow)
+      contrast = (sharrow and legacy)
+      print("==============")
+      print(f"{tag=}")
+      print(f"{resume_after=}")
+      print(f"{fast=}")
+      print(f"{legacy=}")
+      print(f"{compile=}")
+      print(f"{sharrow=}")
+      print(f"{workspace=}")
+      print(f"{example_name=}")
+      print(f"{contrast=}")
+      print("==============")
       save(tag=tag)
+      if resume_after:
+        save(resume=f" -r {resume_after}")
+      else:
+        save(resume="")
+      if fast:
+        save(fastly=f" --fast")
+      else:
+        save(fastly="")
 
 - name: activitysim.workflows.steps.cmd
   in:
@@ -40,20 +64,30 @@ steps:
       run: python -m activitysim create -e {example_name} -d . --link
       cwd: "{workspace}"
 
-- name: pypyr.steps.py
+- name: activitysim.workflows.steps.py
   in:
     label: Make archive directory for this tag
     py: |
       import os
       from pathlib import Path
-      archive_dir = f"{workspace}/{example_name}/archive-{tag}"
-      os.makedirs(archive_dir)
-      os.makedirs(f"{workspace}/{example_name}/output-compile", exist_ok=True)
-      os.makedirs(f"{workspace}/{example_name}/output-compile/log", exist_ok=True)
+      archive_dir = f"{workspace}/{example_name}/output-{tag}"
+      os.makedirs(archive_dir, exist_ok=True)
+      if sharrow:
+        os.makedirs(f"{archive_dir}/output-compile", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-compile/log", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-compile/trace", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-sharrow", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-sharrow/log", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-sharrow/trace", exist_ok=True)
+      if legacy:
+        os.makedirs(f"{archive_dir}/output-legacy", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-legacy/log", exist_ok=True)
+        os.makedirs(f"{archive_dir}/output-legacy/trace", exist_ok=True)
       save(archive_dir=archive_dir, archive_base=os.path.basename(archive_dir))
 
-- description: write.configs_sh_compile
+- description: "write.configs_sh_compile, {sharrow} and {compile}"
   name: pypyr.steps.filewriteyaml
+  run: '{compile}'
   in:
     fileWriteYaml:
       path: "{workspace}/{example_name}/configs_sh_compile/settings.yaml"
@@ -61,7 +95,7 @@ steps:
         inherit_settings: True
         sharrow: test
         chunk_training_mode: disabled
-        households_sample_size: 100
+        households_sample_size: 10000
 
 - name: activitysim.workflows.steps.update_yaml
   in:
@@ -69,23 +103,27 @@ steps:
       path: "{workspace}/{example_name}/configs/settings.yaml"
       payload:
         cache_dir: cache
+        households_sample_size: 100000
 
 - description: Run activitysim to compile and test sharrow-enabled model
   name: activitysim.workflows.steps.cmd
+  run: '{compile}'
   in:
     cmd:
-      run: python -m activitysim run -c configs_sh_compile -c configs -d data -o output-compile
+      run: "python -m activitysim run -c configs_sh_compile -c configs -d data -o output-{tag}/output-compile {resume} {fastly}"
       cwd: "{workspace}/{example_name}"
       label: "{example_name} -- sharrow compile"
 
-- description: Archive outputs of compile
-  name: activitysim.workflows.steps.archive_outputs
-  in:
-    source: "output-compile"
-    destination: "{archive_base}/output-sh-compile"
+#- description: Archive outputs of compile
+#  name: activitysim.workflows.steps.archive_outputs
+#  run: '{sharrow}'
+#  in:
+#    source: "output-compile"
+#    destination: "{archive_base}/output-sh-compile"
 
 - description: write.configs_sh
   name: pypyr.steps.filewriteyaml
+  run: '{sharrow}'
   in:
     fileWriteYaml:
       path: "{workspace}/{example_name}/configs_sh/settings.yaml"
@@ -95,33 +133,46 @@ steps:
 
 - description: Run activitysim to evaluate sharrow-enabled model
   name: activitysim.workflows.steps.cmd
+  run: '{sharrow}'
   in:
     cmd:
-      run: python -m activitysim run -c configs_sh -c configs -d data -o output
+      run: "python -m activitysim run -c configs_sh -c configs -d data -o output-{tag}/output-sharrow {resume} {fastly}"
       cwd: "{workspace}/{example_name}"
       label: "{example_name} -- sharrow run"
 
-- description: Archive outputs of sharrow run
-  name: activitysim.workflows.steps.archive_outputs
+#- description: Archive outputs of sharrow run
+#  name: activitysim.workflows.steps.archive_outputs
+#  run: '{sharrow}'
+#  in:
+#    source: "output"
+#    destination: "{archive_base}/output-sh"
+
+- description: write.configs_sh
+  name: pypyr.steps.filewriteyaml
+  run: '{legacy}'
   in:
-    source: "output"
-    destination: "{archive_base}/output-sh"
+    fileWriteYaml:
+      path: "{workspace}/{example_name}/configs_legacy/settings.yaml"
+      payload:
+        inherit_settings: True
+        recode_pipeline_columns: False
+        offset_preprocessing: False
 
 - description: Run activitysim to evaluate legacy model
   name: activitysim.workflows.steps.cmd
   run: '{legacy}'
   in:
     cmd:
-      run: python -m activitysim run -c configs -d data -o output
+      run: "python -m activitysim run -c configs_legacy -c configs -d data -o output-{tag}/output-legacy {resume} {fastly}"
       cwd: "{workspace}/{example_name}"
       label: "{example_name} -- legacy run"
 
-- description: Archive outputs of legacy run
-  name: activitysim.workflows.steps.archive_outputs
-  run: '{legacy}'
-  in:
-    source: "output"
-    destination: "{archive_base}/output-legacy"
+#- description: Archive outputs of legacy run
+#  name: activitysim.workflows.steps.archive_outputs
+#  run: '{legacy}'
+#  in:
+#    source: "output"
+#    destination: "{archive_base}/output-legacy"
 
 - name: activitysim.workflows.steps.py
   in:
@@ -129,14 +180,40 @@ steps:
     py: |
       import pandas as pd
       timings = {}
-      for t in ['sh-compile', 'sh', 'legacy']:
-        df = pd.read_csv(f"{workspace}/{example_name}/{archive_base}/output-{t}/log/timing_log.csv")
-        timings[t] = df.set_index("model_name")['seconds']
+      compares = []
+      if sharrow:
+        compares.extend(['compile', 'sharrow'])
+      if legacy:
+        compares.append('legacy')
+      for t in compares:
+        df = pd.read_csv(f"{archive_dir}/output-{t}/log/timing_log.csv")
+        df = df.set_index("model_name")['seconds']
+        timings[t] = df.loc[~df.index.duplicated()]
       composite_timing = pd.concat(timings, axis=1)
-      composite_timing.to_csv(f"{workspace}/{example_name}/{archive_base}/combined_timing_log-{tag}.csv")
+      composite_timing.to_csv(f"{archive_dir}/combined_timing_log-{tag}.csv")
       mems = {}
-      for t in ['sh-compile', 'sh', 'legacy']:
-          df = pd.read_csv(f"{workspace}/{example_name}/{archive_base}/output-{t}/log/mem.csv")
-          mems[t] = df.set_index('event')[['rss', 'full_rss', 'uss']]
+      for t in compares:
+        df = pd.read_csv(f"{archive_dir}/output-{t}/log/mem.csv")
+        df = df.set_index('event')[['rss', 'full_rss', 'uss']]
+        mems[t] = df.loc[~df.index.duplicated()]
       composite_mem = pd.concat(mems, axis=1)
-      composite_mem.to_csv(f"{workspace}/{example_name}/{archive_base}/combined_mem_log-{tag}.csv")
+      composite_mem.to_csv(f"{archive_dir}/combined_mem_log-{tag}.csv")
+
+- name: activitysim.workflows.steps.py
+  in:
+    label: Generate contrast report
+    py: |
+      import os
+      from activitysim.standalone.render import render_comparison
+      if example_name in {"example_mtc", "example_mtc_full"}:
+        dist_name = "DIST"
+        county_id = "county_id"
+      elif example_name in {"example_arc", "example_arc_full"}:
+        dist_name = "SOV_FREE_DISTANCE"
+        county_id = "county"
+      else:
+        dist_name = None
+        county_id = None
+      os.chdir(f"{workspace}/{example_name}")
+      render_comparison(f"{archive_dir}/report-{tag}.html", title=example_name, dist_skim=dist_name, county_id=county_id)
+      
