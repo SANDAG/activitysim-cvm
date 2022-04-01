@@ -376,6 +376,40 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#configure-the-summarize-model">
+     Configure the Summarize Model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#summary-expressions">
+       Summary Expressions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#preprocessing">
+       Preprocessing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-and-run-simwrapper">
+     Install and Run Simwrapper
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#navigate-simwrappper">
+     Navigate SimWrappper
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#helpers">
    Helpers
   </a>
@@ -386,7 +420,7 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id19">
+      <a class="reference internal nav-link" href="#id21">
        API
       </a>
      </li>
@@ -398,7 +432,7 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id20">
+      <a class="reference internal nav-link" href="#id22">
        API
       </a>
      </li>
@@ -410,7 +444,7 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id21">
+      <a class="reference internal nav-link" href="#id23">
        API
       </a>
      </li>
@@ -422,7 +456,7 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
+      <a class="reference internal nav-link" href="#id25">
        API
       </a>
      </li>
@@ -434,7 +468,7 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
+      <a class="reference internal nav-link" href="#id26">
        API
       </a>
      </li>
@@ -446,7 +480,7 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id25">
+      <a class="reference internal nav-link" href="#id27">
        API
       </a>
      </li>
@@ -4703,8 +4737,163 @@ btap and atap will be in dataframe, but the other attributes may be either df co
 
 </div>
 </div>
+<div class="section" id="visualization">
+<span id="id19"></span><h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<p>Visualization capabilities are provided with SimWrapper, a standalone browser-based software that creates interactive, graphical visualizations of ActivitySim outputs. SimWrapper builds graphs and other visualization components from CSV summary tables that are produced by the <em>summarize</em> model step. Once the model run is complete, Simwrapper can be started and stopped at any time, independent of ActivitySim to visualize outputs. The tool currently allows users to view dashboards for multiple model runs side-by-side in the browser. The ability to compute and visualize the differences between two model runs is a planned future enhancement.</p>
+<p>To use set up the summarize model to produce tables for SimWrapper, add <code class="docutils literal notranslate"><span class="pre">summarize</span></code> to the list of models in <code class="docutils literal notranslate"><span class="pre">configs_mp/settings.yaml</span></code> and add the following files to the <cite>config</cite> directory:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">summarize.yaml</span></code>: configuration for the summarize model step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarize.csv:</span></code> expression file containing the final aggregations that will be generated at the end of the model run</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summarize_preprocessor.csv</span></code>: intermediate expression file used to add columns, including skim summaries, to the <code class="docutils literal notranslate"><span class="pre">trips_merged</span></code> pipeline table</p></li>
+</ul>
+<p>In the output directory, add a new summarize directory, which must contain:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dashboard-1-summary.yaml</span></code>: configuration for the layout and formatting of charts and other objects in the dashboard</p></li>
+<li><p>Additional <code class="docutils literal notranslate"><span class="pre">dashboard-\*.yaml</span></code> files may be used to configure additional dashboard tabs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">topsheet.yaml</span></code>: configuration for calculated statistics in the ‘At-a-Glance’ table at the top of the dashboard</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">/output/summarize</span></code> directory may also contain one or more .geojson files to support map-based visualizations in the dashboard.</p></li>
+</ul>
+<p>At present, example versions of all of the items above are located in the MTC example model: <code class="docutils literal notranslate"><span class="pre">/activitysim/examples/example_mtc</span></code>. Complete documentation for configuring dashboards is available in the <a class="reference external" href="https://simwrapper.github.io/docs/simwrapper-intro">SimWrapper Docs</a>.</p>
+<div class="section" id="configure-the-summarize-model">
+<h3>Configure the Summarize Model<a class="headerlink" href="#configure-the-summarize-model" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="summary-expressions">
+<h4>Summary Expressions<a class="headerlink" href="#summary-expressions" title="Permalink to this headline">¶</a></h4>
+<p>Example configuration files for the summarize model step (as listed above) are included in MTC example. These files will need to be adjusted to produce customized SimWrapper dashboards. These files are structured as standard ActivitySim expression (CSV) and configuration (YAML) files. More detailed information about configuration of the summarize model step is available in the Models documentation.</p>
+<p>You may wish to manipulate the default expression files to suit your particular needs. Expression files are formatted as CSVs and structured according to ActivitySim conventions with three columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Description</span></code>: Brief description of expression. Non-functional and may be left blank.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Output</span></code>: Name of expression output. Will be used to name either the CSV or local variable storing the expression output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Expression</span></code>: Python expression that will be evaluated to produce the output.</p></li>
+</ul>
+<p>Rows with output values that begin with an alphanumeric character will be saved to a CSV (e.g., <code class="docutils literal notranslate"><span class="pre">output_name</span></code> –&gt; <code class="docutils literal notranslate"><span class="pre">output_name.csv</span></code>). These expressions must yield a Pandas Series, DataFrame, or another object with a <code class="docutils literal notranslate"><span class="pre">to_csv</span></code> method.</p>
+<p>Rows with output values that begin with underscores (e.g., <code class="docutils literal notranslate"><span class="pre">_output_name</span></code>) will be stored as temporary variables in the local namespace so they can be used in following expressions. Expressions defining temporary variables can produce any data type. Users are encouraged to follow the ActivitySim convention using capitals to denote constants (e.g., <code class="docutils literal notranslate"><span class="pre">_TEMP_CONSTANT</span></code>), though this convention is not formally enforced for summarize expressions.</p>
+<p>Summarize expressions can make use of several convenience functions for binning numeric Pandas Series’ into quantiles, equal intervals, or manually-specified ranges. These functions are available in the local namespace used to evaluate summarize expressions (as well as for preprocessing the <code class="docutils literal notranslate"><span class="pre">trips_merged</span></code> table; see below), so they can be used directly in summary expressions. These functions include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">quantiles</span></code>: Construct quantiles from a Series given a number of bins.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spaced_intervals</span></code>: Construct evenly-spaced intervals from a Series given a starting value and bin size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">equal_intervals</span></code>: Construct equally-spaced intervals across the entire range of a Series.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">manual_breaks</span></code>: Classify numeric data in a Series into manually-defined bins.</p></li>
+</ul>
+<p>For example population density quintiles could be calculated with the expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">quantiles</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">land_use</span><span class="o">.</span><span class="n">TOTPOP</span><span class="o">/</span><span class="n">land_use</span><span class="o">.</span><span class="n">TOTACRE</span><span class="p">,</span> <span class="n">bins</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="n">label_format</span><span class="p">:</span><span class="s1">&#39;</span><span class="si">{rank}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">label_format</span></code> parameter uses f-string formatting to specify how bins should be labeled. Several named variables are automatically available in the local namespace for use in labels:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>: Left extent, or minimum, of the bin range</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mid</span></code>: Center of the bin range</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>: Right extent, or maximum, of the bin range</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rank</span></code>: Numeric rank of the bin, with 1 being the lowest rank</p></li>
+</ul>
+<p>By default, bins are labeled with their extents using the following f-string: <code class="docutils literal notranslate"><span class="pre">'{left:,.2f}</span> <span class="pre">-</span> <span class="pre">{right:,.2f}'</span></code>. The <code class="docutils literal notranslate"><span class="pre">'{rank}'</span></code> option demonstrated above would label each bin with its ordinal rank. Numeric labels are converted to numeric data types, if possible.</p>
+<p>Examples of each summarize function are included in the <code class="docutils literal notranslate"><span class="pre">summarize.csv</span></code> expression file for the MTC example. Consult the docstrings for each function in the <code class="docutils literal notranslate"><span class="pre">/activitysim/abm/models/summarize.py</span></code> module for complete specification of parameters.</p>
+</div>
+<div class="section" id="preprocessing">
+<h4>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h4>
+<p>Pipeline tables available for summarization can be preprocessed to include columns that bin or aggregate existing columns into categories or add skim data related to trips or tours. Preprocessing is configured both in <code class="docutils literal notranslate"><span class="pre">summarize.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">summarize_preprocessor.csv</span></code>.</p>
+<p>Binning and aggregation operations that should take place <em>before</em> expressions are calculated, in order to produce a new column in a pipeline table, can be specified in <code class="docutils literal notranslate"><span class="pre">summarize.yaml</span></code>. This can be useful for reducing clutter and redundancy in the summary expressions file.</p>
+<p>Binning during the preprocessing stage uses the same convenience functions available for expression files but specifies them in the configuration YAML. To calculate manually-defined income categories, for example, the YAML would include:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>persons_merged:                      # Pipeline table on which to operate
+  BIN:
+    # Manually-specified bins
+    - column: income                 # Column on which to operate
+      label: income_category         # New column to make
+      type: manual_breaks            # Binning function
+      bin_breaks:                    # Must include lower and upper extents;
+        - 0                          # (One more value than the number of bins)
+        - 25000
+        - 50000
+        - 75000
+        - 100000
+        - 999999
+      bin_labels:                    # (optional)
+        - Very Low Income ($0-$25k)
+        - Low Income ($25k-$50k)
+        - Medium Income ($50k-$75k)
+        - High Income ($75k-$100k)
+        - Very High Income (&gt;$100k)
+</pre></div>
+</div>
+<p>Example uses of each binning function are included in the <code class="docutils literal notranslate"><span class="pre">summarize.yaml</span></code> configuration file in the MTC example.</p>
+<p>Table columns can also be aggregated, or “remapped,” during the preprocessing stage. Aggregations are specified in the configuration YAML using a key-value  structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trips_merged</span><span class="p">:</span>                        <span class="c1"># Pipeline table on which to operate</span>
+  <span class="n">AGGREGATE</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">column</span><span class="p">:</span> <span class="n">major_trip_mode</span>        <span class="c1"># Column on which to operate</span>
+      <span class="n">label</span><span class="p">:</span> <span class="n">major_trip_mode</span>         <span class="c1"># New column to make</span>
+      <span class="nb">map</span><span class="p">:</span>
+        <span class="n">DRIVEALONEFREE</span><span class="p">:</span> <span class="n">SOV</span>          <span class="c1"># Keys: Existing values to map from</span>
+        <span class="n">DRIVEALONEPAY</span><span class="p">:</span> <span class="n">SOV</span>           <span class="c1"># Values: New values to map to</span>
+        <span class="n">SHARED2FREE</span><span class="p">:</span> <span class="n">HOV</span>
+        <span class="n">SHARED2PAY</span><span class="p">:</span> <span class="n">HOV</span>
+        <span class="n">SHARED3FREE</span><span class="p">:</span> <span class="n">HOV</span>
+        <span class="n">SHARED3PAY</span><span class="p">:</span> <span class="n">HOV</span>
+        <span class="n">WALK_LOC</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">WALK_LRF</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">WALK_EXP</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">WALK_HVY</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">WALK_COM</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">DRIVE_LOC</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">DRIVE_LRF</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">DRIVE_EXP</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">DRIVE_HVY</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">DRIVE_COM</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">DRIVEACCESS</span><span class="p">:</span> <span class="n">Transit</span>
+        <span class="n">WALK</span><span class="p">:</span> <span class="n">Non</span><span class="o">-</span><span class="n">Motorized</span>
+        <span class="n">BIKE</span><span class="p">:</span> <span class="n">Non</span><span class="o">-</span><span class="n">Motorized</span>
+        <span class="n">TAXI</span><span class="p">:</span> <span class="n">Ride</span> <span class="n">Hail</span>
+        <span class="n">TNC_SINGLE</span><span class="p">:</span> <span class="n">Ride</span> <span class="n">Hail</span>
+        <span class="n">TNC_SHARED</span><span class="p">:</span> <span class="n">Ride</span> <span class="n">Hail</span>
+</pre></div>
+</div>
+<p>Trip-level skim data are also made available in the preprocessing stage by attaching columns to the <code class="docutils literal notranslate"><span class="pre">trips_merged</span></code> table based on expressions in <code class="docutils literal notranslate"><span class="pre">summarize_preprocessor.csv</span></code>. This process uses skim wrappers indexed by origin, destination, and time of day to gather distance, time, and cost data and each trip, enabling calculation of variables such as vehicle miles traveled (VMT). Preprocessing expressions are interpreted with standard ActivitySim annotation methods, including definition of scalar and vector temporary variables based on underscores and capitalization. The preprocessor expressions included in the MTC example demonstrate calculation of a number of skim-based variables involving distance, time, and cost. The system for joining skim data to trips is currently configured for the one-zone MTC example model and will need to be generalized for multi-zone systems in future work.</p>
+</div>
+</div>
+<div class="section" id="install-and-run-simwrapper">
+<h3>Install and Run Simwrapper<a class="headerlink" href="#install-and-run-simwrapper" title="Permalink to this headline">¶</a></h3>
+<p>The SimWrapper Python package, which contains convenience functions for initiating the SimWrapper app in the browser and a local file server for accessing summary tables from this app, is automatically installed as a dependency of ActivitySim. However, you can also use SimWrapper independent of ActivitySim to, for example, visualize summaries on a different workstation. SimWrapper is available on both conda-forge and pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">simwrapper</span>
+</pre></div>
+</div>
+<p>or</p>
+<blockquote>
+<div><p>&gt; pip install simwrapper</p>
+</div></blockquote>
+<p>The latest information about the Simwrapper package is available on its <a class="reference external" href="https://pypi.org/project/simwrapper/">PyPI page</a>.</p>
+<p>To run SimWrapper, navigate on the command line to <code class="docutils literal notranslate"><span class="pre">output\summarize</span></code> within the model directory, or a directory where you may have copied outputs, and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">simwrapper</span> <span class="nb">open</span> <span class="n">asim</span>
+</pre></div>
+</div>
+<p>This will start SimWrapper in your default browser. If this directory contains the appropriate configuration files for a dashboard (see above), the dashboard will open automatically. Otherwise, SimWrapper will show a file browser with the contents of the directory.</p>
+</div>
+<div class="section" id="navigate-simwrappper">
+<h3>Navigate SimWrappper<a class="headerlink" href="#navigate-simwrappper" title="Permalink to this headline">¶</a></h3>
+<p>When Simwrapper launches, the dashboard is displayed in the scrollable field in the main part of the browser window, and there are
+two sets of navigation controls.  The left-hand sidebar contains a menu of the available simulation outputs you can access from the
+current directory, including a number of sample outputs:</p>
+<img alt="_images/viz_nav-1.png" src="_images/viz_nav-1.png" />
+<p>The header and tabs at the top of the page help you navigate within the simulation run that is currently being visualized:</p>
+<img alt="_images/viz_nav-2.png" src="_images/viz_nav-2.png" />
+<p>Clicking on ‘Details’ will switch from the visualizations view to a current directory listing to facilitate viewing and downloading of
+the code and raw data used to create the dashboard:</p>
+<img alt="_images/viz_nav-3.png" src="_images/viz_nav-3.png" />
+<p>Clicking on ‘Topsheet’ returns you to the visualization graphics page.  The three buttons in the lower left corner provide additional
+functionality to:</p>
+<ol class="arabic simple">
+<li><p>re-sync with the latest version of the output files,</p></li>
+<li><p>toggle light theme vs. dark theme, and</p></li>
+<li><p>split the visualization window into two separate panels like this:</p></li>
+</ol>
+<img alt="_images/viz_nav-4.png" src="_images/viz_nav-4.png" />
+<p>Before starting the split-screen view, choose the model run that you want to appear in the right side pane (‘1-sf-run’ in the image above).
+Then, click on the split view button to divide the window into two visualization panels.  Finally, use the left-hand navigation pane to
+change the comparison run on the left side (‘2-nine-county’ in the image above).</p>
+<p>Each side of the split screen has independent header navigation (Topsheet vs. Details) and independent vertical and horizontal scrolling.
+However, panning and zooming on any one map object controls all maps on both sides of the split view at the same time:</p>
+<img alt="_images/viz_nav-5.png" src="_images/viz_nav-5.png" />
+</div>
+</div>
 <div class="section" id="helpers">
-<h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
+<span id="id20"></span><h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="chunk">
 <span id="chunk-in-detail"></span><span id="chunk-size"></span><span id="index-0"></span><h3>Chunk<a class="headerlink" href="#chunk" title="Permalink to this headline">¶</a></h3>
 <p>Chunking management.</p>
@@ -4783,8 +4972,8 @@ is therefore the default.</p>
 <li><p>keep_chunk_logs: True - whether to preserve or delete subprocess chunk logs when they are consolidated at end of multiprocess run</p></li>
 <li><p>keep_mem_logs: True - whether to preserve or delete subprocess mem logs when they are consolidated at end of multiprocess run</p></li>
 </ul>
-<div class="section" id="id19">
-<h4>API<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id21">
+<h4>API<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <span class="target" id="module-activitysim.core.chunk"></span><dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.chunk.ChunkHistorian">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.chunk.</span></span><span class="sig-name descname"><span class="pre">ChunkHistorian</span></span><a class="headerlink" href="#activitysim.core.chunk.ChunkHistorian" title="Permalink to this definition">¶</a></dt>
@@ -4916,8 +5105,8 @@ as choosers, we can use cumulative pick_counts to identify boundaries of sets of
 <div class="section" id="utilities">
 <h3>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h3>
 <p>Vectorized helper functions</p>
-<div class="section" id="id20">
-<h4>API<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4>API<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <span class="target" id="module-activitysim.core.util"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.util.assign_in_place">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.util.</span></span><span class="sig-name descname"><span class="pre">assign_in_place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.util.assign_in_place" title="Permalink to this definition">¶</a></dt>
@@ -5103,8 +5292,8 @@ helpful in expression files that compute counts (e.g. num_work_tours)</p>
 <div class="section" id="config">
 <h3>Config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h3>
 <p>Helper functions for configuring a model run</p>
-<div class="section" id="id21">
-<h4>API<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id23">
+<h4>API<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 <span class="target" id="module-activitysim.core.config"></span><dl class="py exception">
 <dt class="sig sig-object py" id="activitysim.core.config.SettingsFileNotFound">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.config.</span></span><span class="sig-name descname"><span class="pre">SettingsFileNotFound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.config.SettingsFileNotFound" title="Permalink to this definition">¶</a></dt>
@@ -5280,10 +5469,10 @@ read settings from yaml file and return as dict.</p>
 </div>
 </div>
 <div class="section" id="inject">
-<span id="id22"></span><h3>Inject<a class="headerlink" href="#inject" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3>Inject<a class="headerlink" href="#inject" title="Permalink to this headline">¶</a></h3>
 <p>Model orchestration and data pipeline interaction.</p>
-<div class="section" id="id23">
-<h4>API<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h4>API<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
 <span class="target" id="module-activitysim.core.inject"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.inject.add_table">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.inject.</span></span><span class="sig-name descname"><span class="pre">add_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.inject.add_table" title="Permalink to this definition">¶</a></dt>
@@ -5302,8 +5491,8 @@ Silently replace if replace=True.</p>
 <div class="section" id="mem">
 <h3>Mem<a class="headerlink" href="#mem" title="Permalink to this headline">¶</a></h3>
 <p>Helper functions for tracking memory usage</p>
-<div class="section" id="id24">
-<h4>API<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id26">
+<h4>API<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
 <span class="target" id="module-activitysim.core.mem"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.mem.consolidate_logs">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.mem.</span></span><span class="sig-name descname"><span class="pre">consolidate_logs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.mem.consolidate_logs" title="Permalink to this definition">¶</a></dt>
@@ -5325,8 +5514,8 @@ Silently replace if replace=True.</p>
 <div class="section" id="output">
 <h3>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h3>
 <p>Write output files and track skim usage.</p>
-<div class="section" id="id25">
-<h4>API<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id27">
+<h4>API<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
 <span class="target" id="module-activitysim.core.steps.output"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.steps.output.previous_write_data_dictionary">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.steps.output.</span></span><span class="sig-name descname"><span class="pre">previous_write_data_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.steps.output.previous_write_data_dictionary" title="Permalink to this definition">¶</a></dt>
@@ -5458,7 +5647,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
 </p>
     </div>
     
