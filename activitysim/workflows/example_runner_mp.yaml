@@ -7,8 +7,11 @@ steps:
     defaults:
       example_name: example_mtc_full
       workspace: workspace
-      legacy: True
+      legacy: False
+      compile: False
+      sharrow: False
       tag:
+      n_processes: 5
 
 - description: Make {workspace} directory if it does not exist
   name: pypyr.steps.py
@@ -21,7 +24,7 @@ steps:
 #- pypyr.steps.debug
 
 - description: Generate a tag based on datetime if tag is not given
-  name: activitysim.workflows.py
+  name: activitysim.workflows.steps.py
   in:
     py: |
       import time
@@ -32,7 +35,7 @@ steps:
 #- pypyr.steps.debug
 
 - description: Create (download as needed) the example to be tested
-  name: activitysim.workflows.cmd
+  name: activitysim.workflows.steps.cmd
   in:
     cmd:
       run: python -m activitysim create -e {example_name} -d . --link
@@ -69,10 +72,10 @@ steps:
         chunk_training_mode: disabled
         households_sample_size: 500000
         chunk_size: 0
-        num_processes: 5
+        num_processes: '{n_processes}'
 
 - description: Run activitysim to compile and test sharrow-enabled model
-  name: activitysim.workflows.cmd
+  name: activitysim.workflows.steps.cmd
   in:
     cmd:
       run: python -m activitysim run -c configs_sh_compile -c configs -d data -o output
@@ -80,7 +83,7 @@ steps:
       label: "{example_name} -- sharrow compile"
 
 - description: Archive outputs of compile
-  name: activitysim.workflows.archive_outputs
+  name: activitysim.workflows.steps.archive_outputs
   in:
     source: "output"
     destination: "{archive_base}/output-sh-compile"
@@ -95,7 +98,7 @@ steps:
         sharrow: require
 
 - description: Run activitysim to evaluate sharrow-enabled model
-  name: activitysim.workflows.cmd
+  name: activitysim.workflows.steps.cmd
   in:
     cmd:
       run: python -m activitysim run -c configs_sh -c configs_local_mp -c configs_mp -c configs -d data -o output
@@ -103,13 +106,13 @@ steps:
       label: "{example_name} -- sharrow run"
 
 - description: Archive outputs of sharrow run
-  name: activitysim.workflows.archive_outputs
+  name: activitysim.workflows.steps.archive_outputs
   in:
     source: "output"
     destination: "{archive_base}/output-sh-mp"
 
 - description: Run activitysim to evaluate legacy model
-  name: activitysim.workflows.cmd
+  name: activitysim.workflows.steps.cmd
   run: '{legacy}'
   in:
     cmd:
@@ -118,7 +121,7 @@ steps:
       label: "{example_name} -- legacy run"
 
 - description: Archive outputs of legacy run
-  name: activitysim.workflows.archive_outputs
+  name: activitysim.workflows.steps.archive_outputs
   run: '{legacy}'
   in:
     source: "output"
@@ -126,19 +129,132 @@ steps:
 
 - description: Generate composite timing log
   name: pypyr.steps.py
-  run: False
+  run: True
   in:
     py: |
       import pandas as pd
-      timings = {}
-      for t in ['sh-compile', 'sh', 'legacy']:
-        df = pd.read_csv(f"{workspace}/{example_name}/{archive_base}/output-{t}/log/timing_log.csv")
-        timings[t] = df.set_index("model_name")['seconds']
-      composite_timing = pd.concat(timings, axis=1)
+
+      tot_processors = n_processes
+
+      for t in ['sh-compile', 'sh-mp', 'legacy-mp']:
+        if t == 'sh-compile':
+            df1 = pd.read_csv(f"{workspace}/{example_name}/{archive_base}/output-{t}/log/timing_log.csv")
+            df1 = df1[['model_name', 'seconds']]
+            df1.columns = ['model_name', t+'_seconds']
+            timings1 = df1.copy()
+        else:
+            log_dir = f"{workspace}/{example_name}/{archive_base}/output-{t}/log"
+            df2 = []
+            df3 = []
+            df4 = []
+            files = range(0,tot_processors,1)
+
+            for file_num in files:
+                exact_lines1 = []
+
+                with open(os.path.join(log_dir, 'mp_households_'+str(file_num)+'-activitysim.log')) as fd:
+                    for line in fd:
+                        match = re.search(r'run_model completed step (.*) seconds', line)
+                        if match:
+                            model_component = match.group(1)
+                            exact_lines1.append(model_component)
+
+                with open(os.path.join(log_dir, 'mp_accessibility_'+str(file_num)+'-activitysim.log')) as fd:
+                    for line in fd:
+                        match = re.search(r'run_model completed step (.*) seconds', line)
+                        if match:
+                            model_component = match.group(1)
+                            exact_lines1.append(model_component)
+
+                df2_temp = pd.DataFrame({"model_name" : exact_lines1})
+                df2_temp = df2_temp['model_name'].str.split(':', expand=True)
+                df2_temp.columns = ['model_name'+'_'+str(file_num), 'seconds'+'_'+str(file_num)]
+                df2_temp = df2_temp.reset_index(drop=True)
+                df2.append(df2_temp)
+                
+            with open(os.path.join(log_dir, 'activitysim.log')) as fd:
+                exact_lines2 = []
+                exact_lines3 = []
+                for line in fd:    
+                    match1 = re.search(r'initialize_(.*) seconds', line)
+                    match2 = re.search(r'write_(.*) seconds', line)
+                    if match1:
+                        model_component = match1.group(1)
+                        exact_lines2.append(model_component)
+                        
+                    if match2:
+                        model_component = match2.group(1)
+                        exact_lines3.append(model_component)
+                        
+                df3_temp = pd.DataFrame({"model_name" : exact_lines2})
+                df3_temp = df3_temp['model_name'].str.split(':', expand=True)
+                df3_temp.columns = ['model_name', 'seconds'] 
+                df3_temp['model_name'] = ['initialize_' + x for x in df3_temp['model_name']]
+                df3.append(df3_temp)
+                
+                df4_temp = pd.DataFrame({"model_name" : exact_lines3})
+                df4_temp = df4_temp['model_name'].str.split(':', expand=True)
+                df4_temp.columns = ['model_name', 'seconds'] 
+                df4_temp['model_name'] = ['write_' + x for x in df4_temp['model_name']]
+                df4.append(df4_temp)
+                
+            df2 = pd.concat(df2, axis = 1)
+            df3 = pd.concat(df3, axis = 1)
+            df4 = pd.concat(df4, axis = 1)
+            df2['seconds'] = 0
+            
+            for i in files:
+                df2['seconds' + '_' + str(i)] = df2['seconds' + '_' + str(i)].str.strip()
+                df2['seconds' + '_' + str(i)] = df2['seconds' + '_' + str(i)].astype('float')
+                df2['seconds'] = df2['seconds'] + df2['seconds' + '_' + str(i)]
+
+            #get average
+            df2['seconds'] = df2['seconds']/len(files)
+            df2 = df2[['model_name_0','seconds']]
+            df2 = df2.rename(columns= {'model_name_0' : 'model_name'})
+            df2['model_name'] = df2['model_name'].str.replace("'", "")
+            df2['model_name'] = df2['model_name'].str.strip()
+            df3['model_name'] = df3['model_name'].str.strip()
+            df4['model_name'] = df4['model_name'].str.strip()
+            df5 = pd.concat([df3, df2, df4], axis = 0)
+            
+            if t == 'sh-mp':
+                df5.columns = ['model_name', t + '_seconds']
+                timings2 = df5.copy()
+            else:
+                df5.columns = ['model_name', t + '_seconds']
+                timings3 = df5.copy()
+            
+
+      composite_timing = pd.merge(timings1, timings2, on = 'model_name', how = 'left')
+      composite_timing = pd.merge(composite_timing, timings3, on = 'model_name', how = 'left')
+      composite_timing = composite_timing.dropna()
       composite_timing.to_csv(f"{workspace}/{example_name}/{archive_base}/combined_timing_log-{tag}.csv")
+
+
       mems = {}
-      for t in ['sh-compile', 'sh', 'legacy']:
+      for m in ['sh-mp', 'legacy-mp']:
+          mem_dir = f"{workspace}/{example_name}/{archive_base}/output-{t}/log"
           df = pd.read_csv(f"{workspace}/{example_name}/{archive_base}/output-{t}/log/mem.csv")
+          df['event2'] = df['event']
+          df['event2'] = df['event2'].str.replace('_\d+', '')
+          
+          df1 = df.groupby(['event2'])['rss'].max().reset_index()
+          df1.columns = ['event', 'rss'] 
+          print(df1.shape)
+
+          df2 = df.groupby(['event2'])['full_rss'].max().reset_index()
+          df2.columns = ['event', 'full_rss'] 
+          print(df2.shape)
+
+          df3 = df.groupby(['event2'])['uss'].max().reset_index()
+          df3.columns = ['event', 'uss']
+          print(df3.shape)
+          
+          df = pd.merge(df1, df2, on = 'event')
+          df = pd.merge(df, df3, on = 'event')
+          
           mems[t] = df.set_index('event')[['rss', 'full_rss', 'uss']]
+          
       composite_mem = pd.concat(mems, axis=1)
       composite_mem.to_csv(f"{workspace}/{example_name}/{archive_base}/combined_mem_log-{tag}.csv")
