@@ -291,24 +291,31 @@
 <p>Set to one of {True, False, ‘require’, ‘test’}.  The default is False.</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt>True: Try to use sharrow for each model component, falling back to legacy </dt><dd><p><cite>eval</cite> processes when sharrow is unable to compile and run any given
+<dt>True: </dt><dd><p>Try to use sharrow for each model component, falling back to legacy 
+<cite>eval</cite> processes when sharrow is unable to compile and run any given
 model component.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>‘require’: If an error is encountered in a sharrow flow, an exception is raised</dt><dd><p>(stopping the model) instead of falling back to legacy <cite>eval</cite> processes.</p>
+<dt>‘require’: </dt><dd><p>If an error is encountered in a sharrow flow, an exception is raised
+(stopping the model) instead of falling back to legacy <cite>eval</cite> processes.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>‘test’: Rune both sharrow-optimized and legacy <cite>eval</cite> processes, and validate</dt><dd><p>that the results for each are approximately equivalent.  An exception is 
+<dt>‘test’: </dt><dd><p>Run both sharrow-optimized and legacy <cite>eval</cite> processes, and validate
+that the results for each are approximately equivalent.  An exception is 
 raised if they are not.  This mode is both slow and memory-hungry, and is 
 meant for development only.</p>
 </dd>
 </dl>
 </li>
-<li><p>False: Do not use sharrow.</p></li>
+<li><dl class="simple">
+<dt>False: </dt><dd><p>Do not use sharrow.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </dd></dl>
 
