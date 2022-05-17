@@ -20,6 +20,7 @@
       ~Settings.input_table_list
       ~Settings.models
       ~Settings.resume_after
+      ~Settings.sharrow
       ~Settings.use_shadow_pricing
    
    

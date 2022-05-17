@@ -1,0 +1,6 @@
+activitysim.configs.Settings.sharrow
+====================================
+
+.. currentmodule:: activitysim.configs
+
+.. autoattribute:: Settings.sharrow

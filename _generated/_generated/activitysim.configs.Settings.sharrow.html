@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>activitysim.configs.InputTable.filename &#8212; ActivitySim 1.0.4 documentation</title>
+    <title>activitysim.configs.Settings.sharrow &#8212; ActivitySim 1.0.4 documentation</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -32,8 +32,8 @@
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="activitysim.configs.InputTable.index_col" href="activitysim.configs.InputTable.index_col.html" />
-    <link rel="prev" title="activitysim.configs.InputTable" href="../activitysim.configs.InputTable.html" />
+    <link rel="next" title="activitysim.configs.Settings.use_shadow_pricing" href="activitysim.configs.Settings.use_shadow_pricing.html" />
+    <link rel="prev" title="activitysim.configs.Settings.resume_after" href="activitysim.configs.Settings.resume_after.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -130,16 +130,16 @@
    </i>
   </label>
   <ul class="current">
-   <li class="toctree-l2 has-children">
+   <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="../activitysim.configs.Settings.html">
      activitysim.configs.Settings
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
     <label for="toctree-checkbox-2">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
+    <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="activitysim.configs.Settings.check_for_variability.html">
        activitysim.configs.Settings.check_for_variability
@@ -175,8 +175,8 @@
        activitysim.configs.Settings.resume_after
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="activitysim.configs.Settings.sharrow.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        activitysim.configs.Settings.sharrow
       </a>
      </li>
@@ -187,18 +187,18 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active has-children">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="../activitysim.configs.InputTable.html">
      activitysim.configs.InputTable
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul class="current">
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="activitysim.configs.InputTable.filename.html">
        activitysim.configs.InputTable.filename
       </a>
      </li>
@@ -282,12 +282,34 @@
               
               <div>
                 
-  <div class="section" id="activitysim-configs-inputtable-filename">
-<h1>activitysim.configs.InputTable.filename<a class="headerlink" href="#activitysim-configs-inputtable-filename" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="activitysim-configs-settings-sharrow">
+<h1>activitysim.configs.Settings.sharrow<a class="headerlink" href="#activitysim-configs-settings-sharrow" title="Permalink to this headline">¶</a></h1>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="activitysim.configs.InputTable.filename">
-<span class="sig-prename descclassname"><span class="pre">InputTable.</span></span><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#activitysim.configs.InputTable.filename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Relative path within Input directory.</p>
+<dt class="sig sig-object py" id="activitysim.configs.Settings.sharrow">
+<span class="sig-prename descclassname"><span class="pre">Settings.</span></span><span class="sig-name descname"><span class="pre">sharrow</span></span><a class="headerlink" href="#activitysim.configs.Settings.sharrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable sharrow optimizations.</p>
+<p>Set to one of {True, False, ‘require’, ‘test’}.  The default is False.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>True: Try to use sharrow for each model component, falling back to legacy </dt><dd><p><cite>eval</cite> processes when sharrow is unable to compile and run any given
+model component.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>‘require’: If an error is encountered in a sharrow flow, an exception is raised</dt><dd><p>(stopping the model) instead of falling back to legacy <cite>eval</cite> processes.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>‘test’: Rune both sharrow-optimized and legacy <cite>eval</cite> processes, and validate</dt><dd><p>that the results for each are approximately equivalent.  An exception is 
+raised if they are not.  This mode is both slow and memory-hungry, and is 
+meant for development only.</p>
+</dd>
+</dl>
+</li>
+<li><p>False: Do not use sharrow.</p></li>
+</ul>
 </dd></dl>
 
 </div>
@@ -298,17 +320,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../activitysim.configs.InputTable.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="activitysim.configs.Settings.resume_after.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">activitysim.configs.InputTable</p>
+            <p class="prev-next-title">activitysim.configs.Settings.resume_after</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="activitysim.configs.InputTable.index_col.html" title="next page">
+    <a class='right-next' id="next-link" href="activitysim.configs.Settings.use_shadow_pricing.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">activitysim.configs.InputTable.index_col</p>
+        <p class="prev-next-title">activitysim.configs.Settings.use_shadow_pricing</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
