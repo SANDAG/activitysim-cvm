@@ -95,14 +95,18 @@ class Settings:
      
     Set to one of {True, False, 'require', 'test'}.  The default is False.
     
-    - True: Try to use sharrow for each model component, falling back to legacy 
+    - True: 
+        Try to use sharrow for each model component, falling back to legacy 
         `eval` processes when sharrow is unable to compile and run any given
         model component.
-    - 'require': If an error is encountered in a sharrow flow, an exception is raised
+    - 'require': 
+        If an error is encountered in a sharrow flow, an exception is raised
         (stopping the model) instead of falling back to legacy `eval` processes.
-    - 'test': Rune both sharrow-optimized and legacy `eval` processes, and validate
+    - 'test': 
+        Run both sharrow-optimized and legacy `eval` processes, and validate
         that the results for each are approximately equivalent.  An exception is 
         raised if they are not.  This mode is both slow and memory-hungry, and is 
         meant for development only.
-    - False: Do not use sharrow.
+    - False: 
+        Do not use sharrow.
     """)
