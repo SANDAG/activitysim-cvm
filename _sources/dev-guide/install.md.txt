@@ -45,17 +45,16 @@ want to install in a new directory called "workspace" run:
 mkdir workspace
 cd workspace
 mamba env create -p ASIM-ENV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
-conda activate ./ASIM-DEV
-gh auth login   # <--- (only needed if gh is not logged in)
-gh repo clone ActivitySim/sharrow
+conda activate ./ASIM-ENV
+git clone https://github.com/ActivitySim/sharrow.git
 python -m pip install -e ./sharrow
-gh repo clone ActivitySim/activitysim
+git clone https://github.com/ActivitySim/activitysim.git
 python -m pip install -e ./activitysim
 ```
 
 Note the above commands will create an environment with all the 
 necessary dependencies, clone both ActivitySim and sharrow from GitHub, 
-and `pip install` eoch of these libraries in editable mode, which
+and `pip install` each of these libraries in editable mode, which
 will allow your code changes to be reflected when running ActivitySim
 in this environment.
 

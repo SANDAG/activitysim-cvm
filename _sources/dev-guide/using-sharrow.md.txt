@@ -14,7 +14,7 @@ The code to implement `sharrow` in `activitysim` is in pull request
 
 ```sh
 cd activitysim
-gh pr checkout 542
+gh pr checkout 542  # use `gh auth login` first if needed
 cd ..
 ```
 
@@ -30,7 +30,7 @@ faster.
 You can run both, plus the legacy ActivitySim, all together in one workflow:
 
 ```sh
-activitysim workflow example_runner example_mtc
+activitysim workflow sharrow-contrast/mtc_mini
 ```
 
 

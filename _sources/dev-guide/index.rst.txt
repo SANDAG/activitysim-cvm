@@ -22,6 +22,7 @@ Contents
 
    install
    using-sharrow
+   workflows
    ../development
    ../models
    ../core
