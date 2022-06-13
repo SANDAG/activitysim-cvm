@@ -27,8 +27,13 @@ from .simulate_consts import SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME
 
 from ..sharrow_debug import digital_encoding as digital_encoding_debug
 
-import dask
-dask.config.set(scheduler='single-threaded')  # overwrite default with threaded scheduler
+if os.environ.get('TRAVIS') == 'true':
+    # The multithreaded dask scheduler causes problems on travis.
+    # Here, we detect if this code is running on Travis, and if so, we
+    # change the default scheduler to single-threaded.  This should not
+    # be particularly problematic, as only tiny test cases are run on Travis.
+    import dask
+    dask.config.set(scheduler='single-threaded')  # overwrite default with threaded scheduler
 
 
 logger = logging.getLogger(__name__)
