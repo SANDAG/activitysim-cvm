@@ -97,20 +97,20 @@ def run_test_mtc(multiprocess=False, chunkless=False, recode=False, sharrow=Fals
     regress()
 
 
-def test_mtc():
-    run_test_mtc(multiprocess=False)
-
-
-def test_mtc_chunkless():
-    run_test_mtc(multiprocess=False, chunkless=True)
-
-
-def test_mtc_mp():
-    run_test_mtc(multiprocess=True)
-
-
-def test_mtc_recode():
-    run_test_mtc(recode=True)
+# def test_mtc():
+#     run_test_mtc(multiprocess=False)
+#
+#
+# def test_mtc_chunkless():
+#     run_test_mtc(multiprocess=False, chunkless=True)
+#
+#
+# def test_mtc_mp():
+#     run_test_mtc(multiprocess=True)
+#
+#
+# def test_mtc_recode():
+#     run_test_mtc(recode=True)
 
 
 def test_mtc_sharrow():

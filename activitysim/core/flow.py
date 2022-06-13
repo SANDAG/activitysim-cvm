@@ -25,6 +25,8 @@ from ..core import tracing
 from . import config, inject
 from .simulate_consts import SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME
 
+from ..sharrow_debug import digital_encoding as digital_encoding_debug
+
 logger = logging.getLogger(__name__)
 
 _FLOWS = {}
@@ -357,6 +359,8 @@ def skim_dataset():
                     if zarr_digital_encoding:
                         import zarr  # ensure zarr is available before we do all this work.
 
+                        from ..sharrow_debug import digital_encoding
+
                         # apply once, before saving to zarr, will stick around in cache
                         for encoding in zarr_digital_encoding:
                             logger.info(f"applying zarr digital-encoding: {encoding}")
@@ -367,7 +371,7 @@ def skim_dataset():
                                 for k in d.variables:
                                     if re.match(regex, k):
                                         joins.append(k)
-                                d = d.digital_encoding.set(
+                                d = d.digital_encoding_debug.set(
                                     joins, joint_dict=joint_dict, **encoding
                                 )
                             elif regex:
@@ -377,9 +381,9 @@ def skim_dataset():
                                     )
                                 for k in d.variables:
                                     if re.match(regex, k):
-                                        d = d.digital_encoding.set(k, **encoding)
+                                        d = d.digital_encoding_debug.set(k, **encoding)
                             else:
-                                d = d.digital_encoding.set(**encoding)
+                                d = d.digital_encoding_debug.set(**encoding)
 
                     logger.info(f"writing zarr skims to {zarr_file}")
                     # save skims to zarr
@@ -391,7 +395,7 @@ def skim_dataset():
             tokens = set(d.variables.keys()) - set(d.coords.keys())
             unused_tokens = scan_for_unused_names(tokens)
             if unused_tokens:
-                baggage = d.digital_encoding.baggage(None)
+                baggage = d.digital_encoding_debug.baggage(None)
                 unused_tokens -= baggage
                 # retain sparse matrix tables
                 unused_tokens = set(i for i in unused_tokens if not i.startswith("_s_"))
@@ -414,9 +418,9 @@ def skim_dataset():
                             )
                         for k in d.variables:
                             if re.match(regex, k):
-                                d = d.digital_encoding.set(k, **encoding)
+                                d = d.digital_encoding_debug.set(k, **encoding)
                     else:
-                        d = d.digital_encoding.set(**encoding)
+                        d = d.digital_encoding_debug.set(**encoding)
 
         # check alignment of TAZs that it matches land_use table
         logger.info(f"checking skims alignment with land_use")
