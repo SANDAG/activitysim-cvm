@@ -402,8 +402,15 @@ def skim_dataset():
                             for kk in attrs:
                                 if kk in obj[k].attrs:
                                     del obj[k].attrs[kk]
+                        logger.info(f"final digital_encoding")
+                        for k in obj.variables:
+                            k_attrs = obj._variables[k].attrs
+                            if "digital_encoding" in k_attrs:
+                                logger.info(f"{k}:{k_attrs['digital_encoding']}")
+                            else:
+                                logger.info(f"{k}:NONE")
+                        logger.info(str(obj.digital_encoding.info()))
                         logger.info(f"finally writing zarr skims to {zarr_file}")
-                        print(obj.digital_encoding.info())
                         obj.to_zarr(zarr_file)
                     except ModuleNotFoundError:
                         logger.warning("the 'zarr' package is not installed")
