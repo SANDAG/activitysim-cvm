@@ -27,6 +27,10 @@ from .simulate_consts import SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME
 
 from ..sharrow_debug import digital_encoding as digital_encoding_debug
 
+import dask
+dask.config.set(scheduler='single-threaded')  # overwrite default with threaded scheduler
+
+
 logger = logging.getLogger(__name__)
 
 _FLOWS = {}
