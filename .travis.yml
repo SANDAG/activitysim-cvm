@@ -16,67 +16,67 @@ jobs:
     # Test suites are arranged in groups; all tests in a group must pass before
     # the next stage group can begin.
 
-    - stage: Core Functionality
-      env: TEST_SUITE=activitysim/abm/models
-    - env: TEST_SUITE=activitysim/abm/test
-    - env: TEST_SUITE=activitysim/cli
-    - env: TEST_SUITE=activitysim/core
+#    - stage: Core Functionality
+#      env: TEST_SUITE=activitysim/abm/models
+#    - env: TEST_SUITE=activitysim/abm/test
+#    - env: TEST_SUITE=activitysim/cli
+#    - env: TEST_SUITE=activitysim/core
 
     - stage: Primary Example
       name: "MTC Example"
       env: TEST_SUITE=activitysim/examples/example_mtc/test
 
-    - stage: Other Examples
-      name: "MTC Extended Example"
-      env: TEST_SUITE=activitysim/examples/example_mtc_extended/test
-    - name: "Multizone Example"
-      env: TEST_SUITE=activitysim/examples/example_multiple_zone/test
-    - name: "Marin Example"
-      env: TEST_SUITE=activitysim/examples/example_marin/test
-    - name: "ARC Example"
-      env: TEST_SUITE=activitysim/examples/example_arc/test
-    - name: "SEMCOG Example"
-      env: TEST_SUITE=activitysim/examples/example_semcog/test
-    - name: "PSRC Example"
-      env: TEST_SUITE=activitysim/examples/example_psrc/test
-    - name: "SANDAG Example"
-      env: TEST_SUITE=activitysim/examples/example_sandag/test
-    - name: "SANDAG Cross-Border Example"
-      env: TEST_SUITE=activitysim/examples/example_sandag_xborder/test
-
-    - stage: Estimation Mode
-      name: "Larch Test"
-      env: TEST_SUITE=activitysim/estimation/test/test_larch_estimation.py TEST_ENV="activitysim-test-larch"
-
-    - stage: Deployment
-      name: Documentation
-      env: TEST_ENV="activitysim-test-larch"
-      script:
-        - coveralls
-        # Build docs
-        - mamba install sphinx numpydoc
-        - conda install -c conda-forge sphinx_rtd_theme==0.5.2
-        - cd docs
-        - make clean
-        - make html
-        - touch _build/html/.nojekyll
-      deploy:
-        - provider: pages
-          local_dir: docs/_build/html
-          skip_cleanup: true
-          github_token: $GH_TOKEN  # Set in the settings page of the repository, as a secure variable
-          keep_history: true
-          on:
-            branch: master
-    - name: "PyPI Deployment"
-      script: skip     # do not want to rerun any tests
-      deploy:
-        - provider: pypi
-          username: "__token__"
-          password: "$PYPI_AUTH_TOKEN"  # Set in the settings page of the repository, as a secure variable
-          skip_existing: true
-          on:
-            branch: [ master ]
+#    - stage: Other Examples
+#      name: "MTC Extended Example"
+#      env: TEST_SUITE=activitysim/examples/example_mtc_extended/test
+#    - name: "Multizone Example"
+#      env: TEST_SUITE=activitysim/examples/example_multiple_zone/test
+#    - name: "Marin Example"
+#      env: TEST_SUITE=activitysim/examples/example_marin/test
+#    - name: "ARC Example"
+#      env: TEST_SUITE=activitysim/examples/example_arc/test
+#    - name: "SEMCOG Example"
+#      env: TEST_SUITE=activitysim/examples/example_semcog/test
+#    - name: "PSRC Example"
+#      env: TEST_SUITE=activitysim/examples/example_psrc/test
+#    - name: "SANDAG Example"
+#      env: TEST_SUITE=activitysim/examples/example_sandag/test
+#    - name: "SANDAG Cross-Border Example"
+#      env: TEST_SUITE=activitysim/examples/example_sandag_xborder/test
+#
+#    - stage: Estimation Mode
+#      name: "Larch Test"
+#      env: TEST_SUITE=activitysim/estimation/test/test_larch_estimation.py TEST_ENV="activitysim-test-larch"
+#
+#    - stage: Deployment
+#      name: Documentation
+#      env: TEST_ENV="activitysim-test-larch"
+#      script:
+#        - coveralls
+#        # Build docs
+#        - mamba install sphinx numpydoc
+#        - conda install -c conda-forge sphinx_rtd_theme==0.5.2
+#        - cd docs
+#        - make clean
+#        - make html
+#        - touch _build/html/.nojekyll
+#      deploy:
+#        - provider: pages
+#          local_dir: docs/_build/html
+#          skip_cleanup: true
+#          github_token: $GH_TOKEN  # Set in the settings page of the repository, as a secure variable
+#          keep_history: true
+#          on:
+#            branch: master
+#    - name: "PyPI Deployment"
+#      script: skip     # do not want to rerun any tests
+#      deploy:
+#        - provider: pypi
+#          username: "__token__"
+#          password: "$PYPI_AUTH_TOKEN"  # Set in the settings page of the repository, as a secure variable
+#          skip_existing: true
+#          on:
+#            branch: [ master ]
 
 python:
   - '3.9'
@@ -107,5 +107,4 @@ script:
 # pycodestyle
 - pycodestyle activitysim
 # run specific TEST_SUITE job on travis to avoid job max time
-- travis_wait 50 py.test $TEST_SUITE --cov activitysim --cov-report term-missing --durations=0
-- coveralls
+- travis_wait 50 py.test $TEST_SUITE
