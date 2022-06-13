@@ -317,7 +317,7 @@ def multivalue_digitize_by_dictionary(ds, encode_vars=None, encoding_name=None):
     conjoin_list = []
     for v in encode_vars:
         logger.info(f">> compute {v}")
-        _temp = ds[v].compute()
+        _temp = ds[v].compute(scheduler="single-threaded")
         logger.info(f">> append  {v}")
         conjoin_list.append(array_decode(_temp, aux_data=ds))
     logger.info("final data stack")
