@@ -388,7 +388,19 @@ def skim_dataset():
                     logger.info(f"writing zarr skims to {zarr_file}")
                     # save skims to zarr
                     try:
-                        d.to_zarr_with_attr(zarr_file)
+                        # d.to_zarr_with_attr(zarr_file)
+                        obj = d.copy()
+                        for k in d:
+                            attrs = {}
+                            logger.info(f" checking attrs on {k}")
+                            for aname, avalue in d[k].attrs.items():
+                                if isinstance(avalue, dict):
+                                    avalue = f" {avalue!r} "
+                                attrs[aname] = avalue
+                            logger.info(f" assigning attrs on {k}: {attrs}")
+                            obj[k] = d[k].assign_attrs(attrs)
+                        logger.info(f"finally writing zarr skims to {zarr_file}")
+                        obj.to_zarr(zarr_file)
                     except ModuleNotFoundError:
                         logger.warning("the 'zarr' package is not installed")
             logger.info(f"scanning for unused skims")
