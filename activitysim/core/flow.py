@@ -360,6 +360,7 @@ def skim_dataset():
                         import zarr  # ensure zarr is available before we do all this work.
 
                         from ..sharrow_debug import digital_encoding
+                        d.persist() # load the whole dataset into RAM.  painful but HDF5 hates multiprocessing
 
                         # apply once, before saving to zarr, will stick around in cache
                         for encoding in zarr_digital_encoding:
