@@ -398,7 +398,8 @@ def skim_dataset():
                                     avalue = f" {avalue!r} "
                                 attrs[aname] = avalue
                             logger.info(f" assigning attrs on {k}: {attrs}")
-                            obj[k] = d[k].assign_attrs(attrs)
+                            #obj[k] = d[k].assign_attrs(attrs)
+                            obj[k] = d[k].assign_attrs({})
                         logger.info(f"finally writing zarr skims to {zarr_file}")
                         obj.to_zarr(zarr_file)
                     except ModuleNotFoundError:
