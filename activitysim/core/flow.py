@@ -398,10 +398,10 @@ def skim_dataset():
                                     avalue = f" {avalue!r} "
                                 attrs[aname] = avalue
                             logger.info(f" assigning attrs on {k}: {attrs}")
-                            #obj[k] = d[k].assign_attrs(attrs)
-                            for kk in attrs:
-                                if kk in obj[k].attrs:
-                                    del obj[k].attrs[kk]
+                            obj[k] = d[k].assign_attrs(attrs)
+                            # for kk in attrs:
+                            #     if kk in obj[k].attrs:
+                            #         del obj[k].attrs[kk]
                         logger.info(f"final digital_encoding")
                         for k in obj.variables:
                             k_attrs = obj._variables[k].attrs
@@ -410,6 +410,9 @@ def skim_dataset():
                             else:
                                 logger.info(f"{k}:NONE")
                         logger.info(str(obj.digital_encoding.info()))
+                        logger.info(f"final content")
+                        for k in obj.variables:
+                            logger.info(f"VAR {k}:\n{obj._variables[k]}\n\n")
                         logger.info(f"finally writing zarr skims to {zarr_file}")
                         obj.to_zarr(zarr_file)
                     except ModuleNotFoundError:
