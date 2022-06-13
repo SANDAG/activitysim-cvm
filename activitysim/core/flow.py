@@ -399,8 +399,11 @@ def skim_dataset():
                                 attrs[aname] = avalue
                             logger.info(f" assigning attrs on {k}: {attrs}")
                             #obj[k] = d[k].assign_attrs(attrs)
-                            obj[k] = d[k].assign_attrs({})
+                            for kk in attrs:
+                                if kk in obj[k].attrs:
+                                    del obj[k].attrs[kk]
                         logger.info(f"finally writing zarr skims to {zarr_file}")
+                        print(obj.digital_encoding.info())
                         obj.to_zarr(zarr_file)
                     except ModuleNotFoundError:
                         logger.warning("the 'zarr' package is not installed")
