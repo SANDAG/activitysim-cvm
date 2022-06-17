@@ -22,15 +22,16 @@ input_table_list:
     index_col: household_id
     rename_columns:
       HHID: household_id  # household_id is the required index column
-      PERSONS: hhsize
-      workers: num_workers
+      num_persons: hhsize
+      hinc: income
       VEHICL: auto_ownership
       TAZ: home_zone_id
     keep_columns:
       - home_zone_id
       - income
       - hhsize
-      - HHT
+      - BLD #building size variable
+     # - HHT
       - auto_ownership
       - num_workers
   #
@@ -40,15 +41,22 @@ input_table_list:
     filename: persons.csv
     index_col: person_id
     rename_columns:
-      PERID: person_id  # person_id is the required index column
+      PERS_ID: person_id  # person_id is the required index column
+      AGEP: age
+      SEX: sex
     keep_columns:
       - household_id
       - age
-      - PNUM
       - sex
       - pemploy
       - pstudent
-      - ptype
+      - SCH
+      - ESR
+      - NAICSP02
+      - socp10
+      - SW_UNSPLIT_IND
+      - SW_OCCUP
+      - SW_SPLIT_IND
   #
   # land_use (table index 'zone_id')
   #
@@ -57,32 +65,58 @@ input_table_list:
     index_col: zone_id
     rename_columns:
       TAZ: zone_id  # person_id is the required index column
-      COUNTY: county_id
     keep_columns:
-      - DISTRICT
-      - SD
-      - county_id
-      - TOTHH
-      - TOTPOP
-      - TOTACRE
-      - RESACRE
-      - CIACRE
-      - TOTEMP
-      - AGE0519
-      - RETEMPN
-      - FPSEMPN
-      - HEREMPN
-      - OTHEMPN
-      - AGREMPN
-      - MWTEMPN
-      - PRKCST
-      - OPRKCST
-      - area_type
-      - HSENROLL
-      - COLLFTE
-      - COLLPTE
-      - TOPOLOGY
-      - TERMINAL
+      - MODELAREA
+      - CORDONZONE
+      - AMZ
+      - LDTdistrict
+      - STATE
+      - AreaType
+      - Total_Employment
+      - Utlities_Services
+      - Construction
+      - Transportation_Handling
+      - Health_Care
+      - Other_Services
+      - Government_Services
+      - Highschool_Education
+      - College_Education
+      - Hotel_Accomodation
+      - Agriculture_Production
+      - Agriculture_Office
+      - Metal_Production
+      - Metal_Office
+      - Light_Industry_Production
+      - Light_Industry_Office
+      - Heavy_Industry_Production
+      - Heavy_Industry_Office
+      - Transportation_Equipment_Production
+      - Transportation_Equipment_Office
+      - Wholesale_Production
+      - Wholesale_Office
+      - Retail_Production
+      - Retail_Office
+      - CUBE_N
+      - ETAZ_NAME
+      - TerminalTime
+      - IMPLANTYPE
+      - IMPLANZONE
+      - FAF3_AGGR
+      - CENSUSPOP
+      - HHlt20K1to2
+      - HHlt20K3plus
+      - HH20to40K1to2
+      - HH20to40K3plus
+      - HH40to60K1to2
+      - HH40to60K3plus
+      - HH60to75K1to2
+      - HH60to75K3plus
+      - HH75to100K1to2
+      - HH75to100K3plus
+      - HH100Kplus1to2
+      - HH100Kplus3plus
+      - TotHH
+
 
 # convert input CSVs to HDF5 format and save to outputs directory
 # create_input_store: True
@@ -182,32 +216,12 @@ models:
   - initialize_landuse
   - initialize_households
   - compute_accessibility
-  - school_location
-  - workplace_location
-  - auto_ownership_simulate
-  - free_parking
-  - cdap_simulate
-  - mandatory_tour_frequency
-  - mandatory_tour_scheduling
-  - joint_tour_frequency
-  - joint_tour_composition
-  - joint_tour_participation
-  - joint_tour_destination
-  - joint_tour_scheduling
-  - non_mandatory_tour_frequency
-  - non_mandatory_tour_destination
-  - non_mandatory_tour_scheduling
-  - tour_mode_choice_simulate
-  - atwork_subtour_frequency
-  - atwork_subtour_destination
-  - atwork_subtour_scheduling
-  - atwork_subtour_mode_choice
-  - stop_frequency
-  - trip_purpose
-  - trip_destination
-  - trip_purpose_and_destination
-  - trip_scheduling
-  - trip_mode_choice
+  - ldt_participation
+# - school_location
+#  - workplace_location
+#  - auto_ownership_simulate
+#  - free_parking
+#  - cdap_simulate
   - write_data_dictionary
   - track_skim_usage
   - write_trip_matrices
