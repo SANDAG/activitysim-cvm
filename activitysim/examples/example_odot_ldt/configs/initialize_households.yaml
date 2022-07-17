@@ -1,0 +1,24 @@
+# all of this is done sequentially during the initialize_households stage
+annotate_tables:
+  # - tablename: persons
+    # annotate:
+      # SPEC: annotate_persons
+      # DF: persons
+      # TABLES:
+        # - households
+  - tablename: households
+    annotate:
+      # reference to csv annotation file
+      SPEC: annotate_households
+      # the table to adjust (?)
+      DF: households
+      # tables available to access in annotation
+      TABLES:
+        - persons
+        - land_use
+  # - tablename: persons
+    # annotate:
+      # SPEC: annotate_persons_after_hh
+      # DF: persons
+      # TABLES:
+        # - households

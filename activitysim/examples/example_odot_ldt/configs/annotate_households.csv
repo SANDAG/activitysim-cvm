@@ -1,0 +1,3 @@
+﻿Description,Target,Expression
+# ,,"description describes the field, unimportant in actual program, target refers to the actual variable reference, expression is the value of the target"
+income per person,income_per_person,households.INCOME / households.PERSONS

@@ -1,0 +1,7 @@
+
+# columns from land_use table to add to df
+land_use_columns: ['Total_Employment']
+
+CONSTANTS:
+  # dispersion parameters
+  dispersion_parameter_automobile: -0.05

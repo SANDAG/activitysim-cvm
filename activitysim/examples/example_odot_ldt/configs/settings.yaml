@@ -13,6 +13,8 @@
 # has a different id column name, you can rename it to the required index name with the rename_columns directive.
 # In the settings below, the 'TAZ' column in the imported table is renamed 'zone_id' in the rename_columns settings.
 #
+
+# enforced index names: {'households': 'household_id', 'persons': 'person_id', 'tours': 'tour_id', 'joint_tour_participants': 'participant_id', 'trips': 'trip_id', 'land_use': 'zone_id'}
 input_table_list:
   #
   # households (table index 'household_id')
@@ -22,18 +24,14 @@ input_table_list:
     index_col: household_id
     rename_columns:
       HHID: household_id  # household_id is the required index column
-      num_persons: hhsize
-      hinc: income
-      VEHICL: auto_ownership
-      TAZ: home_zone_id
     keep_columns:
-      - home_zone_id
-      - income
-      - hhsize
+      - TAZ
+      - INCOME
+      - PERSONS
       - BLD #building size variable
-     # - HHT
-      - auto_ownership
-      - num_workers
+      # - HHT
+      # - auto_ownership
+      # - num_workers
   #
   # persons (table index 'person_id')
   #
@@ -41,22 +39,21 @@ input_table_list:
     filename: persons.csv
     index_col: person_id
     rename_columns:
-      PERS_ID: person_id  # person_id is the required index column
-      AGEP: age
-      SEX: sex
+      index: person_id  # person_id is the required index column
+      HHID: household_id
     keep_columns:
+    # - PERID
       - household_id
-      - age
-      - sex
-      - pemploy
-      - pstudent
+      - SEX
+      - AGE
       - SCH
       - ESR
       - NAICSP02
-      - socp10
+      - SOCP10
       - SW_UNSPLIT_IND
       - SW_OCCUP
       - SW_SPLIT_IND
+      # don't use pstudent/pemploy if available, specified wrong
   #
   # land_use (table index 'zone_id')
   #
@@ -124,7 +121,7 @@ input_table_list:
 #input_store: ../output/input_data.h5
 
 # number of households to simulate
-households_sample_size:  100
+households_sample_size:  1000
 # simulate all households
 # households_sample_size: 0
 
@@ -216,12 +213,13 @@ models:
   - initialize_landuse
   - initialize_households
   - compute_accessibility
-  - ldt_participation
-# - school_location
-#  - workplace_location
-#  - auto_ownership_simulate
-#  - free_parking
-#  - cdap_simulate
+  # - ldt_participation
+  # - long_distance_trip_gen_household
+  # - school_location
+  # - workplace_location
+  # - auto_ownership_simulate
+  # - free_parking
+  # - cdap_simulate
   - write_data_dictionary
   - track_skim_usage
   - write_trip_matrices

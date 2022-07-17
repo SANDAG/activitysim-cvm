@@ -1,0 +1,15 @@
+Description,Target,Expression
+#,,
+#,, auto peak
+#,,
+#,, assume peak occurs in AM for outbound and PM for inbound
+peak round trip distance,_auPkTime,"skim_od[('CAR_TIME', 'PK')] + skim_do[('CAR_TIME', 'PK')]"
+decay function,_decay, exp(_auPkTime * dispersion_parameter_automobile)
+auto peak total,auPkTotal,df.Total_Employment * _decay
+#,,
+#,, auto off-peak
+#,,
+#,, assume midday occurs entirely in the midday period
+off-peak round trip distance,_auOpTime,"skim_od[('CAR_TIME', 'OP')] + skim_do[('CAR_TIME', 'OP')]"
+decay function,_decay, exp(_auOpTime * dispersion_parameter_automobile)
+auto off-peak total,auOpTotal,df.Total_Employment * _decay
