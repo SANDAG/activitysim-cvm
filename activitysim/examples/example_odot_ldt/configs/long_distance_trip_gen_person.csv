@@ -1,0 +1,26 @@
+Label,Description,Expression,No_Travel,Travel 
+util_worktravel_constant,Constants,1,,coef_worktravel_constant
+util_worktravel_hhworkers_1,1 household worker,num_workers== 1,,coef_worktravel_hhworkers_1
+util_worktravel_hhworkers_2,2 household workers,num_workers== 2,,coef_worktravel_hhworkers_2
+util_worktravel_hhworkers_3_up,3+ household workers,num_workers > 2,,coef_worktravel_hhworkers_3_up
+util_worktravel_hhautos_1,1 automobile,auto == 1,,coef_worktravel_hhautos_1
+util_worktravel_hhautos_2,2 automobile,auto == 2,,coef_worktravel_hhautos_2
+util_worktravel_hhautos_3_up,3+ automobile,auto > 2,,coef_worktravel_hhautos_3_up
+util_worktravel_hhsize_2,2 person household,hhsize == 2,,coef_worktravel_hhsize_2
+util_worktravel_hhsize_3,3 person household,hhsize == 3,,coef_worktravel_hhsize_3
+util_worktravel_hhsize_4_up,4+ household,hhsize > 3,,coef_worktravel_hhsize_4_up
+util_worktravel_hhincome_20k_40k,"income ranging from $20,000 to $40,000",(INCOME>=20000) & (INCOME<40000),,coef_worktravel_hhincome_20k_40k
+util_worktravel_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) & (INCOME<60000),,coef_worktravel_hhincome_40k_60k
+util_worktravel_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_worktravel_hhincome_60k_up
+util_worktravel_single_family_dwelling,lives in a single family home,(BLD==2) | (BLD==3),,coef_worktravel_single_family_dwelling
+util_worktravel_hhstudents,3+ household students,num_students > 2,,coef_worktravel_hhstudents
+util_worktravel_occupation_farming,TODO - Fix with correct values,SW_OCCUP==1,,coef_worktravel_occupation_farming
+util_worktravel_occupation_manufacturing,TODO - Fix with correct values,SW_OCCUP==2,,coef_worktravel_occupation_manufacturing
+util_worktravel_occupation_transportation,TODO - Fix with correct values,SW_OCCUP==3,,coef_worktravel_occupation_transportation
+util_worktravel_occupation_wholesale,TODO - Fix with correct values,SW_OCCUP==4,,coef_worktravel_occupation_wholesale
+util_worktravel_occupation_finance,TODO - Fix with correct values,SW_OCCUP==5,,coef_worktravel_occupation_finance
+util_worktravel_occupation_other,TODO - Fix with correct values,SW_OCCUP==6,,coef_worktravel_occupation_other
+util_worktravel_college_student,Person is College Student,(SCH>1) & (AGE>=18),,coef_worktravel_college_student
+util_worktravel_male,Male,SEX==1,,coef_worktravel_male
+util_worktravel_age,Age,AGE,,coef_worktravel_age
+util_worktravel_age_squared,Age Squared,AGE*AGE,,coef_worktravel_age_squared
