@@ -1,0 +1,9 @@
+Label,Description,Expression,cars0,cars1,cars2,cars3,cars4
+util_drivers_2,2 Adults (age 16+),num_drivers==2,,coef_cars1_drivers_2,coef_cars2_drivers_2,coef_cars3_drivers_2,coef_cars4_drivers_2
+util_drivers_3,3 Adults (age 16+),num_drivers==3,,coef_cars1_drivers_3,coef_cars2_drivers_3,coef_cars3_drivers_3,coef_cars4_drivers_3
+util_drivers_4_up,4+ Adults (age 16+),num_drivers>3,,coef_cars1_drivers_4_up,coef_cars2_drivers_4_up,coef_cars3_drivers_4_up,coef_cars4_drivers_4_up
+util_num_workers_clip_3,"Number of workers, capped at 3",@df.num_workers.clip(upper=3),,coef_cars1_num_workers_clip_3,coef_cars2_num_workers_clip_3,coef_cars3_num_workers_clip_3,coef_cars4_num_workers_clip_3
+util_hh_income_0_30k,"Piecewise Linear household income, $0-30k","@df.income_in_thousands.clip(0, 30)",,coef_cars1_hh_income_0_30k,coef_cars2_hh_income_0_30k,coef_cars3_hh_income_0_30k,coef_cars4_hh_income_0_30k
+util_hh_income_30_75k,"Piecewise Linear household income, $30-75k","@(df.income_in_thousands-30).clip(0, 45)",,coef_cars1_hh_income_30_up,coef_cars2_hh_income_30_up,coef_cars3_hh_income_30_up,coef_cars4_hh_income_30_up
+util_hh_income_75k_up,"Piecewise Linear household income, $75k+, capped at $125k","@(df.income_in_thousands-75).clip(0, 50)",,coef_cars1_hh_income_30_up,coef_cars2_hh_income_30_up,coef_cars3_hh_income_30_up,coef_cars4_hh_income_30_up
+util_asc,Constants,1,,coef_cars1_asc,coef_cars2_asc,coef_cars3_asc,coef_cars4_asc

@@ -215,11 +215,11 @@ models:
   - initialize_landuse
   - initialize_households
   - compute_accessibility
-  - long_distance_trip_gen_household
   # - school_location
   # - workplace_location
-  # - auto_ownership_simulate
+  - auto_ownership_simulate
   # - free_parking
+  # - long_distance_trip_gen_household
   # - cdap_simulate
   - write_data_dictionary
   - track_skim_usage
