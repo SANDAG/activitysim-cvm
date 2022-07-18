@@ -1,2 +1,16 @@
-Label,Description,Expression,no_travel,travel
-util_constant,Constant,1==1,,coef_asc_hh_travel
+Label,Description,Expression,No_Travel,Travel 
+util_constant,Constants,1,,coef_constant
+util_hhworkers_1,1 household worker,num_workers== 1,,coef_hhworkers_1
+util_hhworkers_2,2 household workers,num_workers== 2,,coef_hhworkers_2
+util_hhworkers_3_up,3+ household workers,num_workers > 2,,coef_hhworkers_3_up
+util_hhautos_1,1 automobile,auto == 1,,coef_hhautos_1
+util_hhautos_2,2 automobile,auto == 2,,coef_hhautos_2
+util_hhautos_3_up,3+ automobile,auto > 2,,coef_hhautos_3_up
+util_hhsize_2,2 person household,hhsize == 2,,coef_hhsize_2
+util_hhsize_3,3 person household,hhsize == 3,,coef_hhsize_3
+util_hhsize_4_up,4+ household,hhsize > 3,,coef_hhsize_4_up
+util_hhincome_20k_40k,"income ranging from $20,000 to $40,000",(INCOME>=20000) & (INCOME<40000),,coef_hhincome_20k_40k
+util_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) & (INCOME<60000),,coef_hhincome_40k_60k
+util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome_60k_up
+util_single_family_dwelling,lives in a single family home,(BLD==2) | (BLD==3),,coef_single_family_dwelling
+util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
