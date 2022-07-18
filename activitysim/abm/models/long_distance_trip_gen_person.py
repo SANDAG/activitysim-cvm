@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def long_distance_trip_gen_person(persons_merged, persons, households,
+def long_distance_trip_gen_person(persons, persons_merged, 
                   chunk_size, trace_hh_id):
     """
 
@@ -75,18 +75,18 @@ def long_distance_trip_gen_person(persons_merged, persons, households,
         estimator.write_override_choices(choices)
         estimator.end_estimation()
 
-    persons = persons_merged.to_frame()
-    persons_merged["long_distance_trip_gen_persons"] = (
-        choices.reindex(persons_merged.index).fillna(0).astype(bool)
+    persons = persons.to_frame()
+    persons["long_distance_trip_gen_persons"] = (
+        choices.reindex(persons.index).fillna(0).astype(bool)
     )
 
-    pipeline.replace_table("persons_merged", persons_merged)
+    pipeline.replace_table("persons", persons)
 
     tracing.print_summary(
         "long_distance_trip_gen_persons",
-        persons_merged.long_distance_trip_gen_persons,
+        persons.long_distance_trip_gen_persons,
         value_counts=True,
     )
 
     if trace_hh_id:
-        tracing.trace_df(persons_merged, label=trace_label, warn_if_empty=True)
+        tracing.trace_df(persons, label=trace_label, warn_if_empty=True)

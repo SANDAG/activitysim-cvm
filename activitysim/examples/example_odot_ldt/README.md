@@ -21,6 +21,4 @@ activitysim run -c configs -d data_full -o output
 # Random issues
 
 - in ldt_trip_generation_houeseholds, the ODOT model specification includes person-level variables in a household-level choice model.  I'm not sure why we did that or how that works.  Need to go back and look at ODOT code to figure it out. 
-- LDT trip generation choice model seems to work for households.  Need to add variable to household table. 
-- In LDT trip generation for persons, there is an error.  It appears the persons_merged table is empty. 
 - In LDT trip generation for persons, is there a more elegant way to segment by trip purpose. 
