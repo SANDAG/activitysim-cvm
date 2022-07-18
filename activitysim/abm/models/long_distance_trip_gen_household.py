@@ -19,7 +19,8 @@ def long_distance_trip_gen_household(households_merged, chunk_size, trace_hh_id)
     model_settings_file_name = "long_distance_trip_gen_household.yaml"
 
     choosers = households_merged.to_frame()
-    choosers = choosers[choosers.workplace_zone_id > -1]
+    # if we want to limit choosers, we can do so here
+    #choosers = choosers[choosers.workplace_zone_id > -1]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
     model_settings = config.read_model_settings(model_settings_file_name)

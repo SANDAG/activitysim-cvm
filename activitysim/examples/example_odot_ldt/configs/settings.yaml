@@ -24,10 +24,12 @@ input_table_list:
     index_col: household_id
     rename_columns:
       HHID: household_id  # household_id is the required index column
+      PERSONS: hhsize
+      TAZ: home_zone_id
     keep_columns:
-      - TAZ
+      - home_zone_id
+      - hhsize
       - INCOME
-      - PERSONS
       - BLD #building size variable
       # - HHT
       # - auto_ownership
@@ -213,8 +215,7 @@ models:
   - initialize_landuse
   - initialize_households
   - compute_accessibility
-  # - ldt_participation
-  # - long_distance_trip_gen_household
+  - long_distance_trip_gen_household
   # - school_location
   # - workplace_location
   # - auto_ownership_simulate
