@@ -75,15 +75,15 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
         estimator.end_estimation()
 
     households = households.to_frame()
-    households["ldt_tour_gen_household"] = (
+    households["ldt_tour_gen_HOUSEHOLD"] = (
         choices.reindex(households.index).fillna(0).astype(bool)
     )
 
     pipeline.replace_table("households", households)
 
     tracing.print_summary(
-        "ldt_tour_gen_household",
-        households.ldt_tour_gen_household,
+        "ldt_tour_gen_HOUSEHOLD",
+        households.ldt_tour_gen_HOUSEHOLD,
         value_counts=True,
     )
 

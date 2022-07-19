@@ -8,7 +8,6 @@ from .util import estimation
 
 logger = logging.getLogger(__name__)
 
-
 @inject.step()
 def ldt_tour_gen_person(persons, persons_merged, 
                   chunk_size, trace_hh_id):
@@ -20,15 +19,13 @@ def ldt_tour_gen_person(persons, persons_merged,
     model_settings_file_name = "ldt_tour_gen_person.yaml"
 
     choosers = persons_merged.to_frame()
-    # if we want to limit choosers, we can do so here
-    #choosers = choosers[choosers.workplace_zone_id > -1]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_tour_gen_person")
 
     constants = config.get_model_constants(model_settings)
-
+        
     # - preprocessor
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
@@ -44,49 +41,57 @@ def ldt_tour_gen_person(persons, persons_merged,
             trace_label=trace_label,
         )
 
-    model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])
-    coefficients_df = simulate.read_model_coefficients(model_settings)
-    model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
-
-    nest_spec = config.get_logit_model_settings(model_settings)
-
-    if estimator:
-        estimator.write_model_settings(model_settings, model_settings_file_name)
-        estimator.write_spec(model_settings)
-        estimator.write_coefficients(coefficients_df, model_settings)
-        estimator.write_choosers(choosers)
-
-    choices = simulate.simple_simulate(
-        choosers=choosers,
-        spec=model_spec,
-        nest_spec=nest_spec,
-        locals_d=constants,
-        chunk_size=chunk_size,
-        trace_label=trace_label,
-        trace_choice_name="ldt_tour_gen_person",
-        estimator=estimator,
-    )
-
-    if estimator:
-        estimator.write_choices(choices)
-        choices = estimator.get_survey_values(
-            choices, "persons", "ldt_tour_gen_person"
-        )
-        estimator.write_override_choices(choices)
-        estimator.end_estimation()
-
+    model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])    
+    spec_purposes = model_settings.get('SPEC_PURPOSES', {})
+    
+    # needs to be outside the loop so we do it only once
     persons = persons.to_frame()
-    persons["ldt_tour_gen_persons"] = (
-        choices.reindex(persons.index).fillna(0).astype(bool)
-    )
+        
+    for purpose_settings in spec_purposes:
+    
+        purpose_name = purpose_settings['NAME']
+        
+        coefficients_df = simulate.read_model_coefficients(purpose_settings)
+        model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
 
-    pipeline.replace_table("persons", persons)
+        nest_spec = config.get_logit_model_settings(model_settings)
 
-    tracing.print_summary(
-        "ldt_tour_gen_persons",
-        persons.ldt_tour_gen_persons,
-        value_counts=True,
-    )
+        if estimator:
+            estimator.write_model_settings(model_settings, model_settings_file_name)
+            estimator.write_spec(model_settings)
+            estimator.write_coefficients(coefficients_df, model_settings)
+            estimator.write_choosers(choosers)
 
-    if trace_hh_id:
-        tracing.trace_df(persons, label=trace_label, warn_if_empty=True)
+        choices = simulate.simple_simulate(
+            choosers=choosers,
+            spec=model_spec,
+            nest_spec=nest_spec,
+            locals_d=constants,
+            chunk_size=chunk_size,
+            trace_label=trace_label,
+            trace_choice_name="ldt_tour_gen_person_" + purpose_name,
+            estimator=estimator,
+        )
+
+        if estimator:
+            estimator.write_choices(choices)
+            choices = estimator.get_survey_values(
+                choices, "persons", "ldt_tour_gen_person_" + purpose_name
+            )
+            estimator.write_override_choices(choices)
+            estimator.end_estimation()
+
+        persons["ldt_tour_gen_persons_" + purpose_name] = (
+            choices.reindex(persons.index).fillna(0).astype(bool)
+        )
+
+        pipeline.replace_table("persons", persons)
+
+        tracing.print_summary(
+            "ldt_tour_gen_persons_" + purpose_name,
+            persons["ldt_tour_gen_persons_" + purpose_name],
+            value_counts=True,
+        )
+
+        if trace_hh_id:
+            tracing.trace_df(persons, label=trace_label, warn_if_empty=True)
