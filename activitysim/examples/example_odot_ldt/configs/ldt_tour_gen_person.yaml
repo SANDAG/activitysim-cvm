@@ -1,0 +1,9 @@
+
+SPEC: ldt_tour_gen_person.csv
+COEFFICIENTS: ldt_tour_gen_person_coefficients.csv
+
+LOGIT_TYPE: MNL
+
+# put global constants here
+CONSTANTS:
+  DUMMY_CONSTANT: 1

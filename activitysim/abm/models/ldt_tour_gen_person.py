@@ -10,14 +10,14 @@ logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def long_distance_trip_gen_person(persons, persons_merged, 
+def ldt_tour_gen_person(persons, persons_merged, 
                   chunk_size, trace_hh_id):
     """
 
     """
 
-    trace_label = "long_distance_trip_gen_person"
-    model_settings_file_name = "long_distance_trip_gen_person.yaml"
+    trace_label = "ldt_tour_gen_person"
+    model_settings_file_name = "ldt_tour_gen_person.yaml"
 
     choosers = persons_merged.to_frame()
     # if we want to limit choosers, we can do so here
@@ -25,7 +25,7 @@ def long_distance_trip_gen_person(persons, persons_merged,
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
     model_settings = config.read_model_settings(model_settings_file_name)
-    estimator = estimation.manager.begin_estimation("long_distance_trip_gen_person")
+    estimator = estimation.manager.begin_estimation("ldt_tour_gen_person")
 
     constants = config.get_model_constants(model_settings)
 
@@ -63,28 +63,28 @@ def long_distance_trip_gen_person(persons, persons_merged,
         locals_d=constants,
         chunk_size=chunk_size,
         trace_label=trace_label,
-        trace_choice_name="long_distance_trip_gen_person",
+        trace_choice_name="ldt_tour_gen_person",
         estimator=estimator,
     )
 
     if estimator:
         estimator.write_choices(choices)
         choices = estimator.get_survey_values(
-            choices, "persons", "long_distance_trip_gen_person"
+            choices, "persons", "ldt_tour_gen_person"
         )
         estimator.write_override_choices(choices)
         estimator.end_estimation()
 
     persons = persons.to_frame()
-    persons["long_distance_trip_gen_persons"] = (
+    persons["ldt_tour_gen_persons"] = (
         choices.reindex(persons.index).fillna(0).astype(bool)
     )
 
     pipeline.replace_table("persons", persons)
 
     tracing.print_summary(
-        "long_distance_trip_gen_persons",
-        persons.long_distance_trip_gen_persons,
+        "ldt_tour_gen_persons",
+        persons.ldt_tour_gen_persons,
         value_counts=True,
     )
 
