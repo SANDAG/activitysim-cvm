@@ -1,0 +1,9 @@
+
+SPEC: long_distance_trip_gen_work.csv
+COEFFICIENTS: long_distance_trip_gen_work_coefficients.csv
+
+LOGIT_TYPE: MNL
+
+# put global constants here
+CONSTANTS:
+  DUMMY_CONSTANT: 1

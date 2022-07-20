@@ -1,11 +1,11 @@
 # all of this is done sequentially during the initialize_households stage
 annotate_tables:
-  # - tablename: persons
-    # annotate:
-      # SPEC: annotate_persons
-      # DF: persons
-      # TABLES:
-        # - households
+  - tablename: persons
+    annotate:
+      SPEC: annotate_persons
+      DF: persons
+      TABLES:
+        - households
   - tablename: households
     annotate:
       # reference to csv annotation file
@@ -16,9 +16,9 @@ annotate_tables:
       TABLES:
         - persons
         - land_use
-  # - tablename: persons
-    # annotate:
-      # SPEC: annotate_persons_after_hh
-      # DF: persons
-      # TABLES:
-        # - households
+  - tablename: persons
+    annotate:
+      SPEC: annotate_persons_after_hh
+      DF: persons
+      TABLES:
+        - households

@@ -220,7 +220,7 @@ models:
   - auto_ownership_simulate
   # - free_parking
   - long_distance_trip_gen_household
-  - long_distance_trip_gen_person
+  - long_distance_trip_gen_work
   # - cdap_simulate
   - write_data_dictionary
   - track_skim_usage
@@ -238,6 +238,7 @@ output_tables:
     - households
     - persons
     - tours
+    - longdist_tours
     - trips
     - joint_tour_participants
 
