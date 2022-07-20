@@ -69,11 +69,12 @@ def process_longdist_tours(df, tour_counts, tour_category):
 
     Parameters
     ----------
-    persons: pandas.DataFrame
-        persons table containing a non_mandatory_tour_frequency column
-        which has the index of the chosen alternative as the value
+    df: pandas.DataFrame
+        persons or household table containing
     tour_counts : pandas.Series
-        Matches the persons
+        Matches the df, a tour frequency column
+    tour_category : str
+        A label for the type of tours
 
     Returns
     -------
@@ -88,11 +89,12 @@ def process_longdist_tours(df, tour_counts, tour_category):
 
     if "household_id" in df.columns:
         tours["household_id"] = reindex(df.household_id, tours.person_id)
+        tours["origin"] = reindex(df.home_zone_id, tours.person_id)
     else:
         # TODO get smart about this, don't just assume we're in households...
         tours["household_id"] = tours["person_id"]
+        tours["origin"] = reindex(df.home_zone_id, tours.household_id)
         tours["person_id"] = -1  # hh tours don't use person ids
-    tours["origin"] = reindex(df.home_zone_id, tours.person_id)
 
     # assign stable (predictable) tour_id
     set_longdist_tour_index(tours)
