@@ -29,7 +29,7 @@ def set_longdist_tour_index(tours):
     """
 
     tour_num_col = "tour_type_num"
-    possible_tours = ["longdist_household1", "longdist_work1", "longdist_other1"]
+    possible_tours = ["longdist_household1", "longdist_workrelated1", "longdist_other1"]
     possible_tours_count = len(possible_tours)
 
     assert tour_num_col in tours.columns
@@ -83,17 +83,16 @@ def process_longdist_tours(df, tour_counts, tour_category):
         a person_id column, and a tour type column which comes from the
         column names of the alternatives DataFrame supplied above.
     """
-    assert tour_category in ["longdist_household", "longdist_work", "longdist_other"]
 
     tours = create_tours(tour_counts, tour_category=tour_category)
 
     if "household_id" in df.columns:
         tours["household_id"] = reindex(df.household_id, tours.person_id)
     else:
-        # TODO get smart about this, don't just assume
+        # TODO get smart about this, don't just assume we're in households...
+        tours["person_id"] = -1  # hh tours don't use person ids
         tours["household_id"] = reindex(pd.Series(df.index, index=df.index), tours.person_id)
     tours["origin"] = reindex(df.home_zone_id, tours.person_id)
-    tours["person_id"] = -1 # hh tours don't use person ids
 
     # assign stable (predictable) tour_id
     set_longdist_tour_index(tours)

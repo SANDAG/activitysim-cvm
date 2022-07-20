@@ -17,8 +17,8 @@ from . import joint_tour_frequency
 from . import joint_tour_participation
 from . import joint_tour_scheduling
 from . import location_choice
-from . import long_distance_trip_gen_household
-from . import long_distance_trip_gen_person
+from . import ldt_tour_gen_household
+from . import ldt_tour_gen_person
 from . import mandatory_scheduling
 from . import mandatory_tour_frequency
 from . import non_mandatory_destination

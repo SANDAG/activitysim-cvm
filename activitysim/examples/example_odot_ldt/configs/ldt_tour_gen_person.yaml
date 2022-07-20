@@ -1,0 +1,14 @@
+
+SPEC: ldt_tour_gen_person.csv
+
+LOGIT_TYPE: MNL
+
+SPEC_PURPOSES:
+  - NAME: WORKRELATED
+    COEFFICIENTS: ldt_tour_gen_person_coefficients_WORKRELATED.csv
+  - NAME: OTHER
+    COEFFICIENTS: ldt_tour_gen_person_coefficients_OTHER.csv
+
+# put global constants here
+CONSTANTS:
+  DUMMY_CONSTANT: 1

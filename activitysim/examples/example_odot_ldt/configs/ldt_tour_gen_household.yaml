@@ -1,0 +1,9 @@
+
+SPEC: ldt_tour_gen_household.csv
+COEFFICIENTS: ldt_tour_gen_household_coefficients.csv
+
+LOGIT_TYPE: MNL
+
+# put global constants here
+CONSTANTS:
+  DUMMY_CONSTANT: 1
