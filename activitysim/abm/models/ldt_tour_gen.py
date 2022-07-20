@@ -90,8 +90,8 @@ def process_longdist_tours(df, tour_counts, tour_category):
         tours["household_id"] = reindex(df.household_id, tours.person_id)
     else:
         # TODO get smart about this, don't just assume we're in households...
+        tours["household_id"] = tours["person_id"]
         tours["person_id"] = -1  # hh tours don't use person ids
-        tours["household_id"] = reindex(pd.Series(df.index, index=df.index), tours.person_id)
     tours["origin"] = reindex(df.home_zone_id, tours.person_id)
 
     # assign stable (predictable) tour_id
