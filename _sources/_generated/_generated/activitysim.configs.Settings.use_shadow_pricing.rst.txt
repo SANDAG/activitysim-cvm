@@ -1,6 +1,0 @@
-activitysim.configs.Settings.use\_shadow\_pricing
-=================================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: Settings.use_shadow_pricing

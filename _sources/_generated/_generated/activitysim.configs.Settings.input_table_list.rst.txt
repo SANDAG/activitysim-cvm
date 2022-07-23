@@ -1,6 +1,0 @@
-activitysim.configs.Settings.input\_table\_list
-===============================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: Settings.input_table_list

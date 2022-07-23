@@ -1,6 +1,0 @@
-activitysim.configs.InputTable.keep\_columns
-============================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: InputTable.keep_columns

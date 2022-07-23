@@ -1,6 +1,0 @@
-activitysim.configs.Settings.resume\_after
-==========================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: Settings.resume_after

@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Developers &#8212; ActivitySim 1.0.4 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Developers &#8212; ActivitySim 0.1.dev1+g0f36391 documentation</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,13 +20,10 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -41,7 +40,7 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -104,7 +103,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -140,10 +140,18 @@
    Core Components
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../benchmarking.html">
+   Benchmarking
+  </a>
+ </li>
 </ul>
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -154,7 +162,7 @@
               
               <div class="toc-item">
                 
-<div class="tocsection onthispage pt-5 pb-3">
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
 
@@ -186,8 +194,8 @@
               
               <div>
                 
-  <div class="section" id="developers">
-<h1>Developers<a class="headerlink" href="#developers" title="Permalink to this headline">¶</a></h1>
+  <section id="developers">
+<h1>Developers<a class="headerlink" href="#developers" title="Permalink to this headline">#</a></h1>
 <p>The mission of the ActivitySim project is to create and maintain advanced, open-source,
 activity-based travel behavior modeling software based on best software development
 practices for distribution at no charge to the public.</p>
@@ -197,8 +205,8 @@ and resources to support project development. New member agencies are welcome to
 the consortium. All member agencies help make decisions about development priorities
 and benefit from contributions of other agency partners.  Additional information about
 the development and management of the ActivitySim is on the <a class="reference external" href="http://www.activitysim.org">project site</a>.</p>
-<div class="section" id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Developer Installation</a><ul>
@@ -208,9 +216,7 @@ the development and management of the ActivitySim is on the <a class="reference 
 </li>
 <li class="toctree-l1"><a class="reference internal" href="using-sharrow.html">Using Sharrow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="using-sharrow.html#getting-the-code">Getting the Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-sharrow.html#mtc-test-example">MTC Test Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-sharrow.html#mtc-full-example">MTC Full Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using-sharrow.html#arc-test-example">ARC Test Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-sharrow.html#prototype-mtc-examples">Prototype MTC Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="workflows.html">Workflows</a></li>
@@ -259,6 +265,7 @@ the development and management of the ActivitySim is on the <a class="reference 
 <li class="toctree-l2"><a class="reference internal" href="../models.html#transit-pass-subsidy">Transit Pass Subsidy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#transit-pass-ownership">Transit Pass Ownership</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#auto-ownership">Auto Ownership</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models.html#vehicle-type-choice">Vehicle Type Choice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#telecommute-frequency">Telecommute Frequency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#free-parking-eligibility">Free Parking Eligibility</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#coordinated-daily-activity-pattern">Coordinated Daily Activity Pattern</a></li>
@@ -272,6 +279,7 @@ the development and management of the ActivitySim is on the <a class="reference 
 <li class="toctree-l2"><a class="reference internal" href="../models.html#non-mandatory-tour-frequency">Non-Mandatory Tour Frequency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#non-mandatory-tour-destination-choice">Non-Mandatory Tour Destination Choice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#non-mandatory-tour-scheduling">Non-Mandatory Tour Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models.html#vehicle-allocation">Vehicle Allocation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#tour-mode-choice">Tour Mode Choice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#at-work-subtours-frequency">At-work Subtours Frequency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#at-work-subtours-destination-choice">At-work Subtours Destination Choice</a></li>
@@ -288,7 +296,7 @@ the development and management of the ActivitySim is on the <a class="reference 
 <li class="toctree-l2"><a class="reference internal" href="../models.html#parking-location-choice">Parking Location Choice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#write-trip-matrices">Write Trip Matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../models.html#util">Util</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../models.html#id30">CDAP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models.html#id32">CDAP</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../models.html#estimation">Estimation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../models.html#module-activitysim.abm.models.util.logsums">Logsums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../models.html#module-activitysim.abm.models.util.mode">Mode</a></li>
@@ -358,17 +366,28 @@ the development and management of the ActivitySim is on the <a class="reference 
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking.html">Benchmarking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#benchmarking-setup">Benchmarking Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#running-benchmarks">Running Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#threading-limits">Threading Limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#submitting-benchmarks">Submitting Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#publishing-to-github-pages">Publishing to Github Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#profiling">Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#writing-new-benchmarks">Writing New Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarking.html#running-benchmarks-for-pull-requests">Running Benchmarks for Pull Requests</a></li>
+</ul>
+</li>
 </ul>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="../howitworks.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -391,7 +410,8 @@ the development and management of the ActivitySim is on the <a class="reference 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 <footer class="footer mt-5 mt-md-0">
   <div class="container">
     

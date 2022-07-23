@@ -44,11 +44,14 @@ want to install in a new directory called "workspace" run:
 ```sh
 mkdir workspace
 cd workspace
-mamba env create -p ASIM-ENV --file https://raw.githubusercontent.com/camsys/activitysim/pydata-docs/conda-environments/activitysim-dev-2.yml
+mamba env create -p ASIM-ENV --file https://raw.githubusercontent.com/camsys/activitysim/with-sharrow-ga/conda-environments/activitysim-dev-base.yml
 conda activate ./ASIM-ENV
 git clone https://github.com/ActivitySim/sharrow.git
 python -m pip install -e ./sharrow
-git clone https://github.com/ActivitySim/activitysim.git
+git clone https://github.com/camsys/activitysim.git
+cd activitysim
+git switch with-sharrow-ga
+cd ..
 python -m pip install -e ./activitysim
 ```
 

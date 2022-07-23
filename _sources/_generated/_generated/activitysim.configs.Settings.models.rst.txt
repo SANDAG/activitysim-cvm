@@ -1,6 +1,0 @@
-activitysim.configs.Settings.models
-===================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: Settings.models

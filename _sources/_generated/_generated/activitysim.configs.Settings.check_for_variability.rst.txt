@@ -1,6 +1,0 @@
-activitysim.configs.Settings.check\_for\_variability
-====================================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: Settings.check_for_variability

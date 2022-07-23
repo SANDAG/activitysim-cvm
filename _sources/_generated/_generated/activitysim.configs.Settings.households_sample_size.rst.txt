@@ -1,6 +1,0 @@
-activitysim.configs.Settings.households\_sample\_size
-=====================================================
-
-.. currentmodule:: activitysim.configs
-
-.. autoattribute:: Settings.households_sample_size
