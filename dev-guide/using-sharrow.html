@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Using Sharrow &#8212; ActivitySim 0.1.dev1+ge819d07 documentation</title>
+    <title>Using Sharrow &#8212; ActivitySim 0.1.dev1+g345fe8a documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -206,10 +206,22 @@
 <h2>Getting the Code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">#</a></h2>
 <p>We’ll assume that activitysim and sharrow have been installed in editable
 mode, per the <a class="reference internal" href="install.html"><span class="doc std std-doc">developer install instructions</span></a>.</p>
-<p>The code to implement <code class="docutils literal notranslate"><span class="pre">sharrow</span></code> in <code class="docutils literal notranslate"><span class="pre">activitysim</span></code> is in pull request
-<a class="reference external" href="https://github.com/ActivitySim/activitysim/pull/542">#542</a>.</p>
+<p>The code to implement <code class="docutils literal notranslate"><span class="pre">sharrow</span></code> in <code class="docutils literal notranslate"><span class="pre">activitysim</span></code> is in the
+<a class="reference external" href="https://github.com/camsys/activitysim/tree/sharrow-black">sharrow-black</a> branch
+of the <a class="reference external" href="https://github.com/camsys/activitysim">camsys/activitysim</a> repository.
+If you have checked out from this repository directly, you can just switch to
+the correct branch:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> activitysim
-gh pr checkout <span class="m">542</span>  <span class="c1"># use `gh auth login` first if needed</span>
+git switch sharrow-black
+<span class="nb">cd</span> ..
+</pre></div>
+</div>
+<p>If your local Git repository is configured with only the main ActivitySim
+parent repo as its remote, you can find the code in
+<a class="reference external" href="https://github.com/ActivitySim/activitysim/pull/579">PR #579</a>, accessible on the
+command line using the <code class="docutils literal notranslate"><span class="pre">gh</span></code> tool:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> activitysim
+gh pr checkout <span class="m">579</span>  <span class="c1"># use `gh auth login` first if needed</span>
 <span class="nb">cd</span> ..
 </pre></div>
 </div>
@@ -241,7 +253,7 @@ as well as a reference implementation (version 1.0.4), all together using the
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>activitysim workflow sharrow-contrast/mtc_comprehensive
 </pre></div>
 </div>
-<p>All these performance tests assume you have suffient RAM to run without chunking.</p>
+<p>All these performance tests assume you have sufficient RAM to run without chunking.</p>
 </section>
 </section>
 

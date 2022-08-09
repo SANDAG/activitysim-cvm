@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Getting Started &#8212; ActivitySim 0.1.dev1+ge819d07 documentation</title>
+    <title>Getting Started &#8212; ActivitySim 0.1.dev1+g345fe8a documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -124,6 +124,43 @@
   <a class="reference internal" href="examples.html">
    Examples
   </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="users-guide/configuration.html">
+   Configuration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.Settings.html">
+     activitysim.core.configuration.Settings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.InputTable.html">
+     activitysim.core.configuration.InputTable
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.NetworkSettings.html">
+     activitysim.core.configuration.NetworkSettings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.TAZ_Settings.html">
+     activitysim.core.configuration.TAZ_Settings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.ZarrDigitalEncoding.html">
+     activitysim.core.configuration.ZarrDigitalEncoding
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="cli.html">
@@ -352,8 +389,8 @@ check the current active environment with <code class="docutils literal notransl
 <ul class="simple">
 <li><p>Open a command prompt</p></li>
 <li><p>Activate the conda environment with ActivitySim installed (i.e. <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">asim</span></code>)</p></li>
-<li><p>Type <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">create</span> <span class="pre">-e</span> <span class="pre">example_mtc</span> <span class="pre">-d</span> <span class="pre">test_example_mtc</span></code> to copy the very small MTC example to a new test_example_mtc directory</p></li>
-<li><p>Change to the test_example_mtc directory</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">create</span> <span class="pre">-e</span> <span class="pre">prototype_mtc</span> <span class="pre">-d</span> <span class="pre">test_prototype_mtc</span></code> to copy the very small prototype_mtc example to a new test_prototype_mtc directory</p></li>
+<li><p>Change to the test_prototype_mtc directory</p></li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">run</span> <span class="pre">-c</span> <span class="pre">configs</span> <span class="pre">-o</span> <span class="pre">output</span> <span class="pre">-d</span> <span class="pre">data</span></code> to run the example</p></li>
 <li><p>Review the outputs in the output directory</p></li>
 </ul>
@@ -362,7 +399,7 @@ check the current active environment with <code class="docutils literal notransl
 <p>Common configuration settings can be overridden at runtime.  See <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">-h</span></code>, <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">create</span> <span class="pre">-h</span></code> and <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">run</span> <span class="pre">-h</span></code>.
 ActivitySim model runs can be configured with settings file inheritance to avoid duplicating settings across model configurations.  See <a class="reference internal" href="cli.html#cli"><span class="std std-ref">Command Line Interface</span></a> for more information.</p>
 </div>
-<p>Additional examples, including the full scale MTC regional demand model, estimation integration examples, multiple zone system examples,
+<p>Additional examples, including the full scale prototype MTC regional demand model, estimation integration examples, multiple zone system examples,
 and examples for agency partners are available for creation by typing <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">create</span> <span class="pre">-l</span></code>.  To create these examples, ActivitySim downloads the (large) input files from
 the <a class="reference external" href="https://github.com/rsginc/activitysim_resources">ActivitySim resources</a> repository.  See <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Examples</span></a> for more information.</p>
 </section>
@@ -373,13 +410,13 @@ the <a class="reference external" href="https://github.com/rsginc/activitysim_re
 <li><p>Open a conda prompt and activate the conda environment with ActivitySim installed</p></li>
 <li><p>If needed, <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code> so you can run jupyter notebooks</p></li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> to launch the web-based notebook manager</p></li>
-<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">examples/example_mtc/notebooks</span></code> folder and select a notebook to learn more:</p>
+<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">examples/prototype_mtc/notebooks</span></code> folder and select a notebook to learn more:</p>
 <ul>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_mtc/notebooks/getting_started.ipynb/">Getting started</a></p></li>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_mtc/notebooks/summarizing_results.ipynb/">Summarizing results</a></p></li>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_mtc/notebooks/change_in_auto_ownership.ipynb/">Testing a change in auto ownership</a></p></li>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_mtc/notebooks/adding_tncs.ipynb/">Adding TNCs</a></p></li>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_mtc/notebooks/memory_usage.ipynb/">Memory usage</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/prototype_mtc/notebooks/getting_started.ipynb/">Getting started</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/prototype_mtc/notebooks/summarizing_results.ipynb/">Summarizing results</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/prototype_mtc/notebooks/change_in_auto_ownership.ipynb/">Testing a change in auto ownership</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/prototype_mtc/notebooks/adding_tncs.ipynb/">Adding TNCs</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/prototype_mtc/notebooks/memory_usage.ipynb/">Memory usage</a></p></li>
 </ul>
 </li>
 </ul>
@@ -391,11 +428,11 @@ the <a class="reference external" href="https://github.com/rsginc/activitysim_re
 <li><p>The number of households to be simulated for disaggregate model steps</p></li>
 <li><p>The number of model zones (for each zone system) for aggregate model steps</p></li>
 <li><p>The number and size of network skims by mode and time-of-day</p></li>
-<li><p>The number of zone systems, see <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a></p></li>
+<li><p>The number of zone systems, see <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a></p></li>
 <li><p>The desired runtimes</p></li>
 </ul>
 <p>ActivitySim framework models use a significant amount of RAM since they store data in-memory to reduce
-data access time in order to minimize runtime.  For example, the example MTC Travel Model One model has 2.7 million
+data access time in order to minimize runtime.  For example, the prototype MTC example model has 2.7 million
 households, 7.5 million people, 1475 zones, 826 network skims and has been run between one hour and one day depending
 on the amount of RAM and number of processors allocated.  See <a class="reference internal" href="howitworks.html#multiprocessing"><span class="std std-ref">Multiprocessing</span></a> and <a class="reference internal" href="core.html#chunk-size"><span class="std std-ref">Chunk</span></a> for more information.</p>
 <div class="admonition note">

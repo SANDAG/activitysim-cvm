@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Models &#8212; ActivitySim 0.1.dev1+ge819d07 documentation</title>
+    <title>Models &#8212; ActivitySim 0.1.dev1+g345fe8a documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -604,7 +604,7 @@ destination.</p>
 </dd>
 </dl>
 <p>These steps are repeated until shadow pricing convergence criteria are satisfied or a max number of iterations is reached.  See <a class="reference internal" href="#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a>.</p>
-<p>School location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>School location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interfaces to the model is the <a class="reference internal" href="#activitysim.abm.models.location_choice.school_location" title="activitysim.abm.models.location_choice.school_location"><code class="xref py py-func docutils literal notranslate"><span class="pre">school_location()</span></code></a> function.
 This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="examples.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how to write logsums for estimation.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">persons</span></code> | Result Field: <code class="docutils literal notranslate"><span class="pre">school_taz</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">TAZ,</span> <span class="pre">alt_dest,</span> <span class="pre">AM</span> <span class="pre">time</span> <span class="pre">period,</span> <span class="pre">MD</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
@@ -628,7 +628,7 @@ which describe the quantity of work opportunities in each possible destination.<
 </dd>
 </dl>
 <p>These steps are repeated until shadow pricing convergence criteria are satisfied or a max number of iterations is reached.  See <a class="reference internal" href="#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a>.</p>
-<p>Work location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Work location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interfaces to the model is the <a class="reference internal" href="#activitysim.abm.models.location_choice.workplace_location" title="activitysim.abm.models.location_choice.workplace_location"><code class="xref py py-func docutils literal notranslate"><span class="pre">workplace_location()</span></code></a> function.
 This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="examples.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how to write logsums for estimation.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">persons</span></code> | Result Field: <code class="docutils literal notranslate"><span class="pre">workplace_taz</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">TAZ,</span> <span class="pre">alt_dest,</span> <span class="pre">AM</span> <span class="pre">time</span> <span class="pre">period,</span> <span class="pre">PM</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
@@ -1118,7 +1118,7 @@ user flexibility to compile and share a single vehicle type data file containing
 different scenario years.</p></li>
 <li><p>Optional additional settings that work the same in other models are constants, expression preprocessor, and annotate tables.</p></li>
 </ul>
-<p>Input vehicle type data included in <a class="reference internal" href="examples.html#example-mtc-extended"><span class="std std-ref">example_mtc_extended</span></a> came from a variety of sources. The number of vehicle makes, models, MPG, and
+<p>Input vehicle type data included in <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> came from a variety of sources. The number of vehicle makes, models, MPG, and
 electric vehicle range was sourced from the Enivornmental Protection Agency (EPA).  Additional data on vehicle costs were derived from the
 National Household Travel Survey. Auto operating costs in the vehicle type data file were a sum of fuel costs and maintenance costs.
 Fuel costs were calculated from MPG assuming a $3.00 cost for a gallon of gas. When MPG was not available to calculate fuel costs,
@@ -1129,11 +1129,11 @@ Motorcycles were assigned the small sedan maintenance costs since they were not 
 Maintenance costs were not varied by vehicle year. (According to
 <a class="reference external" href="https://www.bls.gov/opub/btn/volume-3/pdf/americans-aging-autos.pdf">data from the U.S. Bureau of Labor Statistics</a>,
 there was no consistent relationship between vehicle age and maintenance costs.)</p>
-<p>Using the above methodology, the average auto operating costs of vehicles output from <a class="reference internal" href="examples.html#example-mtc-extended"><span class="std std-ref">example_mtc_extended</span></a> was 18.4 cents.
-This value is very close to the auto operating cost of 18.3 cents used in <a class="reference internal" href="examples.html#example-mtc"><span class="std std-ref">example_mtc</span></a>.
-Non-household vehicles in example_mtc_extended use the auto operating cost of 18.3 cents used in example_mtc.
+<p>Using the above methodology, the average auto operating costs of vehicles output from <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> was 18.4 cents.
+This value is very close to the auto operating cost of 18.3 cents used in <a class="reference internal" href="examples.html#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>.
+Non-household vehicles in prototype_mtc_extended use the auto operating cost of 18.3 cents used in prototype_mtc.
 Users are encouraged to make their own assumptions and calculate auto operating costs as they see fit.</p>
-<p>The distribution of fuel type probabilities included in <a class="reference internal" href="examples.html#example-mtc-extended"><span class="std std-ref">example_mtc_extended</span></a> are computed directly from the National Household Travel Survey data
+<p>The distribution of fuel type probabilities included in <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> are computed directly from the National Household Travel Survey data
 and include the entire US. Therefore, there is “lumpiness” in probabilities due to poor statistics in the data for some vehicle types.
 The user is encouraged to adjust the probabilities to their modeling region and “smooth” them for more consistent results.</p>
 <p>Further discussion of output results and model sensitivities can be found <a class="reference external" href="https://github.com/ActivitySim/activitysim/wiki/Project-Meeting-2022.05.05">here</a>.</p>
@@ -1455,7 +1455,7 @@ combination, demographics, and time pattern characteristics such as the time win
 from previously scheduled tours. This model uses person <a class="reference internal" href="core.html#time-windows"><span class="std std-ref">Person Time Windows</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">example_mtc</span></code>, the modeled time periods for all submodels are hourly from 3 am to 3 am the next day, and any times before 5 am are shifted to time period 5, and any times after 11 pm are shifted to time period 23.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">prototype_mtc</span></code>, the modeled time periods for all submodels are hourly from 3 am to 3 am the next day, and any times before 5 am are shifted to time period 5, and any times after 11 pm are shifted to time period 23.</p>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">tour_departure_and_duration_segments.csv</span></code> is included in the configs, then the model
 will use these representative start and end time periods when calculating mode choice logsums
@@ -1595,7 +1595,7 @@ the primary destination.</p>
 </ul>
 </dd>
 </dl>
-<p>Joint tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Joint tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interface to the model is the <a class="reference internal" href="#activitysim.abm.models.joint_tour_destination.joint_tour_destination" title="activitysim.abm.models.joint_tour_destination.joint_tour_destination"><code class="xref py py-func docutils literal notranslate"><span class="pre">joint_tour_destination()</span></code></a>
 function.  This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="examples.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how
 to write logsums for estimation.</p>
@@ -1693,7 +1693,7 @@ othdiscr, eatout, and social trips in various combination.</p>
 <p>The non-mandatory tour destination choice model chooses a destination zone for
 non-mandatory tours.  The three step (sample, logsums, final choice) process also used for
 mandatory tour destination choice is used for non-mandatory tour destination choice.</p>
-<p>Non-mandatory tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Non-mandatory tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interface to the non-mandatory tour destination choice model is the
 <a class="reference internal" href="#activitysim.abm.models.non_mandatory_destination.non_mandatory_tour_destination" title="activitysim.abm.models.non_mandatory_destination.non_mandatory_tour_destination"><code class="xref py py-func docutils literal notranslate"><span class="pre">non_mandatory_tour_destination()</span></code></a>
 function.  This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="examples.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a>
@@ -1732,11 +1732,11 @@ households would be assigned the non-household vehicle option since there are no
 A vehicle is selected for each occupancy level set by the user such that different tour modes that have different occupancies could see different operating
 characteristics. The output of the vehicle allocation model is appended to the tour table with column names <code class="docutils literal notranslate"><span class="pre">vehicle_occup_{occupancy}</span></code> and the values are
 the vehicle type selected.</p>
-<p>In <a class="reference internal" href="examples.html#example-mtc-extended"><span class="std std-ref">example_mtc_extended</span></a>, three occupancy levels are used: 1, 2, and 3.5.  The auto operating cost
+<p>In <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>, three occupancy levels are used: 1, 2, and 3.5.  The auto operating cost
 for occupancy level 1 is used in the drive alone mode and drive to transit modes. Occupancy levels 2 and 3.5 are used for shared
 ride 2 and shared ride 3+ auto operating costs, respectively.  Auto operating costs are selected in the mode choice pre-processors by selecting the allocated
 vehicle type data from the vehicles table. If the allocated vehicle type was the non-household vehicle, the auto operating costs uses
-the previous default value from <a class="reference internal" href="examples.html#example-mtc"><span class="std std-ref">example_mtc</span></a>. All trips and atwork subtours use the auto operating cost of the parent tour.  Functionality
+the previous default value from <a class="reference internal" href="examples.html#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>. All trips and atwork subtours use the auto operating cost of the parent tour.  Functionality
 was added in tour and atwork subtour mode choice to annotate the tour table and create a <code class="docutils literal notranslate"><span class="pre">selected_vehicle</span></code> which denotes the actual vehicle used.
 If the tour mode does not include a vehicle, then the <code class="docutils literal notranslate"><span class="pre">selected_vehicle</span></code> entry is left blank.</p>
 <p>The current implementation does not account for possible use of the household vehicles by other household members.  Thus, it is possible for a
@@ -1966,7 +1966,7 @@ configured by the user).</p>
 <li><p>simulate - starts with the table created above and chooses a final location, this time with the mode choice logsum included.</p></li>
 </ul>
 </div></blockquote>
-<p>At-work subtour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>At-work subtour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">tours</span></code> | Result Table: <code class="docutils literal notranslate"><span class="pre">destination</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">workplace_taz,</span> <span class="pre">alt_dest,</span> <span class="pre">MD</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
 <p>The main interface to the at-work subtour destination model is the
 <code class="xref py py-func docutils literal notranslate"><span class="pre">atwork_subtour_destination()</span></code>
@@ -2133,7 +2133,7 @@ impedance between the previous stop and the tour primary destination. Stops on r
 similarly, except that the location of the first stop is a function of the additional impedance between the
 tour primary destination and the tour origin. The next stop location is based on the additional
 impedance between the first stop on the return leg and the tour origin, and so on.</p>
-<p>Trip location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Trip location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interface to the trip destination choice model is the
 <a class="reference internal" href="#activitysim.abm.models.trip_destination.trip_destination" title="activitysim.abm.models.trip_destination.trip_destination"><code class="xref py py-func docutils literal notranslate"><span class="pre">trip_destination()</span></code></a> function.
 This function is registered as an Inject step in the example Pipeline.

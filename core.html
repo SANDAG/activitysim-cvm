@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Core Components &#8212; ActivitySim 0.1.dev1+ge819d07 documentation</title>
+    <title>Core Components &#8212; ActivitySim 0.1.dev1+g345fe8a documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -4626,7 +4626,7 @@ checkpoint the table in another context where it does not know that name.</p>
 </section>
 <section id="transit-virtual-path-builder">
 <span id="id17"></span><h2>Transit Virtual Path Builder<a class="headerlink" href="#transit-virtual-path-builder" title="Permalink to this headline">#</a></h2>
-<p>Transit virtual path builder (TVPB) for three zone system (see <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a>) transit path utility calculations.
+<p>Transit virtual path builder (TVPB) for three zone system (see <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a>) transit path utility calculations.
 TAP to TAP skims and walk access and egress times between MAZs and TAPs are input to the
 demand model.  ActivitySim then assembles the total transit path utility based on the user specified TVPB
 expression files for the respective components:</p>
@@ -4867,12 +4867,12 @@ btap and atap will be in dataframe, but the other attributes may be either df co
 <li><p><code class="docutils literal notranslate"><span class="pre">topsheet.yaml</span></code>: configuration for calculated statistics in the ‘At-a-Glance’ table at the top of the dashboard</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">/output/summarize</span></code> directory may also contain one or more .geojson files to support map-based visualizations in the dashboard.</p></li>
 </ul>
-<p>At present, example versions of all of the items above are located in the MTC example model: <code class="docutils literal notranslate"><span class="pre">/activitysim/examples/example_mtc</span></code>. Complete documentation for configuring dashboards is available in the <a class="reference external" href="https://simwrapper.github.io/docs/simwrapper-intro">SimWrapper Docs</a>.</p>
+<p>At present, example versions of all of the items above are located in the prototype MTC example model: <code class="docutils literal notranslate"><span class="pre">/activitysim/examples/prototype_mtc</span></code>. Complete documentation for configuring dashboards is available in the <a class="reference external" href="https://simwrapper.github.io/docs/simwrapper-intro">SimWrapper Docs</a>.</p>
 <section id="configure-the-summarize-model">
 <h3>Configure the Summarize Model<a class="headerlink" href="#configure-the-summarize-model" title="Permalink to this headline">#</a></h3>
 <section id="summary-expressions">
 <h4>Summary Expressions<a class="headerlink" href="#summary-expressions" title="Permalink to this headline">#</a></h4>
-<p>Example configuration files for the summarize model step (as listed above) are included in MTC example. These files will need to be adjusted to produce customized SimWrapper dashboards. These files are structured as standard ActivitySim expression (CSV) and configuration (YAML) files. More detailed information about configuration of the summarize model step is available in the Models documentation.</p>
+<p>Example configuration files for the summarize model step (as listed above) are included in prototype MTC example. These files will need to be adjusted to produce customized SimWrapper dashboards. These files are structured as standard ActivitySim expression (CSV) and configuration (YAML) files. More detailed information about configuration of the summarize model step is available in the Models documentation.</p>
 <p>You may wish to manipulate the default expression files to suit your particular needs. Expression files are formatted as CSVs and structured according to ActivitySim conventions with three columns:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Description</span></code>: Brief description of expression. Non-functional and may be left blank.</p></li>
@@ -4900,7 +4900,7 @@ btap and atap will be in dataframe, but the other attributes may be either df co
 <li><p><code class="docutils literal notranslate"><span class="pre">rank</span></code>: Numeric rank of the bin, with 1 being the lowest rank</p></li>
 </ul>
 <p>By default, bins are labeled with their extents using the following f-string: <code class="docutils literal notranslate"><span class="pre">'{left:,.2f}</span> <span class="pre">-</span> <span class="pre">{right:,.2f}'</span></code>. The <code class="docutils literal notranslate"><span class="pre">'{rank}'</span></code> option demonstrated above would label each bin with its ordinal rank. Numeric labels are converted to numeric data types, if possible.</p>
-<p>Examples of each summarize function are included in the <code class="docutils literal notranslate"><span class="pre">summarize.csv</span></code> expression file for the MTC example. Consult the docstrings for each function in the <code class="docutils literal notranslate"><span class="pre">/activitysim/abm/models/summarize.py</span></code> module for complete specification of parameters.</p>
+<p>Examples of each summarize function are included in the <code class="docutils literal notranslate"><span class="pre">summarize.csv</span></code> expression file for the prototype MTC example. Consult the docstrings for each function in the <code class="docutils literal notranslate"><span class="pre">/activitysim/abm/models/summarize.py</span></code> module for complete specification of parameters.</p>
 </section>
 <section id="preprocessing">
 <h4>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">#</a></h4>
@@ -4928,7 +4928,7 @@ btap and atap will be in dataframe, but the other attributes may be either df co
         - Very High Income (&gt;$100k)
 </pre></div>
 </div>
-<p>Example uses of each binning function are included in the <code class="docutils literal notranslate"><span class="pre">summarize.yaml</span></code> configuration file in the MTC example.</p>
+<p>Example uses of each binning function are included in the <code class="docutils literal notranslate"><span class="pre">summarize.yaml</span></code> configuration file in the prototype MTC example.</p>
 <p>Table columns can also be aggregated, or “remapped,” during the preprocessing stage. Aggregations are specified in the configuration YAML using a key-value  structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trips_merged</span><span class="p">:</span>                        <span class="c1"># Pipeline table on which to operate</span>
   <span class="n">AGGREGATE</span><span class="p">:</span>
@@ -4959,7 +4959,7 @@ btap and atap will be in dataframe, but the other attributes may be either df co
         <span class="n">TNC_SHARED</span><span class="p">:</span> <span class="n">Ride</span> <span class="n">Hail</span>
 </pre></div>
 </div>
-<p>Trip-level skim data are also made available in the preprocessing stage by attaching columns to the <code class="docutils literal notranslate"><span class="pre">trips_merged</span></code> table based on expressions in <code class="docutils literal notranslate"><span class="pre">summarize_preprocessor.csv</span></code>. This process uses skim wrappers indexed by origin, destination, and time of day to gather distance, time, and cost data and each trip, enabling calculation of variables such as vehicle miles traveled (VMT). Preprocessing expressions are interpreted with standard ActivitySim annotation methods, including definition of scalar and vector temporary variables based on underscores and capitalization. The preprocessor expressions included in the MTC example demonstrate calculation of a number of skim-based variables involving distance, time, and cost. The system for joining skim data to trips is currently configured for the one-zone MTC example model and will need to be generalized for multi-zone systems in future work.</p>
+<p>Trip-level skim data are also made available in the preprocessing stage by attaching columns to the <code class="docutils literal notranslate"><span class="pre">trips_merged</span></code> table based on expressions in <code class="docutils literal notranslate"><span class="pre">summarize_preprocessor.csv</span></code>. This process uses skim wrappers indexed by origin, destination, and time of day to gather distance, time, and cost data and each trip, enabling calculation of variables such as vehicle miles traveled (VMT). Preprocessing expressions are interpreted with standard ActivitySim annotation methods, including definition of scalar and vector temporary variables based on underscores and capitalization. The preprocessor expressions included in the prototype MTC example demonstrate calculation of a number of skim-based variables involving distance, time, and cost. The system for joining skim data to trips is currently configured for the one-zone MTC example model and will need to be generalized for multi-zone systems in future work.</p>
 </section>
 </section>
 <section id="install-and-run-simwrapper">

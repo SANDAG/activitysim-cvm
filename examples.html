@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Examples &#8212; ActivitySim 0.1.dev1+ge819d07 documentation</title>
+    <title>Examples &#8212; ActivitySim 0.1.dev1+g345fe8a documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -31,7 +31,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Command Line Interface" href="cli.html" />
+    <link rel="next" title="Configuration" href="users-guide/configuration.html" />
     <link rel="prev" title="Command Line Tools" href="users-guide/cli-tools.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -125,6 +125,43 @@
    Examples
   </a>
  </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="users-guide/configuration.html">
+   Configuration
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.Settings.html">
+     activitysim.core.configuration.Settings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.InputTable.html">
+     activitysim.core.configuration.InputTable
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.NetworkSettings.html">
+     activitysim.core.configuration.NetworkSettings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.TAZ_Settings.html">
+     activitysim.core.configuration.TAZ_Settings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="users-guide/_generated/activitysim.core.configuration.ZarrDigitalEncoding.html">
+     activitysim.core.configuration.ZarrDigitalEncoding
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="cli.html">
    Command Line Interface
@@ -164,8 +201,8 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-mtc">
-   example_mtc
+  <a class="reference internal nav-link" href="#prototype-mtc">
+   prototype_mtc
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -330,8 +367,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-mtc-extended">
-   example_mtc_extended
+  <a class="reference internal nav-link" href="#prototype-mtc-extended">
+   prototype_mtc_extended
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -340,12 +377,12 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-multiple-zones">
-   example_multiple_zones
+  <a class="reference internal nav-link" href="#placeholder-multiple-zone">
+   placeholder_multiple_zone
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id9">
      Examples
     </a>
    </li>
@@ -367,7 +404,7 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
+    <a class="reference internal nav-link" href="#id10">
      Outputs
     </a>
    </li>
@@ -379,25 +416,25 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-marin">
-   example_marin
+  <a class="reference internal nav-link" href="#prototype-marin">
+   prototype_marin
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
+    <a class="reference internal nav-link" href="#id13">
      Example
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id14">
      Settings
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-arc">
-   example_arc
+  <a class="reference internal nav-link" href="#prototype-arc">
+   prototype_arc
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -406,15 +443,15 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
+    <a class="reference internal nav-link" href="#id16">
      Example
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-semcog">
-   example_semcog
+  <a class="reference internal nav-link" href="#prototype-semcog">
+   prototype_semcog
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -423,43 +460,43 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
+    <a class="reference internal nav-link" href="#id19">
      Example
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-psrc">
-   example_psrc
+  <a class="reference internal nav-link" href="#placeholder-psrc">
+   placeholder_psrc
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
+    <a class="reference internal nav-link" href="#id22">
      Example
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-sandag">
-   example_sandag
+  <a class="reference internal nav-link" href="#placeholder-sandag">
+   placeholder_sandag
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
+    <a class="reference internal nav-link" href="#id25">
      Example
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-sandag-xborder">
-   example_sandag_xborder
+  <a class="reference internal nav-link" href="#prototype-sandag-xborder">
+   prototype_sandag_xborder
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
+    <a class="reference internal nav-link" href="#id28">
      Example
     </a>
    </li>
@@ -488,7 +525,31 @@
                 
   <span class="target" id="index-0"></span><section id="examples">
 <span id="example"></span><span id="index-1"></span><span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h1>
-<p>This page describes the example models included with ActivitySim.  The current examples are:</p>
+<p>This page describes the example models included with ActivitySim. There are three
+basic types of example model:</p>
+<ul class="simple">
+<li><p>“production” examples are calibrated and validated by the relevant agency, and
+are intended to be replicas of an “official” travel model used by that agency,
+although generally we expect agencies to maintain independent repositories and
+not rely on the Consortium maintained version as a single source for the model.
+At this time there are no production examples in the consortium’s collection,
+but we expect that to change soon.</p></li>
+<li><p>“prototype” examples are not representative of any “official” travel model
+used by the relevant agency, but they are viewed as “ok” models by the
+consortium: they are usually at least loosely calibrated and/or validated, and
+typically contain at least some components or parameters specialized for the
+relevant region. They may be in-development models that are not quite finished,
+or consortium maintained models that are derived from but now different from
+the official model of some region. They should not be used in place of
+“official” models for policy analysis in any given region, but could serve as
+a donor model for new users who want to implement ActivitySim somewhere new
+(subject to all the caveats that go along with transferring models).</p></li>
+<li><p>“placeholder” examples are computational testbeds that technically run but
+have not been calibrated nor validated in any meaningful way. These examples
+are early stage development models used for testing purposes, and users are
+strongly cautioned not to use them for any policy or planning purpose.</p></li>
+</ul>
+<p>The current examples are:</p>
 <table class="table">
 <colgroup>
 <col style="width: 26%" />
@@ -504,52 +565,52 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="#example-mtc"><span class="std std-ref">example_mtc</span></a></p></td>
-<td><p>Primary MTC travel model one example</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a></p></td>
+<td><p>Original ActivitySim Example, derived from MTC TM1</p></td>
 <td><p>1</p></td>
 <td><p>Mature</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#example-mtc-extended"><span class="std std-ref">example_mtc_extended</span></a></p></td>
-<td><p>example_mtc with additional optional models</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a></p></td>
+<td><p>Prototype MTC example with additional optional models</p></td>
 <td><p>1</p></td>
 <td><p>In development</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#example-estimation"><span class="std std-ref">example_estimation</span></a></p></td>
-<td><p>Estimation example with example_mtc</p></td>
+<td><p>Estimation example with prototype_mtc</p></td>
 <td><p>1</p></td>
 <td><p>Mature</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#example-multiple-zones"><span class="std std-ref">example_multiple_zones</span></a></p></td>
-<td><p>2 or 3 zone system example using example_mtc data</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#placeholder-multiple-zone"><span class="std std-ref">placeholder_multiple_zone</span></a></p></td>
+<td><p>2 or 3 zone system example using MTC data</p></td>
 <td><p>2 or 3</p></td>
 <td><p>Simple test example</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#example-marin"><span class="std std-ref">example_marin</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#prototype-marin"><span class="std std-ref">prototype_marin</span></a></p></td>
 <td><p>3 zone system example using Marin tour mode choice model</p></td>
 <td><p>3</p></td>
 <td><p>Mature</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#example-arc"><span class="std std-ref">example_arc</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#prototype-arc"><span class="std std-ref">prototype_arc</span></a></p></td>
 <td><p>ARC agency example</p></td>
 <td><p>1</p></td>
 <td><p>In development</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#example-semcog"><span class="std std-ref">example_semcog</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#prototype-semcog"><span class="std std-ref">prototype_semcog</span></a></p></td>
 <td><p>SEMCOG agency example</p></td>
 <td><p>1</p></td>
 <td><p>In development</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#example-psrc"><span class="std std-ref">example_psrc</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#placeholder-psrc"><span class="std std-ref">placeholder_psrc</span></a></p></td>
 <td><p>PSRC agency example</p></td>
 <td><p>2</p></td>
-<td><p>In development</p></td>
+<td><p>Future development</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#example-sandag"><span class="std std-ref">example_sandag</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#placeholder-sandag"><span class="std std-ref">placeholder_sandag</span></a></p></td>
 <td><p>SANDAG agency example</p></td>
 <td><p>3</p></td>
-<td><p>In development</p></td>
+<td><p>Future development</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#example-sandag-xborder"><span class="std std-ref">example_sandag_xborder</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#prototype-sandag-xborder"><span class="std std-ref">prototype_sandag_xborder</span></a></p></td>
 <td><p>SANDAG agency example</p></td>
 <td><p>3</p></td>
 <td><p>In development</p></td>
@@ -562,15 +623,15 @@
 contains example commands to create and run several versions of the examples.  See also <a class="reference internal" href="development.html#adding-agency-examples"><span class="std std-ref">Adding Agency Examples</span></a> for more
 information on agency example models.</p>
 </div>
-<section id="example-mtc">
-<span id="id2"></span><h2>example_mtc<a class="headerlink" href="#example-mtc" title="Permalink to this headline">#</a></h2>
-<p>The initial example implemented in ActivitySim was example_mtc.  This section described the example_mtc
+<section id="prototype-mtc">
+<span id="id2"></span><h2>prototype_mtc<a class="headerlink" href="#prototype-mtc" title="Permalink to this headline">#</a></h2>
+<p>The initial example implemented in ActivitySim was prototype_mtc.  This section described the prototype_mtc
 model design, how to setup and run the example, and how to review outputs. The default configuration of the
 example is limited to a small sample of households and zones so that it can be run quickly and require
 less than 1 GB of RAM.  The full scale example can be configured and run as well.</p>
 <section id="model-design">
 <h3>Model Design<a class="headerlink" href="#model-design" title="Permalink to this headline">#</a></h3>
-<p>The example_mtc example is based on the
+<p>The prototype_mtc example is based on (but has evolved away from) the
 <a class="reference external" href="https://github.com/BayAreaMetro/travel-model-one">Bay Area Metro Travel Model One</a> (TM1).
 TM1 has its roots in a wide array of analytical approaches, including discrete
 choice forms (multinomial and nested logit models), activity duration models, time-use models,
@@ -582,12 +643,12 @@ methods capture aggregate outcomes through the representation of the behavior of
 individual decision-makers.</p>
 <section id="space">
 <h4>Space<a class="headerlink" href="#space" title="Permalink to this headline">#</a></h4>
-<p>TM1 uses the 1454 TAZ zone system developed for the MTC trip-based model.  The zones are fairly large for the region,
+<p>The prototype MTC model uses the 1454 TAZ zone system developed for the MTC trip-based model.  The zones are fairly large for the region,
 which may somewhat distort the representation of transit access in mode choice. To ameliorate this problem, the
 original model zones were further sub-divided into three categories of transit access: short walk, long walk, and not
 walkable.  However, support for transit subzones is not included in the activitysim implementation since the latest generation
 of activity-based models typically use an improved approach to spatial representation called multiple zone systems.  See
-<a class="reference internal" href="#multiple-zone-systems"><span class="std std-ref">example_multiple_zones</span></a> for more information.</p>
+<a class="reference internal" href="#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> for more information.</p>
 </section>
 <section id="decision-making-units">
 <h4>Decision-making units<a class="headerlink" href="#decision-making-units" title="Permalink to this headline">#</a></h4>
@@ -866,7 +927,7 @@ transit line-haul modes, and ride hail with taxi, single TNC (Transportation Net
 </section>
 <section id="sub-models">
 <h4>Sub-models<a class="headerlink" href="#sub-models" title="Permalink to this headline">#</a></h4>
-<p>The general design of the example_mtc model is presented below.  Long-term choices that relate to
+<p>The general design of the prototype_mtc model is presented below.  Long-term choices that relate to
 the usual workplace/university/school for each worker and student, household car ownership, and the
 availability of free parking at workplaces are first.</p>
 <p>The coordinated daily activity pattern type of each household member is the first travel-related
@@ -931,9 +992,9 @@ can be aggregated into travel demand matrices for network loading.</p>
 </section>
 <section id="setup">
 <h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h3>
-<p>The following describes the example_mtc model setup.</p>
+<p>The following describes the prototype_mtc model setup.</p>
 <p>Folder and File Setup</p>
-<p>The example_mtc has the following root folder/file setup:</p>
+<p>The prototype_mtc has the following root folder/file setup:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>configs - settings, expressions files, etc.</p></li>
@@ -944,9 +1005,9 @@ can be aggregated into travel demand matrices for network loading.</p>
 </div></blockquote>
 <section id="inputs">
 <h4>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">#</a></h4>
-<p>In order to run example_mtc, you first need the input files in the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder as identified in the <code class="docutils literal notranslate"><span class="pre">configs\settings.yaml</span></code> file and the <code class="docutils literal notranslate"><span class="pre">configs\network_los.yaml</span></code> file:</p>
+<p>In order to run prototype_mtc, you first need the input files in the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder as identified in the <code class="docutils literal notranslate"><span class="pre">configs\settings.yaml</span></code> file and the <code class="docutils literal notranslate"><span class="pre">configs\network_los.yaml</span></code> file:</p>
 <ul>
-<li><p>input_table_list: the input CSV tables from MTC travel model one (see below for column definitions):</p>
+<li><p>input_table_list: the input CSV tables for MTC (see below for column definitions):</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>households - Synthetic population household records for a subset of zones.</p></li>
@@ -958,7 +1019,7 @@ can be aggregated into travel demand matrices for network loading.</p>
 <li><p>taz_skims: skims.omx - an OMX matrix file containing the MTC TM1 skim matrices for a subset of zones.  The time period for the matrix must be represented at the end of the matrix name and be seperated by a double_underscore (e.g. BUS_IVT__AM indicates base skim BUS_IVT with a time period of AM).</p></li>
 </ul>
 <p>These files are used in the tests as well.  The full set
-of MTC TM1 households, persons, and OMX skims are on the ActivitySim <a class="reference external" href="https://github.com/rsginc/activitysim_resources">resources repository</a>.</p>
+of MTC households, persons, and OMX skims are on the ActivitySim <a class="reference external" href="https://github.com/rsginc/activitysim_resources">resources repository</a>.</p>
 <p>Additional details on these files is available in the original <a class="reference external" href="https://github.com/BayAreaMetro/modeling-website/wiki/DataDictionary">Travel Model 1 repository</a>,
 although many of the files described there are not used in ActivitySim.</p>
 </section>
@@ -1193,79 +1254,19 @@ no two individuals have the same person ID, even if they are in different househ
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>ActivitySim can optionally build an HDF5 file of the input CSV tables for use in subsequent runs since
-HDF5 is binary and therefore results in faster read times. see <a class="reference internal" href="#configuration"><span class="std std-ref">Configuration</span></a></p>
+HDF5 is binary and therefore results in faster read times. see <a class="reference internal" href="users-guide/configuration.html#configuration"><span class="std std-ref">Configuration</span></a></p>
 <p>OMX and HDF5 files can be viewed with the <a class="reference external" href="https://github.com/osPlanning/omx/wiki/OMX-Viewer">OMX Viewer</a> or
 <a class="reference external" href="https://www.hdfgroup.org/downloads/hdfview">HDFView</a>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\build_omx.py</span></code> script will build one OMX file containing all the skims. The original MTC TM1 skims were converted from
+<p>The <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\build_omx.py</span></code> script will build one OMX file containing all the skims. The original MTC TM1 skims were converted for the prototype from
 Cube to OMX using the <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\mtc_tm1_omx_export.s</span></code> script.</p>
-<p>The example_mtc inputs were created by the <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\create_sf_example.py</span></code> script, which creates the land use, synthetic population, and
+<p>The prototype_mtc_sf inputs were created by the <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\create_sf_example.py</span></code> script, which creates the land use, synthetic population, and
 skim inputs for a subset of user-defined zones.</p>
 </div>
 </section>
 </section>
 <section id="configuration">
-<span id="index-2"></span><span id="id3"></span><h4>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">#</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">configs</span></code> folder contains settings, expressions files, and other files required for specifying
-model utilities and form.  The first place to start in the <code class="docutils literal notranslate"><span class="pre">configs</span></code> folder is <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code>, which
-is the main settings file for the model run.  This file includes:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">models</span></code> - list of model steps to run - auto ownership, tour frequency, etc. - see <a class="reference internal" href="#model-steps"><span class="std std-ref">Pipeline</span></a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">resume_after</span></code> - to resume running the data pipeline after the last successful checkpoint</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">input_store</span></code> - HDF5 inputs file</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">input_table_list</span></code> - list of table names, indices, and column re-maps for each table in <cite>input_store</cite></p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tablename</span></code> - name of the injected table</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code> - name of the CSV or HDF5 file to read (optional, defaults to <cite>input_store</cite>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">index_col</span></code> - table column to use for the index</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rename_columns</span></code> - dictionary of column name mappings</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">keep_columns</span></code> - columns to keep once read in to memory to save on memory needs and file I/O</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">h5_tablename</span></code> - table name if reading from HDF5 and different from <cite>tablename</cite></p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">create_input_store</span></code> - write new <cite>input_data.h5</cite> file to outputs folder using CSVs from <cite>input_table_list</cite> to use for subsequent model runs</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">households_sample_size</span></code> - number of households to sample and simulate; comment out to simulate all households</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">trace_hh_id</span></code> - trace household id; comment out for no trace</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">trace_od</span></code> - trace origin, destination pair in accessibility calculation; comment out for no trace</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chunk_training_mode</span></code> - disabled, training, production, or adaptive, see <a class="reference internal" href="core.html#chunk-size"><span class="std std-ref">Chunk</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> - approximate amount of RAM in GBs to allocate to ActivitySim for batch processing choosers, see <a class="reference internal" href="core.html#chunk-size"><span class="std std-ref">Chunk</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chunk_method</span></code> - memory use measure such as hybrid_uss, see <a class="reference internal" href="core.html#chunk-size"><span class="std std-ref">Chunk</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">checkpoints</span></code> - if True, checkpoints are written at each step; if False, no intermediate checkpoints will be written before the end of run; also supports an explicit list of models to checkpoint</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">check_for_variability</span></code> - disable check for variability in an expression result debugging feature in order to speed-up runtime</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">log_alt_losers</span></code> - if True, log (i.e. write out) expressions for debugging that return prohibitive utility values that exclude all alternatives.  This feature slows down the model run and so it is recommended for debugging purposes only.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">use_shadow_pricing</span></code> - turn shadow_pricing on and off for work and school location</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">output_tables</span></code> - list of output tables to write to CSV or HDF5</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">want_dest_choice_sample_tables</span></code> - turn writing of sample_tables on and off for all models</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cleanup_pipeline_after_run</span></code> - if true, cleans up pipeline after successful run by creating a single-checkpoint pipeline file and deletes any subprocess pipelines</p></li>
-<li><p>global variables that can be used in expressions tables and Python code such as:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">urban_threshold</span></code> - urban threshold area type max value</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">county_map</span></code> - mapping of county codes to county names</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">household_median_value_of_time</span></code> - various household and person value-of-time model settings</p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<p>Also in the <code class="docutils literal notranslate"><span class="pre">configs</span></code> folder is <code class="docutils literal notranslate"><span class="pre">network_los.yaml</span></code>, which includes network LOS / skims settings such as:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">zone_system</span></code> - 1 (taz), 2 (maz and taz), or 3 (maz, taz, tap)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">taz_skims</span></code> - skim matrices in one OMX file.  The time period for the matrix must be represented at the end of the matrix name and be seperated by a double_underscore (e.g. BUS_IVT__AM indicates base skim BUS_IVT with a time period of AM.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">skim_time_periods</span></code> - time period upper bound values and labels</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">time_window</span></code> - total duration (in minutes) of the modeled time span (Default: 1440 minutes (24 hours))</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">period_minutes</span></code> - length of time (in minutes) each model time period represents. Must be whole factor of <code class="docutils literal notranslate"><span class="pre">time_window</span></code>. (Default: 60 minutes)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">periods</span></code> - Breakpoints that define the aggregate periods for skims and assignment</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - Labels to define names for aggregate periods for skims and assignment</p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">read_skim_cache</span></code> - read cached skims (using numpy memmap) from output directory (memmap is faster than omx)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">write_skim_cache</span></code> - write memmapped cached skims to output directory after reading from omx, for use in subsequent runs</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cache_dir</span></code> - alternate dir to read/write cache files (defaults to output_dir)</p></li>
-</ul>
+<h4>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">#</a></h4>
+<p>This section has been moved to <a class="reference internal" href="users-guide/configuration.html#configuration"><span class="std std-ref">Configuration</span></a>.</p>
 </section>
 <section id="sub-model-specification-files">
 <span id="sub-model-spec-files"></span><h4>Sub-Model Specification Files<a class="headerlink" href="#sub-model-specification-files" title="Permalink to this headline">#</a></h4>
@@ -1273,8 +1274,8 @@ is the main settings file for the model run.  This file includes:</p>
 Python/pandas/numpy expressions, alternatives, and other settings used by each model.  Some models includes an
 alternatives file since the alternatives are not easily described as columns in the expressions file.  An example
 of this is the <code class="docutils literal notranslate"><span class="pre">non_mandatory_tour_frequency_alternatives.csv</span></code> file, which lists each alternative as a row and each
-columns indicates the number of non-mandatory tours by purpose.  The  set of files for the example_mtc are below.  The
-<a class="reference internal" href="#example-arc"><span class="std std-ref">example_arc</span></a>, <a class="reference internal" href="#example-semcog"><span class="std std-ref">example_semcog</span></a>, and <a class="reference internal" href="#example-mtc-extended"><span class="std std-ref">example_mtc_extended</span></a> examples added additional submodels.</p>
+columns indicates the number of non-mandatory tours by purpose.  The  set of files for the prototype_mtc are below.  The
+<a class="reference internal" href="#prototype-arc"><span class="std std-ref">prototype_arc</span></a>, <a class="reference internal" href="#prototype-semcog"><span class="std std-ref">prototype_semcog</span></a>, and <a class="reference internal" href="#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> examples added additional submodels.</p>
 <table class="table">
 <colgroup>
 <col style="width: 41%" />
@@ -1652,7 +1653,7 @@ and resume pipeline processing on the next model step after the specified checkp
 <ul class="simple">
 <li><p>Create a local copy of an example folder</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">activitysim</span> <span class="n">create</span> <span class="o">--</span><span class="n">example</span> <span class="n">example_mtc</span> <span class="o">--</span><span class="n">destination</span> <span class="n">my_test_example</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">activitysim</span> <span class="n">create</span> <span class="o">--</span><span class="n">example</span> <span class="n">prototype_mtc</span> <span class="o">--</span><span class="n">destination</span> <span class="n">my_test_example</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1688,7 +1689,7 @@ include the multiprocessing configuration settings via settings file inheritance
 <p>The default multiprocessed example is configured to run with two processors and chunking training: <code class="docutils literal notranslate"><span class="pre">num_processes:</span> <span class="pre">2</span></code>,
 <code class="docutils literal notranslate"><span class="pre">chunk_size:</span> <span class="pre">0</span></code>, and <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">training</span></code>.  Additional more performant configurations are included and
 commented out in the example settings file.  For example, the 100 percent sample full scale multiprocessing example
-- <code class="docutils literal notranslate"><span class="pre">example_mtc_full</span></code> - was run on a Windows Server machine with 28 cores and 256GB RAM with the configuration below.
+- <code class="docutils literal notranslate"><span class="pre">prototype_mtc_full</span></code> - was run on a Windows Server machine with 28 cores and 256GB RAM with the configuration below.
 The default setup runs with <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">training</span></code> since no chunk cache file is present. To run the example
 significantly faster, try <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">disabled</span></code> if the machine has sufficient RAM, or try
 <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">production</span></code>.  To configure <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">production</span></code>, first configure chunking as
@@ -1701,13 +1702,20 @@ discussed below. See <a class="reference internal" href="howitworks.html#multipr
 </div>
 </section>
 <section id="configuring-chunking">
-<span id="id4"></span><h4>Configuring chunking<a class="headerlink" href="#configuring-chunking" title="Permalink to this headline">#</a></h4>
+<span id="id3"></span><h4>Configuring chunking<a class="headerlink" href="#configuring-chunking" title="Permalink to this headline">#</a></h4>
 <p>To configure chunking, ActivitySim must first be trained to determine reasonable chunking settings given the
 model setup and machine.  The steps to configure chunking are:</p>
 <ul class="simple">
-<li><p>Run the full scale model with <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">training</span></code>.  Set <code class="docutils literal notranslate"><span class="pre">num_processors</span></code> to about 80% of the available physical processors and <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> to about 80% of the available RAM.  This will run the model and create the <code class="docutils literal notranslate"><span class="pre">chunk_cache.csv</span></code> file in the outputcache directory for reuse.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">households_sample_size</span></code> for training chunking should be at least 1 / num_processors to provide sufficient data for training and the <code class="docutils literal notranslate"><span class="pre">chunk_method:</span> <span class="pre">hybrid_uss</span></code> typically performs best.</p></li>
-<li><p>Run the full scale model with <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">production</span></code>.  Experiment with different <code class="docutils literal notranslate"><span class="pre">num_processors</span></code> and <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> settings depending on desired runtimes and machine resources.</p></li>
+<li><p>Run the full scale model with <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">training</span></code>.
+Set <code class="docutils literal notranslate"><span class="pre">num_processors</span></code> to about 80% of the available physical processors
+and <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> to about 80% of the available RAM.  This will run the model
+and create the <code class="docutils literal notranslate"><span class="pre">chunk_cache.csv</span></code> file in the outputcache directory for reuse.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">households_sample_size</span></code> for training chunking should be at least 1 / num_processors
+to provide sufficient data for training and the <code class="docutils literal notranslate"><span class="pre">chunk_method:</span> <span class="pre">hybrid_uss</span></code>
+typically performs best.</p></li>
+<li><p>Run the full scale model with <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">production</span></code>.  Experiment
+with different <code class="docutils literal notranslate"><span class="pre">num_processors</span></code> and <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> settings depending on desired
+runtimes and machine resources.</p></li>
 </ul>
 <p>See <a class="reference internal" href="core.html#chunk-size"><span class="std std-ref">Chunk</span></a> for more information.  Users can run <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">disabled</span></code> if the machine has an abundance of RAM for the model setup.</p>
 </section>
@@ -1912,7 +1920,7 @@ restarting the pipeline at any step.</p>
 </tbody>
 </table>
 <section id="logging">
-<span id="logs"></span><span id="index-3"></span><h4>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">#</a></h4>
+<span id="logs"></span><span id="index-2"></span><h4>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">#</a></h4>
 <p>Included in the <code class="docutils literal notranslate"><span class="pre">configs</span></code> folder is the <code class="docutils literal notranslate"><span class="pre">logging.yaml</span></code>, which configures Python logging
 library.  The following key log files are created with a model run:</p>
 <ul class="simple">
@@ -1929,7 +1937,7 @@ assignment.  The matrices are configured and coded according to the expressions 
 trip annotation file.  See <a class="reference internal" href="models.html#write-trip-matrices"><span class="std std-ref">Write Trip Matrices</span></a> for more information.</p>
 </section>
 <section id="tracing">
-<span id="id5"></span><h4>Tracing<a class="headerlink" href="#tracing" title="Permalink to this headline">#</a></h4>
+<span id="id4"></span><h4>Tracing<a class="headerlink" href="#tracing" title="Permalink to this headline">#</a></h4>
 <p>There are two types of tracing in ActivtiySim: household and origin-destination (OD) pair.  If a household trace ID
 is specified, then ActivitySim will output a comprehensive set (i.e. hundreds) of trace files for all
 calculations for all household members:</p>
@@ -1945,7 +1953,7 @@ file:</p>
 help debug data and/or logic errors.</p>
 </section>
 <section id="writing-logsums">
-<span id="id6"></span><h4>Writing Logsums<a class="headerlink" href="#writing-logsums" title="Permalink to this headline">#</a></h4>
+<span id="id5"></span><h4>Writing Logsums<a class="headerlink" href="#writing-logsums" title="Permalink to this headline">#</a></h4>
 <p>The tour and trip destination and mode choice models calculate logsums but do not persist them by default.
 Mode and destination choice logsums are essential for re-estimating these models and can therefore be
 saved to the pipeline if desired.  To save the tour and trip destination and mode choice model logsums, include
@@ -1993,11 +2001,11 @@ only be activated when writing logsums for a small set of households for model e
 </section>
 </section>
 </section>
-<section id="example-mtc-extended">
-<span id="id7"></span><h2>example_mtc_extended<a class="headerlink" href="#example-mtc-extended" title="Permalink to this headline">#</a></h2>
-<p>example_mtc_extended contains additional models that were developed to enhance ActivitySim’s modeling
-capabilities, but are not part of travel model one that example_mtc was developed from. This example inherets
-the data and configuration files from example_mtc. The current list of additional models included
+<section id="prototype-mtc-extended">
+<span id="id6"></span><h2>prototype_mtc_extended<a class="headerlink" href="#prototype-mtc-extended" title="Permalink to this headline">#</a></h2>
+<p>prototype_mtc_extended contains additional models that were developed to enhance ActivitySim’s modeling
+capabilities. This example inherets
+the data and configuration files from prototype_mtc. The current list of additional models included
 in this example are:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="models.html#vehicle-type-choice"><span class="std std-ref">Vehicle Type Choice</span></a>: Selects a vehicle type for each household vehicle. Runs after auto_ownership.</p></li>
@@ -2006,14 +2014,14 @@ auto operating costs are modified to reflect the allocated vehicle option.</p></
 </ul>
 </section>
 <section id="example-estimation">
-<span id="id8"></span><h2>example_estimation<a class="headerlink" href="#example-estimation" title="Permalink to this headline">#</a></h2>
+<span id="id7"></span><h2>example_estimation<a class="headerlink" href="#example-estimation" title="Permalink to this headline">#</a></h2>
 <p>ActivitySim includes the ability to re-estimate submodels using choice model estimation tools
 such as <a class="reference external" href="https://larch.newman.me/">larch</a>.  In order to do so, ActivitySim adopts the concept of an estimation
 data bundle (EDB), which is a collection of the necessary data to re-estimate a submodel.  See <a class="reference internal" href="estimation.html#estimation"><span class="std std-ref">Estimation</span></a>
 for examples that illustrate running ActivitySim in estimation mode and using larch to re-restimate submodels.</p>
 </section>
-<section id="example-multiple-zones">
-<span id="multiple-zone-systems"></span><span id="index-4"></span><span id="id9"></span><h2>example_multiple_zones<a class="headerlink" href="#example-multiple-zones" title="Permalink to this headline">#</a></h2>
+<section id="placeholder-multiple-zone">
+<span id="multiple-zone-systems"></span><span id="index-3"></span><span id="id8"></span><h2>placeholder_multiple_zone<a class="headerlink" href="#placeholder-multiple-zone" title="Permalink to this headline">#</a></h2>
 <p>In a multiple zone system approach, households, land use, and trips are modeled at the microzone (MAZ) level.  MAZs are smaller
 than traditional TAZs and therefore make for a more precise system.  However, when considering network level-of-service (LOS)
 indicators (e.g. skims), the model uses different spatial resolutions for different travel modes in order to reduce the network
@@ -2022,13 +2030,47 @@ system for non-motorized travel, and optionally a transit access points (TAPs) z
 <p>ActivitySim supports models with multiple zone systems.  The three versions of multiple zone systems are one-zone, two-zone, and three-zone.</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><strong>One-zone</strong>: This version is based on TM1 and supports only TAZs. All origins and destinations are represented at the TAZ level, and all skims including auto, transit, and non-motorized times and costs are also represented at the TAZ level.</p></li>
-<li><p><strong>Two-zone</strong>: This version is similar to many DaySim models. It uses microzones (MAZs) for origins and destinations, and TAZs for specification of auto and transit times and costs. Impedance for walk or bike all-the-way from the origin to the destination can be specified at the MAZ level for close together origins and destinations, and at the TAZ level for further origins and destinations. Users can also override transit walk access and egress times with times specified in the MAZ file by transit mode.  Careful pre-calculation of the assumed transit walk access and egress time by MAZ and transit mode is required depending on the network scenario.</p></li>
-<li><p><strong>Three-zone</strong>: This version is based on the SANDAG generation of CT-RAMP models. Origins and destinations are represented at the MAZ level. Impedance for walk or bike all-the-way from the origin to the destination can be specified at the MAZ level for close together origins and destinations, and at the TAZ level for further origins and destinations, just like the two-zone system. TAZs are used for auto times and costs. The difference between this system and the two-zone system is that transit times and costs are represented between Transit Access Points (TAPs), which are essentially dummy zones that represent transit stops or clusters of stops. Transit skims are built between TAPs, since there are typically too many MAZs to build skims between them. Often multiple sets of TAP to TAP skims (local bus only, all modes, etc.) are created and input to the demand model for consideration.  Walk access and egress times are also calculated between the MAZ and the TAP, and total transit path utilities are assembled from their respective components - from MAZ to first boarding TAP, from first boarding to final alighting TAP, and from alighting TAP to destination MAZ. This assembling is done via the <a class="reference internal" href="core.html#transit-virtual-path-builder"><span class="std std-ref">Transit Virtual Path Builder</span></a> (TVPB), which considers all possible combinations of nearby boarding and alighting TAPs for each origin destination MAZ pair.</p></li>
+<li><p><strong>One-zone</strong>: This version is based on TM1 and supports only TAZs. All origins and
+destinations are represented at the TAZ level, and all skims including auto, transit,
+and non-motorized times and costs are also represented at the TAZ level.</p></li>
+<li><p><strong>Two-zone</strong>: This version is similar to many DaySim models. It uses microzones (MAZs)
+for origins and destinations, and TAZs for specification of auto and transit times and
+costs. Impedance for walk or bike all-the-way from the origin to the destination can
+be specified at the MAZ level for close together origins and destinations, and at
+the TAZ level for further origins and destinations. Users can also override transit
+walk access and egress times with times specified in the MAZ file by transit mode.
+Careful pre-calculation of the assumed transit walk access and egress time by MAZ
+and transit mode is required depending on the network scenario.</p></li>
+<li><p><strong>Three-zone</strong>: This version is based on the SANDAG generation of CT-RAMP models.
+Origins and destinations are represented at the MAZ level. Impedance for walk or
+bike all-the-way from the origin to the destination can be specified at the MAZ
+level for close together origins and destinations, and at the TAZ level for further
+origins and destinations, just like the two-zone system. TAZs are used for auto
+times and costs. The difference between this system and the two-zone system is that
+transit times and costs are represented between Transit Access Points (TAPs), which
+are essentially dummy zones that represent transit stops or clusters of stops.
+Transit skims are built between TAPs, since there are typically too many MAZs to
+build skims between them. Often multiple sets of TAP to TAP skims (local bus only,
+all modes, etc.) are created and input to the demand model for consideration.  Walk
+access and egress times are also calculated between the MAZ and the TAP, and total
+transit path utilities are assembled from their respective components - from MAZ to
+first boarding TAP, from first boarding to final alighting TAP, and from alighting
+TAP to destination MAZ. This assembling is done via the
+<a class="reference internal" href="core.html#transit-virtual-path-builder"><span class="std std-ref">Transit Virtual Path Builder</span></a> (TVPB), which considers all possible
+combinations of nearby boarding and alighting TAPs for each origin destination MAZ
+pair.</p></li>
 </ul>
 </div></blockquote>
-<p>Regions that have an interest in more precise transit forecasts may wish to adopt the three-zone approach, while other regions may adopt the one or two-zone approach.  The microzone version requires coding households and land use at the microzone level.  Typically an all-streets network is used for representation of non-motorized impedances. This requires a routable all-streets network, with centroids and connectors for microzones.  If the three-zone system is adopted, procedures need to be developed to code TAPs from transit stops and populate the all-street network with TAP centroids and centroid connectors.  A model with transit virtual path building takes longer to run than a traditional
-TAZ only model, but it provides a much richer framework for transit modeling.</p>
+<p>Regions that have an interest in more precise transit forecasts may wish to adopt the
+three-zone approach, while other regions may adopt the one or two-zone approach.  The
+microzone version requires coding households and land use at the microzone level.
+Typically an all-streets network is used for representation of non-motorized impedances.
+This requires a routable all-streets network, with centroids and connectors for
+microzones.  If the three-zone system is adopted, procedures need to be developed to
+code TAPs from transit stops and populate the all-street network with TAP centroids
+and centroid connectors.  A model with transit virtual path building takes longer to
+run than a traditional TAZ only model, but it provides a much richer framework for
+transit modeling.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The two and three zone system test examples are simple test examples developed from the TM1 example.  To develop the two zone system
@@ -2036,21 +2078,21 @@ example, TM1 TAZs were labeled MAZs, each MAZ was assigned a TAZ, and MAZ to MAZ
 TAZ to TAZ impedances.  To develop the three zone example system example, the TM1 TAZ model was further transformed
 so select TAZs also became TAPs and TAP to TAP skims and MAZ to TAP impedances files were created.  While sufficient for
 initial development, these examples were insufficient for validation and performance testing of the new software. As a result,
-the <a class="reference internal" href="#example-marin"><span class="std std-ref">example_marin</span></a> example was created.</p>
+the <a class="reference internal" href="#prototype-marin"><span class="std std-ref">prototype_marin</span></a> example was created.</p>
 </div>
 <p>Example simple test configurations and inputs for two and three-zone system models are described below.</p>
-<section id="id10">
-<h3>Examples<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<section id="id9">
+<h3>Examples<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
 <p>To run the two zone and three zone system examples, do the following:</p>
 <ul class="simple">
 <li><p>Activate the correct conda environment if needed</p></li>
 <li><p>Create a local copy of the example</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simple two zone example</span>
-<span class="n">activitysim</span> <span class="n">create</span> <span class="o">-</span><span class="n">e</span> <span class="n">example_2_zone</span> <span class="o">-</span><span class="n">d</span> <span class="n">test_example_2_zone</span>
+<span class="n">activitysim</span> <span class="n">create</span> <span class="o">-</span><span class="n">e</span> <span class="n">placeholder_2_zone</span> <span class="o">-</span><span class="n">d</span> <span class="n">test_placeholder_2_zone</span>
 
 <span class="c1"># simple three zone example</span>
-<span class="n">activitysim</span> <span class="n">create</span> <span class="o">-</span><span class="n">e</span> <span class="n">example_3_zone</span> <span class="o">-</span><span class="n">d</span> <span class="n">test_example_3_zone</span>
+<span class="n">activitysim</span> <span class="n">create</span> <span class="o">-</span><span class="n">e</span> <span class="n">placeholder_3_zone</span> <span class="o">-</span><span class="n">d</span> <span class="n">test_placeholder_3_zone</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -2074,15 +2116,27 @@ the <a class="reference internal" href="#example-marin"><span class="std std-ref
 <h4>Two Zone<a class="headerlink" href="#two-zone" title="Permalink to this headline">#</a></h4>
 <p>In <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">want_dest_choice_presampling</span></code> - enable presampling for multizone systems, which means first select a TAZ using the sampling model and then select a microzone within the TAZ based on the microzone share of TAZ size term.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">want_dest_choice_presampling</span></code> - enable presampling for multizone systems, which
+means first select a TAZ using the sampling model and then select a microzone within
+the TAZ based on the microzone share of TAZ size term.</p></li>
 </ul>
 <p>In <code class="docutils literal notranslate"><span class="pre">network_los.yaml</span></code>:</p>
-<p>The additional two zone system settings and inputs are described and illustrated below.  No additional utility expression files or expression revisions are required beyond the one zone approach.  The MAZ data is available as zone data and the MAZ to MAZ data is available using the existing skim expressions.  Users can specify mode utilities using MAZ data, MAZ to MAZ impedances, and TAZ to TAZ impedances.</p>
+<p>The additional two zone system settings and inputs are described and illustrated below.
+No additional utility expression files or expression revisions are required beyond the
+one zone approach.  The MAZ data is available as zone data and the MAZ to MAZ data is
+available using the existing skim expressions.  Users can specify mode utilities using
+MAZ data, MAZ to MAZ impedances, and TAZ to TAZ impedances.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">zone_system</span></code> - set to 2 for two zone system</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">maz</span></code> -  MAZ data file, with MAZ ID, TAZ, and land use and other MAZ attributes</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">maz_to_maz:tables</span></code> - list of MAZ to MAZ impedance tables.  These tables are read as pandas DataFrames and the columns are exposed to expressions.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">maz_to_maz:max_blend_distance</span></code> - in order to avoid cliff effects, the lookup of MAZ to MAZ impedance can be a blend of origin MAZ to destination MAZ impedance and origin TAZ to destination TAZ impedance up to a max distance.  The blending formula is below.  This requires specifying a distance TAZ skim and distance columns from the MAZ to MAZ files.  The TAZ skim name and MAZ to MAZ column name need to be the same so the blending can happen on-the-fly or else a value of 0 is returned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maz_to_maz:tables</span></code> - list of MAZ to MAZ impedance tables.  These tables are read
+as pandas DataFrames and the columns are exposed to expressions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maz_to_maz:max_blend_distance</span></code> - in order to avoid cliff effects, the lookup of
+MAZ to MAZ impedance can be a blend of origin MAZ to destination MAZ impedance and
+origin TAZ to destination TAZ impedance up to a max distance.  The blending formula
+is below.  This requires specifying a distance TAZ skim and distance columns from
+the MAZ to MAZ files.  The TAZ skim name and MAZ to MAZ column name need to be the
+same so the blending can happen on-the-fly or else a value of 0 is returned.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">MAZ</span> <span class="n">to</span> <span class="n">MAZ</span> <span class="n">distance</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">distance</span> <span class="o">/</span> <span class="nb">max</span> <span class="n">distance</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">TAZ</span> <span class="n">to</span> <span class="n">TAZ</span> <span class="n">distance</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">distance</span> <span class="o">/</span> <span class="nb">max</span> <span class="n">distance</span><span class="p">))</span>
 </pre></div>
@@ -2245,8 +2299,8 @@ the <a class="reference internal" href="#example-marin"><span class="std std-ref
 </div>
 </section>
 </section>
-<section id="id11">
-<h3>Outputs<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<section id="id10">
+<h3>Outputs<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>Essentially the same set of outputs is created for a two or three zone system
 model as for a one zone system model.  However, the one key additional bit of
 information for a three zone system model is the boarding TAP, alighting TAP, and
@@ -2256,7 +2310,7 @@ including tracing of the TVPB calculations. The <a class="reference internal" hr
 both TAZ and TAP level matrices depending on the configured number of zone systems.</p>
 </section>
 <section id="presampling">
-<span id="id12"></span><h3>Presampling<a class="headerlink" href="#presampling" title="Permalink to this headline">#</a></h3>
+<span id="id11"></span><h3>Presampling<a class="headerlink" href="#presampling" title="Permalink to this headline">#</a></h3>
 <p>In multiple zone systems models, destination choice presampling is activated by default.  Destination
 choice presampling first aggregates microzone size terms to the TAZ level and then runs destination
 choice sampling at the TAZ level using the destination choice sampling models.  After sampling X
@@ -2265,22 +2319,22 @@ on the microzone share of TAZ size.  Presampling significantly reduces runtime w
 similar results.</p>
 </section>
 </section>
-<section id="example-marin">
-<span id="id13"></span><h2>example_marin<a class="headerlink" href="#example-marin" title="Permalink to this headline">#</a></h2>
+<section id="prototype-marin">
+<span id="id12"></span><h2>prototype_marin<a class="headerlink" href="#prototype-marin" title="Permalink to this headline">#</a></h2>
 <p>To finalize development and verification of the multiple zone system and transit virtual path building components, the
 <a class="reference external" href="https://www.tam.ca.gov/">Transportation Authority of Marin County</a> version of MTC travel model two (TM2) work
 tour mode choice model was implemented.  This example was also developed to test multiprocessed runtime performance.
-The complete runnable setup is available from the ActivitySim command line interface as <cite>example_3_marin_full</cite>.  This example
+The complete runnable setup is available from the ActivitySim command line interface as <cite>prototype_3_marin_full</cite>.  This example
 has essentially the same configuration as the simpler three zone example above.</p>
-<section id="id14">
-<h3>Example<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
-<p>To run example_marin, do the following:</p>
+<section id="id13">
+<h3>Example<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
+<p>To run prototype_marin, do the following:</p>
 <ul class="simple">
 <li><p>Activate the correct conda environment if needed</p></li>
 <li><p>Create a local copy of the example</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Marin TM2 work tour mode choice for the MTC region</span>
-<span class="n">activitysim</span> <span class="n">create</span> <span class="o">-</span><span class="n">e</span> <span class="n">example_3_marin_full</span> <span class="o">-</span><span class="n">d</span> <span class="n">test_example_3_marin_full</span>
+<span class="n">activitysim</span> <span class="n">create</span> <span class="o">-</span><span class="n">e</span> <span class="n">prototype_3_marin_full</span> <span class="o">-</span><span class="n">d</span> <span class="n">test_prototype_3_marin_full</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -2295,8 +2349,8 @@ has essentially the same configuration as the simpler three zone example above.<
 <li><p>For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p></li>
 </ul>
 </section>
-<section id="id15">
-<h3>Settings<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<section id="id14">
+<h3>Settings<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
 <p>Additional settings for running the Marin TM2 tour mode choice example are in the <code class="docutils literal notranslate"><span class="pre">network_los.yaml</span></code> file.  The
 only additional notable setting is the <code class="docutils literal notranslate"><span class="pre">tap_lines</span></code> setting, which identifies a table of transit line names
 served for each TAP.  This file is used to trimmed the set of nearby TAP for each MAZ so only TAPs that are
@@ -2307,14 +2361,14 @@ file to include as it can considerably reduce runtimes.</p>
 </div>
 </section>
 </section>
-<section id="example-arc">
-<span id="id16"></span><h2>example_arc<a class="headerlink" href="#example-arc" title="Permalink to this headline">#</a></h2>
+<section id="prototype-arc">
+<span id="id15"></span><h2>prototype_arc<a class="headerlink" href="#prototype-arc" title="Permalink to this headline">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This example is in development</p>
 </div>
-<p>The example_arc added a <a class="reference internal" href="models.html#trip-scheduling-choice"><span class="std std-ref">Trip Scheduling Choice (Logit Choice)</span></a>, <a class="reference internal" href="models.html#trip-departure-choice"><span class="std std-ref">Trip Departure Choice (Logit Choice)</span></a>, and <a class="reference internal" href="models.html#parking-location-choice"><span class="std std-ref">Parking Location Choice</span></a>
-submodel.  These submodel specification files are below, and are in addition to the <a class="reference internal" href="#example-mtc"><span class="std std-ref">example_mtc</span></a>
+<p>The prototype_arc added a <a class="reference internal" href="models.html#trip-scheduling-choice"><span class="std std-ref">Trip Scheduling Choice (Logit Choice)</span></a>, <a class="reference internal" href="models.html#trip-departure-choice"><span class="std std-ref">Trip Departure Choice (Logit Choice)</span></a>, and <a class="reference internal" href="models.html#parking-location-choice"><span class="std std-ref">Parking Location Choice</span></a>
+submodel.  These submodel specification files are below, and are in addition to the <a class="reference internal" href="#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>
 submodel <a class="reference internal" href="#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>.</p>
 <section id="example-arc-sub-model-specification-files">
 <span id="arc-sub-model-spec-files"></span><h3>Example ARC Sub-Model Specification Files<a class="headerlink" href="#example-arc-sub-model-specification-files" title="Permalink to this headline">#</a></h3>
@@ -2357,21 +2411,21 @@ submodel <a class="reference internal" href="#sub-model-spec-files"><span class=
 </tbody>
 </table>
 </section>
-<section id="id17">
-<h3>Example<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
+<section id="id16">
+<h3>Example<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
-for running example_arc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
+for running prototype_arc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
-<section id="example-semcog">
-<span id="id19"></span><h2>example_semcog<a class="headerlink" href="#example-semcog" title="Permalink to this headline">#</a></h2>
+<section id="prototype-semcog">
+<span id="id18"></span><h2>prototype_semcog<a class="headerlink" href="#prototype-semcog" title="Permalink to this headline">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This example is in development</p>
 </div>
-<p>The example_semcog added a <a class="reference internal" href="models.html#work-from-home"><span class="std std-ref">Work From Home</span></a>, <a class="reference internal" href="models.html#telecommute-frequency"><span class="std std-ref">Telecommute Frequency</span></a>, <a class="reference internal" href="models.html#transit-pass-subsidy"><span class="std std-ref">Transit Pass Subsidy</span></a>
-and <a class="reference internal" href="models.html#transit-pass-ownership"><span class="std std-ref">Transit Pass Ownership</span></a> submodel.  These submodel specification files are below, and are in addition to the <a class="reference internal" href="#example-mtc"><span class="std std-ref">example_mtc</span></a>
-submodel <a class="reference internal" href="#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>.  These submodels were added to example_semcog as extensions, which is a way for users to add
+<p>The prototype_semcog added a <a class="reference internal" href="models.html#work-from-home"><span class="std std-ref">Work From Home</span></a>, <a class="reference internal" href="models.html#telecommute-frequency"><span class="std std-ref">Telecommute Frequency</span></a>, <a class="reference internal" href="models.html#transit-pass-subsidy"><span class="std std-ref">Transit Pass Subsidy</span></a>
+and <a class="reference internal" href="models.html#transit-pass-ownership"><span class="std std-ref">Transit Pass Ownership</span></a> submodel.  These submodel specification files are below, and are in addition to the <a class="reference internal" href="#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>
+submodel <a class="reference internal" href="#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>.  These submodels were added to prototype_semcog as extensions, which is a way for users to add
 submodels within their model setup as opposed to formally adding them to the activitysim package.  Extension submodels are run through
 the <cite>models</cite> settings.  However, the model must be run with the <cite>simulation.py</cite> script instead of the command line interface
 in order to load the extensions folder.</p>
@@ -2423,51 +2477,58 @@ in order to load the extensions folder.</p>
 </tbody>
 </table>
 </section>
-<section id="id20">
-<h3>Example<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h3>
+<section id="id19">
+<h3>Example<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
 <p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
-for running example_semcog.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
+for running prototype_semcog.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
-<section id="example-psrc">
-<span id="id22"></span><h2>example_psrc<a class="headerlink" href="#example-psrc" title="Permalink to this headline">#</a></h2>
+<section id="placeholder-psrc">
+<span id="id21"></span><h2>placeholder_psrc<a class="headerlink" href="#placeholder-psrc" title="Permalink to this headline">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example is a placeholder model used only for code development and debugging, and is not suitable for policy analysis</p>
+</div>
+<p>The placeholder_psrc is a two zone system (MAZs and TAZs) implementation of the
+prototype_mtc model design.  It uses PSRC zones, land use, synthetic population, and network LOS (skims).</p>
+<section id="id22">
+<h3>Example<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
+<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+for running placeholder_psrc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
+</section>
+</section>
+<section id="placeholder-sandag">
+<span id="id24"></span><h2>placeholder_sandag<a class="headerlink" href="#placeholder-sandag" title="Permalink to this headline">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This example is in development</p>
 </div>
-<p>The example_psrc is a two zone system (MAZs and TAZs) implementation of the
-example_mtc model design.  It uses PSRC zones, land use, synthetic population, and network LOS (skims).</p>
-<section id="id23">
-<h3>Example<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h3>
+<p>The placeholder_sandag is a multi-part model, containing one-, two-, and three- zone system (MAZs, TAZs, and TAPs) implementation of the
+prototype_mtc model design.  It uses SANDAG zones, land use, synthetic population, and network LOS (skims).</p>
+<section id="id25">
+<h3>Example<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
 <p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
-for running example_psrc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
+for running placeholder_sandag.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
-<section id="example-sandag">
-<span id="id25"></span><h2>example_sandag<a class="headerlink" href="#example-sandag" title="Permalink to this headline">#</a></h2>
+<section id="prototype-sandag-xborder">
+<span id="id27"></span><h2>prototype_sandag_xborder<a class="headerlink" href="#prototype-sandag-xborder" title="Permalink to this headline">#</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This example is in development</p>
 </div>
-<p>The example_sandag is a three zone system (MAZs, TAZs, and TAPs) implementation of the
-example_mtc model design.  It uses SANDAG zones, land use, synthetic population, and network LOS (skims).</p>
-<section id="id26">
-<h3>Example<a class="headerlink" href="#id26" title="Permalink to this headline">#</a></h3>
+<p>The prototype_sandag_xborder is a three zone system (MAZs, TAZs, and TAPs) that
+generates cross-border activities for a tour-based population of Mexican residents.
+In addition to the normal SANDAG zones, there are external MAZs and TAZs defined for
+each border crossing station (Port of Entry). Because the model is tour-based, there
+are no household or person-level attributes in the synthetic population. The
+principal difference between this and the standard 3-zone implementation is that
+since household do not have a default tour origin (home zones), a tour OD choice
+model is required to assign tour origins and destinations simultaneously.</p>
+<section id="id28">
+<h3>Example<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h3>
 <p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
-for running example_sandag.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
-</section>
-</section>
-<section id="example-sandag-xborder">
-<span id="id28"></span><h2>example_sandag_xborder<a class="headerlink" href="#example-sandag-xborder" title="Permalink to this headline">#</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This example is in development</p>
-</div>
-<p>The example_sandag_xborder is a three zone system (MAZs, TAZs, and TAPs) that generates cross-border activities for a tour-based population of Mexican residents. In addition to the normal SANDAG zones, there are external MAZs and TAZs defined for each border crossing station (Port of Entry). Because the model is tour-based, there are no household or person-level attributes in the synthetic population. The principal difference between this and the standard 3-zone implementation is that since household do not have a default tour origin (home zones), a tour OD choice model is required to assign tour origins and destinations simultaneously.</p>
-<section id="id29">
-<h3>Example<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h3>
-<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
-for running example_sandag_xborder.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
+for running prototype_sandag_xborder.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
 </section>
@@ -2485,10 +2546,10 @@ for running example_sandag_xborder.  For optimal performance, configure multipro
             <p class="prev-next-title">Command Line Tools</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="cli.html" title="next page">
+    <a class='right-next' id="next-link" href="users-guide/configuration.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Command Line Interface</p>
+        <p class="prev-next-title">Configuration</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
