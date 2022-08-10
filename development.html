@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Software Development &#8212; ActivitySim 0.1.dev1+g345fe8a documentation</title>
+    <title>Software Development &#8212; ActivitySim 0.1.dev1+ged8dcff documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -436,7 +436,7 @@ any changes you make in the code in your git directory will be reflected.</p></l
 <section id="style">
 <h3>Style<a class="headerlink" href="#style" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
-<li><p>Python code should follow the <a class="reference external" href="https://pypi.python.org/pypi/pycodestyle">pycodestyle style guide</a></p></li>
+<li><p>Python code should follow the <a class="reference external" href="https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html">black code style</a></p></li>
 <li><p>Python docstrings should follow the <a class="reference external" href="https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt">numpydoc documentation format</a></p></li>
 </ul>
 </section>
@@ -501,14 +501,16 @@ release other than for a specific well-defined purpose.</p></li>
 </section>
 <section id="testing">
 <h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">#</a></h3>
-<p>ActivitySim testing is done with three tools:</p>
+<p>ActivitySim testing is done with several tools:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://pypi.python.org/pypi/pycodestyle">pycodestyle</a>, a tool to check Python code against the pycodestyle style conventions</p></li>
+<li><p><a class="reference external" href="https://black.readthedocs.io">black</a>, a tool to check and enforce black
+code style on Python code</p></li>
+<li><p><cite>isort &lt;https://pycqa.github.io/isort/&gt;</cite> to organize imports</p></li>
 <li><p><a class="reference external" href="http://pytest.org/latest/">pytest</a>, a Python testing tool</p></li>
 <li><p><a class="reference external" href="https://github.com/coagulant/coveralls-python">coveralls</a>, a tool for measuring code coverage and publishing code coverage stats online</p></li>
 </ul>
 <p>To run the tests locally, first make sure the required packages are installed.  Next, run the tests with the following commands:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pycodestyle</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">black</span> <span class="o">--</span><span class="n">check</span>
 <span class="n">py</span><span class="o">.</span><span class="n">test</span>
 </pre></div>
 </div>
