@@ -44,3 +44,5 @@ from . import transit_pass_subsidy
 from . import transit_pass_ownership
 from . import vehicle_allocation
 from . import vehicle_type_choice
+from . import ldt_pattern_household
+from . import ldt_pattern_person

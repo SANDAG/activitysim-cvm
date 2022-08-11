@@ -1,0 +1,6 @@
+# no spec or coefficients needed; this model is purely probabilistic
+COMPLETE: 0.0248
+BEGIN: 0.0237
+END: 0.0203
+AWAY: 0.0790
+# NOTOUR = 0.8521
