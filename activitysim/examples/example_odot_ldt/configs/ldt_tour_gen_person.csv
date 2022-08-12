@@ -25,3 +25,4 @@ util_male,Male,SEX==1,,coef_male
 util_age,Age,AGE,,coef_age
 util_age_squared,Age Squared,AGE*AGE,,coef_age_squared
 util_accessibility,amount of stuff in origin,sdist_accessibility,,coef_accessibility
+util_hh_ldt,person was predicted to go on household LDT trip,household_ldt,,coef_hh_ldt

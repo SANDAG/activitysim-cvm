@@ -25,3 +25,4 @@ coef_male,0.806,F
 coef_age,0.1,F
 coef_age_squared,-0.001,F
 coef_accessibility,0,F
+coef_hh_ldt,-0.842,F
