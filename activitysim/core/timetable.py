@@ -144,7 +144,7 @@ def _available_run_length_2(
 
         row_ix = person_to_row[window_row_id_values[row]]
         window_row = windows[row_ix]
-        for j in range(1, num_cols-1):
+        for j in range(1, num_cols - 1):
             if window_row[j] != I_MIDDLE:
                 available[j] = 1
             else:
@@ -167,8 +167,6 @@ def _available_run_length_2(
             ).min()
             available_run_length[row] = first_unavailable - _time_col_ix - 1
     return available_run_length
-
-
 
 
 def tour_map(persons, tours, tdd_alts, persons_id_col="person_id"):
