@@ -12,3 +12,10 @@ SPEC_PURPOSES:
 # put global constants here
 CONSTANTS:
   DUMMY_CONSTANT: 1
+  
+preprocessor:
+    SPEC: ldt_tour_gen_person_preprocessor
+    DF: persons
+    TABLES:
+        - accessibility
+        - households

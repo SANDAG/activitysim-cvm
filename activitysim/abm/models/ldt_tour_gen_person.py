@@ -9,11 +9,12 @@ from .ldt_tour_gen import process_longdist_tours
 
 logger = logging.getLogger(__name__)
 
-@inject.step()
-def ldt_tour_gen_person(persons, persons_merged, 
-                  chunk_size, trace_hh_id):
-    """
 
+@inject.step()
+def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
+    """
+    This model determines whether a person goes on an LDT trip
+    (whether for a work-related or other purpose) over a period of 2 weeks
     """
 
     trace_label = "ldt_tour_gen_person"
@@ -26,34 +27,30 @@ def ldt_tour_gen_person(persons, persons_merged,
     estimator = estimation.manager.begin_estimation("ldt_tour_gen_person")
 
     constants = config.get_model_constants(model_settings)
-        
+
     # - preprocessor
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
 
-        locals_d = {}
-        if constants is not None:
-            locals_d.update(constants)
-
         expressions.assign_columns(
             df=choosers,
             model_settings=preprocessor_settings,
-            locals_dict=locals_d,
             trace_label=trace_label,
         )
 
-    model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])    
+    model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])
     spec_purposes = model_settings.get('SPEC_PURPOSES', {})
-    
+
     # needs to be outside the loop so we do it only once
     persons = persons.to_frame()
-        
+
     for purpose_settings in spec_purposes:
-    
+
         purpose_name = purpose_settings['NAME']
-        
+
         coefficients_df = simulate.read_model_coefficients(purpose_settings)
-        model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
+        # need to differentiate the model_spec read in and the one used for each purpose
+        model_spec_purpose = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
 
         nest_spec = config.get_logit_model_settings(model_settings)
 
@@ -65,7 +62,7 @@ def ldt_tour_gen_person(persons, persons_merged,
 
         choices = simulate.simple_simulate(
             choosers=choosers,
-            spec=model_spec,
+            spec=model_spec_purpose,
             nest_spec=nest_spec,
             locals_d=constants,
             chunk_size=chunk_size,
@@ -103,8 +100,8 @@ def ldt_tour_gen_person(persons, persons_merged,
         persons_making_longdist_tours = persons[persons[colname]]
         tour_counts = (
             persons_making_longdist_tours[[colname]]
-                .astype(int)
-                .rename(
+            .astype(int)
+            .rename(
                 columns={colname: f"longdist_{purpose_name.lower()}"}
             )
         )

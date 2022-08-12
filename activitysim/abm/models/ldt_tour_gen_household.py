@@ -22,18 +22,21 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
 
     choosers = households_merged.to_frame()
     # if we want to limit choosers, we can do so here
-    #choosers = choosers[choosers.workplace_zone_id > -1]
+    # choosers = choosers[choosers.workplace_zone_id > -1]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
+
+    print(choosers)
+    print(choosers.columns)
+    print(households.to_frame().columns)
 
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_tour_gen_household")
 
     constants = config.get_model_constants(model_settings)
 
-    # - preprocessor - adds accessiblity
+    # - preprocessor - adds accessiblity to choosers sample
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
-        
         expressions.assign_columns(
             df=choosers,
             model_settings=preprocessor_settings,

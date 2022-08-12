@@ -1,0 +1,4 @@
+Description,Target,Expression
+#,,adding accessibility
+short-distance destination choice logsum,sdist_accessibility,"reindex(accessibility.auPkTotal, persons.home_zone_id)"
+number of autos in household,auto_ownership,"reindex(households.auto_ownership, persons.household_id)"
