@@ -7,3 +7,10 @@ LOGIT_TYPE: MNL
 # put global constants here
 CONSTANTS:
   DUMMY_CONSTANT: 1
+
+preprocessor:
+    SPEC: ldt_tour_gen_household_preprocessor
+    DF: households
+    TABLES:
+        - accessibility
+    

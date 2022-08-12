@@ -3,6 +3,7 @@
 import logging
 
 from activitysim.core import config, expressions, inject, pipeline, simulate, tracing
+from ...core.util import reindex_i
 
 from .util import estimation
 from .ldt_tour_gen import process_longdist_tours
@@ -29,18 +30,13 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
 
     constants = config.get_model_constants(model_settings)
 
-    # - preprocessor
+    # - preprocessor - adds accessiblity
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
-
-        locals_d = {}
-        if constants is not None:
-            locals_d.update(constants)
-
+        
         expressions.assign_columns(
             df=choosers,
             model_settings=preprocessor_settings,
-            locals_dict=locals_d,
             trace_label=trace_label,
         )
 
