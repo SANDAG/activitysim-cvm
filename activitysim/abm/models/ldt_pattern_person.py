@@ -59,6 +59,8 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         purpose_name = purpose_settings["NAME"]
         choosers = choosers_full[choosers_full["ldt_tour_gen_persons_" + purpose_name]]
         
+        constants = config.get_model_constants(purpose_settings)
+        
         # coefficients_df = simulate.read_model_coefficients(model_settings)
         
         if estimator:
@@ -67,15 +69,14 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             # estimator.write_coefficients(coefficients_df, model_settings)
             estimator.write_choosers(choosers)
         
-        complete_prob = purpose_settings["COMPLETE"]
-        begin_prob = purpose_settings["BEGIN"]
-        end_prob = purpose_settings["END"]
-        away_prob = purpose_settings["AWAY"]
-        notour_prob = 1 - complete_prob - begin_prob - end_prob - away_prob
-        
+        # calculating complementary probability
+        notour_prob = 1 - constants["COMPLETE"] - constants["BEGIN"] - constants["END"] - constants["AWAY"]
+    
         # sampling probabilities
         df = pd.DataFrame(index=choosers.index, columns=["complete", "begin", "end", "away", "none"])
-        df["complete"], df["begin"], df["end"], df["away"], df["none"] = complete_prob, begin_prob, end_prob, away_prob, notour_prob
+        df["complete"], df["begin"], df["end"], df["away"], df["none"] = constants["COMPLETE"], constants["BEGIN"], constants["END"], constants["AWAY"], notour_prob
+        print(constants["COMPLETE"])
+        print(notour_prob)
         # _ is the random value used to make the monte carlo draws
         choices, _ = logit.make_choices(df)
         

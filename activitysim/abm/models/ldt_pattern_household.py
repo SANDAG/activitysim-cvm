@@ -59,16 +59,14 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
         # estimator.write_coefficients(coefficients_df, model_settings)
         estimator.write_choosers(choosers)
 
-    # reading in probabilities of each tour type
-    complete_prob = model_settings["COMPLETE"]
-    begin_prob = model_settings["BEGIN"]
-    end_prob = model_settings["END"]
-    away_prob = model_settings["AWAY"]
-    notour_prob = 1 - complete_prob - begin_prob - end_prob - away_prob
+    # calculating complementary probability
+    notour_prob = 1 - constants["COMPLETE"] - constants["BEGIN"] - constants["END"] - constants["AWAY"]
     
     # sampling probabilities
     df = pd.DataFrame(index=choosers.index, columns=["complete", "begin", "end", "away", "none"])
-    df["complete"], df["begin"], df["end"], df["away"], df["none"] = complete_prob, begin_prob, end_prob, away_prob, notour_prob
+    df["complete"], df["begin"], df["end"], df["away"], df["none"] = constants["COMPLETE"], constants["BEGIN"], constants["END"], constants["AWAY"], notour_prob
+    print(constants["COMPLETE"])
+    print(notour_prob)
     # _ is the random value used to make the monte carlo draws
     choices, _ = logit.make_choices(df)
     

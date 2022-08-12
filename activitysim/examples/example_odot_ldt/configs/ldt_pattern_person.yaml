@@ -1,14 +1,16 @@
 # also completely probabilistic; just needs 2 specifications
 SPEC_PURPOSES:
   - NAME: WORKRELATED
-    COMPLETE: 0.0695
-    BEGIN: 0.0472
-    END: 0.0336
-    AWAY: 0.1126
-    # NOTOUR: 0.7371
+    CONSTANTS:
+        COMPLETE: 0.0695
+        BEGIN: 0.0472
+        END: 0.0336
+        AWAY: 0.1126
+        # NOTOUR: 0.7371
   - NAME: OTHER
-    COMPLETE: 0.0286
-    BEGIN: 0.0211
-    END: 0.0171
-    AWAY: 0.0543
-    # NOTOUR: 0.8788
+    CONSTANTS:
+        COMPLETE: 0.0286
+        BEGIN: 0.0211
+        END: 0.0171
+        AWAY: 0.0543
+        # NOTOUR: 0.8788    
