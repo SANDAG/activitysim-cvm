@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 @inject.step()
 def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_id):
     """
-
+    This model predicts whether a household will go on an LDT trip over a 2 week period
     """
 
     trace_label = "ldt_tour_gen_household"
@@ -24,10 +24,6 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     # if we want to limit choosers, we can do so here
     # choosers = choosers[choosers.workplace_zone_id > -1]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
-
-    print(choosers)
-    print(choosers.columns)
-    print(households.to_frame().columns)
 
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_tour_gen_household")
