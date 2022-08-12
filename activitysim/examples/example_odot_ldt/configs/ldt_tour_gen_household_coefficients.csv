@@ -20,7 +20,7 @@ coef_occupation_transportation,-0.366,F
 coef_occupation_wholesale,0,F
 coef_occupation_finance,0,F
 coef_occupation_other,-0.181,F
-coef_college_student,0,F
-coef_male,0.455,F
+coef_college_student,-0.242,F
+coef_male,0,F
 coef_age,0,F
 coef_accessibility,-0.182,F
