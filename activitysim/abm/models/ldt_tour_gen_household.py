@@ -33,9 +33,14 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     # - preprocessor - adds accessiblity to choosers sample
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
+        locals_d = {}
+        if constants is not None:
+            locals_d.update(constants)
+
         expressions.assign_columns(
             df=choosers,
             model_settings=preprocessor_settings,
+            locals_dict=locals_d,
             trace_label=trace_label,
         )
 

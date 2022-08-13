@@ -31,10 +31,14 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
     # - preprocessor
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
+        locals_d = {}
+        if constants is not None:
+            locals_d.update(constants)
 
         expressions.assign_columns(
             df=choosers,
             model_settings=preprocessor_settings,
+            locals_dict=locals_d,
             trace_label=trace_label,
         )
 
