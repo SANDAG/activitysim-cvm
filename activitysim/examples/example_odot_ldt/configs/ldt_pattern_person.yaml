@@ -1,4 +1,4 @@
-# also completely probabilistic; just needs 2 specifications
+# also completely probabilistic; just needs 2 specifications for each purpose
 SPEC_PURPOSES:
   - NAME: WORKRELATED
     CONSTANTS:
@@ -14,3 +14,9 @@ SPEC_PURPOSES:
         END: 0.0171
         AWAY: 0.0543
         # NOTOUR: 0.8788    
+        
+preprocessor:
+    SPEC: ldt_pattern_person_preprocessor
+    DF: persons
+    TABLES:
+        - households

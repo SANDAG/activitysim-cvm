@@ -222,7 +222,7 @@ models:
   - ldt_tour_gen_household
   - ldt_tour_gen_person
   - ldt_pattern_household
-  # - ldt_pattern_person
+  - ldt_pattern_person
   # - cdap_simulate
   - write_data_dictionary
   - track_skim_usage

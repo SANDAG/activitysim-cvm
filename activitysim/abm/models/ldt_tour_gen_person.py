@@ -79,7 +79,7 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        colname = "ldt_tour_gen_persons_" + purpose_name
+        colname = "ldt_tour_gen_person_" + purpose_name
         persons[colname] = (
             choices.reindex(persons.index).fillna(0).astype(bool)
         )

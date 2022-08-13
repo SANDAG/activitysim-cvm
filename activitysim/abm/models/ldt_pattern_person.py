@@ -59,12 +59,24 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     # nest_spec = config.get_logit_model_settings(model_settings)
 
     persons = persons.to_frame()
-    persons["ldt_pattern"] = -1
+    temp = False
 
     for purpose_settings in spec_purposes:
-
         purpose_name = purpose_settings["NAME"]
-        choosers = choosers_full[choosers_full["ldt_tour_gen_persons_" + purpose_name]]
+        colname = "ldt_pattern_PERSON_" + purpose_name
+
+        # default value
+        persons[colname] = -1
+        choosers_full[colname] = -1
+
+        # only consider people who are predicted to go on LDT tour over 2 week period
+        choosers = choosers_full[choosers_full["ldt_tour_gen_person_" + purpose_name]]
+        # only consider people who aren't scheduled to go on household LDT
+        choosers = choosers[choosers["ldt_pattern_HOUSEHOLD"].isin([-1, 4])]
+
+        if temp:
+            # only consider people who aren't scheduled to go on work LDT when scheduling other LDT
+            choosers = choosers[choosers["ldt_pattern_PERSON_WORKRELATED"].isin([-1, 4])]
 
         constants = config.get_model_constants(purpose_settings)
 
@@ -84,8 +96,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         df["complete"], df["begin"], df["end"], df["away"], df["none"] = (
             constants["COMPLETE"], constants["BEGIN"], constants["END"], constants["AWAY"], notour_prob
         )
-        print(constants["COMPLETE"])
-        print(notour_prob)
+
         # _ is the random value used to make the monte carlo draws
         choices, _ = logit.make_choices(df)
 
@@ -97,14 +108,27 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        colname = "ldt_pattern"
         # making one ldt pattern field instead of segmenting by person/household currently
-        persons.loc[choices.index, "ldt_pattern"] = choices
+        persons.loc[choices.index, colname] = choices
+        # adding it to choosers for downstream integrity check
+        choosers_full.loc[choices.index, colname] = choices
 
         pipeline.replace_table("persons", persons)
+        temp = True
 
-    tracing.print_summary(
-        colname,
-        persons[colname],
-        value_counts=True,
-    )
+        tracing.print_summary(
+            colname,
+            persons[colname],
+            value_counts=True,
+        )
+
+        people_making_longdist_tours_patterns = (
+            persons[persons["ldt_tour_gen_person_" + purpose_name]][colname]
+            .astype(int)
+        )
+        longdist_tours = pipeline.get_table("longdist_tours")
+        longdist_tours = (
+            pd.merge(longdist_tours, people_making_longdist_tours_patterns,
+                     how="left", left_on="person_id", right_index=True)
+        )
+        pipeline.replace_table("longdist_tours", longdist_tours)
