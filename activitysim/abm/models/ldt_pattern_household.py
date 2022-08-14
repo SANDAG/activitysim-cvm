@@ -30,7 +30,7 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     # if we want to limit choosers, we can do so here
     # limiting ldt_pattern_household to households that go on LDTs
     # should there be that many LDT households?
-    choosers = choosers[choosers.ldt_tour_gen_HOUSEHOLD]
+    choosers = choosers[choosers.ldt_tour_gen_household]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
     # necessary to run
@@ -89,16 +89,19 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
 
     # setting -1 to non-LDT households
     households = households.to_frame()
-    households["ldt_pattern_HOUSEHOLD"] = (
+    households["ldt_pattern_household"] = (
         choices.reindex(households.index).fillna(-1)
     )
+
+    # adding some convenient fields
+    households["on_ldt"] = np.where(households["ldt_pattern_household"].isin([-1, 4]), False, True)
 
     # merging into households
     pipeline.replace_table("households", households)
 
     tracing.print_summary(
         "ldt_pattern_household",
-        households.ldt_pattern_HOUSEHOLD,
+        households.ldt_pattern_household,
         value_counts=True
     )
 
@@ -107,7 +110,7 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
 
     # init log dist trip table
     hh_making_longdist_tours_patterns = (
-        households[households["ldt_tour_gen_HOUSEHOLD"]]["ldt_pattern_HOUSEHOLD"]
+        households[households["ldt_tour_gen_household"]]["ldt_pattern_household"]
         .astype(int)
     )
     longdist_tours = pipeline.get_table("longdist_tours")

@@ -63,7 +63,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
 
     for purpose_settings in spec_purposes:
         purpose_name = purpose_settings["NAME"]
-        colname = "ldt_pattern_PERSON_" + purpose_name
+        colname = "ldt_pattern_person_" + purpose_name
 
         # default value
         persons[colname] = -1
@@ -72,11 +72,11 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         # only consider people who are predicted to go on LDT tour over 2 week period
         choosers = choosers_full[choosers_full["ldt_tour_gen_person_" + purpose_name]]
         # only consider people who aren't scheduled to go on household LDT
-        choosers = choosers[choosers["ldt_pattern_HOUSEHOLD"].isin([-1, 4])]
+        choosers = choosers[choosers["ldt_pattern_household"].isin([-1, 4])]
 
         if temp:
             # only consider people who aren't scheduled to go on work LDT when scheduling other LDT
-            choosers = choosers[choosers["ldt_pattern_PERSON_WORKRELATED"].isin([-1, 4])]
+            choosers = choosers[choosers["ldt_pattern_person_WORKRELATED"].isin([-1, 4])]
 
         constants = config.get_model_constants(purpose_settings)
 
@@ -103,7 +103,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         if estimator:
             estimator.write_choices(choices)
             choices = estimator.get_survey_values(
-                choices, "persons", "ldt_pattern_" + purpose_name
+                choices, "persons", colname
             )
             estimator.write_override_choices(choices)
             estimator.end_estimation()
@@ -113,7 +113,6 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         # adding it to choosers for downstream integrity check
         choosers_full.loc[choices.index, colname] = choices
 
-        pipeline.replace_table("persons", persons)
         temp = True
 
         tracing.print_summary(
@@ -132,3 +131,28 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
                      how="left", left_on="person_id", right_index=True)
         )
         pipeline.replace_table("longdist_tours", longdist_tours)
+
+    # adding convenient fields
+    # whether or not person is scheduled to be on LDT trip
+    persons["on_ldt"] = np.where(persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2, 3]), True, False)
+    persons["on_ldt"] = (
+        np.where(~persons["on_ldt"], persons["ldt_pattern_person_OTHER"].isin([0, 1, 2, 3]), persons["on_ldt"])
+    )
+
+    # -1 is no LDT trip (whether a trip waws not generated/not scheduled), 0 is work releated, 1 is other
+    persons["ldt_purpose"] = np.where(persons["on_ldt"], 1, -1)
+    persons["ldt_purpose"] = (
+        np.where(persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2, 3]), 0, persons["ldt_purpose"])
+    )
+
+    # -1 is no LDT trip (whether a trip was not generated/not scheduled), others match up to the pattern for a
+    # person's specified ldt_purpose (excluding 4, which means no scheduled LDT--changed to -1)
+    persons["ldt_pattern"] = np.where(persons["on_ldt"], 0, -1)
+    persons["ldt_pattern"] = (
+        np.where(persons["ldt_purpose"] == 0, persons["ldt_pattern_person_WORKRELATED"], persons["ldt_pattern"])
+    )
+    persons["ldt_pattern"] = (
+        np.where(persons["ldt_purpose"] == 1, persons["ldt_pattern_person_OTHER"], persons["ldt_pattern"])
+    )
+
+    pipeline.replace_table("persons", persons)

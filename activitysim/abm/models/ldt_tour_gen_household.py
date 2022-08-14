@@ -76,15 +76,15 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
         estimator.end_estimation()
 
     households = households.to_frame()
-    households["ldt_tour_gen_HOUSEHOLD"] = (
+    households["ldt_tour_gen_household"] = (
         choices.reindex(households.index).fillna(0).astype(bool)
     )
 
     pipeline.replace_table("households", households)
 
     tracing.print_summary(
-        "ldt_tour_gen_HOUSEHOLD",
-        households.ldt_tour_gen_HOUSEHOLD,
+        "ldt_tour_gen_household",
+        households.ldt_tour_gen_household,
         value_counts=True,
     )
 
@@ -92,12 +92,12 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
 
     # init log dist trip table
-    hh_making_longdist_tours = households[households["ldt_tour_gen_HOUSEHOLD"]]
+    hh_making_longdist_tours = households[households["ldt_tour_gen_household"]]
     tour_counts = (
-        hh_making_longdist_tours[["ldt_tour_gen_HOUSEHOLD"]]
+        hh_making_longdist_tours[["ldt_tour_gen_household"]]
         .astype(int)
         .rename(
-            columns={"ldt_tour_gen_HOUSEHOLD": "longdist_household"}
+            columns={"ldt_tour_gen_household": "longdist_household"}
         )
     )
     longdist_tours = process_longdist_tours(
