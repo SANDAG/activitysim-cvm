@@ -29,7 +29,6 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     choosers = households_merged.to_frame()
     # if we want to limit choosers, we can do so here
     # limiting ldt_pattern_household to households that go on LDTs
-    # should there be that many LDT households?
     choosers = choosers[choosers.ldt_tour_gen_household]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 

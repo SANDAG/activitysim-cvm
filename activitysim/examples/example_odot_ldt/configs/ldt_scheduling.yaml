@@ -1,0 +1,62 @@
+LOGIT_TYPE: MNL
+
+SPEC_CATEGORIES:
+  - NAME: COMPLETE_TOUR
+    CATEGORY: 0
+    SPEC: ldt_complete_tour_scheduling.csv
+    COEFFICIENTS: ldt_complete_tour_scheduling_coefficients.csv
+  - NAME: BEGIN_TOUR
+    CATEGORY: 1
+    CONSTANTS:
+        hour_0: 0.0008
+        hour_1: 0.0017
+        hour_2: 0.002
+        hour_3: 0.0044
+        hour_4: 0.0183
+        hour_5: 0.0299
+        hour_6: 0.0623
+        hour_7: 0.0905
+        hour_8: 0.1036
+        hour_9: 0.1059
+        hour_10: 0.0763
+        hour_11: 0.0394
+        hour_12: 0.0566
+        hour_13: 0.0512
+        hour_14: 0.0474
+        hour_15: 0.0595
+        hour_16: 0.062
+        hour_17: 0.0822
+        hour_18: 0.0649
+        hour_19: 0.0252
+        hour_20: 0.0083
+        hour_21: 0.0056
+        hour_22: 0.0008
+        hour_23: 0.0012
+  - NAME: END_TOUR
+    CATEGORY: 2
+    CONSTANTS:
+        hour_0: 0.0184
+        hour_1: 0.0095
+        hour_2: 0.0076
+        hour_3: 0.0039
+        hour_4: 0.0094
+        hour_5: 0.036
+        hour_6: 0.0638
+        hour_7: 0.0809
+        hour_8: 0.1055
+        hour_9: 0.0719
+        hour_10: 0.079
+        hour_11: 0.035
+        hour_12: 0.0589
+        hour_13: 0.0428
+        hour_14: 0.0553
+        hour_15: 0.0578
+        hour_16: 0.0611
+        hour_17: 0.0744
+        hour_18: 0.058
+        hour_19: 0.0289
+        hour_20: 0.0151
+        hour_21: 0.0121
+        hour_22: 0.007
+        hour_23: 0.0077
+  

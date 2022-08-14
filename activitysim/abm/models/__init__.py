@@ -46,3 +46,4 @@ from . import vehicle_allocation
 from . import vehicle_type_choice
 from . import ldt_pattern_household
 from . import ldt_pattern_person
+from . import ldt_scheduling_household
