@@ -1,235 +1,91 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>Benchmarking &#8212; ActivitySim 0.1.dev1+ged8dcff documentation</title>
-    
-  <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
-    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-    
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Benchmarking &mdash; ActivitySim 1.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Core Components" href="core.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
+    <link rel="prev" title="Software Development" href="development.html" /> 
+</head>
 
-    <!-- Google Analytics -->
-    
-  </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
-
-  <div id="navbar-start">
-    
-    
-<a class="navbar-brand" href="index.html">
-<p class="title">ActivitySim</p>
-</a>
-
-    
-  </div>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  
-  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
-    <div id="navbar-center" class="mr-auto">
-      
-      <div class="navbar-center-item">
-        <ul id="navbar-main-elements" class="navbar-nav">
-    <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="users-guide/index.html">
-  Users Guide
- </a>
-</li>
-
-<li class="toctree-l1 current active nav-item">
- <a class="reference internal nav-link" href="dev-guide/index.html">
-  Developers
- </a>
-</li>
-
-    
-</ul>
-      </div>
-      
-    </div>
-
-    <div id="navbar-end">
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
-      </ul>
-      </div>
-      
-    </div>
-  </div>
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> ActivitySim
+          </a>
+              <div class="version">
+                1.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimation.html">Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howitworks.html">How the System Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Software Development</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#benchmarking-setup">Benchmarking Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-benchmarks">Running Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#threading-limits">Threading Limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submitting-benchmarks">Submitting Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#publishing-to-github-pages">Publishing to Github Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profiling">Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-new-benchmarks">Writing New Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-benchmarks-for-pull-requests">Running Benchmarks for Pull Requests</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
     </nav>
-    
 
-    <div class="container-xl">
-      <div class="row">
-          
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <div class="bd-toc-item active">
-    <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="dev-guide/install.html">
-   Developer Installation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="dev-guide/using-sharrow.html">
-   Using Sharrow
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="dev-guide/workflows.html">
-   Workflows
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="development.html">
-   Software Development
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="models.html">
-   Models
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="core.html">
-   Core Components
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Benchmarking
-  </a>
- </li>
-</ul>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ActivitySim</a>
+      </nav>
 
-  </div>
-</nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
-
-          
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-              
-              <div class="toc-item">
-                
-<div class="tocsection onthispage mt-5 pt-1 pb-3">
-    <i class="fas fa-list"></i> On this page
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Benchmarking</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/benchmarking.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
 </div>
-
-<nav id="bd-toc-nav">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#benchmarking-setup">
-   Benchmarking Setup
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#running-benchmarks">
-   Running Benchmarks
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#threading-limits">
-   Threading Limits
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#submitting-benchmarks">
-   Submitting Benchmarks
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#publishing-to-github-pages">
-   Publishing to Github Pages
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#profiling">
-   Profiling
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#writing-new-benchmarks">
-   Writing New Benchmarks
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#running-benchmarks-for-pull-requests">
-   Running Benchmarks for Pull Requests
-  </a>
- </li>
-</ul>
-
-</nav>
-              </div>
-              
-              <div class="toc-item">
-                
-              </div>
-              
-            
-          </div>
-          
-
-          
-          
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
-              
-              <div>
-                
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="benchmarking">
-<span id="id1"></span><h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">#</a></h1>
+<span id="id1"></span><h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h1>
 <p>A key focus of the ActivitySim project is <em>performance</em>.  It’s not enough
 to build a new modeling platform that’s mathematically sound and simulates
 travel behavior as expected.  It’s also required that it do so quickly.
@@ -244,7 +100,7 @@ called <a class="reference external" href="https://asv.readthedocs.io/en/stable/
 <p>The benchmarking process is closely tied to ActivitySim’s <em>git</em> repository,
 so it is recommended that you use Git to clone the repository from GitHub.</p>
 <section id="benchmarking-setup">
-<h2>Benchmarking Setup<a class="headerlink" href="#benchmarking-setup" title="Permalink to this headline">#</a></h2>
+<h2>Benchmarking Setup<a class="headerlink" href="#benchmarking-setup" title="Permalink to this headline">¶</a></h2>
 <p>The first step in running benchmarks is to have a conda environment for
 benchmarking, as well as a local clone of the main ActivitySim repository,
 plus one of the <code class="docutils literal notranslate"><span class="pre">asim-benchmarks</span></code> repository. If you plan to submit your
@@ -299,7 +155,7 @@ accept all.  For example, under “arch” it may suggest “AMD64”, but for c
 you can change that to “x86_64”, which is the same thing by a different name.</p>
 </section>
 <section id="running-benchmarks">
-<h2>Running Benchmarks<a class="headerlink" href="#running-benchmarks" title="Permalink to this headline">#</a></h2>
+<h2>Running Benchmarks<a class="headerlink" href="#running-benchmarks" title="Permalink to this headline">¶</a></h2>
 <p>ActivitySim automates the process of running many benchmarks. It can also easily
 accumulate and analyze benchmark results across many different machines, as long as the
 benchmarks are all run in the same (relative) place. So before running benchmarks,
@@ -367,7 +223,7 @@ into a text file, and then point to that file using the <cite>batch</cite> comma
 </div>
 </section>
 <section id="threading-limits">
-<h2>Threading Limits<a class="headerlink" href="#threading-limits" title="Permalink to this headline">#</a></h2>
+<h2>Threading Limits<a class="headerlink" href="#threading-limits" title="Permalink to this headline">¶</a></h2>
 <p>When you run benchmarking using the <cite>activitysim benchmark</cite> command, the
 following environment variable are set automatically before benchmarking begins:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MKL_NUM_THREADS</span> <span class="o">=</span> <span class="mi">1</span>
@@ -383,7 +239,7 @@ mode.  This still allows ActivitySim itself to spin up multiple processes if the
 item being timed is a multiprocess benchmark.</p>
 </section>
 <section id="submitting-benchmarks">
-<h2>Submitting Benchmarks<a class="headerlink" href="#submitting-benchmarks" title="Permalink to this headline">#</a></h2>
+<h2>Submitting Benchmarks<a class="headerlink" href="#submitting-benchmarks" title="Permalink to this headline">¶</a></h2>
 <p>One of the useful features of the airspeed velocity benchmarking engine is the
 opportunity to compare performance benchmarks across different machines. The
 ActivitySim community is interested in aggregating such results from a number
@@ -415,7 +271,7 @@ pre-commit step is required.</p>
 visit their fork on GitHub.com to use the web interface to open a pull request.</p>
 </section>
 <section id="publishing-to-github-pages">
-<h2>Publishing to Github Pages<a class="headerlink" href="#publishing-to-github-pages" title="Permalink to this headline">#</a></h2>
+<h2>Publishing to Github Pages<a class="headerlink" href="#publishing-to-github-pages" title="Permalink to this headline">¶</a></h2>
 <p>Publishing the standard airspeed velocity content to GitHub pages is a built-in
 feature of the command line tool, available to users who have write-access to the
 asim-benchmarks GitHub repository.  Be sure you have all the relevant branches
@@ -425,7 +281,7 @@ tracked locally (especially master and develop) and then run:</p>
 </div>
 </section>
 <section id="profiling">
-<h2>Profiling<a class="headerlink" href="#profiling" title="Permalink to this headline">#</a></h2>
+<h2>Profiling<a class="headerlink" href="#profiling" title="Permalink to this headline">¶</a></h2>
 <p>The benchmarking tool can also be used for profiling, which allows a developer to
 inspect the timings for various commands <em>inside</em> a particular benchmark. This is
 most conveniently accomplished using the <code class="docutils literal notranslate"><span class="pre">snakeviz</span></code> tool, which should be installed
@@ -453,7 +309,7 @@ json result file.  For example:</p>
 interface.</p>
 </section>
 <section id="writing-new-benchmarks">
-<h2>Writing New Benchmarks<a class="headerlink" href="#writing-new-benchmarks" title="Permalink to this headline">#</a></h2>
+<h2>Writing New Benchmarks<a class="headerlink" href="#writing-new-benchmarks" title="Permalink to this headline">¶</a></h2>
 <p>New benchmarks for other model examples can be added to
 <code class="docutils literal notranslate"><span class="pre">activitysim/benchmarking/benchmarks</span></code>. A basic template structure has been used,
 so that it should be relatively straight-forward to implement component-level
@@ -465,7 +321,7 @@ a stable process to execute chunking training for each machine prior to running
 the production-version benchmarks that will be meaningful for users.</p>
 </section>
 <section id="running-benchmarks-for-pull-requests">
-<h2>Running Benchmarks for Pull Requests<a class="headerlink" href="#running-benchmarks-for-pull-requests" title="Permalink to this headline">#</a></h2>
+<h2>Running Benchmarks for Pull Requests<a class="headerlink" href="#running-benchmarks-for-pull-requests" title="Permalink to this headline">¶</a></h2>
 <p>The complete set of performance benchmarks is too large to include in ActivitySim’s
 automatic continuous integration (CI) testing, both by compute time and by memory usage.
 However, it is valuable to run these tests once against the final version of
@@ -487,44 +343,33 @@ mitigate problems promptly if desired.</p>
 </section>
 
 
-              </div>
-              
-              
-              <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="core.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Core Components</p>
-        </div>
-    </a>
-</div>
-              
-          </main>
-          
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="development.html" class="btn btn-neutral float-left" title="Software Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
-      </div>
-    </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-<footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
-    &copy; Copyright contributing authors.<br>
-</p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
-</p>
-    </div>
-    
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright contributing authors.</p>
   </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
 </footer>
-  </body>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>
