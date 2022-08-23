@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Getting Started &#8212; ActivitySim 0.1.dev1+gb0fdc7a documentation</title>
+    <title>Getting Started &#8212; ActivitySim 0.1.dev1+g1d56952</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -88,8 +88,82 @@
     <div id="navbar-end">
       
       <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
-      </ul>
+        <div class="dropdown" id="version_switcher">
+    <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
+        0.1.dev1  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+
+<!-- NOTE: this JS must live here (not in our global JS file) because it relies
+     on being processed by Jinja before it is run (specifically for replacing
+     variables gettingstarted and {'json_url': 'https://camsys.github.io/activitysim/infrastructure/_static/switcher.json', 'version_match': '0.1.dev1'}.
+-->
+
+<script type="text/javascript">
+// Check if corresponding page path exists in other version of docs
+// and, if so, go there instead of the homepage of the other docs version
+function checkPageExistsAndRedirect(event) {
+    const currentFilePath = "gettingstarted.html",
+          tryUrl = event.target.getAttribute("href");
+    let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
+    $.ajax({
+        type: 'HEAD',
+        url: tryUrl,
+        // if the page exists, go there
+        success: function() {
+            location.href = tryUrl;
+        }
+    }).fail(function() {
+        location.href = otherDocsHomepage;
+    });
+    // this prevents the browser from following the href of the clicked node
+    // (which is fine because this function takes care of redirecting)
+    return false;
+}
+
+// Populate the version switcher from the JSON config file
+(function () {
+    $.getJSON("https://camsys.github.io/activitysim/infrastructure/_static/switcher.json", function(data, textStatus, jqXHR) {
+        const currentFilePath = "gettingstarted.html";
+        // create links to the corresponding page in the other docs versions
+        $.each(data, function(index, entry) {
+            // if no custom name specified (e.g., "latest"), use version string
+            if (!("name" in entry)) {
+                entry.name = entry.version;
+            }
+            // create the node
+            const node = document.createElement("a");
+            node.setAttribute("class", "list-group-item list-group-item-action py-1");
+            node.textContent = `${entry.name}`;
+            node.setAttribute("href", `${entry.url}${currentFilePath}`);
+            // on click, AJAX calls will check if the linked page exists before
+            // trying to redirect, and if not, will redirect to the homepage
+            // for that version of the docs.
+            node.onclick = checkPageExistsAndRedirect;
+            // Add dataset values for the version and name in case people want
+            // to apply CSS styling based on this information.
+            node.dataset["versionName"] = entry.name;
+            node.dataset["version"] = entry.version;
+
+            $("#version_switcher_menu").append(node);
+            // replace dropdown button text with the preferred display name of
+            // this version, rather than using sphinx's 0.1.dev1 variable.
+            // also highlight the dropdown entry for the currently-viewed
+            // version's entry
+            if (entry.version == "0.1.dev1") {
+                node.classList.add("active");
+                let btn = document.getElementById("version_switcher_button");
+                btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+                btn.dataset["activeVersion"] = entry.version;
+            }
+        });
+    });
+})();
+</script>
       </div>
       
     </div>
@@ -265,13 +339,20 @@
 <section id="installation">
 <span id="index-0"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
 <p>1. It is recommended that you install and use a <em>conda</em> package manager
-for your system. One easy way to do so is by using <a class="reference external" href="https://www.anaconda.com/distribution/">Anaconda 64bit Python 3</a>,
+for your system. One easy way to do so is by using
+<a class="reference external" href="https://github.com/conda-forge/miniforge#mambaforge">Mambaforge</a>.
+Mamba is a free open source cross-platform package manager that runs on
+Windows, OS X and Linux and is fully compatible with conda packages.  It is
+also usually substantially faster than conda itself.</p>
+<p>Alternatively, if you prefer a package installer backed by corporate tech
+support available (for a fee) as necessary, you can install
+<a class="reference external" href="https://www.anaconda.com/distribution/">Anaconda 64bit Python 3</a>,
 although you should consult the <a class="reference external" href="https://www.anaconda.com/terms-of-service">terms of service</a>
 for this product and ensure you qualify since businesses and
-governments with over 200 employees do not qualify for free usage.  If you prefer
-a completely free open source <em>conda</em> tool, you can download and install the
-appropriate version of <a class="reference external" href="https://github.com/conda-forge/miniforge#miniforge3">Miniforge</a>.  If desired,
-select ‘add miniforge3 to the system PATH environment variable’ so typing ‘conda’ on the command line will work.</p>
+governments with over 200 employees do not qualify for free usage.
+If you’re using <cite>conda</cite> instead of <cite>mamba</cite>, just replace every call to
+<cite>mamba</cite> below with <cite>conda</cite>, as they share the same user interface and most
+command formats.</p>
 <p>2. If you access the internet from behind a firewall, then you may need to
 configure your proxy server. To do so, create a <cite>.condarc</cite> file in your
 home installation folder, such as:</p>
@@ -283,7 +364,7 @@ home installation folder, such as:</p>
 </div>
 <p>3. Create a conda environment (basically a Python install just for this project)
 using conda Prompt (on Windows) or the terminal (macOS or Linux):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span> <span class="n">activitysim</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span> <span class="n">activitysim</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span>
 </pre></div>
 </div>
 <p>This command will create the environment and install all the dependencies
@@ -291,33 +372,33 @@ required for running ActivitySim.  It is only necessary to create the environmen
 once per machine, you do not need to (re)create the environment for each session.
 If you would also like to install other tools or optional dependencies, it is
 possible to do so by adding additional libraries to this command.  For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span> <span class="n">activitysim</span> <span class="n">jupyterlab</span> <span class="n">larch</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span> <span class="n">activitysim</span> <span class="n">jupyterlab</span> <span class="n">larch</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span>
 </pre></div>
 </div>
 <p>This example installs a specific version of Python, version 3.9.  A similar
 approach can be used to install specific versions of other libraries as well,
 including ActivitySim, itself. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span> <span class="n">activitysim</span><span class="o">=</span><span class="mf">1.0.2</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span> <span class="n">activitysim</span><span class="o">=</span><span class="mf">1.0.2</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span>
 </pre></div>
 </div>
 <p>Additional libraries can also be installed later.  You may want to consider these
 tools for certain development tasks:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># packages for testing</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">pytest</span> <span class="n">pytest</span><span class="o">-</span><span class="n">cov</span> <span class="n">coveralls</span> <span class="n">black</span> <span class="n">flake8</span> <span class="n">pytest</span><span class="o">-</span><span class="n">regressions</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
+<span class="n">mamba</span> <span class="n">install</span> <span class="n">pytest</span> <span class="n">pytest</span><span class="o">-</span><span class="n">cov</span> <span class="n">coveralls</span> <span class="n">black</span> <span class="n">flake8</span> <span class="n">pytest</span><span class="o">-</span><span class="n">regressions</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
 
 <span class="c1"># packages for building documentation</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">sphinx</span> <span class="n">numpydoc</span> <span class="n">sphinx_rtd_theme</span><span class="o">==</span><span class="mf">0.5.2</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
+<span class="n">mamba</span> <span class="n">install</span> <span class="n">sphinx</span> <span class="n">numpydoc</span> <span class="n">sphinx_rtd_theme</span><span class="o">==</span><span class="mf">0.5.2</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
 
 <span class="c1"># packages for estimation integration</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">larch</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
+<span class="n">mamba</span> <span class="n">install</span> <span class="n">larch</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
 
 <span class="c1"># packages for example notebooks</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">jupyterlab</span> <span class="n">matplotlib</span> <span class="n">geopandas</span> <span class="n">descartes</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
+<span class="n">mamba</span> <span class="n">install</span> <span class="n">jupyterlab</span> <span class="n">matplotlib</span> <span class="n">geopandas</span> <span class="n">descartes</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="o">--</span><span class="n">override</span><span class="o">-</span><span class="n">channels</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
 </pre></div>
 </div>
 <p>To create an environment containing all these optional dependencies at once, you
 can run the shortcut command</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="n">activitysim</span><span class="o">/</span><span class="n">ASIM</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">env</span> <span class="n">create</span> <span class="n">activitysim</span><span class="o">/</span><span class="n">ASIM</span> <span class="o">-</span><span class="n">n</span> <span class="n">asim</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
@@ -327,7 +408,9 @@ can run the shortcut command</p>
 </pre></div>
 </div>
 <p>The activation of the correct environment needs to be done every time you
-start a new session (e.g. opening a new conda Prompt window).</p>
+start a new session (e.g. opening a new conda Prompt window).  Note that
+the <em>activate</em> and <em>deactivate</em> commands to start and stop using environments
+are called as <cite>conda</cite> even if you are otherwise using <cite>mamba</cite>.</p>
 <section id="alternative-installation-methods">
 <h3>Alternative Installation Methods<a class="headerlink" href="#alternative-installation-methods" title="Permalink to this headline">#</a></h3>
 <p>If you prefer to install ActivitySim without conda, it is possible to
@@ -335,20 +418,20 @@ do so with pip, although you may find it more difficult to get all of the
 required dependencies installed correctly.  If you can use conda for
 the dependencies, you can get most of the libraries you need from there:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># required packages for running ActivitySim</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">cytoolz</span> <span class="n">numpy</span> <span class="n">pandas</span> <span class="n">psutil</span> <span class="n">pyarrow</span> <span class="n">numba</span> <span class="n">pytables</span> <span class="n">pyyaml</span> <span class="n">openmatrix</span> <span class="n">requests</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="n">mamba</span> <span class="n">install</span> <span class="n">cytoolz</span> <span class="n">numpy</span> <span class="n">pandas</span> <span class="n">psutil</span> <span class="n">pyarrow</span> <span class="n">numba</span> <span class="n">pytables</span> <span class="n">pyyaml</span> <span class="n">openmatrix</span> <span class="n">requests</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
 
 <span class="c1"># required for ActivitySim version 1.0.1 and earlier</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">zbox</span>
 </pre></div>
 </div>
 <p>And then simply install just activitysim with pip.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">activitysim</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">activitysim</span>
 </pre></div>
 </div>
 <p>If you are using a firewall you may need to add <code class="docutils literal notranslate"><span class="pre">--trusted-host</span> <span class="pre">pypi.python.org</span> <span class="pre">--proxy=myproxy.org:8080</span></code> to this command.</p>
 <p>For development work, can also install ActivitySim directly from source. Clone
 the ActivitySim repository, and then from within that directory run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span> <span class="o">-</span><span class="n">e</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span> <span class="o">-</span><span class="n">e</span>
 </pre></div>
 </div>
 <p>The “-e” will install in editable mode, so any changes you make to the ActivitySim
@@ -356,7 +439,7 @@ code will also be reflected in your installation.</p>
 <p>Installing from source is easier if you have all the necessary dependencies already
 installed in a development conda environment.  Developers can create an
 environment that has all the optional dependencies preinstalled by running:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="n">activitysim</span><span class="o">/</span><span class="n">ASIM</span><span class="o">-</span><span class="n">DEV</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mamba</span> <span class="n">env</span> <span class="n">create</span> <span class="n">activitysim</span><span class="o">/</span><span class="n">ASIM</span><span class="o">-</span><span class="n">DEV</span>
 </pre></div>
 </div>
 <p>If you prefer to use a different environment name than <cite>ASIM-DEV</cite>, just
@@ -489,8 +572,9 @@ line as follows: <code class="docutils literal notranslate"><span class="pre">SE
   <div class="container">
     
     <div class="footer-item">
-      <p class="copyright">
-    &copy; Copyright contributing authors.<br>
+      <!-- This will display the version of the docs -->
+<p class="last-updated">
+ActivitySim 0.1.dev1+g1d56952, documentation last updated Aug 23, 2022.<br/>
 </p>
     </div>
     
