@@ -1,18 +1,13 @@
 [
     {
-        "name": "Bleeding Edge",
+        "name": "Sharrow Enabled",
         "version": "1.2.dev",
-        "url": "https://camsys.github.io/activitysim/bleed/index.html"
-    },
-    {
-        "name": "Latest Stable",
-        "version": "1.2.dev",
-        "url": "https://camsys.github.io/activitysim/develop/index.html"
+        "url": "https://camsys.github.io/activitysim/sharrow-3z/index.html"
     },
     {
         "name": "1.1 (Released)",
         "version": "1.1.1",
-        "url": "https://activitysim.github.io/activitysim/v1.1.1/index.html"
+        "url": "https://camsys.github.io/activitysim/develop/index.html"
     },
     {
         "version": "1.0.4",
