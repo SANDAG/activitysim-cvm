@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Examples &#8212; ActivitySim 0.1.dev1+g1d56952</title>
+    <title>Examples &#8212; ActivitySim 0.1.dev1+g2a92be8</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -100,7 +100,7 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables examples and {'json_url': 'https://camsys.github.io/activitysim/infrastructure/_static/switcher.json', 'version_match': '0.1.dev1'}.
+     variables examples and {'json_url': 'https://camsys.github.io/activitysim/switcher.json', 'version_match': '0.1.dev1'}.
 -->
 
 <script type="text/javascript">
@@ -127,7 +127,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 (function () {
-    $.getJSON("https://camsys.github.io/activitysim/infrastructure/_static/switcher.json", function(data, textStatus, jqXHR) {
+    $.getJSON("https://camsys.github.io/activitysim/switcher.json", function(data, textStatus, jqXHR) {
         const currentFilePath = "examples.html";
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
@@ -693,7 +693,7 @@ strongly cautioned not to use them for any policy or planning purpose.</p></li>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<p>The <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 contains example commands to create and run several versions of the examples.  See also <a class="reference internal" href="development.html#adding-agency-examples"><span class="std std-ref">Adding Agency Examples</span></a> for more
 information on agency example models.</p>
 </div>
@@ -1743,7 +1743,7 @@ and resume pipeline processing on the next model step after the specified checkp
 <p>The example should run in a few minutes since it runs a small sample of households.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A customizable run script for power users can be found in the <a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/master/other_resources/scripts">Github repo</a>.
+<p>A customizable run script for power users can be found in the <a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/main/other_resources/scripts">Github repo</a>.
 This script takes many of the same arguments as the <code class="docutils literal notranslate"><span class="pre">activitysim</span> <span class="pre">run</span></code> command, including paths to
 <code class="docutils literal notranslate"><span class="pre">--config</span></code>, <code class="docutils literal notranslate"><span class="pre">--data</span></code>, and <code class="docutils literal notranslate"><span class="pre">--output</span></code> directories. The script looks for these folders in the current
 working directory by default.</p>
@@ -2487,7 +2487,7 @@ submodel <a class="reference internal" href="#sub-model-spec-files"><span class=
 </section>
 <section id="id16">
 <h3>Example<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
-<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 for running prototype_arc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
@@ -2553,7 +2553,7 @@ in order to load the extensions folder.</p>
 </section>
 <section id="id19">
 <h3>Example<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
-<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 for running prototype_semcog.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
@@ -2567,7 +2567,7 @@ for running prototype_semcog.  For optimal performance, configure multiprocessin
 prototype_mtc model design.  It uses PSRC zones, land use, synthetic population, and network LOS (skims).</p>
 <section id="id22">
 <h3>Example<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
-<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 for running placeholder_psrc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
@@ -2581,7 +2581,7 @@ for running placeholder_psrc.  For optimal performance, configure multiprocessin
 prototype_mtc model design.  It uses SANDAG zones, land use, synthetic population, and network LOS (skims).</p>
 <section id="id25">
 <h3>Example<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
-<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 for running placeholder_sandag.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
@@ -2601,7 +2601,7 @@ since household do not have a default tour origin (home zones), a tour OD choice
 model is required to assign tour origins and destinations simultaneously.</p>
 <section id="id28">
 <h3>Example<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h3>
-<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<p>See example commands in <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 for running prototype_sandag_xborder.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.</p>
 </section>
 </section>
@@ -2643,7 +2643,7 @@ for running prototype_sandag_xborder.  For optimal performance, configure multip
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 0.1.dev1+g1d56952, documentation last updated Aug 23, 2022.<br/>
+ActivitySim 0.1.dev1+g2a92be8, documentation last updated Aug 24, 2022.<br/>
 </p>
     </div>
     
