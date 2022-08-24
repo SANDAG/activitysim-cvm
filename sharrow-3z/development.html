@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Software Development &#8212; ActivitySim 1.1.1.dev298+g1d56952e</title>
+    <title>Software Development &#8212; ActivitySim 0.1.dev1+g2a92be8</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -90,7 +90,7 @@
       <div class="navbar-end-item">
         <div class="dropdown" id="version_switcher">
     <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
-        1.1.1  <!-- this text may get changed later by javascript -->
+        0.1.dev1  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
@@ -100,7 +100,7 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables development and {'json_url': 'https://camsys.github.io/activitysim/infrastructure/_static/switcher.json', 'version_match': '1.1.1'}.
+     variables development and {'json_url': 'https://camsys.github.io/activitysim/switcher.json', 'version_match': '0.1.dev1'}.
 -->
 
 <script type="text/javascript">
@@ -127,7 +127,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 (function () {
-    $.getJSON("https://camsys.github.io/activitysim/infrastructure/_static/switcher.json", function(data, textStatus, jqXHR) {
+    $.getJSON("https://camsys.github.io/activitysim/switcher.json", function(data, textStatus, jqXHR) {
         const currentFilePath = "development.html";
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
@@ -151,10 +151,10 @@ function checkPageExistsAndRedirect(event) {
 
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's 1.1.1 variable.
+            // this version, rather than using sphinx's 0.1.dev1 variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
-            if (entry.version == "1.1.1") {
+            if (entry.version == "0.1.dev1") {
                 node.classList.add("active");
                 let btn = document.getElementById("version_switcher_button");
                 btn.innerText = btn.dataset["activeVersionName"] = entry.name;
@@ -449,12 +449,12 @@ and network skim matrices.  With this design, the Python code, which can be thou
 engine, and the specific model calculations, such as the utilities, are separate.  This helps to avoid
 modifying the actual Python code when making changes to the models, such as during model calibration. An
 example of model expressions is found in the example auto ownership model specification file -
-<a class="reference external" href="https://github.com/activitysim/activitysim/blob/master/example/configs/auto_ownership.csv">auto_ownership.csv</a>.
+<a class="reference external" href="https://github.com/activitysim/activitysim/blob/main/example/configs/auto_ownership.csv">auto_ownership.csv</a>.
 Refer to the <a class="reference internal" href="core.html#expressions"><span class="std std-ref">Utility Expressions</span></a> section for more detail.</p>
 <p>Many of the models have pre- and post-processor table annotators, which read a CSV file of expression, calculate
 required additional table fields, and join the fields to the target tables.  An example table annotation expressions
 file is found in the example configuration files for households for the CDAP model -
-<a class="reference external" href="https://github.com/activitysim/activitysim/blob/master/example/configs/annotate_households_cdap.csv">annotate_households_cdap.csv</a>.
+<a class="reference external" href="https://github.com/activitysim/activitysim/blob/main/example/configs/annotate_households_cdap.csv">annotate_households_cdap.csv</a>.
 Refer to <a class="reference internal" href="models.html#table-annotation"><span class="std std-ref">Estimation</span></a> for more information and the <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.expressions.assign_columns()</span></code> function.</p>
 </section>
 <section id="choice-models">
@@ -533,7 +533,7 @@ any changes you make in the code in your git directory will be reflected.</p></l
 <p>We use <a class="reference external" href="https://guides.github.com/introduction/flow">GitHub Flow</a>.  The key points to
 our GitHub workflow are:</p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch contains the latest release version of the ActivitySim resources</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">main</span></code> branch contains the latest release version of the ActivitySim resources</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch contains new features or revisions planned for the next release.
 Generally, developers should not work directly in the <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch.</p></li>
 <li><p>Work to implement new features or other revisions is done in an issue/feature branch
@@ -546,8 +546,8 @@ and barring any objection raised by a consortium member, PR’s can be merged in
 <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch.</p></li>
 <li><p>If tests pass for the <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch, new features are suitably documented, and on approval of
 <a class="reference external" href="https://github.com/ActivitySim/activitysim/wiki/Governance#actions">a lazy majority of the PMC</a>,
-a repository administrator can approve a manual pull request to merge <code class="docutils literal notranslate"><span class="pre">develop</span></code> into <code class="docutils literal notranslate"><span class="pre">master</span></code>,
-and otherwise make a <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/HOW_TO_RELEASE.md">product release</a>.</p></li>
+a repository administrator can approve a manual pull request to merge <code class="docutils literal notranslate"><span class="pre">develop</span></code> into <code class="docutils literal notranslate"><span class="pre">main</span></code>,
+and otherwise make a <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/HOW_TO_RELEASE.md">product release</a>.</p></li>
 </ul>
 </section>
 <section id="versioning">
@@ -589,7 +589,7 @@ code style on Python code</p></li>
 </pre></div>
 </div>
 <p>These same tests are run by Travis with each push to the repository.  These tests need to pass in order
-to merge the revisions into master.</p>
+to merge the revisions into main.</p>
 <p>In some cases, test targets need to be updated to match the new results produced by the code since these
 are now the correct results.  In order to update the test targets, first determine which tests are
 failing and then review the failing lines in the source files.  These are easy to identify since each
@@ -622,7 +622,7 @@ is automatically built by Travis after successfully passing the tests.</p>
 <section id="releases">
 <span id="release-steps"></span><h3>Releases<a class="headerlink" href="#releases" title="Permalink to this headline">#</a></h3>
 <p>With the agreement of the PMC, a project administrator will handle making releases, following the detailed
-steps outlined in the <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/HOW_TO_RELEASE.md">HOW_TO_RELEASE</a>
+steps outlined in the <a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/HOW_TO_RELEASE.md">HOW_TO_RELEASE</a>
 document.</p>
 </section>
 <section id="issues-and-support">
@@ -632,7 +632,7 @@ document.</p>
 <section id="license">
 <h3>License<a class="headerlink" href="#license" title="Permalink to this headline">#</a></h3>
 <p>ActivitySim is provided “as is.”  See the
-<a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/LICENSE.txt">License</a> for more information.</p>
+<a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/LICENSE.txt">License</a> for more information.</p>
 </section>
 <section id="contribution-review-criteria">
 <h3>Contribution Review Criteria<a class="headerlink" href="#contribution-review-criteria" title="Permalink to this headline">#</a></h3>
@@ -734,7 +734,7 @@ mode functionality.  The estimation example is a version of the example prototyp
 prototype_mtc and includes additional settings for reading in survey files and producing estimation data bundles.</p></li>
 </ul>
 <p>Regardless of the type or version, all functioning examples are described in a common list stored in
-<a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>.
+<a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>.
 Each item included in this file represents one example, and each includes the following tags:</p>
 <ul class="simple">
 <li><p><em>name</em>: A unique name for the example, used to identify the example when using the <cite>activitysim create</cite> command. The
@@ -765,7 +765,7 @@ trip list.  This is what is known as a regression test.  This test is also run b
 <p>Both types of examples are stored in the ActivitySim repositories for version control and collaborative maintenance.
 There are two storage locations:</p>
 <ul class="simple">
-<li><p>The <a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/master/activitysim/examples">activitysim package example folder</a>,
+<li><p>The <a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/main/activitysim/examples">activitysim package example folder</a>,
 which stores the test and agency example setup files, cropped data and cropping script, regression test script,
 expected results, and a change log to track any revisions to the example to get it working for testing.  These
 resources are the resources automatically tested by the TravisCI test system with each revision to the software.</p></li>
@@ -777,7 +777,7 @@ resources are the resources periodically and manually tested (for now).</p></li>
 <p>This two-part solution allows for the main activitysim repo to remain relatively lightweight, while providing an
 organized and accessible storage solution for the full scale example data.  The ActivitySim command line interface for
 creating and running examples makes uses the
-<a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/master/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
+<a class="reference external" href="https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml">example_manifest.yaml</a>
 to maintain the dictionary of the examples and how to get and run them.</p>
 </section>
 <section id="running-the-test-system">
@@ -785,9 +785,9 @@ to maintain the dictionary of the examples and how to get and run them.</p>
 <p>The automatic TravisCI test system runs the test examples and the cropped agency examples.  Examples of the testing
 resources for each agency example that need to be up-to-date are:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/master/activitysim/examples/prototype_semcog/scripts">scripts folder (including crop script)</a></p></li>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/master/activitysim/examples/prototype_semcog/test">test folder (including test script)</a></p></li>
-<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/master/activitysim/examples/prototype_semcog/test/regress">regress folder (including expected outputs)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/main/activitysim/examples/prototype_semcog/scripts">scripts folder (including crop script)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/main/main/activitysim/examples/prototype_semcog/test">test folder (including test script)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ActivitySim/activitysim/tree/main/activitysim/examples/prototype_semcog/test/regress">regress folder (including expected outputs)</a></p></li>
 </ul>
 <p>For the time being, running the full scale examples is done manually since it involves getting and running several large examples that take many hours to run.  The entire system could be fully automated, and either run in the cloud or on a local server.</p>
 </section>
@@ -858,7 +858,7 @@ resources for each agency example that need to be up-to-date are:</p>
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.1.1.dev298+g1d56952e, documentation last updated Aug 23, 2022.<br/>
+ActivitySim 0.1.dev1+g2a92be8, documentation last updated Aug 24, 2022.<br/>
 </p>
     </div>
     
