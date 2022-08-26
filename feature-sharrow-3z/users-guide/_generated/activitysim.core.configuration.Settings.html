@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>activitysim.core.configuration.Settings &#8212; ActivitySim 1.2.0.dev327+g5b736f68</title>
+    <title>activitysim.core.configuration.Settings &#8212; ActivitySim 1.2.0.dev331+g5f472570</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -316,6 +316,7 @@ the model.</p>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.chunk_training_mode" title="activitysim.core.configuration.Settings.chunk_training_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_training_mode</span> <span class="pre">(str)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.cleanup_pipeline_after_run" title="activitysim.core.configuration.Settings.cleanup_pipeline_after_run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cleanup_pipeline_after_run</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.create_input_store" title="activitysim.core.configuration.Settings.create_input_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_input_store</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.disable_zarr" title="activitysim.core.configuration.Settings.disable_zarr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_zarr</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.households_sample_size" title="activitysim.core.configuration.Settings.households_sample_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">households_sample_size</span> <span class="pre">(int)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.input_store" title="activitysim.core.configuration.Settings.input_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input_store</span> <span class="pre">(str)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.Settings.input_table_list" title="activitysim.core.configuration.Settings.input_table_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input_table_list</span> <span class="pre">(list[activitysim.core.configuration.InputTable])</span></code></a></p></li>
@@ -383,6 +384,18 @@ single-checkpoint pipeline file, and deleting any subprocess pipelines.</p>
 <dd><p>Write the inputs as read in back to an HDF5 store.</p>
 <p>If enabled, this writes the store to the outputs folder to use for subsequent
 model runs, as reading HDF5 can be faster than reading CSV files.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.core.configuration.Settings.disable_zarr">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disable_zarr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#activitysim.core.configuration.Settings.disable_zarr" title="Permalink to this definition">#</a></dt>
+<dd><p>Disable the use of zarr format skims.</p>
+<p>By default, if sharrow is enabled (any setting other than false), ActivitySim
+currently loads data from zarr format skims if a zarr location is provided,
+and data is found there.  If no data is found there, then original OMX skim
+data is loaded, any transformations or encodings are applied, and then this
+data is written out to a zarr file at that location.  Setting this option to
+True will disable the use of zarr.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -519,7 +532,7 @@ mode of operation, but useful for development and debugging.</p></li>
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.0.dev327+g5b736f68, documentation last updated Aug 25, 2022.<br/>
+ActivitySim 1.2.0.dev331+g5f472570, documentation last updated Aug 26, 2022.<br/>
 </p>
     </div>
     
