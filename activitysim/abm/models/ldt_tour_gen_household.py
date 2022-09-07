@@ -88,4 +88,3 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
 
     if trace_hh_id:
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
-

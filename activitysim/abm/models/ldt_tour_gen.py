@@ -88,16 +88,19 @@ def process_longdist_tours(df, tour_counts, tour_category):
 
     tours = create_tours(tour_counts, tour_category=tour_category)
 
-    if "household_id" in df.columns: # only person dfs have a household_id column; processing persons here
+    if "household_id" in df.columns:  # only person dfs have a household_id column; processing persons here
         tours["household_id"] = reindex(df.household_id, tours.person_id)
         tours["origin"] = reindex(df.home_zone_id, tours.person_id)
-    else: # processing households here
+    else:  # processing households here
         # TODO get smart about this, don't just assume we're in households...
-            # wouldn't even people living alone technically be in households unless want to segment by GQ/household
-        tours["household_id"] = tours["person_id"] # create_tours returns ids as person_id, need to reassign to households_ids 
+        # wouldn't even people living alone technically be in households unless want to segment by GQ/household
+        # create_tours returns ids as person_id, need to reassignto household_id
+        tours["household_id"] = tours["person_id"]
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
-        tours["person_id"] = -1  # hh tours don't use person ids
-        tours["number_of_participants"] = reindex(df.hhsize, tours.household_id) # number of participants = hhsize since hh ldt tours are necessarily joint (can remove if implemented in participation stage)
+        tours["person_id"] = -1   # hh tours don't use person ids
+        # number of participants = hhsize since hh ldt tours are necessarily joint
+        # (can remove if participation stage implemented)
+        tours["number_of_participants"] = reindex(df.hhsize, tours.household_id)
 
     # assign stable (predictable) tour_id
     set_longdist_tour_index(tours)

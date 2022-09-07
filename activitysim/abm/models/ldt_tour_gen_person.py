@@ -97,4 +97,3 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
 
         if trace_hh_id:
             tracing.trace_df(persons, label=trace_label, warn_if_empty=True)
-

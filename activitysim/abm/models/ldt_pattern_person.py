@@ -135,7 +135,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         np.where(persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2, 3]), 0, persons["ldt_purpose"])
     )
 
-    # -1 is no LDT trip (whether a trip was not generated/not scheduled), others match up to the pattern for a 
+    # -1 is no LDT trip (whether a trip was not generated/not scheduled), others match up to the pattern for a
     # person's specified ldt_purpose (excluding 4, which means no scheduled LDT--changed to -1)
     persons["ldt_pattern"] = np.where(persons["on_ldt"], 0, -1)
     persons["ldt_pattern"] = (
@@ -146,9 +146,10 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     )
 
     pipeline.replace_table("persons", persons)
-    
+
     process_person_tours(persons, "workrelated", 0)
     process_person_tours(persons, "other", 1)
+
 
 def process_person_tours(persons, purpose: str, purpose_num: int):
     persons_making_longdist_tours = persons[persons["ldt_purpose"] == purpose_num]
@@ -159,16 +160,16 @@ def process_person_tours(persons, purpose: str, purpose_num: int):
             columns={"on_ldt": f"longdist_person_{purpose}"}
         )
     )
-    
+
     print(tour_counts)
-    
+
     longdist_tours_person = process_longdist_tours(
         persons, tour_counts, "longdist"
     )
-    
+
     longdist_tours_person = (
-            pd.merge(longdist_tours_person, persons[["ldt_pattern"]],
-                     how="left", left_on="person_id", right_index=True)
-        )
-    
+        pd.merge(longdist_tours_person, persons[["ldt_pattern"]],
+                 how="left", left_on="person_id", right_index=True)
+    )
+
     pipeline.extend_table("longdist_tours", longdist_tours_person)

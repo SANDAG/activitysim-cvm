@@ -111,21 +111,21 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     # initializing the longdist tours table with actual household ldt trips (both genereated and scheduled)
     hh_making_longdist_tours = households[households["on_ldt"]]
     tour_counts = (
-       hh_making_longdist_tours[["on_ldt"]]
+        hh_making_longdist_tours[["on_ldt"]]
         .astype(int)
         .rename(
             columns={"on_ldt": "longdist_household"}
         )
     )
     hh_longdist_tours = process_longdist_tours(
-        households, tour_counts, "longdist" # making longdist the braoder tour category instead of segmenting by all types of ldt
+        # making longdist the braoder tour category instead of segmenting by all types of ldt
+        households, tour_counts, "longdist"
     )
-    
+
     hh_longdist_tours = (
-            pd.merge(hh_longdist_tours, households[["ldt_pattern_household"]],
-                     how="left", left_on="household_id", right_index=True)
-            .rename(columns={"ldt_pattern_household": "ldt_pattern"})
-        )
-    
+        pd.merge(hh_longdist_tours, households[["ldt_pattern_household"]],
+                 how="left", left_on="household_id", right_index=True)
+        .rename(columns={"ldt_pattern_household": "ldt_pattern"})
+    )
+
     pipeline.extend_table("longdist_tours", hh_longdist_tours)
-    
