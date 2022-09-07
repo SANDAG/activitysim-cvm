@@ -1,6 +1,6 @@
 coefficient_name,value,constrain
 coef_duration1,0,F
-coef_duration2,0,F
+coef_duration2,0.959,F
 coef_duration3,0.959,F
 coef_duration4,1.609,F
 coef_duration5,2.544,F
@@ -16,8 +16,8 @@ coef_duration14,2.874,F
 coef_duration15,2.874,F
 coef_duration16,2.964,F
 coef_duration17,2.964,F
-coef_duration18,0,F
-coef_duration19,0,F
+coef_duration18,2.964,F
+coef_duration19,2.964,F
 coef_departHour5,0,F
 coef_departHour6,0,F
 coef_departHour7,1.033,F
