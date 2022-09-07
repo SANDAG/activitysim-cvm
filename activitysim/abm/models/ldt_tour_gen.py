@@ -87,12 +87,12 @@ def process_longdist_tours(df, tour_counts, tour_category):
 
     tours = create_tours(tour_counts, tour_category=tour_category)
 
-    if "household_id" in df.columns:
+    if "household_id" in df.columns: # only person dfs have a household_id column; processing persons here
         tours["household_id"] = reindex(df.household_id, tours.person_id)
         tours["origin"] = reindex(df.home_zone_id, tours.person_id)
-    else:
+    else: # processing households here
         # TODO get smart about this, don't just assume we're in households...
-        tours["household_id"] = tours["person_id"]
+        tours["household_id"] = tours["person_id"] # create_tours returns ids as person_id, need to reassign to households_ids 
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
         tours["person_id"] = -1  # hh tours don't use person ids
 
