@@ -5,7 +5,6 @@ import logging
 from activitysim.core import config, expressions, inject, pipeline, simulate, tracing
 
 from .util import estimation
-from .ldt_tour_gen import process_longdist_tours
 
 logger = logging.getLogger(__name__)
 
@@ -99,17 +98,3 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
         if trace_hh_id:
             tracing.trace_df(persons, label=trace_label, warn_if_empty=True)
 
-        ####
-        # init log dist trip table
-        persons_making_longdist_tours = persons[persons[colname]]
-        tour_counts = (
-            persons_making_longdist_tours[[colname]]
-            .astype(int)
-            .rename(
-                columns={colname: f"longdist_{purpose_name.lower()}"}
-            )
-        )
-        longdist_tours = process_longdist_tours(
-            persons, tour_counts, f"longdist_{purpose_name.lower()}"
-        )
-        pipeline.extend_table("longdist_tours", longdist_tours)

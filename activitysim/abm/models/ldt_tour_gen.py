@@ -29,7 +29,8 @@ def set_longdist_tour_index(tours):
     """
 
     tour_num_col = "tour_type_num"
-    possible_tours = ["longdist_household1", "longdist_workrelated1", "longdist_other1"]
+    # changed tours types to be more specific
+    possible_tours = ["longdist_household1", "longdist_person_workrelated1", "longdist_person_other1"]
     possible_tours_count = len(possible_tours)
 
     assert tour_num_col in tours.columns
@@ -92,9 +93,11 @@ def process_longdist_tours(df, tour_counts, tour_category):
         tours["origin"] = reindex(df.home_zone_id, tours.person_id)
     else: # processing households here
         # TODO get smart about this, don't just assume we're in households...
+            # wouldn't even people living alone technically be in households unless want to segment by GQ/household
         tours["household_id"] = tours["person_id"] # create_tours returns ids as person_id, need to reassign to households_ids 
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
         tours["person_id"] = -1  # hh tours don't use person ids
+        tours["number_of_participants"] = reindex(df.hhsize, tours.household_id) # number of participants = hhsize since hh ldt tours are necessarily joint (can remove if implemented in participation stage)
 
     # assign stable (predictable) tour_id
     set_longdist_tour_index(tours)

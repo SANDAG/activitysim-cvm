@@ -3,10 +3,8 @@
 import logging
 
 from activitysim.core import config, expressions, inject, pipeline, simulate, tracing
-from ...core.util import reindex_i
 
 from .util import estimation
-from .ldt_tour_gen import process_longdist_tours
 
 logger = logging.getLogger(__name__)
 
@@ -91,16 +89,3 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     if trace_hh_id:
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
 
-    # init log dist trip table
-    hh_making_longdist_tours = households[households["ldt_tour_gen_household"]]
-    tour_counts = (
-        hh_making_longdist_tours[["ldt_tour_gen_household"]]
-        .astype(int)
-        .rename(
-            columns={"ldt_tour_gen_household": "longdist_household"}
-        )
-    )
-    longdist_tours = process_longdist_tours(
-        households, tour_counts, "longdist_household"
-    )
-    pipeline.extend_table("longdist_tours", longdist_tours)

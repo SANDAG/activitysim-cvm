@@ -6,6 +6,7 @@ import logging
 from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, logit
 
 from .util import estimation
+from .ldt_tour_gen import process_longdist_tours
 
 import pandas as pd
 import numpy as np
@@ -107,14 +108,24 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     if trace_hh_id:
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
 
-    # init log dist trip table
-    hh_making_longdist_tours_patterns = (
-        households[households["ldt_tour_gen_household"]]["ldt_pattern_household"]
+    # initializing the longdist tours table with actual household ldt trips (both genereated and scheduled)
+    hh_making_longdist_tours = households[households["on_ldt"]]
+    tour_counts = (
+       hh_making_longdist_tours[["on_ldt"]]
         .astype(int)
+        .rename(
+            columns={"on_ldt": "longdist_household"}
+        )
     )
-    longdist_tours = pipeline.get_table("longdist_tours")
-    longdist_tours = (
-        pd.merge(longdist_tours, hh_making_longdist_tours_patterns,
-                 how="left", left_on="household_id", right_index=True)
+    hh_longdist_tours = process_longdist_tours(
+        households, tour_counts, "longdist" # making longdist the braoder tour category instead of segmenting by all types of ldt
     )
-    pipeline.replace_table("longdist_tours", longdist_tours)
+    
+    hh_longdist_tours = (
+            pd.merge(hh_longdist_tours, households[["ldt_pattern_household"]],
+                     how="left", left_on="household_id", right_index=True)
+            .rename(columns={"ldt_pattern_household": "ldt_pattern"})
+        )
+    
+    pipeline.extend_table("longdist_tours", hh_longdist_tours)
+    
