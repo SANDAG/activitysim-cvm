@@ -146,4 +146,17 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     if trace_hh_id:
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
 
-    # TODO: merge scheduling into longdist csv
+    # merging into longdist_tours
+    longdist_tours = pipeline.get_table("longdist_tours")
+
+    # merge start/end hours for households only, -2 for persons
+    longdist_tours["ldt_start_hour"] = (
+        np.where(longdist_tours["actor_type"] == "household",
+                 households.loc[longdist_tours["household_id"], "ldt_start_hour"], -2)
+    )
+    longdist_tours["ldt_end_hour"] = (
+        np.where(longdist_tours["actor_type"] == "household",
+                 households.loc[longdist_tours["household_id"], "ldt_end_hour"], -2)
+    )
+
+    pipeline.replace_table("longdist_tours", longdist_tours)

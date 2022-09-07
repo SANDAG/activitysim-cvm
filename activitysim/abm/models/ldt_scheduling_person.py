@@ -146,4 +146,23 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
     if trace_hh_id:
         tracing.trace_df(persons, label=trace_label, warn_if_empty=True)
 
-    # TODO: merge scheduling into longdist csv
+    # merging into longdist_tours
+    longdist_tours = pipeline.get_table("longdist_tours")
+
+    # making a version of persons with valid lookup values for a person_id of -1
+    persons_temp = persons
+    persons_temp.loc[-1, "ldt_start_hour"] = -2
+    persons_temp.loc[-1, "ldt_end_hour"] = -2
+
+    # merging start/end for persons; -2 lookup value would never be used since all entries with person_id of -1
+    # is necessarily a household and thus not a person -- defaults to existing value
+    longdist_tours["ldt_start_hour"] = (
+        np.where(longdist_tours["actor_type"] == "person",
+                 persons_temp.loc[longdist_tours["person_id"], "ldt_start_hour"], longdist_tours["ldt_start_hour"])
+    )
+    longdist_tours["ldt_end_hour"] = (
+        np.where(longdist_tours["actor_type"] == "person",
+                 persons_temp.loc[longdist_tours["person_id"], "ldt_end_hour"], longdist_tours["ldt_end_hour"])
+    )
+
+    pipeline.replace_table("longdist_tours", longdist_tours)

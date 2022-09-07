@@ -128,4 +128,6 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
         .rename(columns={"ldt_pattern_household": "ldt_pattern"})
     )
 
+    hh_longdist_tours["actor_type"] = "household"
+
     pipeline.extend_table("longdist_tours", hh_longdist_tours)
