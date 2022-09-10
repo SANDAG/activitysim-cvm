@@ -12,6 +12,11 @@ SPEC_PURPOSES:
 # put global constants here
 CONSTANTS:
   DUMMY_CONSTANT: 1
+  MALE_CONSTANT: 1
+  TOO_YOUNG_SCH_CONSTANT: 0  # only applies to people too young to be in school (age 3 or lower)
+  NOT_IN_SCHOOL_CONSTANT: 1
+  ONE_FAMILY_HOUSE_DETACHED_CATEGORY: 2
+  ONE_FAMILY_HOUSE_ATTACHED_CATEGORY: 3
   
 preprocessor:
     SPEC: ldt_tour_gen_person_preprocessor

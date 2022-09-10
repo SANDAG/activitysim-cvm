@@ -12,6 +12,6 @@ util_hhsize_4_up,4+ household,hhsize > 3,,coef_hhsize_4_up
 util_hhincome_20k_40k,"income ranging from $20,000 to $40,000",(INCOME>=20000) & (INCOME<40000),,coef_hhincome_20k_40k
 util_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) & (INCOME<60000),,coef_hhincome_40k_60k
 util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome_60k_up
-util_single_family_dwelling,lives in a single family home,(BLD==2) | (BLD==3),,coef_single_family_dwelling
+util_single_family_dwelling,lives in a single family home,(BLD==ONE_FAMILY_HOUSE_DETACHED_CONSTANT) | (BLD==ONE_FAMILY_HOUSE_ATTACHED_CONSTANT),,coef_single_family_dwelling
 util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
 util_accessibility,amount of stuff in origin,sdist_accessibility,,coef_accessibility

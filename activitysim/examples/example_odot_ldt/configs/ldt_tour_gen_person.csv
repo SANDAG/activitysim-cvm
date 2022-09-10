@@ -12,7 +12,7 @@ util_hhsize_4_up,4+ household,hhsize > 3,,coef_hhsize_4_up
 util_hhincome_20k_40k,"income ranging from $20,000 to $40,000",(INCOME>=20000) & (INCOME<40000),,coef_hhincome_20k_40k
 util_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) & (INCOME<60000),,coef_hhincome_40k_60k
 util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome_60k_up
-util_single_family_dwelling,lives in a single family home,(BLD==2) | (BLD==3),,coef_single_family_dwelling
+util_single_family_dwelling,lives in a single family home,(BLD==ONE_FAMILY_HOUSE_DETACHED_CATEGORY) | (BLD==ONE_FAMILY_HOUSE_ATTACHED_CATEGORY),,coef_single_family_dwelling
 util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
 util_occupation_farming,TODO - Fix with correct values,SW_OCCUP==1,,coef_occupation_farming
 util_occupation_manufacturing,TODO - Fix with correct values,SW_OCCUP==2,,coef_occupation_manufacturing
@@ -20,9 +20,9 @@ util_occupation_transportation,TODO - Fix with correct values,SW_OCCUP==3,,coef_
 util_occupation_wholesale,TODO - Fix with correct values,SW_OCCUP==4,,coef_occupation_wholesale
 util_occupation_finance,TODO - Fix with correct values,SW_OCCUP==5,,coef_occupation_finance
 util_occupation_other,TODO - Fix with correct values,SW_OCCUP==6,,coef_occupation_other
-util_college_student,Person is College Student,(SCH>1) & (AGE>=18),,coef_college_student
-util_male,Male,SEX==1,,coef_male
+util_college_student,Person is College Student,(SCH != NOT_IN_SCHOOL_CONSTANT) & (AGE>=18),,coef_college_student
+util_male,Male,SEX==MALE_CONSTANT,,coef_male
 util_age,Age,AGE,,coef_age
 util_age_squared,Age Squared,AGE*AGE,,coef_age_squared
 util_accessibility,amount of stuff in origin,sdist_accessibility,,coef_accessibility
-util_hh_ldt,person was predicted to go on household LDT trip,household_ldt,,coef_hh_ldt
+util_hh_ldt,person was predicted to go on household LDT trip,household_ldt==TRUE,,coef_hh_ldt

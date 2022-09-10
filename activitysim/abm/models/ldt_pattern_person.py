@@ -169,7 +169,7 @@ def process_person_tours(persons, purpose: str, purpose_num: int):
         pd.merge(longdist_tours_person, persons[["ldt_pattern"]],
                  how="left", left_on="person_id", right_index=True)
     )
-    
+
     longdist_tours_person["actor_type"] = "person"
 
     pipeline.extend_table("longdist_tours", longdist_tours_person)

@@ -7,6 +7,8 @@ LOGIT_TYPE: MNL
 # put global constants here
 CONSTANTS:
   DUMMY_CONSTANT: 1
+  ONE_FAMILY_HOUSE_DETACHED_CATEGORY: 2
+  ONE_FAMILY_HOUSE_ATTACHED_CATEGORY: 3
 
 preprocessor:
     SPEC: ldt_tour_gen_household_preprocessor
