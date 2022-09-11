@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 @inject.step()
 def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_id):
     """
-    This model predicts whether a household will go on an LDT trip over a 2 week period
+    This model predicts whether a household will go on an LDT trip over a 2 week period.
     """
 
     trace_label = "ldt_tour_gen_household"
@@ -21,14 +21,15 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     choosers = households_merged.to_frame()
     # if we want to limit choosers, we can do so here
     # choosers = choosers[choosers.workplace_zone_id > -1]
-    logger.info("Running %s with %d persons", trace_label, len(choosers))
+    logger.info("Running %s with %d households", trace_label, len(choosers))
 
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_tour_gen_household")
 
+    # reading in some category constants
     constants = config.get_model_constants(model_settings)
 
-    # - preprocessor - adds accessiblity to choosers sample
+    # preprocessor - adds accessiblity of chooser origin for use in estimation
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
         locals_d = {}
@@ -42,6 +43,7 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
             trace_label=trace_label,
         )
 
+    # reading in model specification/coefficients
     model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])
     coefficients_df = simulate.read_model_coefficients(model_settings)
     model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
@@ -54,6 +56,7 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
         estimator.write_coefficients(coefficients_df, model_settings)
         estimator.write_choosers(choosers)
 
+    # running the tour gen multinomial logit model
     choices = simulate.simple_simulate(
         choosers=choosers,
         spec=model_spec,
@@ -73,11 +76,13 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
         estimator.write_override_choices(choices)
         estimator.end_estimation()
 
+    # merging in tour gen results to households df
     households = households.to_frame()
     households["ldt_tour_gen_household"] = (
         choices.reindex(households.index).fillna(0).astype(bool)
     )
 
+    # merging into final_households csv
     pipeline.replace_table("households", households)
 
     tracing.print_summary(

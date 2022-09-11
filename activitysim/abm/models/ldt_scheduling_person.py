@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 @inject.step()
 def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
     """
-    This model schedules the times for applicable LDT patterns
+    This model schedules the start/end times for persons that were assigned
+    to be beginning and/or ending a tour on a given day
         - 0/complete: schedules both start/end of tour
         - 1/begin: schedules beginning of tour
         - 2/end: schedules end of tour
@@ -27,18 +28,18 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
     model_settings_file_name = "ldt_scheduling.yaml"
 
     choosers = persons_merged.to_frame()
-    # if we want to limit choosers, we can do so here
+
     # limiting ldt_scheduling_persons to applicable patterns - complete, begin, or end
     choosers = choosers[choosers["ldt_pattern"].isin([0, 1, 2])]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
-    # necessary to run
+    # preliminary estimation steps
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_scheduling_person")
 
     constants = config.get_model_constants(model_settings)
 
-    # - preprocessor
+    # preprocessor - adds nothing
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
 
@@ -53,12 +54,18 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
             trace_label=trace_label,
         )
 
+    # reads in the three different specifications needed for scheduling LDTs -
+    # complete (specification and coefficient), end, and start (constants)
     spec_categories = model_settings.get("SPEC_CATEGORIES", {})
 
+    # convert persons file to DF and set default start/end hours to -1
     persons = persons.to_frame()
     persons["ldt_start_hour"] = -1
     persons["ldt_end_hour"] = -1
 
+    # matching each possible start-end combination to an index starting from 0
+    # predictions will all be index values and can be translated to actual start/end
+    # times using this dictionary
     complete_tour_translation = {}
     i = 5
     x = 0
@@ -71,12 +78,18 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
         i += 1
     complete_tour_translation = pd.Series(complete_tour_translation)
 
+    # do prediction for each of the categories encoded on ldt_scheduling yaml
     for category_settings in spec_categories:
+        # see function documentation for category_num translation
         category_num = int(category_settings["CATEGORY"])
+        # limiting scheduling to the current tour pattern
         subset = choosers[choosers["ldt_pattern"] == category_num]
+        # name of the current tour pattern beign estimated
         category_name = category_settings["NAME"]
 
+        # logic for complete tour pattern scheduling
         if category_num == 0:
+            # read in specification for complete tour pattern scheduling
             model_spec = simulate.read_model_spec(file_name=category_settings["SPEC"])
             coefficients_df = simulate.read_model_coefficients(category_settings)
             model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
@@ -89,6 +102,7 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
                 estimator.write_coefficients(coefficients_df, model_settings)
                 estimator.write_choosers(choosers)
 
+            # apply the specified multinomial logit model
             choices = simulate.simple_simulate(
                 choosers=subset,
                 spec=model_spec,
@@ -108,7 +122,9 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
                 estimator.write_override_choices(choices)
                 estimator.end_estimation()
 
+            # get the start/end hours associated with the estimated values
             starts_ends = complete_tour_translation.loc[choices.values]
+            # merge start/end hours to the persons file
             persons.loc[choices.index, "ldt_start_hour"] = starts_ends.apply(lambda x: x[0]).values
             persons.loc[choices.index, "ldt_end_hour"] = starts_ends.apply(lambda x: x[1]).values
 
@@ -116,13 +132,14 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
 
         constants = config.get_model_constants(category_settings)
 
-        # sampling probabilities
+        # sampling probabilities for the current tour pattern (start/end)
         df = pd.DataFrame(index=choosers.index, columns=["hour_" + str(x) for x in range(24)])
         for i in range(24):
             key = "hour_" + str(i)
             df[key] = constants[key]
         choices, _ = logit.make_choices(df)
 
+        # merge in scheduled values to the respective tour pattern (start/end)
         if category_num == 1:
             persons.loc[choices.index, "ldt_start_hour"] = choices
         else:

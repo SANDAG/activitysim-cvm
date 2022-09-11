@@ -31,15 +31,16 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     # if we want to limit choosers, we can do so here
     # limiting ldt_pattern_household to households that go on LDTs
     choosers = choosers[choosers.ldt_tour_gen_household]
-    logger.info("Running %s with %d persons", trace_label, len(choosers))
+    logger.info("Running %s with %d households", trace_label, len(choosers))
 
-    # necessary to run
+    # preliminary estimation steps
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_pattern_household")
 
+    # reading in the probability distribution of household patterns
     constants = config.get_model_constants(model_settings)
 
-    # - preprocessor
+    # preprocessor - adds nothing
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
 
@@ -53,12 +54,6 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
             locals_dict=locals_d,
             trace_label=trace_label,
         )
-
-    # model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])
-    # coefficients_df = simulate.read_model_coefficients(model_settings)
-    # model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
-
-    # nest_spec = config.get_logit_model_settings(model_settings)
 
     # base estimator
     if estimator:
@@ -75,7 +70,7 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     df["complete"], df["begin"], df["end"], df["away"], df["none"] = (
         constants["COMPLETE"], constants["BEGIN"], constants["END"], constants["AWAY"], notour_prob
     )
-    # _ is the random value used to make the monte carlo draws
+    # _ is the random value used to make the monte carlo draws, not used
     choices, _ = logit.make_choices(df)
 
     # overwriting estimator
