@@ -149,14 +149,14 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
     pipeline.replace_table("persons", persons)
 
     tracing.print_summary(
-        "ldt_scheduling_person_starts",
-        persons.ldt_start_hour,
+        "ldt_scheduling_person_start_hours",
+        persons[persons["ldt_start_hour"] != -1]["ldt_start_hour"],
         value_counts=True
     )
 
     tracing.print_summary(
-        "ldt_scheduling_person_ends",
-        persons.ldt_end_hour,
+        "ldt_scheduling_person_end_hours",
+        persons[persons["ldt_end_hour"] != -1]["ldt_end_hour"],
         value_counts=True
     )
 

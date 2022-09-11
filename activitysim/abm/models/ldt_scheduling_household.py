@@ -149,14 +149,14 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     pipeline.replace_table("households", households)
 
     tracing.print_summary(
-        "ldt_scheduling_household_starts",
-        households.ldt_start_hour,
+        "ldt_scheduling_household_start_hours",
+        households[households["ldt_start_hour"] != -1]["ldt_start_hour"],
         value_counts=True
     )
 
     tracing.print_summary(
-        "ldt_scheduling_household_ends",
-        households.ldt_end_hour,
+        "ldt_scheduling_household_end_hours",
+        households[households["ldt_end_hour"] != -1]["ldt_end_hour"],
         value_counts=True
     )
 

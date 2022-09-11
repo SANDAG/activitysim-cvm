@@ -87,7 +87,7 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
 
     tracing.print_summary(
         "ldt_tour_gen_household",
-        households.ldt_tour_gen_household,
+        choices,
         value_counts=True,
     )
 

@@ -97,7 +97,7 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
 
     tracing.print_summary(
         "ldt_pattern_household",
-        households.ldt_pattern_household,
+        choices,
         value_counts=True
     )
 

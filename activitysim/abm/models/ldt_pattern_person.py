@@ -113,7 +113,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
 
         tracing.print_summary(
             colname,
-            persons[colname],
+            choices,
             value_counts=True,
         )
 

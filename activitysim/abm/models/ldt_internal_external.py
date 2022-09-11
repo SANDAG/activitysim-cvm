@@ -108,17 +108,12 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
         else:
             persons.loc[choices.index, colname] = choices.values
 
-    tracing.print_summary(
-        "ldt_internal_external_households",
-        households.internal_external,
-        value_counts=True
-    )
-
-    tracing.print_summary(
-        "ldt_internal_external_persons",
-        persons.internal_external,
-        value_counts=True
-    )
+        # print out summary of estimated internal_external choices for the current category
+        tracing.print_summary(
+            "ldt_internal_external_" + category_name,
+            choices,
+            value_counts=True
+        )
 
     # merging into final csvs
     pipeline.replace_table("households", households)
@@ -141,7 +136,5 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
         np.where(longdist_tours["actor_type"] == "person",
                  persons_temp.loc[longdist_tours["person_id"], colname], longdist_tours[colname])
     )
-
-    print(longdist_tours)
 
     pipeline.replace_table("longdist_tours", longdist_tours)
