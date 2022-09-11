@@ -17,8 +17,8 @@ coef_hhstudents,0.276,F
 coef_occupation_farming,0,F
 coef_occupation_manufacturing,-0.43,F
 coef_occupation_transportation,0,F
-coef_occupation_wholesale,0,F
-coef_occupation_finance,0,F
+coef_occupation_wholesale,0.884,F
+coef_occupation_finance,0.778,F
 coef_occupation_other,0,F
 coef_college_student,0,F
 coef_male,0.806,F
