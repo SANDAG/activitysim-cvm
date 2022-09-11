@@ -14,12 +14,12 @@ util_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) &
 util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome_60k_up
 util_single_family_dwelling,lives in a single family home,@(df.BLD==ONE_FAMILY_HOUSE_DETACHED_CATEGORY) | (df.BLD==ONE_FAMILY_HOUSE_ATTACHED_CATEGORY),,coef_single_family_dwelling
 util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
-util_occupation_farming,TODO - Fix with correct values,SW_OCCUP==1,,coef_occupation_farming
-util_occupation_manufacturing,TODO - Fix with correct values,SW_OCCUP==2,,coef_occupation_manufacturing
-util_occupation_transportation,TODO - Fix with correct values,SW_OCCUP==3,,coef_occupation_transportation
-util_occupation_wholesale,TODO - Fix with correct values,SW_OCCUP==4,,coef_occupation_wholesale
-util_occupation_finance,TODO - Fix with correct values,SW_OCCUP==5,,coef_occupation_finance
-util_occupation_other,TODO - Fix with correct values,SW_OCCUP==6,,coef_occupation_other
+util_occupation_farming,Works in agriculture/extraction,@(df.SW_OCCUP == AGR_CATEGORY),,coef_occupation_farming
+util_occupation_manufacturing,Works in manufacturing,@(df.SW_OCCUP == MFG_CATEGORY),,coef_occupation_manufacturing
+util_occupation_transportation,Works in transportation,@(df.SW_OCCUP == TRN_CATEGORY),,coef_occupation_transportation
+util_occupation_wholesale,Works as non-retail sales worker?,@(df.SW_OCCUP == WHL_CATEGORY),,coef_occupation_wholesale
+util_occupation_finance,Works in business/finance,@(df.SW_OCCUP == FIN_CATEGORY),,coef_occupation_finance
+util_occupation_other,"Works in some other service (retail, food, service)",@(df.SW_OCCUP == RET_CATEGORY) | (df.SW_OCCUP == FOD_CATEGORY) | (df.SW_OCCUP == SRV_CATEGORY),,coef_occupation_other
 util_college_student,Person is College Student,@(df.SCH != NOT_IN_SCHOOL_CATEGORY) & (df.AGE>=18),,coef_college_student
 util_male,Male,@df.SEX==MALE_CATEGORY,,coef_male
 util_age,Age,AGE,,coef_age
