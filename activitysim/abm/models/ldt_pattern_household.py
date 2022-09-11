@@ -90,6 +90,7 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
 
     # adding some convenient fields
     households["on_ldt"] = np.where(households["ldt_pattern_household"].isin([-1, 4]), False, True)
+    households["ldt_pattern"] = households["ldt_pattern_household"]
 
     # merging into households
     pipeline.replace_table("households", households)

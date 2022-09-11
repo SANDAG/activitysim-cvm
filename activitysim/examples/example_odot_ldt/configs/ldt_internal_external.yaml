@@ -1,0 +1,26 @@
+SPEC: ldt_internal_external.csv
+
+LOGIT_TYPE: MNL
+
+SPEC_CATEGORIES:
+  - NAME: HOUSEHOLD
+    COEFFICIENTS: ldt_internal_external_household_coefficients.csv
+    TYPE: household
+  - NAME: WORKRELATED
+    COEFFICIENTS: ldt_internal_external_workrelated_coefficients.csv
+    TYPE: person
+  - NAME: OTHER
+    COEFFICIENTS: ldt_internal_external_other_coefficients.csv
+    TYPE: person
+
+CONSTANTS: 
+  DUMMY_CONSTANT: 1
+  OCC_CON_CATEGORY: 14
+  OCC_FIN_CATEGORY: 2
+  OCC_ADM_CATEGORY: 12
+  OCC_PRI_EDU_CATEGORY: 5
+  OCC_PS_EDU_CATEGORY: 4
+  OCC_MED_CATEGORY: 7
+  ESR_UNEMP_CATEGORY: 3
+  ESR_NOT_LABOR_CATEGORY: 6
+  LDT_COMPLETE_CATEGORY: 1

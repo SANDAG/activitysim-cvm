@@ -1,0 +1,16 @@
+﻿Label,Description,Expression,Travel Internally,Travel Externally
+util_constant,Constants,1,,coef_constant
+util_income_below_20k,"Income less than $20,000",@df.income_in_thousands < 20,,coef_income_below_20k
+util_income_20k_40k,"income ranging from $20,000 to $40,000",@(df.income_in_thousands >= 20) & (df.income_in_thousands < 40),,coef_income_20k_40k
+util_income_40k_60k,"income ranging from $40,000 to $60,000",@(df.income_in_thousands >= 40) & (df.income_in_thousands < 60),,coef_income_40k_60k
+util_income_60k_up,"income from $60,000 and up",@df.income_in_thousands >= 60,,coef_income_60k_up
+util_occupation_construction,occupation is construction,@df.SW_OCCUP == OCC_CON_CATEGORY,,coef_occupation_construction
+util_occupation_finance,occupation is finance,@df.SW_OCCUP == OCC_FIN_CATEGORY,,coef_occupation_finance
+util_occupation_administration,occupation is public administration (and office),@df.SW_OCCUP == OCC_ADM_CATEGORY,,coef_occupation_administration
+util_occupation_education,occupation is education,@(df.SW_OCCUP == OCC_PRI_EDU_CATEGORY) | (df.SW_OCCUP == OCC_PS_EDU_CATEGORY),,coef_occupation_education
+util_occupation_medical,occupation is medical,@df.SW_OCCUP == OCC_MED_CATEGORY,,coef_occupation_medical
+util_person_worker,person is a worker,@(df.ESR == ESR_UNEMP_CATEGORY) | (df.ESR == ESR_NOT_LABOR_CATEGORY),,coef_person_worker
+util_age_below_25,age 25 and below,AGE < 25,,coef_age_below_25
+util_age_55_up,age 55 and below 65,(AGE >=55) & (AGE < 65),,coef_age_55_65
+util_age_65_up,age 65+,AGE >= 65,,coef_age_65_up
+util_complete_travel_one_day,complete travel in one day,@(df.ldt_pattern == LDT_COMPLETE_CATEGORY),,coef_complete_travel_one_day
