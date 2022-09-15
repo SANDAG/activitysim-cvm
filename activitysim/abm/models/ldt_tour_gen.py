@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 
 from ...core.util import reindex
-from .util.canonical_ids import set_tour_index
 from .util.tour_frequency import create_tours
 
 logger = logging.getLogger(__name__)
@@ -30,7 +29,11 @@ def set_longdist_tour_index(tours):
 
     tour_num_col = "tour_type_num"
     # changed tours types to be more specific
-    possible_tours = ["longdist_household1", "longdist_person_workrelated1", "longdist_person_other1"]
+    possible_tours = [
+        "longdist_household1",
+        "longdist_person_workrelated1",
+        "longdist_person_other1",
+    ]
     possible_tours_count = len(possible_tours)
 
     assert tour_num_col in tours.columns
@@ -88,7 +91,9 @@ def process_longdist_tours(df, tour_counts, tour_category):
 
     tours = create_tours(tour_counts, tour_category=tour_category)
 
-    if "household_id" in df.columns:  # only person dfs have a household_id column; processing persons here
+    if (
+        "household_id" in df.columns
+    ):  # only person dfs have a household_id column; processing persons here
         tours["household_id"] = reindex(df.household_id, tours.person_id)
         tours["origin"] = reindex(df.home_zone_id, tours.person_id)
     else:  # processing households here
@@ -97,7 +102,7 @@ def process_longdist_tours(df, tour_counts, tour_category):
         # create_tours returns ids as person_id, need to reassignto household_id
         tours["household_id"] = tours["person_id"]
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
-        tours["person_id"] = -1   # hh tours don't use person ids
+        tours["person_id"] = -1  # hh tours don't use person ids
         # number of participants = hhsize since hh ldt tours are necessarily joint
         # (can remove if participation stage implemented)
         tours["number_of_participants"] = reindex(df.hhsize, tours.household_id)

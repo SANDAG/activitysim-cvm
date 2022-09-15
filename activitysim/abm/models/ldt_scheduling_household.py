@@ -3,12 +3,20 @@
 
 import logging
 
-from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, logit
+import numpy as np
+import pandas as pd
+
+from activitysim.core import (
+    config,
+    expressions,
+    inject,
+    logit,
+    pipeline,
+    simulate,
+    tracing,
+)
 
 from .util import estimation
-
-import pandas as pd
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +100,9 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
             # read in specification for complete tour pattern scheduling
             model_spec = simulate.read_model_spec(file_name=category_settings["SPEC"])
             coefficients_df = simulate.read_model_coefficients(category_settings)
-            model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
+            model_spec = simulate.eval_coefficients(
+                model_spec, coefficients_df, estimator
+            )
 
             nest_spec = config.get_logit_model_settings(model_settings)
 
@@ -125,15 +135,21 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
             # get the start/end hours associated with the estimated values
             starts_ends = complete_tour_translation.loc[choices.values]
             # merge start/end hours to the households file
-            households.loc[choices.index, "ldt_start_hour"] = starts_ends.apply(lambda x: x[0]).values
-            households.loc[choices.index, "ldt_end_hour"] = starts_ends.apply(lambda x: x[1]).values
+            households.loc[choices.index, "ldt_start_hour"] = starts_ends.apply(
+                lambda x: x[0]
+            ).values
+            households.loc[choices.index, "ldt_end_hour"] = starts_ends.apply(
+                lambda x: x[1]
+            ).values
             # go to next pattern after complete tour estimation is finished
             continue
 
         constants = config.get_model_constants(category_settings)
 
         # sampling probabilities for the current tour pattern (start/end)
-        df = pd.DataFrame(index=choosers.index, columns=["hour_" + str(x) for x in range(24)])
+        df = pd.DataFrame(
+            index=choosers.index, columns=["hour_" + str(x) for x in range(24)]
+        )
         for i in range(24):
             key = "hour_" + str(i)
             df[key] = constants[key]
@@ -151,13 +167,13 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     tracing.print_summary(
         "ldt_scheduling_household_start_hours",
         households[households["ldt_start_hour"] != -1]["ldt_start_hour"],
-        value_counts=True
+        value_counts=True,
     )
 
     tracing.print_summary(
         "ldt_scheduling_household_end_hours",
         households[households["ldt_end_hour"] != -1]["ldt_end_hour"],
-        value_counts=True
+        value_counts=True,
     )
 
     if trace_hh_id:
@@ -167,13 +183,15 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     longdist_tours = pipeline.get_table("longdist_tours")
 
     # merge start/end hours for households only, -2 for persons
-    longdist_tours["ldt_start_hour"] = (
-        np.where(longdist_tours["actor_type"] == "household",
-                 households.loc[longdist_tours["household_id"], "ldt_start_hour"], -2)
+    longdist_tours["ldt_start_hour"] = np.where(
+        longdist_tours["actor_type"] == "household",
+        households.loc[longdist_tours["household_id"], "ldt_start_hour"],
+        -2,
     )
-    longdist_tours["ldt_end_hour"] = (
-        np.where(longdist_tours["actor_type"] == "household",
-                 households.loc[longdist_tours["household_id"], "ldt_end_hour"], -2)
+    longdist_tours["ldt_end_hour"] = np.where(
+        longdist_tours["actor_type"] == "household",
+        households.loc[longdist_tours["household_id"], "ldt_end_hour"],
+        -2,
     )
 
     pipeline.replace_table("longdist_tours", longdist_tours)

@@ -46,17 +46,19 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
 
     # reading in the two specs for each individual ldt type
     model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])
-    spec_purposes = model_settings.get('SPEC_PURPOSES', {})
+    spec_purposes = model_settings.get("SPEC_PURPOSES", {})
 
     # needs to be outside the loop so we do it only once
     persons = persons.to_frame()
 
     for purpose_settings in spec_purposes:
-        purpose_name = purpose_settings['NAME']
+        purpose_name = purpose_settings["NAME"]
 
         coefficients_df = simulate.read_model_coefficients(purpose_settings)
         # need to differentiate the model_spec read in and the one used for each purpose, need to redeclare
-        model_spec_purpose = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
+        model_spec_purpose = simulate.eval_coefficients(
+            model_spec, coefficients_df, estimator
+        )
 
         nest_spec = config.get_logit_model_settings(model_settings)
 
@@ -88,9 +90,7 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
 
         # merging choices into the person csv
         colname = "ldt_tour_gen_person_" + purpose_name
-        persons[colname] = (
-            choices.reindex(persons.index).fillna(0).astype(bool)
-        )
+        persons[colname] = choices.reindex(persons.index).fillna(0).astype(bool)
 
         pipeline.replace_table("persons", persons)
 

@@ -3,13 +3,13 @@
 
 import logging
 
-from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, logit
-
-from .util import estimation
-from .ldt_tour_gen import process_longdist_tours
-
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from activitysim.core import config, expressions, inject, logit, pipeline, tracing
+
+from .ldt_tour_gen import process_longdist_tours
+from .util import estimation
 
 logger = logging.getLogger(__name__)
 
@@ -63,12 +63,24 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
         estimator.write_choosers(choosers)
 
     # calculating complementary probability
-    notour_prob = 1 - constants["COMPLETE"] - constants["BEGIN"] - constants["END"] - constants["AWAY"]
+    notour_prob = (
+        1
+        - constants["COMPLETE"]
+        - constants["BEGIN"]
+        - constants["END"]
+        - constants["AWAY"]
+    )
 
     # sampling probabilities
-    df = pd.DataFrame(index=choosers.index, columns=["complete", "begin", "end", "away", "none"])
+    df = pd.DataFrame(
+        index=choosers.index, columns=["complete", "begin", "end", "away", "none"]
+    )
     df["complete"], df["begin"], df["end"], df["away"], df["none"] = (
-        constants["COMPLETE"], constants["BEGIN"], constants["END"], constants["AWAY"], notour_prob
+        constants["COMPLETE"],
+        constants["BEGIN"],
+        constants["END"],
+        constants["AWAY"],
+        notour_prob,
     )
     # _ is the random value used to make the monte carlo draws, not used
     choices, _ = logit.make_choices(df)
@@ -84,22 +96,18 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
 
     # setting -1 to non-LDT households
     households = households.to_frame()
-    households["ldt_pattern_household"] = (
-        choices.reindex(households.index).fillna(-1)
-    )
+    households["ldt_pattern_household"] = choices.reindex(households.index).fillna(-1)
 
     # adding some convenient fields
-    households["on_ldt"] = np.where(households["ldt_pattern_household"].isin([-1, 4]), False, True)
+    households["on_ldt"] = np.where(
+        households["ldt_pattern_household"].isin([-1, 4]), False, True
+    )
     households["ldt_pattern"] = households["ldt_pattern_household"]
 
     # merging into households
     pipeline.replace_table("households", households)
 
-    tracing.print_summary(
-        "ldt_pattern_household",
-        choices,
-        value_counts=True
-    )
+    tracing.print_summary("ldt_pattern_household", choices, value_counts=True)
 
     if trace_hh_id:
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
@@ -109,20 +117,22 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
     tour_counts = (
         hh_making_longdist_tours[["on_ldt"]]
         .astype(int)
-        .rename(
-            columns={"on_ldt": "longdist_household"}
-        )
+        .rename(columns={"on_ldt": "longdist_household"})
     )
     hh_longdist_tours = process_longdist_tours(
         # making longdist the braoder tour category instead of segmenting by all types of ldt
-        households, tour_counts, "longdist"
+        households,
+        tour_counts,
+        "longdist",
     )
 
-    hh_longdist_tours = (
-        pd.merge(hh_longdist_tours, households[["ldt_pattern_household"]],
-                 how="left", left_on="household_id", right_index=True)
-        .rename(columns={"ldt_pattern_household": "ldt_pattern"})
-    )
+    hh_longdist_tours = pd.merge(
+        hh_longdist_tours,
+        households[["ldt_pattern_household"]],
+        how="left",
+        left_on="household_id",
+        right_index=True,
+    ).rename(columns={"ldt_pattern_household": "ldt_pattern"})
 
     hh_longdist_tours["actor_type"] = "household"
 

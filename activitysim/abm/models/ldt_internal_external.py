@@ -1,21 +1,21 @@
 # ActivitySim
 # See full license in LICENSE.txt
 
-from inspect import trace
 import logging
 
-from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, logit
+import numpy as np
+
+from activitysim.core import config, expressions, inject, pipeline, simulate, tracing
 
 from .util import estimation
-
-import pandas as pd
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def ldt_internal_external(persons, persons_merged, households, households_merged, chunk_size, trace_hh_id):
+def ldt_internal_external(
+    persons, persons_merged, households, households_merged, chunk_size, trace_hh_id
+):
     """
     This model determines if a person on an LDT is going/will go/is at an internal location (within Ohio/0)
     or at an external location (outside of Ohio/1)
@@ -40,8 +40,12 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
     households[colname] = -1
     persons[colname] = -1
 
-    spec_categories = model_settings.get("SPEC_CATEGORIES", {})  # reading in category-specific things
-    model_spec = simulate.read_model_spec(file_name=model_settings["SPEC"])  # reading in generic model spec
+    spec_categories = model_settings.get(
+        "SPEC_CATEGORIES", {}
+    )  # reading in category-specific things
+    model_spec = simulate.read_model_spec(
+        file_name=model_settings["SPEC"]
+    )  # reading in generic model spec
     nest_spec = config.get_logit_model_settings(model_settings)  # all are MNL
 
     for category_settings in spec_categories:  # iterate through all the categories
@@ -74,7 +78,9 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
 
         # reading in specific category coefficients & evaluate them
         coefficients_df = simulate.read_model_coefficients(category_settings)
-        category_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
+        category_spec = simulate.eval_coefficients(
+            model_spec, coefficients_df, estimator
+        )
 
         if estimator:
             estimator.write_model_settings(category_settings, model_settings_file_name)
@@ -96,9 +102,7 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
 
         if estimator:
             estimator.write_choices(choices)
-            choices = estimator.get_survey_values(
-                choices, actor_type, full_name
-            )
+            choices = estimator.get_survey_values(choices, actor_type, full_name)
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
@@ -110,9 +114,7 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
 
         # print out summary of estimated internal_external choices for the current category
         tracing.print_summary(
-            "ldt_internal_external_" + category_name,
-            choices,
-            value_counts=True
+            "ldt_internal_external_" + category_name, choices, value_counts=True
         )
 
     # merging into final csvs
@@ -122,9 +124,10 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
     # merging into longdist csv
     longdist_tours = pipeline.get_table("longdist_tours")
 
-    longdist_tours[colname] = (
-        np.where(longdist_tours["actor_type"] == "household",
-                 households.loc[longdist_tours["household_id"], colname], -2)
+    longdist_tours[colname] = np.where(
+        longdist_tours["actor_type"] == "household",
+        households.loc[longdist_tours["household_id"], colname],
+        -2,
     )
 
     # have temp persons_temp df to prevent np.where from throwing an error
@@ -132,9 +135,10 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
     persons_temp = persons
     persons_temp.loc[-1, colname] = -2
 
-    longdist_tours[colname] = (
-        np.where(longdist_tours["actor_type"] == "person",
-                 persons_temp.loc[longdist_tours["person_id"], colname], longdist_tours[colname])
+    longdist_tours[colname] = np.where(
+        longdist_tours["actor_type"] == "person",
+        persons_temp.loc[longdist_tours["person_id"], colname],
+        longdist_tours[colname],
     )
 
     pipeline.replace_table("longdist_tours", longdist_tours)
