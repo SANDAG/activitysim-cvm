@@ -2,7 +2,6 @@
 # See full license in LICENSE.txt.
 
 import logging
-import os
 import time
 import warnings
 from builtins import range
@@ -10,11 +9,15 @@ from collections import OrderedDict
 from datetime import timedelta
 
 import numpy as np
-import orca
 import pandas as pd
 
 from . import assign, chunk, config, logit, pathbuilder, pipeline, tracing, util
-from .simulate_consts import *
+from .simulate_consts import (
+    ALT_LOSER_UTIL,
+    SPEC_DESCRIPTION_NAME,
+    SPEC_EXPRESSION_NAME,
+    SPEC_LABEL_NAME,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -318,7 +321,7 @@ def get_segment_coefficients(model_settings, segment_name):
             FutureWarning,
         )
     else:
-        raise RuntimeError(f"No COEFFICIENTS setting in model_settings")
+        raise RuntimeError("No COEFFICIENTS setting in model_settings")
 
     if legacy:
         constants = config.get_model_constants(model_settings)
@@ -424,6 +427,8 @@ def eval_utilities(
     estimator=None,
     trace_column_names=None,
     log_alt_losers=False,
+    zone_layer=None,
+    spec_sh=None,
 ):
     """
 
@@ -456,18 +461,6 @@ def eval_utilities(
     # skim_dataset = inject.get_injectable('skim_dataset')
     sharrow_enabled = config.setting("sharrow", False)
 
-    if trace_label and (
-        # TODO: make this smarter
-        # trace_label.startswith("trip_mode_choice") # uses '.isin(I_RIDE_HAIL_MODES)'
-        # or
-        trace_label.startswith("joint_tour_composition")
-        or trace_label.startswith("stop_frequency.social")
-        or trace_label.startswith("stop_frequency.shopping")
-        or trace_label.startswith("stop_frequency.eatout")
-        # or trace_label.startswith("trip_destination")
-    ):
-        sharrow_enabled = False
-
     expression_values = None
 
     t0 = time.time()
@@ -478,6 +471,15 @@ def eval_utilities(
     sh_flow = None
     utilities = None
 
+    if spec_sh is None:
+        spec_sh = spec
+
+    if locals_d is not None and "disable_sharrow" in locals_d:
+        sharrow_enabled = False
+
+    # if locals_d is not None and 'tvpb_logsum_odt' in locals_d:
+    #     sharrow_enabled = False
+
     if sharrow_enabled:
         from .flow import apply_flow  # import inside func to prevent circular imports
 
@@ -486,7 +488,12 @@ def eval_utilities(
         if locals_d is not None:
             locals_dict.update(locals_d)
         sh_util, sh_flow = apply_flow(
-            spec, choosers, locals_dict, trace_label, sharrow_enabled == "require"
+            spec_sh,
+            choosers,
+            locals_dict,
+            trace_label,
+            sharrow_enabled == "require",
+            zone_layer=zone_layer,
         )
         utilities = sh_util
         timelogger.mark("sharrow flow", True, logger, trace_label)
@@ -1190,8 +1197,10 @@ def eval_nl(
     if have_trace_targets:
         tracing.trace_df(choosers, "%s.choosers" % trace_label)
 
+    choosers, spec_sh = _preprocess_tvpb_logsums_on_choosers(choosers, spec, locals_d)
+
     raw_utilities = eval_utilities(
-        spec,
+        spec_sh,
         choosers,
         locals_d,
         log_alt_losers=log_alt_losers,
@@ -1199,6 +1208,7 @@ def eval_nl(
         have_trace_targets=have_trace_targets,
         estimator=estimator,
         trace_column_names=trace_column_names,
+        spec_sh=spec_sh,
     )
     chunk.log_df(trace_label, "raw_utilities", raw_utilities)
 
@@ -1465,7 +1475,7 @@ def simple_simulate(
 
         result_list.append(choices)
 
-        chunk.log_df(trace_label, f"result_list", result_list)
+        chunk.log_df(trace_label, "result_list", result_list)
 
     if len(result_list) > 1:
         choices = pd.concat(result_list)
@@ -1516,7 +1526,7 @@ def simple_simulate_by_chunk_id(
 
         result_list.append(choices)
 
-        chunk.log_df(trace_label, f"result_list", result_list)
+        chunk.log_df(trace_label, "result_list", result_list)
 
     if len(result_list) > 1:
         choices = pd.concat(result_list)
@@ -1572,6 +1582,81 @@ def eval_mnl_logsums(choosers, spec, locals_d, trace_label=None):
     return logsums
 
 
+def _preprocess_tvpb_logsums_on_choosers(choosers, spec, locals_d):
+    """
+    Compute TVPB logsums and attach those values to the choosers.
+
+    Also generate a modified spec that uses the replacement value instead of
+    regenerating the logsums dynamically inline.
+
+    Parameters
+    ----------
+    choosers
+    spec
+    locals_d
+
+    Returns
+    -------
+    choosers
+    spec
+
+    """
+    spec_sh = spec.copy()
+
+    def _replace_in_level(multiindex, level_name, *args, **kwargs):
+        y = multiindex.levels[multiindex.names.index(level_name)].str.replace(
+            *args, **kwargs
+        )
+        return re_spec.set_levels(y, level=level_name)
+
+    # Preprocess TVPB logsums outside sharrow
+    if "tvpb_logsum_odt" in locals_d:
+        tvpb = locals_d["tvpb_logsum_odt"]
+        path_types = tvpb.tvpb.network_los.setting(
+            f"TVPB_SETTINGS.{tvpb.recipe}.path_types"
+        ).keys()
+        assignments = {}
+        for path_type in ["WTW", "DTW"]:
+            if path_type not in path_types:
+                continue
+            preloaded = locals_d["tvpb_logsum_odt"][path_type]
+            re_spec = spec_sh.index
+            re_spec = _replace_in_level(
+                re_spec,
+                "Expression",
+                rf"tvpb_logsum_odt\['{path_type}'\]",
+                f"df.PRELOAD_tvpb_logsum_odt_{path_type}",
+                regex=True,
+            )
+            spec_sh.index = re_spec
+            assignments[f"PRELOAD_tvpb_logsum_odt_{path_type}"] = preloaded
+        choosers = choosers.assign(**assignments)
+
+    if "tvpb_logsum_dot" in locals_d:
+        tvpb = locals_d["tvpb_logsum_dot"]
+        path_types = tvpb.tvpb.network_los.setting(
+            f"TVPB_SETTINGS.{tvpb.recipe}.path_types"
+        ).keys()
+        assignments = {}
+        for path_type in ["WTW", "WTD"]:
+            if path_type not in path_types:
+                continue
+            preloaded = locals_d["tvpb_logsum_dot"][path_type]
+            re_spec = spec_sh.index
+            re_spec = _replace_in_level(
+                re_spec,
+                "Expression",
+                rf"tvpb_logsum_dot\['{path_type}'\]",
+                f"df.PRELOAD_tvpb_logsum_dot_{path_type}",
+                regex=True,
+            )
+            spec_sh.index = re_spec
+            assignments[f"PRELOAD_tvpb_logsum_dot_{path_type}"] = preloaded
+        choosers = choosers.assign(**assignments)
+
+    return choosers, spec_sh
+
+
 def eval_nl_logsums(choosers, spec, nest_spec, locals_d, trace_label=None):
     """
     like eval_nl except return logsums instead of making choices
@@ -1587,16 +1672,19 @@ def eval_nl_logsums(choosers, spec, nest_spec, locals_d, trace_label=None):
 
     logit.validate_nest_spec(nest_spec, trace_label)
 
+    choosers, spec_sh = _preprocess_tvpb_logsums_on_choosers(choosers, spec, locals_d)
+
     # trace choosers
     if have_trace_targets:
         tracing.trace_df(choosers, "%s.choosers" % trace_label)
 
     raw_utilities = eval_utilities(
-        spec,
+        spec_sh,
         choosers,
         locals_d,
         trace_label=trace_label,
         have_trace_targets=have_trace_targets,
+        spec_sh=spec_sh,
     )
     chunk.log_df(trace_label, "raw_utilities", raw_utilities)
 
@@ -1696,7 +1784,7 @@ def simple_simulate_logsums(
 
         result_list.append(logsums)
 
-        chunk.log_df(trace_label, f"result_list", result_list)
+        chunk.log_df(trace_label, "result_list", result_list)
 
     if len(result_list) > 1:
         logsums = pd.concat(result_list)

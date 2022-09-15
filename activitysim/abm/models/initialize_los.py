@@ -1,26 +1,26 @@
 # ActivitySim
 # See full license in LICENSE.txt.
 import logging
+import multiprocessing
 import os
 import time
-import multiprocessing
-import numba
-
 from contextlib import contextmanager
 
-import pandas as pd
+import numba
 import numpy as np
+import pandas as pd
 
-from activitysim.core import assign
-from activitysim.core import config
-from activitysim.core import simulate
-from activitysim.core import pipeline
-from activitysim.core import tracing
-from activitysim.core import chunk
-from activitysim.core import inject
-from activitysim.core import los
-
-from activitysim.core import pathbuilder
+from activitysim.core import (
+    assign,
+    chunk,
+    config,
+    inject,
+    los,
+    pathbuilder,
+    pipeline,
+    simulate,
+    tracing,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -154,8 +154,16 @@ def compute_utilities_for_attribute_tuple(
         choosers_df, chunk_size, trace_label, chunk_tag=chunk_tag
     ):
         # we should count choosers_df as chunk overhead since its pretty big and was custom made for compute_utilities
-        assert chooser_chunk._is_view  # otherwise copying it is wasteful
-        chooser_chunk = chooser_chunk.copy()
+        if chooser_chunk._is_view:
+            chooser_chunk = (
+                chooser_chunk.copy()
+            )  # copy is needed when we start with a view
+        else:
+            # copying this is wasteful, but the code below edits the dataframe,
+            # which could have undesirable side effects.
+            # TODO: convert to Dataset or otherwise stop this copying, without
+            #       harming anything else.
+            chooser_chunk = chooser_chunk.copy()
         chunk.log_df(trace_label, "attribute_chooser_chunk", chooser_chunk)
 
         # add any attribute columns specified as column attributes in settings (the rest will be scalars in locals_dict)

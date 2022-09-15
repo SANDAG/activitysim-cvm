@@ -1,4 +1,4 @@
-name: core-tests
+name: Core Testing
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
     name: linux-64-py${{ matrix.python-version }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
@@ -60,10 +60,10 @@ jobs:
           mamba info -a
           mamba list
 
-      - name: Lint with pycodestyle
+      - name: Lint with Black
         run: |
           # stop the build if there are problems
-          pycodestyle .
+          black --check --diff .
 
       - name: Test activitysim.core
         run: |
@@ -106,7 +106,7 @@ jobs:
     name: ${{ matrix.label }}
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
@@ -142,10 +142,10 @@ jobs:
           mamba info -a
           mamba list
 
-      - name: Lint with pycodestyle
+      - name: Lint with Black
         run: |
           # stop the build if there are problems
-          pycodestyle .
+          black --check --diff .
 
       - name: Test activitysim.core
         run: |
@@ -173,23 +173,24 @@ jobs:
     strategy:
       matrix:
         region:
-          - mtc
-          - arc
-          - psrc
-          - marin
-          - mtc_extended
-          - sandag
-          - sandag_xborder
-          - semcog
-          - multiple_zone
+          - prototype_mtc
+          - prototype_arc
+          - placeholder_psrc
+          - prototype_marin
+          - prototype_mtc_extended
+          - placeholder_sandag
+          - prototype_sandag_xborder
+          - prototype_semcog
+          - prototype_mwcog
+          - placeholder_multiple_zone
       fail-fast: false
     defaults:
       run:
         shell: bash -l {0}
-    name: example_${{ matrix.region }}
+    name: ${{ matrix.region }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
@@ -229,7 +230,7 @@ jobs:
       #       be ignored, so this is not working as expected right now
       #
       #  - name: Define Inputs
-      #    run: echo "REGION_DEFS=activitysim/examples/example_${{ matrix.region }}/** " >> $GITHUB_ENV
+      #    run: echo "REGION_DEFS=activitysim/examples/${{ matrix.region }}/** " >> $GITHUB_ENV
       #
       #  - name: Get a random number
       #    run: echo "RANDOM_SUFFIX=${RANDOM}${RANDOM}" >> $GITHUB_ENV
@@ -242,15 +243,15 @@ jobs:
       #    # Hoping this will result in fewer re-compiles on tests and faster
       #    # testing overall
       #    with:
-      #      path: activitysim/examples/example_${{ matrix.region }}/test/output/cache
-      #      key: example_${{ matrix.region }}-${{ env.label }}-${{ hashFiles(env.REGION_DEFS) }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}-${{ env.RANDOM_SUFFIX }}
+      #      path: activitysim/examples/${{ matrix.region }}/test/output/cache
+      #      key: ${{ matrix.region }}-${{ env.label }}-${{ hashFiles(env.REGION_DEFS) }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}-${{ env.RANDOM_SUFFIX }}
       #      restore-keys: |
-      #        example_${{ matrix.region }}-${{ env.label }}-${{ hashFiles(env.REGION_DEFS) }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}
+      #        ${{ matrix.region }}-${{ env.label }}-${{ hashFiles(env.REGION_DEFS) }}-${{ env.DATE }}-${{ env.CACHE_NUMBER }}
       #    id: cache-example
 
-      - name: Test example_${{ matrix.region }}
+      - name: Test ${{ matrix.region }}
         run: |
-          python -m pytest activitysim/examples/example_${{ matrix.region }}/test --durations=0
+          python -m pytest activitysim/examples/${{ matrix.region }}/test --durations=0
 
   estimation_mode:
     needs: foundation
@@ -264,7 +265,7 @@ jobs:
     name: estimation_mode_test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
@@ -307,3 +308,56 @@ jobs:
         run: |
           python -m pytest activitysim/estimation/test/test_larch_estimation.py --durations=0
 
+  develop-docbuild:
+    needs: foundation
+    if: github.ref_name == 'develop'
+    name: develop-docbuild
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # get all tags, lets setuptools_scm do its thing
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          use-mamba: true
+          environment-file: conda-environments/docbuild.yml
+          python-version: 3.9
+          activate-environment: docbuild
+          auto-activate-base: false
+          auto-update-conda: false
+      - name: Install activitysim
+        run: |
+          python -m pip install .
+      - name: Conda checkup
+        run: |
+          conda info -a
+          conda list
+          echo ${{ github.repository }}
+          echo ${{ github.ref_name }}
+      - name: localize version switcher
+        run: |
+          python .github/workflows/localize-base-urls.py docs/_static/switcher.json
+          git update-index --assume-unchanged docs/_static/switcher.json
+          cat docs/_static/switcher.json
+      - name: Build the docs
+        run: |
+          cd docs
+          make clean
+          make html
+      - name: Push to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Token is created automatically by Github Actions, no other config needed
+          publish_dir: ./docs/_build/html
+          destination_dir: develop

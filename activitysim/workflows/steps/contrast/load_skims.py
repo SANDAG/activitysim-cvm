@@ -1,16 +1,17 @@
-import os
-from pypyr.context import Context
-from ..progression import reset_progress_step
-from ..error_handler import error_logging
-from ..wrapping import workstep
-from pathlib import Path
-from activitysim.standalone.utils import chdir
-import logging
-import yaml
-import openmatrix
-import sharrow as sh
-import numpy as np
 import glob
+import logging
+import os
+from pathlib import Path
+
+import numpy as np
+import openmatrix
+import pandas as pd
+import sharrow as sh
+import yaml
+
+from activitysim.standalone.utils import chdir
+
+from ..wrapping import workstep
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +26,13 @@ def load_skims_per_settings(
     skim_settings = settings["taz_skims"]
     if isinstance(skim_settings, str):
         skims_omx_fileglob = skim_settings
+        skims_filenames = glob.glob(os.path.join(data_dir, skims_omx_fileglob))
+    elif isinstance(skim_settings, list):
+        skims_filenames = [os.path.join(data_dir, i) for i in skim_settings]
     else:
         skims_omx_fileglob = skim_settings.get("omx", None)
         skims_omx_fileglob = skim_settings.get("files", skims_omx_fileglob)
-    skims_filenames = glob.glob(os.path.join(data_dir, skims_omx_fileglob))
+        skims_filenames = glob.glob(os.path.join(data_dir, skims_omx_fileglob))
     index_names = ("otaz", "dtaz", "time_period")
     indexes = None
     time_period_breaks = settings.get("skim_time_periods", {}).get("periods")
@@ -65,6 +69,33 @@ def load_skims_per_settings(
     )
     result.attrs["time_period_map"] = tp_map
     result.attrs["time_period_imap"] = tp_imap
+
+    # load sparse MAZ skims, if any
+    from activitysim.core.skim_dataset import load_sparse_maz_skims
+
+    zone_system = int(settings.get("zone_system"))
+
+    if zone_system > 1:
+        maz2taz_file_name = settings.get("maz")
+        maz_to_maz = settings.get("maz_to_maz", {})
+        maz_to_maz_tables = maz_to_maz.get("tables", ())
+        max_blend_distance = maz_to_maz.get("max_blend_distance", {})
+
+        maz2taz = pd.read_csv(os.path.join(data_dir, maz2taz_file_name), index_col=0)
+        maz2taz = maz2taz.rename_axis("MAZ")
+        maz2taz = maz2taz.reset_index()
+        remapper = dict(zip(maz2taz.MAZ, maz2taz.index))
+
+        result = load_sparse_maz_skims(
+            result,
+            maz2taz.index,
+            remapper,
+            zone_system,
+            maz2taz_file_name,
+            maz_to_maz_tables=maz_to_maz_tables,
+            max_blend_distance=max_blend_distance,
+            data_file_resolver=lambda f, mandatory=True: os.path.join(data_dir, f),
+        )
 
     return result
 

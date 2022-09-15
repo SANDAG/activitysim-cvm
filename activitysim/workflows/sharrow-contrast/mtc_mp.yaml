@@ -14,18 +14,18 @@ steps:
   name: pypyr.steps.default
   in:
     defaults:
-      example_name: example_mtc_full
+      example_name: prototype_mtc_full
       workflow_name: sharrow-contrast/mtc_mp
       workspace: workspace
       multiprocess: 8
       chunk_size: 0
       create: True
-      compile: False
-      sharrow: False
-      legacy: False
+      compile: True
+      sharrow: True
+      legacy: True
       reference: True
       reference_asim_version: "1.0.4"
-      tag: '2022-07-MP-100'
+      tag:
       resume_after:
       fast: False
       compile_n_households: 2000

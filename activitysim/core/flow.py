@@ -1,41 +1,48 @@
 import contextlib
 import glob
-import hashlib
 import logging
 import os
-import re
 import time
 from datetime import timedelta
 from numbers import Number
 from stat import ST_MTIME
-from typing import Mapping
 
 import numpy as np
-import openmatrix
 import pandas as pd
-from orca import orca
+
+from .. import __version__
+from ..core import tracing
+from . import config, inject
+from .simulate_consts import SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME
+from .timetable import (
+    sharrow_tt_adjacent_window_after,
+    sharrow_tt_adjacent_window_before,
+    sharrow_tt_max_time_block_available,
+    sharrow_tt_previous_tour_begins,
+    sharrow_tt_previous_tour_ends,
+    sharrow_tt_remaining_periods_available,
+)
 
 try:
     import sharrow as sh
 except ModuleNotFoundError:
     sh = None
 
-from .. import __version__
-from ..core import tracing
-from . import config, inject
-from .simulate_consts import SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME
 
 logger = logging.getLogger(__name__)
 
 _FLOWS = {}
 
-if os.environ.get('TRAVIS') == 'true':
+if os.environ.get("TRAVIS") == "true":
     # The multithreaded dask scheduler causes problems on travis.
     # Here, we detect if this code is running on Travis, and if so, we
     # change the default scheduler to single-threaded.  This should not
     # be particularly problematic, as only tiny test cases are run on Travis.
     import dask
-    dask.config.set(scheduler='single-threaded')  # overwrite default with threaded scheduler
+
+    dask.config.set(
+        scheduler="single-threaded"
+    )  # overwrite default with threaded scheduler
 
 
 @contextlib.contextmanager
@@ -124,8 +131,9 @@ def only_simple(x, exclude_keys=()):
     return y
 
 
-def get_flow(spec, local_d, trace_label=None, choosers=None, interacts=None):
-    global _FLOWS
+def get_flow(
+    spec, local_d, trace_label=None, choosers=None, interacts=None, zone_layer=None
+):
     extra_vars = only_simple(local_d)
     orig_col_name = local_d.get("orig_col_name", None)
     dest_col_name = local_d.get("dest_col_name", None)
@@ -144,6 +152,10 @@ def get_flow(spec, local_d, trace_label=None, choosers=None, interacts=None):
             stop_col_name = local_d["dp_skims"].dest_key
     local_d = size_terms_on_flow(local_d)
     size_term_mapping = local_d.get("size_array", {})
+    if "tt" in local_d:
+        aux_vars = local_d["tt"].export_for_numba()
+    else:
+        aux_vars = {}
     flow = new_flow(
         spec,
         extra_vars,
@@ -156,7 +168,10 @@ def get_flow(spec, local_d, trace_label=None, choosers=None, interacts=None):
         parking_col_name=parking_col_name,
         size_term_mapping=size_term_mapping,
         interacts=interacts,
+        zone_layer=zone_layer,
+        aux_vars=aux_vars,
     )
+    flow.tree.aux_vars = aux_vars
     return flow
 
 
@@ -186,288 +201,6 @@ def should_invalidate_cache_file(cache_filename, *source_filenames):
         if stat0[ST_MTIME] < stat1[ST_MTIME]:
             return True
     return False
-
-
-@inject.injectable(cache=True)
-def skim_dataset():
-    from ..core.los import ONE_ZONE, THREE_ZONE, TWO_ZONE
-
-    # TODO:SHARROW: taz and maz are the same
-    skim_tag = "taz"
-    network_los_preload = inject.get_injectable("network_los_preload", None)
-    if network_los_preload is None:
-        raise ValueError("missing network_los_preload")
-
-    # find which OMX files are to be used.
-    omx_file_paths = config.expand_input_file_list(
-        network_los_preload.omx_file_names(skim_tag),
-    )
-    zarr_file = network_los_preload.zarr_file_name(skim_tag)
-
-    if config.setting("disable_zarr", False):
-        # we can disable the zarr optimizations by setting the `disable_zarr`
-        # flag in the master config file to True
-        zarr_file = None
-
-    if zarr_file is not None:
-        zarr_file = os.path.join(config.get_cache_dir(), zarr_file)
-
-    max_float_precision = network_los_preload.skim_max_float_precision(skim_tag)
-
-    skim_digital_encoding = network_los_preload.skim_digital_encoding(skim_tag)
-    zarr_digital_encoding = network_los_preload.zarr_pre_encoding(skim_tag)
-
-    # The backing can be plain shared_memory, or a memmap
-    backing = network_los_preload.skim_backing_store(skim_tag)
-    if backing == "memmap":
-        # if memmap is given without a path, create a cache file
-        mmap_file = os.path.join(
-            config.get_cache_dir(), f"sharrow_dataset_{skim_tag}.mmap"
-        )
-        backing = f"memmap:{mmap_file}"
-
-    with logtime("loading skims as dataset"):
-
-        land_use = inject.get_table("land_use")
-
-        if f"_original_{land_use.index.name}" in land_use.to_frame():
-            land_use_zone_ids = land_use.to_frame()[f"_original_{land_use.index.name}"]
-            remapper = dict(zip(land_use_zone_ids, land_use_zone_ids.index))
-        else:
-            remapper = None
-
-        d = None
-        if backing.startswith("memmap:"):
-            # when working with a memmap, check if the memmap file on disk
-            # needs to be invalidated, because the source skims have been
-            # modified more recently.
-            if not should_invalidate_cache_file(backing[7:], *omx_file_paths):
-                try:
-                    d = sh.Dataset.shm.from_shared_memory(backing, mode="r")
-                except FileNotFoundError as err:
-                    logger.info(f"skim dataset {skim_tag!r} not found {err!s}")
-                    logger.info(f"loading skim dataset {skim_tag!r} from disk")
-                    d = None
-                else:
-                    logger.info(f"using skim_dataset from shared memory")
-            else:
-                sh.Dataset.shm.delete_shared_memory_files(backing)
-        else:
-            # when working in ephemeral shared memory, assume that if that data
-            # is loaded then it is good to use without further checks.
-            try:
-                d = sh.Dataset.shm.from_shared_memory(backing, mode="r")
-            except FileNotFoundError as err:
-                logger.info(f"skim dataset {skim_tag!r} not found {err!s}")
-                logger.info(f"loading skim dataset {skim_tag!r} from disk")
-                d = None
-
-        if d is None:
-            time_periods_ = network_los_preload.los_settings["skim_time_periods"][
-                "labels"
-            ]
-            # deduplicate time period names
-            time_periods = []
-            for t in time_periods_:
-                if t not in time_periods:
-                    time_periods.append(t)
-            if zarr_file:
-                logger.info(f"looking for zarr skims at {zarr_file}")
-            if zarr_file and os.path.exists(zarr_file):
-                # TODO: check if the OMX skims are modified more recently than
-                #       the cached ZARR versions; if so do not use the ZARR
-                # load skims from zarr.zip
-                logger.info(f"found zarr skims, loading them")
-                d = sh.dataset.from_zarr_with_attr(zarr_file).max_float_precision(
-                    max_float_precision
-                )
-            else:
-                if zarr_file:
-                    logger.info(f"did not find zarr skims, loading omx")
-                d = sh.dataset.from_omx_3d(
-                    [openmatrix.open_file(f, mode="r") for f in omx_file_paths],
-                    time_periods=time_periods,
-                    max_float_precision=max_float_precision,
-                )
-                # load sparse MAZ skims, if any
-                if network_los_preload.zone_system in [TWO_ZONE, THREE_ZONE]:
-
-                    # maz
-                    maz2taz_file_name = network_los_preload.setting("maz")
-                    maz_taz = pd.read_csv(
-                        config.data_file_path(maz2taz_file_name, mandatory=True)
-                    )
-                    maz_taz = maz_taz[["MAZ", "TAZ"]].set_index("MAZ").sort_index()
-
-                    # MAZ alignment is ensured here, so no re-alignment check is
-                    # needed below for TWO_ZONE or THREE_ZONE systems
-                    try:
-                        pd.testing.assert_index_equal(
-                            maz_taz.index, land_use.index, check_names=False
-                        )
-                    except AssertionError:
-                        if remapper is not None:
-                            maz_taz.index = maz_taz.index.map(remapper.get)
-                            maz_taz = maz_taz.sort_index()
-                            assert maz_taz.index.equals(
-                                land_use.to_frame().sort_index().index
-                            ), f"maz-taz lookup index does not match index of land_use table"
-                        else:
-                            raise
-
-                    d.redirection.set(
-                        maz_taz,
-                        map_to="otaz",
-                        name="omaz",
-                        map_also={"dtaz": "dmaz"},
-                    )
-
-                    maz_to_maz_tables = network_los_preload.setting("maz_to_maz.tables")
-                    maz_to_maz_tables = (
-                        [maz_to_maz_tables]
-                        if isinstance(maz_to_maz_tables, str)
-                        else maz_to_maz_tables
-                    )
-
-                    max_blend_distance = network_los_preload.setting(
-                        "maz_to_maz.max_blend_distance", default={}
-                    )
-                    if isinstance(max_blend_distance, int):
-                        max_blend_distance = {"DEFAULT": max_blend_distance}
-
-                    for file_name in maz_to_maz_tables:
-
-                        df = pd.read_csv(
-                            config.data_file_path(file_name, mandatory=True)
-                        )
-                        if remapper is not None:
-                            df.OMAZ = df.OMAZ.map(remapper.get)
-                            df.DMAZ = df.DMAZ.map(remapper.get)
-                        for colname in df.columns:
-                            if colname in ["OMAZ", "DMAZ"]:
-                                continue
-                            max_blend_distance_i = max_blend_distance.get(
-                                "DEFAULT", None
-                            )
-                            max_blend_distance_i = max_blend_distance.get(
-                                colname, max_blend_distance_i
-                            )
-                            d.redirection.sparse_blender(
-                                colname,
-                                df.OMAZ,
-                                df.DMAZ,
-                                df[colname],
-                                max_blend_distance=max_blend_distance_i,
-                                index=land_use.index,
-                            )
-
-                if zarr_file:
-                    if zarr_digital_encoding:
-                        import zarr  # ensure zarr is available before we do all this work.
-
-                        # apply once, before saving to zarr, will stick around in cache
-                        for encoding in zarr_digital_encoding:
-                            logger.info(f"applying zarr digital-encoding: {encoding}")
-                            regex = encoding.pop("regex", None)
-                            joint_dict = encoding.pop("joint_dict", None)
-                            if joint_dict:
-                                joins = []
-                                for k in d.variables:
-                                    if re.match(regex, k):
-                                        joins.append(k)
-                                d = d.digital_encoding.set(
-                                    joins, joint_dict=joint_dict, **encoding
-                                )
-                            elif regex:
-                                if "name" in encoding:
-                                    raise ValueError(
-                                        "cannot give both name and regex for digital_encoding"
-                                    )
-                                for k in d.variables:
-                                    if re.match(regex, k):
-                                        d = d.digital_encoding.set(k, **encoding)
-                            else:
-                                d = d.digital_encoding.set(**encoding)
-
-                    logger.info(f"writing zarr skims to {zarr_file}")
-                    # save skims to zarr
-                    try:
-                        d.to_zarr_with_attr(zarr_file)
-                    except ModuleNotFoundError:
-                        logger.warning("the 'zarr' package is not installed")
-            logger.info(f"scanning for unused skims")
-            tokens = set(d.variables.keys()) - set(d.coords.keys())
-            unused_tokens = scan_for_unused_names(tokens)
-            if unused_tokens:
-                baggage = d.digital_encoding.baggage(None)
-                unused_tokens -= baggage
-                # retain sparse matrix tables
-                unused_tokens = set(i for i in unused_tokens if not i.startswith("_s_"))
-                # retain lookup tables
-                unused_tokens = set(
-                    i for i in unused_tokens if not i.startswith("_digitized_")
-                )
-                logger.info(f"dropping unused skims: {unused_tokens}")
-                d = d.drop_vars(unused_tokens)
-            else:
-                logger.info(f"no unused skims found")
-            # apply digital encoding
-            if skim_digital_encoding:
-                for encoding in skim_digital_encoding:
-                    regex = encoding.pop("regex", None)
-                    if regex:
-                        if "name" in encoding:
-                            raise ValueError(
-                                "cannot give both name and regex for digital_encoding"
-                            )
-                        for k in d.variables:
-                            if re.match(regex, k):
-                                d = d.digital_encoding.set(k, **encoding)
-                    else:
-                        d = d.digital_encoding.set(**encoding)
-
-        # check alignment of TAZs that it matches land_use table
-        logger.info(f"checking skims alignment with land_use")
-        try:
-            land_use_zone_id = land_use[f"_original_{land_use.index.name}"]
-        except KeyError:
-            land_use_zone_id = land_use.index
-
-        if network_los_preload.zone_system == ONE_ZONE:
-            # check TAZ alignment for ONE_ZONE system.
-            # other systems use MAZ for most lookups, which dynamically
-            # resolves to TAZ inside the Dataset code.
-            if d["otaz"].attrs.get("preprocessed") != "zero-based-contiguous":
-                try:
-                    np.testing.assert_array_equal(land_use_zone_id, d.otaz)
-                except AssertionError as err:
-                    logger.info(f"otaz realignment required\n{err}")
-                    d = d.reindex(otaz=land_use_zone_id)
-                else:
-                    logger.info(f"otaz alignment ok")
-                d["otaz"] = land_use.index.to_numpy()
-                d["otaz"].attrs["preprocessed"] = "zero-based-contiguous"
-            else:
-                np.testing.assert_array_equal(land_use.index, d.otaz)
-
-            if d["dtaz"].attrs.get("preprocessed") != "zero-based-contiguous":
-                try:
-                    np.testing.assert_array_equal(land_use_zone_id, d.dtaz)
-                except AssertionError as err:
-                    logger.info(f"dtaz realignment required\n{err}")
-                    d = d.reindex(dtaz=land_use_zone_id)
-                else:
-                    logger.info(f"dtaz alignment ok")
-                d["dtaz"] = land_use.index.to_numpy()
-                d["dtaz"].attrs["preprocessed"] = "zero-based-contiguous"
-            else:
-                np.testing.assert_array_equal(land_use.index, d.dtaz)
-
-        if d.shm.is_shared_memory:
-            return d
-        else:
-            logger.info(f"writing skims to shared memory")
-            return d.shm.to_shared_memory(backing, mode="r")
 
 
 def scan_for_unused_names(tokens):
@@ -517,14 +250,34 @@ def skims_mapping(
     timeframe="tour",
     stop_col_name=None,
     parking_col_name=None,
+    zone_layer=None,
 ):
-    logger.info(f"loading skims_mapping")
+    logger.info("loading skims_mapping")
     logger.info(f"- orig_col_name: {orig_col_name}")
     logger.info(f"- dest_col_name: {dest_col_name}")
     logger.info(f"- stop_col_name: {stop_col_name}")
     skim_dataset = inject.get_injectable("skim_dataset")
-    odim = "omaz" if "omaz" in skim_dataset.dims else "otaz"
-    ddim = "dmaz" if "dmaz" in skim_dataset.dims else "dtaz"
+    if zone_layer == "maz" or zone_layer is None:
+        odim = "omaz" if "omaz" in skim_dataset.dims else "otaz"
+        ddim = "dmaz" if "dmaz" in skim_dataset.dims else "dtaz"
+    elif zone_layer == "taz":
+        odim = "otaz"
+        ddim = "dtaz"
+        if "omaz" in skim_dataset.dims:
+            # strip out all MAZ-specific features of the skim_dataset
+            dropdims = ["omaz", "dmaz"]
+            skim_dataset = skim_dataset.drop_dims(dropdims, errors="ignore")
+            for dd in dropdims:
+                if f"dim_redirection_{dd}" in skim_dataset.attrs:
+                    del skim_dataset.attrs[f"dim_redirection_{dd}"]
+            for attr_name in list(skim_dataset.attrs):
+                if attr_name.startswith("blend"):
+                    del skim_dataset.attrs[attr_name]
+
+    else:
+        raise ValueError(f"unknown zone layer {zone_layer!r}")
+    if zone_layer:
+        logger.info(f"- zone_layer: {zone_layer}")
     if (
         orig_col_name is not None
         and dest_col_name is not None
@@ -558,10 +311,10 @@ def skims_mapping(
                 relationships=(
                     f"df._orig_col_name -> odt_skims.{odim}",
                     f"df._dest_col_name -> odt_skims.{ddim}",
-                    f"df.trip_period -> odt_skims.time_period",
+                    "df.trip_period -> odt_skims.time_period",
                     f"df._dest_col_name -> dot_skims.{odim}",
                     f"df._orig_col_name -> dot_skims.{ddim}",
-                    f"df.trip_period -> dot_skims.time_period",
+                    "df.trip_period -> dot_skims.time_period",
                     f"df._orig_col_name -> od_skims.{odim}",
                     f"df._dest_col_name -> od_skims.{ddim}",
                 ),
@@ -577,16 +330,16 @@ def skims_mapping(
                 relationships=(
                     f"df._orig_col_name -> odt_skims.{odim}",
                     f"df._dest_col_name -> odt_skims.{ddim}",
-                    f"df.out_period      @  odt_skims.time_period",
+                    "df.out_period      @  odt_skims.time_period",
                     f"df._dest_col_name -> dot_skims.{odim}",
                     f"df._orig_col_name -> dot_skims.{ddim}",
-                    f"df.in_period       @  dot_skims.time_period",
+                    "df.in_period       @  dot_skims.time_period",
                     f"df._orig_col_name -> odr_skims.{odim}",
                     f"df._dest_col_name -> odr_skims.{ddim}",
-                    f"df.in_period       @  odr_skims.time_period",
+                    "df.in_period       @  odr_skims.time_period",
                     f"df._dest_col_name -> dor_skims.{odim}",
                     f"df._orig_col_name -> dor_skims.{ddim}",
-                    f"df.out_period      @  dor_skims.time_period",
+                    "df.out_period      @  dor_skims.time_period",
                     f"df._orig_col_name -> od_skims.{odim}",
                     f"df._dest_col_name -> od_skims.{ddim}",
                 ),
@@ -606,16 +359,16 @@ def skims_mapping(
                 f"df._stop_col_name -> dp_skims.{ddim}",
                 f"df._orig_col_name -> odt_skims.{odim}",
                 f"df._dest_col_name -> odt_skims.{ddim}",
-                f"df.trip_period     -> odt_skims.time_period",
+                "df.trip_period     -> odt_skims.time_period",
                 f"df._dest_col_name -> dot_skims.{odim}",
                 f"df._orig_col_name -> dot_skims.{ddim}",
-                f"df.trip_period     -> dot_skims.time_period",
+                "df.trip_period     -> dot_skims.time_period",
                 f"df._dest_col_name -> dpt_skims.{odim}",
                 f"df._stop_col_name  -> dpt_skims.{ddim}",
-                f"df.trip_period     -> dpt_skims.time_period",
+                "df.trip_period     -> dpt_skims.time_period",
                 f"df._stop_col_name    -> pdt_skims.{odim}",
                 f"df._dest_col_name -> pdt_skims.{ddim}",
-                f"df.trip_period     -> pdt_skims.time_period",
+                "df.trip_period     -> pdt_skims.time_period",
             ),
         )
     elif parking_col_name is not None:  # parking location
@@ -639,16 +392,16 @@ def skims_mapping(
                 f"df._dest_col_name -> pd_skims.{ddim}",
                 f"df._orig_col_name -> odt_skims.{odim}",
                 f"df._dest_col_name -> odt_skims.{ddim}",
-                f"df.trip_period    -> odt_skims.time_period",
+                "df.trip_period    -> odt_skims.time_period",
                 f"df._dest_col_name -> dot_skims.{odim}",
                 f"df._orig_col_name -> dot_skims.{ddim}",
-                f"df.trip_period    -> dot_skims.time_period",
+                "df.trip_period    -> dot_skims.time_period",
                 f"df._orig_col_name -> opt_skims.{odim}",
                 f"df._park_col_name -> opt_skims.{ddim}",
-                f"df.trip_period    -> opt_skims.time_period",
+                "df.trip_period    -> opt_skims.time_period",
                 f"df._park_col_name -> pdt_skims.{odim}",
                 f"df._dest_col_name -> pdt_skims.{ddim}",
-                f"df.trip_period    -> pdt_skims.time_period",
+                "df.trip_period    -> pdt_skims.time_period",
             ),
         )
     else:
@@ -667,7 +420,64 @@ def new_flow(
     parking_col_name=None,
     size_term_mapping=None,
     interacts=None,
+    zone_layer=None,
+    aux_vars=None,
 ):
+    """
+    Setup a new sharrow flow.
+
+    Parameters
+    ----------
+    spec : pandas.DataFrame
+        The spec, as usual for ActivitySim. The index should either be a basic
+        single-level index containing the expressions to be evaluated, or a
+        MultiIndex with at least "Expression" and "Label" levels.
+    extra_vars : Mapping
+        Extra values that are available to expressions and which are written
+        explicitly into compiled code (and cannot be changed later).
+    orig_col_name : str
+        The column from the choosers table that gives the origin zone index,
+        used to attach values from skims.
+    dest_col_name : str
+        The column from the choosers table that gives the destination zone index,
+        used to attach values from skims.
+    trace_label : str
+        A descriptive label
+    timeframe : {"tour", "timeless", "timeless_directional", "trip"}, default "tour"
+        A framework for how to treat the time and directionality of skims that
+        will be attached.
+    choosers : pandas.DataFrame
+        Attributes of the choosers, possibly interacted with attributes of the
+        alternatives.  Generally this flow can and will be re-used by swapping
+        out the `choosers` for a new dataframe with the same columns and
+        different rows.
+    stop_col_name : str
+        The column from the choosers table that gives the stop zone index in
+        trip destination choice, used to attach values from skims.
+    parking_col_name : str
+        The column from the choosers table that gives the parking zone index,
+        used to attach values from skims.
+    size_term_mapping : Mapping
+        Size term arrays.
+    interacts : pd.DataFrame, optional
+        An unmerged interaction dataset, giving attributes of the alternatives
+        that are not conditional on the chooser.  Use this when the choice model
+        has some variables that are conditional on the chooser (and included in
+        the `choosers` dataframe, and some variables that are conditional on the
+        alternative but not the chooser, and when every chooser has the same set
+        of possible alternatives.
+    zone_layer : {'taz', 'maz'}, default 'taz'
+        Specify which zone layer of the skims is to be used.  You cannot use the
+        'maz' zone layer in a one-zone model, but you can use the 'taz' layer in
+        a two- or three-zone model (e.g. for destination pre-sampling).
+    aux_vars : Mapping
+        Extra values that are available to expressions and which are written
+        only by reference into compiled code (and thus can be changed later).
+
+    Returns
+    -------
+    sharrow.Flow
+    """
 
     with logtime(f"setting up flow {trace_label}"):
         if choosers is None:
@@ -687,6 +497,7 @@ def new_flow(
             timeframe,
             stop_col_name,
             parking_col_name=parking_col_name,
+            zone_layer=zone_layer,
         )
         if size_term_mapping is None:
             size_term_mapping = {}
@@ -772,15 +583,15 @@ def new_flow(
         flow_tree.add_items(skims_mapping_)
         flow_tree.add_items(size_term_mapping)
         flow_tree.extra_vars = extra_vars
-
-        # logger.info(f"initializing sharrow shared data {trace_label}")
-        # pool = sh.SharedData(
-        #     chooser_cols,
-        #     **skims_mapping_,
-        #     **size_term_mapping,
-        #     extra_vars=extra_vars,
-        #     alias_main="df",
-        # )
+        flow_tree.extra_funcs = (
+            sharrow_tt_remaining_periods_available,
+            sharrow_tt_previous_tour_begins,
+            sharrow_tt_previous_tour_ends,
+            sharrow_tt_adjacent_window_after,
+            sharrow_tt_adjacent_window_before,
+            sharrow_tt_max_time_block_available,
+        )
+        flow_tree.aux_vars = aux_vars
 
         # - eval spec expressions
         if isinstance(spec.index, pd.MultiIndex):
@@ -792,7 +603,12 @@ def new_flow(
             labels = exprs
 
         defs = {}
+        # duplicate labels cause problems for sharrow, so we need to dedupe
+        existing_labels = set()
         for (expr, label) in zip(exprs, labels):
+            while label in existing_labels:
+                label = label + "_"
+            existing_labels.add(label)
             if expr[0] == "@":
                 if label == expr:
                     if expr[1:].isidentifier():
@@ -821,18 +637,22 @@ def new_flow(
         for (expr, label) in zip(exprs, labels):
             readme += f"\n            - {label}: {expr}"
         if extra_vars:
-            readme += f"\n        extra_vars:"
+            readme += "\n        extra_vars:"
             for i, v in extra_vars.items():
                 readme += f"\n            - {i}: {v}"
 
         logger.info(f"setting up sharrow flow {trace_label}")
+        extra_hash_data = ()
+        if zone_layer:
+            extra_hash_data += (zone_layer,)
         return flow_tree.setup_flow(
             defs,
             cache_dir=cache_dir,
             readme=readme[1:],  # remove leading newline
             flow_library=_FLOWS,
-            # extra_hash_data=(orig_col_name, dest_col_name),
+            extra_hash_data=extra_hash_data,
             hashing_level=0,
+            boundscheck=False,
         )
 
 
@@ -857,15 +677,21 @@ def size_terms_on_flow(locals_d):
         locals_d["size_array"] = dict(
             size_terms=a,
             relationships=(
-                f"df._dest_col_name -> size_terms.stoptaz",
-                f"df.purpose_index_num -> size_terms.purpose_index",
+                "df._dest_col_name -> size_terms.stoptaz",
+                "df.purpose_index_num -> size_terms.purpose_index",
             ),
         )
     return locals_d
 
 
 def apply_flow(
-    spec, choosers, locals_d=None, trace_label=None, required=False, interacts=None
+    spec,
+    choosers,
+    locals_d=None,
+    trace_label=None,
+    required=False,
+    interacts=None,
+    zone_layer=None,
 ):
     if sh is None:
         return None, None
@@ -874,7 +700,12 @@ def apply_flow(
     with logtime("apply_flow"):
         try:
             flow = get_flow(
-                spec, locals_d, trace_label, choosers=choosers, interacts=interacts
+                spec,
+                locals_d,
+                trace_label,
+                choosers=choosers,
+                interacts=interacts,
+                zone_layer=zone_layer,
             )
         except ValueError as err:
             if "unable to rewrite" in str(err):

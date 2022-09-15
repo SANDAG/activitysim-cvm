@@ -2,22 +2,14 @@
 # See full license in LICENSE.txt.
 
 import logging
-import os
 import warnings
 
 import numpy as np
 import pandas as pd
 
-from activitysim.core import (
-    config,
-    inject,
-    mem,
-    pathbuilder,
-    skim_dataset,
-    skim_dictionary,
-    tracing,
-    util,
-)
+from activitysim.core import skim_dataset  # noqa: F401
+from activitysim.core import config, inject, pathbuilder, skim_dictionary, tracing, util
+from activitysim.core.cleaning import recode_based_on_table
 from activitysim.core.skim_dict_factory import MemMapSkimFactory, NumpyArraySkimFactory
 from activitysim.core.skim_dictionary import NOT_IN_SKIM_ZONE_ID
 
@@ -281,6 +273,14 @@ class Network_LOS(object):
                 by="MAZ"
             )  # only fields we need
 
+            # recode MAZs if needed
+            self.maz_taz_df["MAZ"] = recode_based_on_table(
+                self.maz_taz_df["MAZ"], "land_use"
+            )
+            self.maz_taz_df["TAZ"] = recode_based_on_table(
+                self.maz_taz_df["TAZ"], "land_use_taz"
+            )
+
             self.maz_ceiling = self.maz_taz_df.MAZ.max() + 1
 
             # maz_to_maz_df
@@ -329,6 +329,9 @@ class Network_LOS(object):
 
                 file_name = maz_to_tap_settings["table"]
                 df = pd.read_csv(config.data_file_path(file_name, mandatory=True))
+
+                # recode MAZs if needed
+                df["MAZ"] = recode_based_on_table(df["MAZ"], "land_use")
 
                 # trim tap set
                 # if provided, use tap_line_distance_col together with tap_lines table to trim the near tap set
@@ -448,21 +451,26 @@ class Network_LOS(object):
                 assert not (
                     maz_skim_dict.offset_mapper.map(self.maz_taz_df["MAZ"].values)
                     == NOT_IN_SKIM_ZONE_ID
-                ).any()
+                ).any(), (
+                    "every MAZ in the MAZ-to-TAZ mapping must map to a TAZ that exists"
+                )
             else:
                 self.skim_dicts["maz"] = self.get_skim_dict("maz")
                 # TODO:SHARROW: make sure skim has all maz_ids
 
         # create tap skim dict
         if self.zone_system == THREE_ZONE:
-            assert "tap" not in self.skim_dicts
-            tap_skim_dict = self.create_skim_dict("tap")
-            self.skim_dicts["tap"] = tap_skim_dict
-            # make sure skim has all tap_ids
-            assert not (
-                tap_skim_dict.offset_mapper.map(self.tap_df["TAP"].values)
-                == NOT_IN_SKIM_ZONE_ID
-            ).any()
+            if not config.setting("sharrow", False):
+                assert "tap" not in self.skim_dicts
+                tap_skim_dict = self.create_skim_dict("tap")
+                self.skim_dicts["tap"] = tap_skim_dict
+                # make sure skim has all tap_ids
+                assert not (
+                    tap_skim_dict.offset_mapper.map(self.tap_df["TAP"].values)
+                    == NOT_IN_SKIM_ZONE_ID
+                ).any()
+            else:
+                self.skim_dicts["tap"] = self.get_skim_dict("tap")
 
     def create_skim_dict(self, skim_tag, _override_offset_int=None):
         """
@@ -680,6 +688,11 @@ class Network_LOS(object):
                     if f"dim_redirection_{dd}" in skim_dataset.attrs:
                         del skim_dataset.attrs[f"dim_redirection_{dd}"]
                 return SkimDataset(skim_dataset)
+        elif sharrow_enabled and skim_tag in ("tap"):
+            tap_dataset = inject.get_injectable("tap_dataset")
+            from .skim_dataset import SkimDataset
+
+            return SkimDataset(tap_dataset)
         else:
             assert (
                 skim_tag in self.skim_dicts
@@ -748,9 +761,36 @@ class Network_LOS(object):
         -------
             Numpy.ndarray: list of tap skim values for odt tuples
         """
+        tap_skim = self.get_skim_dict("tap")
 
-        s = self.get_skim_dict("tap").lookup_3d(otap, dtap, dim3, key)
-        return s
+        if isinstance(tap_skim, skim_dictionary.SkimDict):
+            return tap_skim.lookup_3d(otap, dtap, dim3, key)
+        elif isinstance(dim3, str):
+            s = (
+                tap_skim.dataset[[key]]
+                .sel(time_period=dim3)
+                .at(
+                    otap=otap.values,
+                    dtap=dtap.values,
+                    _name=key,
+                )
+            )
+        elif dim3.dtype.kind == "i":
+            s = tap_skim.dataset.at(
+                otap=otap.values,
+                dtap=dtap.values,
+                time_period=tap_skim.dataset.time_period.values[dim3],
+                _name=key,
+            )
+        else:
+            s = tap_skim.dataset.at(
+                otap=otap.values,
+                dtap=dtap.values,
+                time_period=dim3,
+                _name=key,
+            )
+
+        return s.values
 
     def skim_time_period_label(self, time_period):
         """
@@ -806,7 +846,16 @@ class Network_LOS(object):
         if self.zone_system == ONE_ZONE:
             tazs = inject.get_table("land_use").index.values
         else:
-            tazs = self.maz_taz_df.TAZ.unique()
+            try:
+                land_use_taz = inject.get_table("land_use_taz").to_frame()
+            except (RuntimeError, KeyError):
+                # land_use_taz is missing, use fallback
+                tazs = self.maz_taz_df.TAZ.unique()
+            else:
+                if "_original_TAZ" in land_use_taz:
+                    tazs = land_use_taz["_original_TAZ"].values
+                else:
+                    tazs = self.maz_taz_df.TAZ.unique()
         assert isinstance(tazs, np.ndarray)
         return tazs
 

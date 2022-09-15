@@ -2,23 +2,16 @@
 # See full license in LICENSE.txt.
 import logging
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
-from activitysim.core import tracing
-from activitysim.core import config
-from activitysim.core import los
-from activitysim.core import simulate
-from activitysim.core import inject
-from activitysim.core import pipeline
-
+from activitysim.abm.tables.size_terms import tour_destination_size_terms
+from activitysim.core import config, inject, los, pipeline, simulate, tracing
+from activitysim.core.interaction_sample import interaction_sample
+from activitysim.core.interaction_sample_simulate import interaction_sample_simulate
 from activitysim.core.util import reindex
 
-from activitysim.core.interaction_sample_simulate import interaction_sample_simulate
-from activitysim.core.interaction_sample import interaction_sample
-
 from . import logsums as logsum
-from activitysim.abm.tables.size_terms import tour_destination_size_terms
 
 logger = logging.getLogger(__name__)
 DUMP = False
@@ -83,6 +76,7 @@ def _destination_sample(
     chunk_size,
     chunk_tag,
     trace_label,
+    zone_layer=None,
 ):
 
     model_spec = simulate.spec_for_segment(
@@ -129,6 +123,7 @@ def _destination_sample(
         chunk_size=chunk_size,
         chunk_tag=chunk_tag,
         trace_label=trace_label,
+        zone_layer=zone_layer,
     )
 
     # remember person_id in chosen alts so we can merge with persons in subsequent steps
@@ -506,6 +501,7 @@ def destination_presample(
         chunk_size,
         chunk_tag=chunk_tag,
         trace_label=trace_label,
+        zone_layer="taz",
     )
 
     # choose a MAZ for each DEST_TAZ choice, choice probability based on MAZ size_term fraction of TAZ total

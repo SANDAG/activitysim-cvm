@@ -1,4 +1,4 @@
-# activitysim workflow example_runner example_name=example_mtc
+# activitysim workflow example_runner example_name=prototype_mtc
 
 context_parser: pypyr.parser.keyvaluepairs
 
@@ -15,11 +15,12 @@ steps:
   name: pypyr.steps.default
   in:
     defaults:
-      example_name: example_mtc
+      example_name: prototype_mtc
       workflow_name: sharrow-contrast
       workspace: workspace
       multiprocess: 0
-      chunk_size: 0
+      chunk_size:
+      chunk_size_pct_of_available: 0.75
       create: True
       compile: True
       sharrow: True
@@ -30,6 +31,7 @@ steps:
       resume_after:
       fast: False
       compile_n_households: 1000
+      train_n_households: 20000
       main_n_households: 100000
       config_dirs: configs
       data_dir: data
@@ -38,7 +40,7 @@ steps:
       trace_hh_id:
       trace_od:
       chunk_method: hybrid_uss
-      chunk_training: False
+      chunk_training: True
       chunk_training_mode: training
       machine_name:
       disable_zarr: False
@@ -115,7 +117,7 @@ run-compile:
         sharrow: test
         chunk_training_mode: disabled
         households_sample_size: '{compile_n_households}'
-        cache_dir: cache
+        cache_dir: cache_sharrow
         trace_hh_id:
         trace_od:
         instrument: '{instrument}'
@@ -142,8 +144,9 @@ run-sharrow:
       path: "{workspace}/{example_name}/configs_sh_chunktrain/{settings_file}"
       payload:
         inherit_settings: True
-        households_sample_size: 10000
         chunk_training_mode: '{chunk_training_mode}'
+        households_sample_size: '{train_n_households}'
+        num_processes: 2
 
 - description: write configs_sh
   name: pypyr.steps.filewriteyaml
@@ -153,7 +156,7 @@ run-sharrow:
       payload:
         inherit_settings: True
         sharrow: require
-        cache_dir: cache
+        cache_dir: cache_sharrow
         households_sample_size: '{main_n_households}'
         trace_hh_id:
         trace_od:
@@ -194,8 +197,9 @@ run-legacy:
       path: "{workspace}/{example_name}/configs_legacy_chunktrain/{settings_file}"
       payload:
         inherit_settings: True
-        households_sample_size: 10000
         chunk_training_mode: '{chunk_training_mode}'
+        households_sample_size: '{train_n_households}'
+        num_processes: 2
 
 - description: write.configs_legacy
   name: pypyr.steps.filewriteyaml
@@ -205,7 +209,7 @@ run-legacy:
       payload:
         inherit_settings: True
         recode_pipeline_columns: False
-        cache_dir: cache
+        cache_dir: cache_legacy
         households_sample_size: '{main_n_households}'
         trace_hh_id: '{trace_hh_id}'
         trace_od: '{trace_od}'

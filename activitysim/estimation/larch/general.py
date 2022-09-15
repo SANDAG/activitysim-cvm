@@ -1,18 +1,18 @@
+import itertools
+import logging
+import os
+import re
+from pathlib import Path
+from typing import Mapping
+
 import numpy as np
 import pandas as pd
-import re
-import os
 import yaml
-import itertools
-from typing import Mapping
-from larch import P, X, DataFrames, Model
+from larch import DataFrames, Model, P, X
+from larch.log import logger_name
 from larch.model.abstract_model import AbstractChoiceModel
 from larch.model.tree import NestingTree
 from larch.util import Dict
-from pathlib import Path
-
-import logging
-from larch.log import logger_name
 
 _logger = logging.getLogger(logger_name)
 
@@ -48,7 +48,7 @@ def cv_to_ca(alt_values, dtype="float64", required_labels=None):
     x_ca_tall = alt_values.stack()
 
     # Set the last level index name to 'altid'
-    x_ca_tall.index.rename("altid", -1, inplace=True)
+    x_ca_tall.index.rename("altid", level=-1, inplace=True)
     c_, v_, a_ = x_ca_tall.index.names
 
     # case and alt id's should be integers.
@@ -142,15 +142,12 @@ def linear_utility_from_spec(spec, x_col, p_col, ignore_x=(), segment_id=None):
             raise ValueError("segment_id must be given if p_col is a dict")
         partial_utility = {}
         for seg_p_col, segval in p_col.items():
-            partial_utility[seg_p_col] = (
-                linear_utility_from_spec(
-                    spec,
-                    x_col,
-                    seg_p_col,
-                    ignore_x,
-                )
-                * X(f"{segment_id}=={str_repr(segval)}")
-            )
+            partial_utility[seg_p_col] = linear_utility_from_spec(
+                spec,
+                x_col,
+                seg_p_col,
+                ignore_x,
+            ) * X(f"{segment_id}=={str_repr(segval)}")
         return sum(partial_utility.values())
     parts = []
     for i in spec.index:

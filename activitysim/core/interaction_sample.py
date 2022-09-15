@@ -1,8 +1,6 @@
 # ActivitySim
 # See full license in LICENSE.txt.
 import logging
-from builtins import range
-from math import ceil
 
 import numpy as np
 import pandas as pd
@@ -182,6 +180,7 @@ def _interaction_sample(
     skims=None,
     locals_d=None,
     trace_label=None,
+    zone_layer=None,
 ):
     """
     Run a MNL simulation in the situation in which alternatives must
@@ -321,6 +320,7 @@ def _interaction_sample(
             estimator=None,
             log_alt_losers=log_alt_losers,
             extra_data=alternatives,
+            zone_layer=zone_layer,
         )
         chunk.log_df(trace_label, "interaction_utilities", interaction_utilities)
         if sharrow_enabled == "test" or True:
@@ -374,6 +374,7 @@ def _interaction_sample(
             trace_rows,
             estimator=None,
             log_alt_losers=log_alt_losers,
+            zone_layer=zone_layer,
         )
         chunk.log_df(trace_label, "interaction_utilities", interaction_utilities)
 
@@ -413,6 +414,23 @@ def _interaction_sample(
             if len(misses[0]) > interaction_utilities_sh.values.size * 0.01:
                 print("big problem")
                 print(misses)
+                if "nan location mismatch" in str(err):
+                    print("nan location mismatch interaction_utilities_sh")
+                    print(np.where(np.isnan(interaction_utilities_sh.values)))
+                    print("nan location mismatch interaction_utilities legacy")
+                    print(np.where(np.isnan(interaction_utilities.values)))
+                print("misses =>", misses)
+                j = 0
+                while j < len(misses[0]):
+                    print(
+                        f"miss {j} {tuple(m[j] for m in misses)}:",
+                        interaction_utilities_sh.values[tuple(m[j] for m in misses)],
+                        "!=",
+                        interaction_utilities.values[tuple(m[j] for m in misses)],
+                    )
+                    j += 1
+                    if j > 10:
+                        break
                 raise
 
     if have_trace_targets and trace_ids is not None:
@@ -568,6 +586,7 @@ def interaction_sample(
     chunk_size=0,
     chunk_tag=None,
     trace_label=None,
+    zone_layer=None,
 ):
 
     """
@@ -653,6 +672,7 @@ def interaction_sample(
             skims=skims,
             locals_d=locals_d,
             trace_label=chunk_trace_label,
+            zone_layer=zone_layer,
         )
 
         if choices.shape[0] > 0:

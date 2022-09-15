@@ -1,4 +1,4 @@
-# activitysim workflow example_runner example_name=example_mtc
+# activitysim workflow example_runner example_name=prototype_mtc
 
 context_parser: pypyr.parser.keyvaluepairs
 
@@ -15,7 +15,7 @@ steps:
   name: pypyr.steps.default
   in:
     defaults:
-      example_name: example_mtc
+      example_name: prototype_mtc
       workflow_name: sharrow-contrast
       workspace: workspace
       multiprocess: 0
@@ -33,6 +33,7 @@ steps:
       main_n_households: 100000
       config_dirs: configs
       data_dir: data
+      ext_dirs:
       instrument: False
       memory_profile: False
       trace_hh_id:
@@ -42,6 +43,7 @@ steps:
       machine_name:
       disable_zarr: False
       settings_file: settings.yaml
+      report_skip: []
 
 - name: activitysim.workflows.steps.title
   in:
@@ -54,6 +56,24 @@ steps:
     py: |
       import os
       os.makedirs(f"{workspace}", exist_ok=True)
+
+- name: activitysim.workflows.steps.py
+  in:
+    label: Detect if debugging
+    py: |
+      def is_debug():
+          import sys
+          gettrace = getattr(sys, 'gettrace', None)
+          if gettrace is None:
+              return False
+          else:
+              v = gettrace()
+              if v is None:
+                  return False
+              else:
+                  return True
+      should_swallow_errors = not is_debug()
+      save('should_swallow_errors')
 
 - activitysim.workflows.steps.contrast.contrast_setup
 
@@ -68,25 +88,25 @@ steps:
   run: '{compile}'
   in:
     call: run-compile
-  swallow: True
+  swallow: False
 
 - name: pypyr.steps.call
   run: '{sharrow}'
   in:
     call: run-sharrow
-  swallow: True
+  swallow: '{should_swallow_errors}'
 
 - name: pypyr.steps.call
   run: '{legacy}'
   in:
     call: run-legacy
-  swallow: True
+  swallow: '{should_swallow_errors}'
 
 - name: pypyr.steps.call
   run: '{reference}'
   in:
     call: run-reference
-  swallow: True
+  swallow: '{should_swallow_errors}'
 
 - activitysim.workflows.steps.contrast.composite_log
 
@@ -96,6 +116,7 @@ steps:
       groups: reporting
       success: report-save
       failure: report-save
+  swallow: False
 
 ################################################################################
 run-compile:
@@ -112,9 +133,9 @@ run-compile:
         sharrow: test
         chunk_training_mode: disabled
         households_sample_size: '{compile_n_households}'
-        cache_dir: cache
-        trace_hh_id:
-        trace_od:
+        cache_dir: cache_sharrow
+        trace_hh_id: '{trace_hh_id}'
+        trace_od: '{trace_od}'
         instrument: '{instrument}'
         disable_zarr: '{disable_zarr}'
         multiprocess: False
@@ -139,10 +160,10 @@ run-sharrow:
       payload:
         inherit_settings: True
         sharrow: require
-        cache_dir: cache
+        cache_dir: cache_sharrow
         households_sample_size: '{main_n_households}'
-        trace_hh_id:
-        trace_od:
+        trace_hh_id: '{trace_hh_id}'
+        trace_od: '{trace_od}'
         instrument: '{instrument}'
         memory_profile: '{memory_profile}'
         chunk_size: '{chunk_size}'
@@ -171,7 +192,7 @@ run-legacy:
       payload:
         inherit_settings: True
         recode_pipeline_columns: False
-        cache_dir: cache
+        cache_dir: cache_legacy
         households_sample_size: '{main_n_households}'
         trace_hh_id: '{trace_hh_id}'
         trace_od: '{trace_od}'
@@ -202,12 +223,22 @@ run-reference:
     env_prefix: "{workspace}/env/asim-ref-{reference_asim_version}"
     asim_version: '{reference_asim_version}'
 
+- name: activitysim.workflows.steps.py
+  in:
+    label: Identify first config dir
+    py: |
+      if isinstance(config_dirs, str):
+        first_config_dir = config_dirs
+      else:
+        first_config_dir = config_dirs[0]
+      save('first_config_dir')
+
 - description: Copy required reference settings
   name: activitysim.workflows.steps.copy_files
   in:
     source_glob:
-      - "{workspace}/{example_name}/configs/legacy-{reference_asim_version}/*.yaml"
-      - "{workspace}/{example_name}/configs/legacy-{reference_asim_version}/*.csv"
+      - "{workspace}/{example_name}/{first_config_dir}/legacy-{reference_asim_version}/*.yaml"
+      - "{workspace}/{example_name}/{first_config_dir}/legacy-{reference_asim_version}/*.csv"
     dest_dir: "{workspace}/{example_name}/configs_reference"
 
 - name: activitysim.workflows.steps.py
@@ -386,11 +417,13 @@ reporting:
       workplace_zone_agg:
 
 - name: activitysim.workflows.steps.reporting.section_title
+  skip: !py "'work location' in report_skip"
   run: '{workplace_zone_agg}'
   in:
     title: Workplace Location
 
 - name: activitysim.workflows.steps.contrast.district_to_district
+  skip: !py "'work location' in report_skip"
   run: '{workplace_zone_agg}'
   in:
     tablename: persons
@@ -404,21 +437,6 @@ reporting:
     filter: workplace_zone_id >= 0
     size_label: n_workers
 
-
-#### Auto Ownership ####
-
-- name: activitysim.workflows.steps.reporting.section_title
-  in:
-    title: Auto Ownership
-
-- name: activitysim.workflows.steps.contrast.transform_data
-  in:
-    tablename: households
-    column: hhsize
-    out: hhsize_to5
-    clip:
-      upper: 5
-
 - name: activitysim.workflows.steps.contrast.transform_data
   in:
     tablename: households
@@ -431,7 +449,52 @@ reporting:
         - mid
         - high
 
+- name: activitysim.workflows.steps.contrast.join_table_data
+  in:
+    caption: Join Income to Persons
+    tablename: persons
+    from_tablename: households
+    columns: income_tertile
+    on: household_id
+
+- name: activitysim.workflows.steps.contrast.trip_distance
+  skip: !py "'work location' in report_skip"
+  in:
+    caption: Workplace Distance by Income
+    caption_level: 3
+    dist_bins: 20
+    dist_skim_name: 'distance_to_work'
+    tablename: persons
+    grouping: income_tertile
+
+- name: activitysim.workflows.steps.contrast.trip_distance
+  skip: !py "'school location' in report_skip"
+  in:
+    caption: School Distance by Income
+    caption_level: 3
+    dist_bins: 20
+    dist_skim_name: 'distance_to_school'
+    tablename: persons
+    grouping: income_tertile
+
+#### Auto Ownership ####
+
+- name: activitysim.workflows.steps.reporting.section_title
+  skip: !py "'auto ownership' in report_skip"
+  in:
+    title: Auto Ownership
+
+- name: activitysim.workflows.steps.contrast.transform_data
+  skip: !py "'auto ownership' in report_skip"
+  in:
+    tablename: households
+    column: hhsize
+    out: hhsize_to5
+    clip:
+      upper: 5
+
 - name: activitysim.workflows.steps.contrast.nominal_choice
+  skip: !py "'auto ownership' in report_skip"
   in:
     caption: Household Auto Ownership Counts by Household Size
     caption_level: 3
@@ -449,6 +512,7 @@ reporting:
     axis_label: "# of Households"
 
 - name: activitysim.workflows.steps.contrast.nominal_choice
+  skip: !py "'auto ownership' in report_skip"
   in:
     caption: Household Auto Ownership Shares by Household Size
     caption_level: 3
@@ -467,10 +531,12 @@ reporting:
 #### CDAP ####
 
 - name: activitysim.workflows.steps.reporting.section_title
+  skip: !py "'cdap' in report_skip"
   in:
     title: Coordinated Daily Activity Pattern
 
 - name: activitysim.workflows.steps.contrast.nominal_choice
+  skip: !py "'cdap' in report_skip"
   in:
     caption: Coordinated Daily Activity Pattern by Person Type
     caption_level: 3
@@ -499,6 +565,7 @@ reporting:
     axis_label: Tour Mode Share
 
 - name: activitysim.workflows.steps.contrast.nominal_choice
+  skip: !py "'tour mode by composition' in report_skip"
   in:
     caption: Tour Mode Choice by Composition
     caption_level: 3

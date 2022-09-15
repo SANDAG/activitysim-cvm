@@ -1,13 +1,14 @@
+import glob
+import hashlib
 import logging
 import os
-import sys
-import requests
 import shutil
-import glob
-import pkg_resources
-import yaml
-import hashlib
+import sys
 from pathlib import Path
+
+import pkg_resources
+import requests
+import yaml
 
 PACKAGE = "activitysim"
 EXAMPLES_DIR = "examples"
@@ -227,6 +228,7 @@ def download_asset(url, target_path, sha256=None, link=True):
     if download:
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
+            print(f"|        as {target_path_dl}")
             with open(target_path_dl, "wb") as f:
                 for chunk in r.iter_content(chunk_size=None):
                     f.write(chunk)
@@ -235,6 +237,7 @@ def download_asset(url, target_path, sha256=None, link=True):
 
             with gzip.open(target_path_dl, "rb") as f_in:
                 with open(target_path, "wb") as f_out:
+                    print(f"|  unzip to {target_path}")
                     shutil.copyfileobj(f_in, f_out)
             os.remove(target_path_dl)
         computed_sha256 = sha256_checksum(target_path)
@@ -244,6 +247,8 @@ def download_asset(url, target_path, sha256=None, link=True):
                 f"   expected checksum {sha256}\n"
                 f"   computed checksum {computed_sha256}"
             )
+        elif not sha256:
+            print(f"|  computed checksum {computed_sha256}")
     if link:
         os.makedirs(
             os.path.dirname(os.path.normpath(original_target_path)),
@@ -271,6 +276,9 @@ def download_asset(url, target_path, sha256=None, link=True):
                     os.path.normpath(target_path),
                     os.path.normpath(original_target_path),
                 )
+                print(f"|    copied to {os.path.normpath(original_target_path)}")
+            else:
+                print(f"| symlinked to {os.path.normpath(original_target_path)}")
 
 
 def sha256_checksum(filename, block_size=65536):

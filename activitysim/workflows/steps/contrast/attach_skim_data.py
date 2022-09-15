@@ -2,7 +2,6 @@ import logging
 
 import numpy as np
 import pandas as pd
-from pypyr.context import Context
 
 from ..progression import reset_progress_step
 from ..wrapping import workstep
@@ -14,12 +13,19 @@ def _as_int(x):
     if x.dtype.kind == "i":
         return x
     else:
-        return x.astype(np.int)
+        return x.astype(np.int32)
 
 
 @workstep(updates_context=True)
 def attach_skim_data(
-    tablesets, skims, skim_vars, tablename, otaz_col, dtaz_col, time_col=None,
+    tablesets,
+    skims,
+    skim_vars,
+    tablename,
+    otaz_col,
+    dtaz_col,
+    time_col=None,
+    rename_skim_vars=None,
 ) -> dict:
     if isinstance(skim_vars, str):
         skim_vars = [skim_vars]
@@ -36,7 +42,11 @@ def attach_skim_data(
         skims = {i: skims for i in tablesets.keys()}
 
     for key, tableset in tablesets.items():
+        # skim_subset = skims[key][list(skims[key].coords) + skim_vars]
         skim_subset = skims[key][skim_vars]
+
+        otag = "omaz" if "omaz" in skims[key].coords else "otaz"
+        dtag = "dmaz" if "dmaz" in skims[key].coords else "dtaz"
 
         zone_ids = tableset["land_use"].index
         if (
@@ -45,18 +55,14 @@ def attach_skim_data(
         ):
             offset = zone_ids[0]
             looks = [
-                _as_int(tableset[tablename][otaz_col].rename("otaz") - offset),
-                _as_int(tableset[tablename][dtaz_col].rename("dtaz") - offset),
+                _as_int(tableset[tablename][otaz_col].rename(otag) - offset),
+                _as_int(tableset[tablename][dtaz_col].rename(dtag) - offset),
             ]
         else:
             remapper = dict(zip(zone_ids, pd.RangeIndex(len(zone_ids))))
             looks = [
-                _as_int(
-                    tableset[tablename][otaz_col].rename("otaz").apply(remapper.get)
-                ),
-                _as_int(
-                    tableset[tablename][dtaz_col].rename("dtaz").apply(remapper.get)
-                ),
+                _as_int(tableset[tablename][otaz_col].rename(otag).apply(remapper.get)),
+                _as_int(tableset[tablename][dtaz_col].rename(dtag).apply(remapper.get)),
             ]
         if "time_period" in skim_subset.dims:
             if time_col is None:
@@ -67,7 +73,17 @@ def attach_skim_data(
                 .rename("time_period"),
             )
         look = pd.concat(looks, axis=1)
-        out = skim_subset.iat.df(look)
+        try:
+            out = skim_subset.iat.df(look)
+        except KeyError as err:
+            # KeyError is triggered when reading TAZ data from MAZ-enabled skims
+            lookr = {i: look[i].values for i in look.columns}
+            out = skims[key].iat(**lookr, _names=skim_vars).to_dataframe()
+            out = out.set_index(tablesets[key][tablename].index)
+        if rename_skim_vars is not None:
+            if isinstance(rename_skim_vars, str):
+                rename_skim_vars = [rename_skim_vars]
+            out = out.rename(columns=dict(zip(skim_vars, rename_skim_vars)))
         tablesets[key][tablename] = tablesets[key][tablename].assign(**out)
 
     return dict(tablesets=tablesets)

@@ -27,6 +27,7 @@ def eval_interaction_utilities(
     estimator=None,
     log_alt_losers=False,
     extra_data=None,
+    zone_layer=None,
 ):
     """
     Compute the utilities for a single-alternative spec evaluated in the context of df
@@ -71,6 +72,25 @@ def eval_interaction_utilities(
     trace_label = tracing.extend_trace_label(trace_label, "eval_interaction_utils")
     logger.info("Running eval_interaction_utilities on %s rows" % df.shape[0])
 
+    # # extract expressions and labels from spec.index
+    # if isinstance(spec.index, pd.MultiIndex):
+    #     exprs = spec.index.get_level_values(simulate.SPEC_EXPRESSION_NAME)
+    #     labels = spec.index.get_level_values(simulate.SPEC_LABEL_NAME)
+    # else:
+    #     exprs = spec.index
+    #     labels = spec.index
+    #
+    # # rewrite tt.xxx from spec expression to use numba accelerated versions
+    # updated_exprs = []
+    # for e in exprs:
+    #     e = e.replace("tt.adjacent_window_before(", "tt_adjacent_window_before(tt, ")
+    #     e = e.replace("tt.adjacent_window_after(", "tt_adjacent_window_after(tt, ")
+    #     e = e.replace("tt.previous_tour_ends(", "tt_previous_tour_ends(tt, ")
+    #     e = e.replace("tt.previous_tour_begins(", "tt_previous_tour_begins(tt, ")
+    #     e = e.replace("tt.remaining_periods_available(", "tt_remaining_periods_available(tt, ")
+    #     updated_exprs.append(e)
+    # exprs = updated_exprs
+    #
     # from .flow import apply_flow
     # from . import inject
     # skim_dataset = inject.get_injectable('skim_dataset')
@@ -90,33 +110,87 @@ def eval_interaction_utilities(
         # avoid altering caller's passed-in locals_d parameter (they may be looping)
         locals_d = locals_d.copy() if locals_d is not None else {}
 
+        # # add numba accelerated versions of timetable functions to locals_d
+        # locals_d.update(
+        #     tt_adjacent_window_before=timetable.tt_adjacent_window_before,
+        #     tt_adjacent_window_after=timetable.tt_adjacent_window_after,
+        #     tt_previous_tour_ends=timetable.tt_previous_tour_ends,
+        #     tt_previous_tour_begins=timetable.tt_previous_tour_begins,
+        #     tt_remaining_periods_available=timetable.tt_remaining_periods_available,
+        # )
+
         utilities = None
 
         from .flow import TimeLogger
 
         timelogger = TimeLogger("interaction_simulate")
 
-        t0 = time.time()
-
         # add df for startswith('@') eval expressions
         locals_d["df"] = df
 
-        if sharrow_enabled and not {"tt"} & set(
-            locals_d.keys()
-        ):  # timetables not yet compatible
+        if sharrow_enabled:
 
             from .flow import apply_flow
 
+            spec_sh = spec.copy()
+
+            def replace_in_index_level(mi, level, *repls):
+                if isinstance(mi, pd.MultiIndex):
+                    level = mi._get_level_number(level)
+                    content = list(mi.levels[level])
+                    new_content = []
+                    for i in content:
+                        for repl in repls:
+                            i = i.replace(*repl)
+                        new_content.append(i)
+                    return mi.set_levels(new_content, level=level)
+                else:
+                    new_content = []
+                    for i in mi:
+                        for repl in repls:
+                            i = i.replace(*repl)
+                        new_content.append(i)
+                    return new_content
+
+            spec_sh.index = replace_in_index_level(
+                spec_sh.index,
+                simulate.SPEC_EXPRESSION_NAME,
+                (
+                    "tt.adjacent_window_before(",
+                    "sharrow_tt_adjacent_window_before(tt_windows, tt_row_mapper, tt_col_mapper, ",
+                ),
+                (
+                    "tt.adjacent_window_after(",
+                    "sharrow_tt_adjacent_window_after(tt_windows, tt_row_mapper, tt_col_mapper, ",
+                ),
+                (
+                    "tt.previous_tour_ends(",
+                    "sharrow_tt_previous_tour_ends(tt_windows, tt_row_mapper, tt_col_mapper, ",
+                ),
+                (
+                    "tt.previous_tour_begins(",
+                    "sharrow_tt_previous_tour_begins(tt_windows, tt_row_mapper, tt_col_mapper, ",
+                ),
+                (
+                    "tt.remaining_periods_available(",
+                    "sharrow_tt_remaining_periods_available(tt_windows, tt_row_mapper, ",
+                ),
+                (
+                    "tt.max_time_block_available(",
+                    "sharrow_tt_max_time_block_available(tt_windows, tt_row_mapper, ",
+                ),
+            )
+
             # need to zero out any coefficients on temp vars
-            if isinstance(spec.index, pd.MultiIndex):
-                exprs = spec.index.get_level_values(simulate.SPEC_EXPRESSION_NAME)
-                labels = spec.index.get_level_values(simulate.SPEC_LABEL_NAME)
+            if isinstance(spec_sh.index, pd.MultiIndex):
+                exprs = spec_sh.index.get_level_values(simulate.SPEC_EXPRESSION_NAME)
+                labels = spec_sh.index.get_level_values(simulate.SPEC_LABEL_NAME)
             else:
-                exprs = spec.index
-                labels = spec.index
+                exprs = spec_sh.index
+                labels = spec_sh.index
             for n, (expr, label) in enumerate(zip(exprs, labels)):
                 if expr.startswith("_") and "@" in expr:
-                    spec.iloc[n, 0] = 0.0
+                    spec_sh.iloc[n, 0] = 0.0
 
             for i1, i2 in zip(exprs, labels):
                 logger.debug(f"        - expr: {i1}: {i2}")
@@ -124,7 +198,12 @@ def eval_interaction_utilities(
             timelogger.mark("sharrow preamble", True, logger, trace_label)
 
             sh_util, sh_flow = apply_flow(
-                spec, df, locals_d, trace_label, interacts=extra_data
+                spec_sh,
+                df,
+                locals_d,
+                trace_label,
+                interacts=extra_data,
+                zone_layer=zone_layer,
             )
             if sh_util is not None:
                 chunk.log_df(trace_label, "sh_util", sh_util)
@@ -138,8 +217,6 @@ def eval_interaction_utilities(
         else:
             sh_util, sh_flow = None, None
             timelogger.mark("sharrow flow", False)
-
-        t1 = time.time()
 
         if (
             utilities is None
@@ -227,7 +304,7 @@ def eval_interaction_utilities(
                     if expr.startswith("@"):
                         v = to_series(eval(expr[1:], globals(), locals_d))
                     else:
-                        v = df.eval(expr)
+                        v = df.eval(expr, resolvers=[locals_d])
 
                     if check_for_variability and v.std() == 0:
                         logger.info(
@@ -351,7 +428,7 @@ def eval_interaction_utilities(
                 # ),
                 dtype=np.float32,
             )
-            sh_utility_fat = sh_utility_fat.sel(chooserindex=trace_rows)
+            sh_utility_fat = sh_utility_fat[trace_rows, :]
             sh_utility_fat = sh_utility_fat.to_dataframe("vals")
             try:
                 sh_utility_fat = sh_utility_fat.unstack("expressions")
@@ -441,7 +518,23 @@ def eval_interaction_utilities(
                 diff = _sh_util_miss1 - _u_miss1
                 if len(misses[0]) > sh_util.size * 0.01:
                     print("big problem")
-                    print(misses)
+                    if "nan location mismatch" in str(err):
+                        print("nan location mismatch sh_util")
+                        print(np.where(np.isnan(sh_util)))
+                        print("nan location mismatch legacy util")
+                        print(np.where(np.isnan(utilities.values)))
+                    print("misses =>", misses)
+                    j = 0
+                    while j < len(misses[0]):
+                        print(
+                            f"miss {j} {tuple(m[j] for m in misses)}:",
+                            sh_util[tuple(m[j] for m in misses)],
+                            "!=",
+                            utilities.values[tuple(m[j] for m in misses)],
+                        )
+                        j += 1
+                        if j > 10:
+                            break
 
                     re_trace = misses[0]
                     retrace_eval_data = {}
@@ -482,11 +575,12 @@ def eval_interaction_utilities(
                         dtype=np.float32,
                     )
                     re_sh_flow_load_ = re_sh_flow_load[re_trace]
-                    # np.dot(re_sh_flow_load_, spec.iloc[:, 0])
 
                     look_for_problems_here = np.where(
                         ~np.isclose(
-                            re_sh_flow_load_,
+                            re_sh_flow_load_[
+                                :, ~spec.index.get_level_values(0).str.startswith("_")
+                            ],
                             retrace_eval_data_.values.astype(np.float32),
                         )
                     )
@@ -602,8 +696,14 @@ def _interaction_simulate(
     chooser_index_id = ALT_CHOOSER_ID if log_alt_losers else None
 
     sharrow_enabled = config.setting("sharrow", False)
+    interaction_utilities = None
 
-    if sharrow_enabled and skims is None and not have_trace_targets and sample_size == len(alternatives):
+    if (
+        sharrow_enabled
+        and skims is None
+        and not have_trace_targets
+        and sample_size == len(alternatives)
+    ):
         # no need to create the merged interaction dataset
         # TODO: can we still do this if skims is not None?
 
@@ -637,7 +737,11 @@ def _interaction_simulate(
     else:
         interaction_utilities_sh = trace_eval_results_sh = None
 
-    if not sharrow_enabled or (sharrow_enabled == "test"):
+    if (
+        not sharrow_enabled
+        or (sharrow_enabled == "test")
+        or interaction_utilities is None
+    ):
 
         interaction_df = logit.interaction_dataset(
             choosers,
@@ -892,7 +996,7 @@ def interaction_simulate(
 
         result_list.append(choices)
 
-        chunk.log_df(trace_label, f"result_list", result_list)
+        chunk.log_df(trace_label, "result_list", result_list)
 
     # FIXME: this will require 2X RAM
     # if necessary, could append to hdf5 store on disk:
