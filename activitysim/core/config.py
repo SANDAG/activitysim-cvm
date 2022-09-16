@@ -261,6 +261,9 @@ def cascading_input_file_path(
             if os.path.isfile(p):
                 file_path = p
                 break
+            if p.endswith(".csv") and os.path.isfile(p + ".gz"):
+                file_path = p + ".gz"
+                break
 
             if allow_glob and len(glob.glob(p)) > 0:
                 file_path = p

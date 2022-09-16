@@ -1,0 +1,89 @@
+SAMPLE_SPEC: ldt_internal_tour_destination_sample.csv
+SPEC: ldt_internal_tour_destination.csv
+COEFFICIENTS: ldt_internal_tour_destination_coefficients.csv
+
+SAMPLE_SIZE: 30
+
+SIZE_TERM_SELECTOR: ldt
+
+# we can't use use household income_segment as this will also be set for non-workers
+CHOOSER_SEGMENT_COLUMN_NAME: ldt_tour_segment
+
+# optional (comment out if not desired)
+DEST_CHOICE_LOGSUM_COLUMN_NAME: destination_logsum
+
+# comment out DEST_CHOICE_LOGSUM_COLUMN_NAME if saved alt logsum table
+DEST_CHOICE_SAMPLE_TABLE_NAME: tour_destination_sample
+
+
+SEGMENTS:
+  # household tours are sub-segmented only by daytrip / overnight
+  # other
+  - household_day
+  - household_overnight
+  # individual work related tours are sub-segmented by daytrip / overnight and worker industry category
+  - workrelated_day_1
+  - workrelated_day_2
+  - workrelated_day_3
+  - workrelated_day_4
+  - workrelated_day_5
+  - workrelated_day_6
+  - workrelated_day_7
+  - workrelated_day_8
+  - workrelated_day_9
+  - workrelated_day_10
+  - workrelated_day_11
+  - workrelated_day_12
+  - workrelated_day_13
+  - workrelated_day_14
+  - workrelated_day_15
+  - workrelated_day_16
+  - workrelated_day_17
+  - workrelated_overnight_1
+  - workrelated_overnight_2
+  - workrelated_overnight_3
+  - workrelated_overnight_4
+  - workrelated_overnight_5
+  - workrelated_overnight_6
+  - workrelated_overnight_7
+  - workrelated_overnight_8
+  - workrelated_overnight_9
+  - workrelated_overnight_10
+  - workrelated_overnight_11
+  - workrelated_overnight_12
+  - workrelated_overnight_13
+  - workrelated_overnight_14
+  - workrelated_overnight_15
+  - workrelated_overnight_16
+  - workrelated_overnight_17
+  # individual other tours are sub-segmented by daytrip / overnight and student status
+  - other_day_student
+  - other_overnight_student
+  - other_day_nonstudent
+  - other_overnight_nonstudent
+
+
+SIMULATE_CHOOSER_COLUMNS:
+  - tour_type
+  - home_zone_id
+  - person_id
+
+LOGSUM_SETTINGS: ldt_internal_tour_mode_choice.yaml
+
+# model-specific logsum-related settings
+CHOOSER_ORIG_COL_NAME: home_zone_id
+ALT_DEST_COL_NAME: alt_dest
+IN_PERIOD:
+  shopping: 14
+  othmaint: 14
+  othdiscr: 14
+  eatout: 14
+  social: 14
+  escort: 14
+OUT_PERIOD:
+  shopping: 14
+  othmaint: 14
+  othdiscr: 14
+  eatout: 14
+  social: 14
+  escort: 14

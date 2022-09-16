@@ -1,0 +1,6 @@
+coefficient_name,value,constrain
+coef_mode_logsum,0.6755,F
+coef_dist_0_2,-0.1499,F
+coef_dist_2_5,-0.1499,F
+coef_dist_5_15,-0.1499,F
+coef_dist_15_plus,-0.1499,F
