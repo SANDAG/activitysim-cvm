@@ -2,6 +2,7 @@
 # See full license in LICENSE.txt.
 import logging
 
+import pandas as pd
 from activitysim.core import config, inject, pipeline, tracing
 from activitysim.core.util import assign_in_place
 
@@ -37,17 +38,72 @@ def ldt_tour_destination(
     # choosers are tours - in a sense tours are choosing their destination
     ldt_tours = longdist_tours.to_frame()
     ldt_tours = ldt_tours[
-        ldt_tours.tour_category == 1
+        ldt_tours.tour_category == 1 #
     ]  # filter tours travel on model day
 
     persons_merged = persons_merged.to_frame()
 
-    # - if no joint tours
+    # - if no ldt tours
     if ldt_tours.shape[0] == 0:
         tracing.no_results("ldt_tour_destination")
         return
 
     # TODO create ldt_tour_segment before this model step
+    ldt_tours = pd.merge(
+        ldt_tours.person_id,
+        persons_merged[['NAICSP02', 'student_status', 'AGE']],
+        on = 'person_id',
+        how = 'left'
+    )
+
+    ldt_tours = ldt_tours.rename(columns = {'NAICSP02' : 'worker_industry'})
+    day_hours = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20] # TO DO check
+    overnight_hours = [21,22,23,0,1,2,3,4,5] # TO DO check
+    # household tours are sub-segmented only by daytrip / overnight
+    ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_household') & (
+        ldt_tours['ldt_start_hour'].isin(day_hours)), 'ldt_tour_segment'] = 'household_day'
+    ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_household') & (
+        ldt_tours['ldt_start_hour'].isin(overnight_hours)), 'ldt_tour_segment'] = 'household_day'
+
+    # individual work related tours are sub-segmented by daytrip / overnight and worker industry category
+    for i in range(max(ldt_tours['worker_industry'])):
+        ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_person_workrelated') & (
+                ldt_tours['worker_industry'] == i) & (
+                          ldt_tours['ldt_start_hour'].isin(day_hours)), 'ldt_tour_segment'] = 'workrelated_day_' + str(i)
+
+        ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_person_workrelated') & (
+                ldt_tours['worker_industry'] == i) & (
+                          ldt_tours['ldt_start_hour'].isin(overnight_hours)), 'ldt_tour_segment'] = 'workrelated_overnight_' + str(i)
+
+
+    # - Individual other tours are sub-segmented by daytrip / overnight and student status
+    ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_person_other') & (
+            ldt_tours['student_status'] == 1) & (
+                    ldt_tours['ldt_start_hours'].isin(day_hours).isin(
+                        day_hours)) & (
+                            ldt_tours['age'] > 18), 'ldt_tour_segment'] = 'other_day_student'
+
+    ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_person_other') & (
+            ldt_tours['student_status'] == 1) & (
+                      ldt_tours['ldt_start_hours'].isin(day_hours).isin(
+                          overnight_hours)) & (
+                            ldt_tours['age'] > 18), 'ldt_tour_segment'] = 'other_overnight_student'
+
+    ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_person_other') & (
+            ldt_tours['student_status'] == 0) & (
+                      ldt_tours['ldt_start_hours'].isin(day_hours).isin(
+                          day_hours)) & (
+                            ldt_tours['age'] > 18), 'ldt_tour_segment'] = 'other_day_nonstudent'
+
+    ldt_tours.loc[(ldt_tours['tour_type'] == 'longdist_person_other') & (
+            ldt_tours['student_status'] == 0) & (
+                      ldt_tours['ldt_start_hours'].isin(day_hours).isin(
+                          overnight_hours)) & (
+                            ldt_tours['age'] > 18), 'ldt_tour_segment'] = 'other_overnight_nonstudent'
+
+
+
+    #ldt_tours
 
     # TODO
     # estimator = estimation.manager.begin_estimation("ldt_tour_destination")

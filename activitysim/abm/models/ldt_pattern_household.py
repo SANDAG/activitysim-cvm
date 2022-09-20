@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id):
+def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id, persons):
     """
     This model gives each LDT household one of the possible LDT categories for a given day --
         - complete tour (start and end tour on same day)
@@ -124,6 +124,7 @@ def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id
         households,
         tour_counts,
         "longdist",
+        persons
     )
 
     hh_longdist_tours = pd.merge(

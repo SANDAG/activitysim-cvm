@@ -66,7 +66,7 @@ def set_longdist_tour_index(tours):
     return tours
 
 
-def process_longdist_tours(df, tour_counts, tour_category):
+def process_longdist_tours(df, tour_counts, tour_category, persons=None):
     """
     This method processes a tour_counts column and turns out a DataFrame that
     represents the long distance tours that were generated.
@@ -79,6 +79,8 @@ def process_longdist_tours(df, tour_counts, tour_category):
         Matches the df, a tour frequency column
     tour_category : str
         A label for the type of tours
+    persons : pandas.DataFrame
+        optional, if df is households
 
     Returns
     -------
@@ -96,13 +98,15 @@ def process_longdist_tours(df, tour_counts, tour_category):
     ):  # only person dfs have a household_id column; processing persons here
         tours["household_id"] = reindex(df.household_id, tours.person_id)
         tours["origin"] = reindex(df.home_zone_id, tours.person_id)
+
     else:  # processing households here
         # TODO get smart about this, don't just assume we're in households...
         # wouldn't even people living alone technically be in households unless want to segment by GQ/household
-        # create_tours returns ids as person_id, need to reassignto household_id
+        # create_tours returns ids as person_id, need to reassign to household_id
         tours["household_id"] = tours["person_id"]
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
-        tours["person_id"] = -1  # hh tours don't use person ids
+        tours["person_id"] = reindex(df.min_person_id, tours.household_id)
+        # hh tours don't use person ids
         # number of participants = hhsize since hh ldt tours are necessarily joint
         # (can remove if participation stage implemented)
         tours["number_of_participants"] = reindex(df.hhsize, tours.household_id)
