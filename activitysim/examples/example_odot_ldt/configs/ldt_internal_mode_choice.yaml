@@ -1,0 +1,43 @@
+# ldt_internal_mode_choice.yaml
+
+SPEC: ldt_internal_mode_choice.csv
+COEFFICIENTS: ldt_internal_mode_choice_coefficients.csv
+COEFFICIENT_TEMPLATE: ldt_internal_mode_choice_coefficients_template.csv
+
+LOGIT_TYPE: NL
+
+NESTS:
+  name: root
+  coefficient: coef_nest_root
+  alternatives: # automobile, air, walk to tran- sit, drive to transit, walk to high-speed rail, and drive to high-speed rail.
+    - PRIVATEAUTO
+    - AIR
+    - name: GROUND
+      coefficient:  coef_nest_GROUND
+      alternatives:
+        - name: TRANSIT
+          coefficient: coef_nest_TRANSIT
+          alternatives:
+          - WALK_TRANSIT
+          - DRIVE_TRANSIT
+        - name: HSR
+          coefficient: coef_nest_HSR
+          alternatives:
+          - WALK_HSR
+          - DRIVE_HSR
+
+CONSTANTS:
+  orig_col_name: origin
+  dest_col_name: destination
+  min_waitTime: 0
+  max_waitTime: 50
+
+
+# to reduce memory needs filter chooser table to these fields
+TOURS_MERGED_CHOOSER_COLUMNS:
+  - income
+  - auto_ownership
+
+MODE_CHOICE_LOGSUM_COLUMN_NAME: ldt_mode_choice_logsum
+
+preprocessor:  # None

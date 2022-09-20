@@ -792,6 +792,13 @@ def run_tour_destination(
     sample_list = []
     for segment_name in segments:
 
+        if isinstance(segment_name, (tuple, list)) and len(segment_name) == 2:
+            # when segments are 2-tuples, they give segment_name for
+            # destination segmenting and tour_purpose for mode segmenting
+            segment_name, tour_purpose = segment_name
+        else:
+            tour_purpose = segment_name
+
         segment_trace_label = tracing.extend_trace_label(trace_label, segment_name)
 
         if chooser_segment_column is not None:
@@ -825,7 +832,6 @@ def run_tour_destination(
         )
 
         # - destination_logsums
-        tour_purpose = segment_name  # tour_purpose is segment_name
         location_sample_df = run_destination_logsums(
             tour_purpose,
             persons_merged,

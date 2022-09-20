@@ -61,6 +61,7 @@ def set_longdist_tour_index(tours):
     assert not tours.tour_id.duplicated().any()
 
     tours.set_index("tour_id", inplace=True, verify_integrity=True)
+    tours.index.name = "longdist_tour_id"
 
     # we modify tours in place, but return the dataframe for the convenience of the caller
     return tours
@@ -102,7 +103,9 @@ def process_longdist_tours(df, tour_counts, tour_category):
         # create_tours returns ids as person_id, need to reassignto household_id
         tours["household_id"] = tours["person_id"]
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
-        tours["person_id"] = -1  # hh tours don't use person ids
+        tours["person_id"] = reindex(
+            df.min_person_id, tours.household_id
+        )  # hh tours attach lead person
         # number of participants = hhsize since hh ldt tours are necessarily joint
         # (can remove if participation stage implemented)
         tours["number_of_participants"] = reindex(df.hhsize, tours.household_id)

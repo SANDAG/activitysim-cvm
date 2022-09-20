@@ -11,8 +11,13 @@ logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def ldt_tour_destination(
-    longdist_tours, persons_merged, network_los, chunk_size, trace_hh_id
+def ldt_internal_tour_destination(
+    longdist_tours,
+    persons_merged,
+    network_los,
+    chunk_size,
+    trace_hh_id,
+    households_merged,
 ):
 
     """
@@ -36,11 +41,14 @@ def ldt_tour_destination(
 
     # choosers are tours - in a sense tours are choosing their destination
     ldt_tours = longdist_tours.to_frame()
+    pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
+
     ldt_tours = ldt_tours[
-        ldt_tours.tour_category == 1
+        ldt_tours.ldt_pattern >= 1
     ]  # filter tours travel on model day
 
     persons_merged = persons_merged.to_frame()
+    hh = households_merged.to_frame()
 
     # - if no joint tours
     if ldt_tours.shape[0] == 0:
@@ -48,6 +56,37 @@ def ldt_tour_destination(
         return
 
     # TODO create ldt_tour_segment before this model step
+
+    ldt_tours = ldt_tours.join(
+        persons_merged[["NAICSP02"]], on="person_id", rsuffix="__"
+    )
+
+    seg1 = ldt_tours["tour_type"].apply(lambda x: x.split("_")[-1])
+    import numpy as np
+
+    seg2 = np.where(ldt_tours["ldt_pattern"] == 1, "day", "overnight")  # FIXME
+
+    ldt_tours["seg1"] = seg1
+    ldt_tours["seg2"] = seg2
+
+    def seg3_(row):
+        if row["seg1"] == "household":
+            return f"{row['seg1']}_{row['seg2']}"
+        elif row.seg1 == "workrelated":
+            return f"{row['seg1']}_{row['seg2']}_{np.clip(row['NAICSP02'], 1, 17):.0f}"
+        else:
+            return f"{row['seg1']}_{row['seg2']}_student"
+
+    ldt_tours["ldt_tour_segment"] = ldt_tours.apply(seg3_, axis=1)
+
+    # ldt_tours["in_period"] = network_los.skim_time_period_label(
+    #     ldt_tours['ldt_end_hour'],
+    #     fillna=0,
+    # )
+    # ldt_tours["out_period"] = network_los.skim_time_period_label(
+    #     ldt_tours['ldt_start_hour'],
+    #     fillna=0,
+    # )
 
     # TODO
     # estimator = estimation.manager.begin_estimation("ldt_tour_destination")

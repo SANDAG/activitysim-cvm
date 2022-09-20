@@ -1,0 +1,6 @@
+coefficient_name,value,constrain
+coef_nest_root,1.0,T
+coef_nest_GROUND,0.65,T
+coef_nest_TRANSIT,0.5,T
+coef_nest_HSR,0.5,T
+coef_ivt,-0.12345,F

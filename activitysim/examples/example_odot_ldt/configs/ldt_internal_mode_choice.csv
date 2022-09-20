@@ -1,0 +1,2 @@
+Label,Description,Expression,PRIVATEAUTO,AIR,WALK_TRANSIT,DRIVE_TRANSIT,WALK_HSR,DRIVE_HSR
+util_AUTO_in_vehicle_time,AUTO - In-vehicle time,@odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'],coef_ivt,,,,,

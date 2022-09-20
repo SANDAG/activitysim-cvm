@@ -4,7 +4,7 @@ import logging
 
 import pandas as pd
 
-from activitysim.core import config, expressions, simulate, tracing
+from activitysim.core import config, expressions, simulate
 
 """
 At this time, these utilities are mostly for transforming the mode choice
@@ -124,15 +124,21 @@ def run_tour_mode_choice_simulate(
     assert ("in_period" not in choosers) and ("out_period" not in choosers)
     in_time = skims["in_time_col_name"]
     out_time = skims["out_time_col_name"]
-    choosers["in_period"] = network_los.skim_time_period_label(choosers[in_time])
-    choosers["out_period"] = network_los.skim_time_period_label(choosers[out_time])
+    default_in_time = skims.get("default_in_time")
+    default_out_time = skims.get("default_out_time")
+    choosers["in_period"] = network_los.skim_time_period_label(
+        choosers[in_time], fillna=default_in_time
+    )
+    choosers["out_period"] = network_los.skim_time_period_label(
+        choosers[out_time], fillna=default_out_time
+    )
 
     expressions.annotate_preprocessors(
         choosers, locals_dict, skims, model_settings, trace_label
     )
 
     trace_column_names = choosers.index.name
-    assert trace_column_names == "tour_id"
+    assert trace_column_names.endswith("tour_id")
     if trace_column_names not in choosers:
         choosers[trace_column_names] = choosers.index
 

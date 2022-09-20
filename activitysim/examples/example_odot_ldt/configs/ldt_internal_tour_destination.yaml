@@ -18,49 +18,48 @@ DEST_CHOICE_SAMPLE_TABLE_NAME: tour_destination_sample
 
 SEGMENTS:
   # household tours are sub-segmented only by daytrip / overnight
-  # other
-  - household_day
-  - household_overnight
+  - [household_day, household]
+  - [household_overnight, household]
   # individual work related tours are sub-segmented by daytrip / overnight and worker industry category
-  - workrelated_day_1
-  - workrelated_day_2
-  - workrelated_day_3
-  - workrelated_day_4
-  - workrelated_day_5
-  - workrelated_day_6
-  - workrelated_day_7
-  - workrelated_day_8
-  - workrelated_day_9
-  - workrelated_day_10
-  - workrelated_day_11
-  - workrelated_day_12
-  - workrelated_day_13
-  - workrelated_day_14
-  - workrelated_day_15
-  - workrelated_day_16
-  - workrelated_day_17
-  - workrelated_overnight_1
-  - workrelated_overnight_2
-  - workrelated_overnight_3
-  - workrelated_overnight_4
-  - workrelated_overnight_5
-  - workrelated_overnight_6
-  - workrelated_overnight_7
-  - workrelated_overnight_8
-  - workrelated_overnight_9
-  - workrelated_overnight_10
-  - workrelated_overnight_11
-  - workrelated_overnight_12
-  - workrelated_overnight_13
-  - workrelated_overnight_14
-  - workrelated_overnight_15
-  - workrelated_overnight_16
-  - workrelated_overnight_17
+  - [workrelated_day_1, person_workrelated]
+  - [workrelated_day_2, person_workrelated]
+  - [workrelated_day_3, person_workrelated]
+  - [workrelated_day_4, person_workrelated]
+  - [workrelated_day_5, person_workrelated]
+  - [workrelated_day_6, person_workrelated]
+  - [workrelated_day_7, person_workrelated]
+  - [workrelated_day_8, person_workrelated]
+  - [workrelated_day_9, person_workrelated]
+  - [workrelated_day_10, person_workrelated]
+  - [workrelated_day_11, person_workrelated]
+  - [workrelated_day_12, person_workrelated]
+  - [workrelated_day_13, person_workrelated]
+  - [workrelated_day_14, person_workrelated]
+  - [workrelated_day_15, person_workrelated]
+  - [workrelated_day_16, person_workrelated]
+  - [workrelated_day_17, person_workrelated]
+  - [workrelated_overnight_1, person_workrelated]
+  - [workrelated_overnight_2, person_workrelated]
+  - [workrelated_overnight_3, person_workrelated]
+  - [workrelated_overnight_4, person_workrelated]
+  - [workrelated_overnight_5, person_workrelated]
+  - [workrelated_overnight_6, person_workrelated]
+  - [workrelated_overnight_7, person_workrelated]
+  - [workrelated_overnight_8, person_workrelated]
+  - [workrelated_overnight_9, person_workrelated]
+  - [workrelated_overnight_10, person_workrelated]
+  - [workrelated_overnight_11, person_workrelated]
+  - [workrelated_overnight_12, person_workrelated]
+  - [workrelated_overnight_13, person_workrelated]
+  - [workrelated_overnight_14, person_workrelated]
+  - [workrelated_overnight_15, person_workrelated]
+  - [workrelated_overnight_16, person_workrelated]
+  - [workrelated_overnight_17, person_workrelated]
   # individual other tours are sub-segmented by daytrip / overnight and student status
-  - other_day_student
-  - other_overnight_student
-  - other_day_nonstudent
-  - other_overnight_nonstudent
+  - [other_day_student, person_other]
+  - [other_overnight_student, person_other]
+  - [other_day_nonstudent, person_other]
+  - [other_overnight_nonstudent, person_other]
 
 
 SIMULATE_CHOOSER_COLUMNS:
@@ -68,22 +67,10 @@ SIMULATE_CHOOSER_COLUMNS:
   - home_zone_id
   - person_id
 
-LOGSUM_SETTINGS: ldt_internal_tour_mode_choice.yaml
+LOGSUM_SETTINGS: ldt_internal_mode_choice.yaml
 
 # model-specific logsum-related settings
 CHOOSER_ORIG_COL_NAME: home_zone_id
 ALT_DEST_COL_NAME: alt_dest
-IN_PERIOD:
-  shopping: 14
-  othmaint: 14
-  othdiscr: 14
-  eatout: 14
-  social: 14
-  escort: 14
-OUT_PERIOD:
-  shopping: 14
-  othmaint: 14
-  othdiscr: 14
-  eatout: 14
-  social: 14
-  escort: 14
+IN_PERIOD: 14
+OUT_PERIOD: 14

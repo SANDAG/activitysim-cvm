@@ -18,10 +18,10 @@ logger = logging.getLogger(__name__)
 def ldt_pattern_household(households, households_merged, chunk_size, trace_hh_id):
     """
     This model gives each LDT household one of the possible LDT categories for a given day --
-        - complete tour (start and end tour on same day)
-        - begin tour
-        - end tour
-        - away on tour
+        - 1: complete tour (start and end tour on same day)
+        - 2: begin tour
+        - 3: end tour
+        - 4: away on tour
         - no tour
     """
     trace_label = "ldt_pattern_household"

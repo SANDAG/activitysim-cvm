@@ -1,0 +1,7 @@
+coefficient_name,household,person_workrelated,person_other
+#same for all segments
+coef_nest_root,,,
+coef_nest_GROUND,,,
+coef_nest_TRANSIT,,,
+coef_nest_HSR,,,
+coef_ivt,,,

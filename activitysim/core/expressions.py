@@ -2,8 +2,8 @@
 # See full license in LICENSE.txt.
 import logging
 
-import numpy as np
-import pandas as pd
+import numpy as np  # noqa: F401
+import pandas as pd  # noqa: F401
 
 from activitysim.core import assign, config, inject, simulate, tracing
 from activitysim.core.util import assign_in_place
@@ -132,6 +132,8 @@ def annotate_preprocessors(df, locals_dict, skims, model_settings, trace_label):
     locals_d.update(skims)
 
     preprocessor_settings = model_settings.get("preprocessor", [])
+    if preprocessor_settings is None:
+        preprocessor_settings = []
     if not isinstance(preprocessor_settings, list):
         assert isinstance(preprocessor_settings, dict)
         preprocessor_settings = [preprocessor_settings]

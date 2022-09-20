@@ -2,7 +2,6 @@
 # See full license in LICENSE.txt.
 import logging
 
-import numpy as np
 import pandas as pd
 
 from activitysim.core import config, inject
@@ -84,7 +83,9 @@ def tour_destination_size_terms(land_use, size_terms, model_selector):
     if not land_use.index.is_monotonic_increasing:
         land_use = land_use.sort_index()
 
-    size_terms = size_terms[size_terms.model_selector == model_selector].copy()
+    size_terms = (
+        size_terms[size_terms.model_selector == model_selector].copy().fillna(0)
+    )
     del size_terms["model_selector"]
 
     df = pd.DataFrame(

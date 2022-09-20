@@ -18,6 +18,8 @@ from . import (  # noqa: F401
     joint_tour_participation,
     joint_tour_scheduling,
     ldt_internal_external,
+    ldt_internal_mode_choice,
+    ldt_internal_tour_destination,
     ldt_pattern_household,
     ldt_pattern_person,
     ldt_scheduling_household,
