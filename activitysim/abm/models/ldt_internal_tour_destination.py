@@ -2,6 +2,8 @@
 # See full license in LICENSE.txt.
 import logging
 
+import pandas as pd
+
 from activitysim.core import config, inject, pipeline, tracing
 from activitysim.core.util import assign_in_place
 
@@ -17,7 +19,6 @@ def ldt_internal_tour_destination(
     network_los,
     chunk_size,
     trace_hh_id,
-    households_merged,
 ):
 
     """
@@ -43,50 +44,113 @@ def ldt_internal_tour_destination(
     ldt_tours = longdist_tours.to_frame()
     pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
 
-    ldt_tours = ldt_tours[
-        ldt_tours.ldt_pattern >= 1
-    ]  # filter tours travel on model day
+    # we do NOT filter for tours on the travel day, as we want
+    # to know the destination of long distance tours even if they
+    # are away on the travel day
 
     persons_merged = persons_merged.to_frame()
-    hh = households_merged.to_frame()
 
-    # - if no joint tours
+    # - if no ldt tours
     if ldt_tours.shape[0] == 0:
         tracing.no_results("ldt_tour_destination")
         return
 
     # TODO create ldt_tour_segment before this model step
-
-    ldt_tours = ldt_tours.join(
-        persons_merged[["NAICSP02"]], on="person_id", rsuffix="__"
+    ldt_tours = pd.merge(
+        ldt_tours.person_id,
+        persons_merged[["NAICSP02", "student_status", "AGE"]],
+        on="person_id",
+        how="left",
     )
 
-    seg1 = ldt_tours["tour_type"].apply(lambda x: x.split("_")[-1])
-    import numpy as np
+    ldt_tours = ldt_tours.rename(columns={"NAICSP02": "worker_industry"})
+    day_hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]  # TO DO check
+    overnight_hours = [21, 22, 23, 0, 1, 2, 3, 4, 5]  # TO DO check
+    # household tours are sub-segmented only by daytrip / overnight
+    ldt_tours.loc[
+        (ldt_tours["tour_type"] == "longdist_household")
+        & (ldt_tours["ldt_start_hour"].isin(day_hours)),
+        "ldt_tour_segment",
+    ] = "household_day"
+    ldt_tours.loc[
+        (ldt_tours["tour_type"] == "longdist_household")
+        & (ldt_tours["ldt_start_hour"].isin(overnight_hours)),
+        "ldt_tour_segment",
+    ] = "household_day"
 
-    seg2 = np.where(ldt_tours["ldt_pattern"] == 1, "day", "overnight")  # FIXME
+    # individual work related tours are sub-segmented by daytrip / overnight and worker industry category
+    for i in range(max(ldt_tours["worker_industry"])):
+        ldt_tours.loc[
+            (ldt_tours["tour_type"] == "longdist_person_workrelated")
+            & (ldt_tours["worker_industry"] == i)
+            & (ldt_tours["ldt_start_hour"].isin(day_hours)),
+            "ldt_tour_segment",
+        ] = "workrelated_day_" + str(i)
 
-    ldt_tours["seg1"] = seg1
-    ldt_tours["seg2"] = seg2
+        ldt_tours.loc[
+            (ldt_tours["tour_type"] == "longdist_person_workrelated")
+            & (ldt_tours["worker_industry"] == i)
+            & (ldt_tours["ldt_start_hour"].isin(overnight_hours)),
+            "ldt_tour_segment",
+        ] = "workrelated_overnight_" + str(i)
 
-    def seg3_(row):
-        if row["seg1"] == "household":
-            return f"{row['seg1']}_{row['seg2']}"
-        elif row.seg1 == "workrelated":
-            return f"{row['seg1']}_{row['seg2']}_{np.clip(row['NAICSP02'], 1, 17):.0f}"
-        else:
-            return f"{row['seg1']}_{row['seg2']}_student"
+    # - Individual other tours are sub-segmented by daytrip / overnight and student status
+    ldt_tours.loc[
+        (ldt_tours["tour_type"] == "longdist_person_other")
+        & (ldt_tours["student_status"] == 1)
+        & (ldt_tours["ldt_start_hours"].isin(day_hours).isin(day_hours))
+        & (ldt_tours["age"] > 18),
+        "ldt_tour_segment",
+    ] = "other_day_student"
 
-    ldt_tours["ldt_tour_segment"] = ldt_tours.apply(seg3_, axis=1)
+    ldt_tours.loc[
+        (ldt_tours["tour_type"] == "longdist_person_other")
+        & (ldt_tours["student_status"] == 1)
+        & (ldt_tours["ldt_start_hours"].isin(day_hours).isin(overnight_hours))
+        & (ldt_tours["age"] > 18),
+        "ldt_tour_segment",
+    ] = "other_overnight_student"
 
-    # ldt_tours["in_period"] = network_los.skim_time_period_label(
-    #     ldt_tours['ldt_end_hour'],
-    #     fillna=0,
+    ldt_tours.loc[
+        (ldt_tours["tour_type"] == "longdist_person_other")
+        & (ldt_tours["student_status"] == 0)
+        & (ldt_tours["ldt_start_hours"].isin(day_hours).isin(day_hours))
+        & (ldt_tours["age"] > 18),
+        "ldt_tour_segment",
+    ] = "other_day_nonstudent"
+
+    ldt_tours.loc[
+        (ldt_tours["tour_type"] == "longdist_person_other")
+        & (ldt_tours["student_status"] == 0)
+        & (ldt_tours["ldt_start_hours"].isin(day_hours).isin(overnight_hours))
+        & (ldt_tours["age"] > 18),
+        "ldt_tour_segment",
+    ] = "other_overnight_nonstudent"
+
+    # ldt_tours
+
+    # hard coded and slightly wrong, delete this code when finalized
+    # ldt_tours = ldt_tours.join(
+    #     persons_merged[["NAICSP02"]], on="person_id", rsuffix="__"
     # )
-    # ldt_tours["out_period"] = network_los.skim_time_period_label(
-    #     ldt_tours['ldt_start_hour'],
-    #     fillna=0,
-    # )
+    #
+    # seg1 = ldt_tours["tour_type"].apply(lambda x: x.split("_")[-1])
+    # import numpy as np
+    #
+    # seg2 = np.where(ldt_tours["ldt_pattern"] == 1, "day", "overnight")  # FIXME
+    #
+    # ldt_tours["seg1"] = seg1
+    # ldt_tours["seg2"] = seg2
+    #
+    # def seg3_(row):
+    #     if row["seg1"] == "household":
+    #         return f"{row['seg1']}_{row['seg2']}"
+    #     elif row.seg1 == "workrelated":
+    #         return f"{row['seg1']}_{row['seg2']}_{np.clip(row['NAICSP02'], 1, 17):.0f}"
+    #     else:
+    #         return f"{row['seg1']}_{row['seg2']}_student"
+    #
+    # ldt_tours["ldt_tour_segment"] = ldt_tours.apply(seg3_, axis=1)
 
     # TODO
     # estimator = estimation.manager.begin_estimation("ldt_tour_destination")

@@ -100,12 +100,11 @@ def process_longdist_tours(df, tour_counts, tour_category):
     else:  # processing households here
         # TODO get smart about this, don't just assume we're in households...
         # wouldn't even people living alone technically be in households unless want to segment by GQ/household
-        # create_tours returns ids as person_id, need to reassignto household_id
+        # create_tours returns ids as person_id, need to reassign to household_id
         tours["household_id"] = tours["person_id"]
         tours["origin"] = reindex(df.home_zone_id, tours.household_id)
-        tours["person_id"] = reindex(
-            df.min_person_id, tours.household_id
-        )  # hh tours attach lead person
+        tours["person_id"] = reindex(df.min_person_id, tours.household_id)
+        # hh tours attach a person from the household to simplify merging later
         # number of participants = hhsize since hh ldt tours are necessarily joint
         # (can remove if participation stage implemented)
         tours["number_of_participants"] = reindex(df.hhsize, tours.household_id)
