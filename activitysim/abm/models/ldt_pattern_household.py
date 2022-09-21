@@ -126,7 +126,6 @@ def ldt_pattern_household(
         households,
         tour_counts,
         "longdist",
-        persons,
     )
 
     hh_longdist_tours = pd.merge(

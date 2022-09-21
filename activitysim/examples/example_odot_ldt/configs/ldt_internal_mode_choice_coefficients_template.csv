@@ -1,7 +1,15 @@
 coefficient_name,household,person_workrelated,person_other
-#same for all segments
+#same for all segments,,,
 coef_nest_root,,,
 coef_nest_GROUND,,,
 coef_nest_TRANSIT,,,
 coef_nest_HSR,,,
-coef_ivt,,,
+coef_ivt,coef_ivt_hh,coef_ivt_work,coef_ivt_other
+coef_wacc_time,coef_wacc_time_hh,coef_wacc_time_work,coef_wacc_time_other
+coef_dracc_time,coef_dracc_time_hh,coef_dracc_time_work,coef_dracc_time_other
+coef_wt_upto_60min,coef_wt_upto_60min_hh,coef_wt_upto_60min_work,coef_wt_upto_60min_other
+coef_wt_gt_60min,coef_wt_gt_60min_hh,coef_wt_gt_60min_work,coef_wt_gt_60min_other
+coef_cost_inc_0to20k,coef_cost_inc_0to20k_hh,coef_cost_inc_0to20k_work,coef_cost_inc_0to20k_other
+coef_cost_inc_20kto60k,coef_cost_inc_20kto60k_hh,coef_cost_inc_20kto60k_work,coef_cost_inc_20kto60k_other
+coef_cost_inc_gt60k,coef_cost_inc_gt60k_hh,coef_cost_inc_gt60k_work,coef_cost_inc_gt60k_other
+coef_daily_freq_service,coef_daily_freq_service_hh,coef_daily_freq_service_work,coef_daily_freq_service_other
