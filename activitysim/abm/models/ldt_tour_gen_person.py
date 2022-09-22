@@ -28,7 +28,7 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
 
     # reading in category constants
     constants = config.get_model_constants(model_settings)
-    
+
     category_file_name = model_settings.get("CATEGORY_CONSTANTS", {})
     categories = {}
     if category_file_name is not None:
