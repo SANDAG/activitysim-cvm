@@ -1,0 +1,69 @@
+CONSTANTS: 
+  # sex (SEX)
+  MALE: 1
+  FEMALE: 2
+
+  # units in structure (BLD)
+  BLD_GQ: 0
+  BLD_MOBILE_HOME: 1
+  BLD_ONE_FAMILY_HOUSE_DETACHED: 2
+  BLD_ONE_FAMILY_HOUSE_ATTACHED: 3
+  BLD_UNDER_2_APT: 4
+  BLD_3_4_APT: 5
+  BLD_5_9_APT: 6
+  BLD_10_19_APT: 7
+  BLD_20_49_APT: 8
+  BLD_OVER_50_APT: 9
+  BLD_VEHICLE: 10
+
+  # school enrollment (SCH)
+  SCH_TOO_YOUNG: 1
+  SCH_NO_SCHOOL: 2
+  SCH_PUB_SCHOOL: 3
+  SCH_PRI_SCHOOL: 4
+
+  # industries (sourced from that one docx file in docs) (SW_SPLIT_IND)
+  IND_UNEMP: 0  # unemployed
+  IND_AGR_PROD: 1  # agriculture production
+  IND_AGR_OFF: 2  # agriculture office
+  IND_MET_PROD: 3  # metals
+  IND_MET_OFF: 4
+  IND_LIND_PROD: 5  # light industry
+  IND_LIND_OFF: 6
+  IND_HIND_PROD: 7  # heavy industry
+  IND_HIND_OFF: 8
+  IND_TEQP_PROD: 9  # transportation equipment
+  IND_TEQP_OFF: 10 
+  IND_WHL_PROD: 11  # wholesale
+  IND_WHL_OFF: 12
+  IND_RET_PROD: 13  # retail
+  IND_RET_OFF: 14
+  IND_HOTEL: 15  # hotels/accomodations
+  IND_CONSTRUCT: 16  # construction
+  IND_HEALTH: 17  # heatlhcare
+  IND_TRN_HANDLE: 18  # transporation handling
+  IND_UTL: 19  # utilities services
+  IND_MISC_SRV: 20  # other services
+  IND_GRADE_EDU: 21  # gradeschool education
+  IND_POSTSEC_EDU: 22  # postsecondary education
+  IND_GOVT: 23  # government and other
+
+  # employment status (ESR)
+  ESR_UNDER16: 0
+  ESR_EMP_1: 1  # 2 different categories for employed people
+  ESR_EMP_2: 2
+  ESR_UNEMP: 3
+  ESR_ARMY_1: 4  # 2 different categories for people in the army
+  ESR_ARMY_2: 5
+  ESR_NOT_LABOR: 6
+
+  # LDT tour types (defined by convention)
+  LDT_COMPLETE: 0
+  LDT_BEGIN: 1
+  LDT_END: 2
+  LDT_AWAY: 3
+  LDT_NOTOUR: 4
+
+  # internal-external categories
+  LDT_INTERNAL: 0
+  LDT_EXTERNAL: 1

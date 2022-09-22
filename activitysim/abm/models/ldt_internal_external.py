@@ -30,6 +30,12 @@ def ldt_internal_external(persons, persons_merged, households, households_merged
     estimator = estimation.manager.begin_estimation("ldt_scheduling_person")
     constants = config.get_model_constants(model_settings)  # constants shared by all
 
+    category_file_name = model_settings.get("CATEGORY_CONSTANTS", {})
+    categories = {}
+    if category_file_name is not None:
+        categories = config.get_model_constants(config.read_model_settings(category_file_name))
+    constants.update(categories)
+
     # converting parameters to dataframes
     hh_full = households_merged.to_frame()
     persons_full = persons_merged.to_frame()

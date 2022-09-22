@@ -38,7 +38,7 @@ input_table_list:
   # persons (table index 'person_id')
   #
   - tablename: persons
-    filename: persons.csv
+    filename: persons_fixed.csv # can merge with persons to return to original
     index_col: person_id
     rename_columns:
       index: person_id  # person_id is the required index column
