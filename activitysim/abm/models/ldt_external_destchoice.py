@@ -1,0 +1,146 @@
+# ActivitySim
+# See full license in LICENSE.txt
+
+from inspect import trace
+import logging
+
+from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, logit
+
+from .util import estimation
+
+import pandas as pd
+import numpy as np
+
+logger = logging.getLogger(__name__)
+
+
+def ldt_external_destchoice_households(households, households_merged, trace_hh_id):
+    trace_label = "ldt_external_destchoice_household"
+    colname = "external_destchoice"
+    model_settings_file_name = "ldt_external_destchoice.yaml"
+
+    # preliminary estimation steps
+    model_settings = config.read_model_settings(model_settings_file_name)
+    estimator = estimation.manager.begin_estimation("ldt_external_destchoice_household")
+    constants = config.get_model_constants(model_settings)  # constants shared by all
+
+    households = households.to_frame()
+    choosers = households_merged.to_frame()
+
+    choosers = choosers[choosers["tour_generated"]]
+    
+    choosers[colname] = -1
+    households[colname] = -1
+
+    spec_categories = model_settings.get("SPEC_CATEGORIES", {})  # reading in category-specific things
+
+    for category_settings in spec_categories:
+        region = category_settings["NAME"]
+        print(f"Estimating LDT region {region}")
+
+        region_choosers = choosers[choosers["LDTdistrict"] == region]
+
+        if estimator:
+            estimator.write_model_settings(model_settings, model_settings_file_name)
+            estimator.write_spec(model_settings)
+            # estimator.write_coefficients(coefficients_df, model_settings)
+            estimator.write_choosers(choosers)
+
+        constants = config.get_model_constants(category_settings)
+
+        df = pd.DataFrame(index=region_choosers.index, columns=list(constants.keys()))
+        for taz, prob in constants.items():
+            df[taz] = prob
+
+        choices, _ = logit.make_choices(df)
+        df = df.reset_index()
+
+        if estimator:
+            estimator.write_choices(choices)
+            choices = estimator.get_survey_values(
+                choices, "households", colname
+            )
+            estimator.write_override_choices(choices)
+            estimator.end_estimation()
+
+        households.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
+        choosers.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
+        
+    pipeline.replace_table("households", households)
+    
+    tracing.print_summary(
+        trace_label,
+        choosers[colname],
+        value_counts=True,
+    )
+
+
+def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
+    trace_label = "ldt_external_destchoice_persons"
+    colname = "external_destchoice"
+    model_settings_file_name = "ldt_external_destchoice.yaml"
+
+    # preliminary estimation steps
+    model_settings = config.read_model_settings(model_settings_file_name)
+    estimator = estimation.manager.begin_estimation("ldt_external_destchoice_persons")
+    constants = config.get_model_constants(model_settings)  # constants shared by all
+
+    persons = persons.to_frame()
+    choosers = persons_merged.to_frame()
+
+    choosers = choosers[choosers["tour_generated"]]
+    
+    choosers[colname] = -1
+    persons[colname] = -1
+
+    spec_categories = model_settings.get("SPEC_CATEGORIES", {})  # reading in category-specific things
+
+    for category_settings in spec_categories:
+        region = category_settings["NAME"]
+        print(f"Estimating LDT region {region}")
+
+        region_choosers = choosers[choosers["LDTdistrict"] == region]
+
+        if estimator:
+            estimator.write_model_settings(model_settings, model_settings_file_name)
+            estimator.write_spec(model_settings)
+            # estimator.write_coefficients(coefficients_df, model_settings)
+            estimator.write_choosers(choosers)
+
+        constants = config.get_model_constants(category_settings)
+
+        df = pd.DataFrame(index=region_choosers.index, columns=list(constants.keys()))
+        for taz, prob in constants.items():
+            df[taz] = prob
+
+        choices, _ = logit.make_choices(df)
+        df = df.reset_index()
+
+        if estimator:
+            estimator.write_choices(choices)
+            choices = estimator.get_survey_values(
+                choices, "persons", colname
+            )
+            estimator.write_override_choices(choices)
+            estimator.end_estimation()
+
+        persons.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
+        choosers.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
+    
+    pipeline.replace_table("persons", persons)
+    
+    tracing.print_summary(
+        trace_label,
+        choosers[colname],
+        value_counts=True,
+    )
+
+
+@inject.step()
+def ldt_external_destchoice(households, households_merged, persons, persons_merged, chunk_size, trace_hh_id):
+    """
+    This model determines if a person on an LDT is going/will go/is at an internal location (within Ohio/0)
+    or at an external location (outside of Ohio/1)
+    """
+    ldt_external_destchoice_households(households, households_merged, trace_hh_id)
+    ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id)

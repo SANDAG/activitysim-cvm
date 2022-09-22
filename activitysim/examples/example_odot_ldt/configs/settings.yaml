@@ -226,6 +226,7 @@ models:
   - ldt_scheduling_household
   - ldt_scheduling_person
   - ldt_internal_external
+  - ldt_external_destchoice
   # - cdap_simulate
   - write_data_dictionary
   - track_skim_usage
