@@ -123,10 +123,11 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     persons["on_ldt"] = (
         np.where(~persons["on_ldt"], persons["ldt_pattern_person_OTHER"].isin([0, 1, 2, 3]), persons["on_ldt"])
     )
-    
+
     persons["tour_generated"] = np.where(persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2]), True, False)
     persons["tour_generated"] = (
-        np.where(~persons["tour_generated"], persons["ldt_pattern_person_OTHER"].isin([0, 1, 2]), persons["tour_generated"])
+        np.where(~persons["tour_generated"], persons["ldt_pattern_person_OTHER"].isin([0, 1, 2]),
+                 persons["tour_generated"])
     )
 
     # -1 is no LDT trip (whether a trip was not generated/not scheduled), 0 is work releated, 1 is other
