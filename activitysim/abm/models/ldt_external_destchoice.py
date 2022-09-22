@@ -28,7 +28,7 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
     choosers = households_merged.to_frame()
 
     choosers = choosers[choosers["tour_generated"]]
-    
+
     choosers[colname] = -1
     households[colname] = -1
 
@@ -65,9 +65,9 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
 
         households.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
         choosers.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
-        
+
     pipeline.replace_table("households", households)
-    
+
     tracing.print_summary(
         trace_label,
         choosers[colname],
@@ -89,7 +89,7 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
     choosers = persons_merged.to_frame()
 
     choosers = choosers[choosers["tour_generated"]]
-    
+
     choosers[colname] = -1
     persons[colname] = -1
 
@@ -126,9 +126,9 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
 
         persons.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
         choosers.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
-    
+
     pipeline.replace_table("persons", persons)
-    
+
     tracing.print_summary(
         trace_label,
         choosers[colname],
@@ -139,8 +139,30 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
 @inject.step()
 def ldt_external_destchoice(households, households_merged, persons, persons_merged, chunk_size, trace_hh_id):
     """
-    This model determines if a person on an LDT is going/will go/is at an internal location (within Ohio/0)
-    or at an external location (outside of Ohio/1)
+    This model determines the destination of those traveling externally based on a probability distribution.
     """
     ldt_external_destchoice_households(households, households_merged, trace_hh_id)
     ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id)
+
+    persons = pipeline.get_table("persons")
+    households = pipeline.get_table("households")
+    longdist_tours = pipeline.get_table("longdist_tours")
+
+    def fill_in(x):
+        if x == -1:
+            return -1
+        return persons.loc[x, "external_destchoice"]
+
+    longdist_tours["external_destchoice"] = -1
+    longdist_tours["external_destchoice"] = (
+        np.where(longdist_tours["actor_type"] == "person",
+                 longdist_tours["person_id"].apply(fill_in),
+                 longdist_tours["external_destchoice"])
+    )
+    longdist_tours["external_destchoice"] = (
+        np.where(longdist_tours["actor_type"] == "household",
+                 households.loc[longdist_tours["household_id"], "external_destchoice"],
+                 longdist_tours["external_destchoice"])
+    )
+
+    pipeline.replace_table("longdist_tours", longdist_tours)
