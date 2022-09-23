@@ -125,8 +125,8 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
             # get the start/end hours associated with the estimated values
             starts_ends = complete_tour_translation.loc[choices.values]
             # merge start/end hours to the persons file
-            persons.loc[choices.index, "ldt_start_hour"] = starts_ends.apply(lambda x: x[0]).values
-            persons.loc[choices.index, "ldt_end_hour"] = starts_ends.apply(lambda x: x[1]).values
+            persons.loc[subset.index, "ldt_start_hour"] = starts_ends.apply(lambda x: x[0]).values
+            persons.loc[subset.index, "ldt_end_hour"] = starts_ends.apply(lambda x: x[1]).values
 
             continue
 
@@ -141,9 +141,9 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
 
         # merge in scheduled values to the respective tour pattern (start/end)
         if category_num == 1:
-            persons.loc[choices.index, "ldt_start_hour"] = choices
+            persons.loc[subset.index, "ldt_start_hour"] = choices
         else:
-            persons.loc[choices.index, "ldt_end_hour"] = choices
+            persons.loc[subset.index, "ldt_end_hour"] = choices
 
     # merging into persons
     pipeline.replace_table("persons", persons)

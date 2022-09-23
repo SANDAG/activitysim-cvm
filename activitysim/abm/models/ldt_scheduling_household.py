@@ -82,8 +82,11 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     for category_settings in spec_categories:
         # see function documentation for category_num translation
         category_num = int(category_settings["CATEGORY"])
+        print(category_num)
         # limiting scheduling to the current tour pattern
+        print(choosers.shape)
         subset = choosers[choosers["ldt_pattern_household"] == category_num]
+        print(subset.shape)
         # name of the current tour pattern being estimated
         category_name = category_settings["NAME"]
 
@@ -124,20 +127,23 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
 
             # get the start/end hours associated with the estimated values
             starts_ends = complete_tour_translation.loc[choices.values]
+            print(starts_ends)
             # merge start/end hours to the households file
             households.loc[choices.index, "ldt_start_hour"] = starts_ends.apply(lambda x: x[0]).values
             households.loc[choices.index, "ldt_end_hour"] = starts_ends.apply(lambda x: x[1]).values
             # go to next pattern after complete tour estimation is finished
             continue
-
+        print('not households')
         constants = config.get_model_constants(category_settings)
 
         # sampling probabilities for the current tour pattern (start/end)
-        df = pd.DataFrame(index=choosers.index, columns=["hour_" + str(x) for x in range(24)])
+        df = pd.DataFrame(index=subset.index, columns=["hour_" + str(x) for x in range(24)])
         for i in range(24):
             key = "hour_" + str(i)
             df[key] = constants[key]
         choices, _ = logit.make_choices(df)
+        
+        print(choices.shape)
 
         # merge in scheduled values to the respective tour pattern (start/end)
         if category_num == 1:
