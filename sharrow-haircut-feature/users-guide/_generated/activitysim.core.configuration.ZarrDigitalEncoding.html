@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>ZarrDigitalEncoding &#8212; ActivitySim 1.2.0.dev409+g0d53eca3</title>
+    <title>ZarrDigitalEncoding &#8212; ActivitySim 1.2.0.dev413+gd9cd6e5d</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -320,6 +320,9 @@ function checkPageExistsAndRedirect(event) {
 <dt class="sig sig-object py" id="activitysim.core.configuration.ZarrDigitalEncoding">
 <em class="property"><span class="pre">settings</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.configuration.</span></span><span class="sig-name descname"><span class="pre">ZarrDigitalEncoding</span></span><a class="headerlink" href="#activitysim.core.configuration.ZarrDigitalEncoding" title="Permalink to this definition">#</a></dt>
 <dd><p>Digital encoding instructions for skim tables.</p>
+<p>These encoding instructions are used to digitally encode data prior
+to writing that data back to disk in the <cite>zarr</cite> file format.</p>
+<p>See <a class="reference internal" href="../../dev-guide/using-sharrow.html#digital-encoding"><span class="std std-ref">Digital Encoding</span></a> documentation for details.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2.</span></p>
 </div>
@@ -327,7 +330,7 @@ function checkPageExistsAndRedirect(event) {
 <dt class="field-odd">Fields</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bitwidth</span> <span class="pre">(int)</span></code></p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">by_dict</span> <span class="pre">(int)</span></code></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">by_dict</span> <span class="pre">(Union[int,</span> <span class="pre">bool])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">joint_dict</span> <span class="pre">(str)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_value</span> <span class="pre">(Union[int,</span> <span class="pre">float])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">min_value</span> <span class="pre">(Union[int,</span> <span class="pre">float])</span></code></p></li>
@@ -341,15 +344,20 @@ function checkPageExistsAndRedirect(event) {
 </dl>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.ZarrDigitalEncoding.bitwidth">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bitwidth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.ZarrDigitalEncoding.bitwidth" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bitwidth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#activitysim.core.configuration.ZarrDigitalEncoding.bitwidth" title="Permalink to this definition">#</a></dt>
 <dd><p>Number of bits to use in encoded integers, either 8, 16 or 32.</p>
+<p>For basic fixed point encoding, it is usually sufficient to simply define
+the target bitwidth, and the <cite>missing value</cite> if applicable.  The other
+necessary parameters can then be inferred from the data.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.ZarrDigitalEncoding.by_dict">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.ZarrDigitalEncoding.by_dict" title="Permalink to this definition">#</a></dt>
-<dd><p>Encode by dictionary, using a bitwidth from {8, 16, 32}.</p>
-<p>If given, all arguments other settings for this data are ignored.</p>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_dict</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.ZarrDigitalEncoding.by_dict" title="Permalink to this definition">#</a></dt>
+<dd><p>Encode by dictionary, using a bitwidth from {8, 16, 32}, or <cite>True</cite>.</p>
+<p>If given, all arguments other settings for this data are ignored. If given
+as <cite>True</cite>, the bitwidth setting is not ignored, but everything else still
+is.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -466,7 +474,7 @@ the same time.</p>
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.0.dev409+g0d53eca3, documentation last updated Sep 27, 2022.<br/>
+ActivitySim 1.2.0.dev413+gd9cd6e5d, documentation last updated Sep 28, 2022.<br/>
 </p>
     </div>
     
