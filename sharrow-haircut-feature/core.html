@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Core Components &#8212; ActivitySim 1.2.0.dev413+gd9cd6e5d</title>
+    <title>Core Components &#8212; ActivitySim 1.2.0.dev415+gc4fea702</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -196,6 +196,11 @@ function checkPageExistsAndRedirect(event) {
  <li class="toctree-l1">
   <a class="reference internal" href="dev-guide/using-sharrow.html">
    Using Sharrow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev-guide/skim-dataset.html">
+   Using Skim Dataset
   </a>
  </li>
  <li class="toctree-l1">
@@ -1448,7 +1453,11 @@ to be shared with subprocesses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>skim_tag: str</strong></dt><dd></dd>
+<dt><strong>skim_tag</strong><span class="classifier">str</span></dt><dd></dd>
+<dt><strong>_override_offset_int</strong><span class="classifier">int, optional</span></dt><dd><p>Override the offset int for this dictionary.  Use this to set that
+offset to zero when zone id’s have been pre-processed to be zero-based
+contiguous integers.</p>
+</dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -6090,7 +6099,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.0.dev413+gd9cd6e5d, documentation last updated Sep 28, 2022.<br/>
+ActivitySim 1.2.0.dev415+gc4fea702, documentation last updated Sep 29, 2022.<br/>
 </p>
     </div>
     

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Using Sharrow &#8212; ActivitySim 1.2.0.dev413+gd9cd6e5d</title>
+    <title>Using Sharrow &#8212; ActivitySim 1.2.0.dev415+gc4fea702</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -35,7 +35,7 @@
     <script src="../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Workflows" href="workflows.html" />
+    <link rel="next" title="Using Skim Dataset" href="skim-dataset.html" />
     <link rel="prev" title="Developer Installation" href="install.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -199,6 +199,11 @@ function checkPageExistsAndRedirect(event) {
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="skim-dataset.html">
+   Using Skim Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="workflows.html">
    Workflows
   </a>
@@ -271,6 +276,11 @@ function checkPageExistsAndRedirect(event) {
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#getting-the-code">
    Getting the Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-design-requirements">
+   Model Design Requirements
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -378,6 +388,13 @@ gh pr checkout <span class="m">579</span>  <span class="c1"># use `gh auth login
 <span class="nb">cd</span> ..
 </pre></div>
 </div>
+</section>
+<section id="model-design-requirements">
+<h2>Model Design Requirements<a class="headerlink" href="#model-design-requirements" title="Permalink to this headline">#</a></h2>
+<p>Activating the <code class="docutils literal notranslate"><span class="pre">sharrow</span></code> optimizations also requires using the new
+<a class="reference internal" href="skim-dataset.html#skim-datasets"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">SkimDataset</span></code></span></a> interface for skims instead of the legacy
+<a class="reference internal" href="../core.html#activitysim.core.skim_dictionary.SkimDict" title="activitysim.core.skim_dictionary.SkimDict"><span class="xref myst py py-class"><code class="docutils literal notranslate"><span class="pre">SkimDict</span></code></span></a>, and internally
+recoding zones into a zero-based contiguous indexing scheme.</p>
 </section>
 <section id="measuring-performance">
 <h2>Measuring Performance<a class="headerlink" href="#measuring-performance" title="Permalink to this headline">#</a></h2>
@@ -618,10 +635,10 @@ few specific names by joining them with the pipe operator (|).</p>
             <p class="prev-next-title">Developer Installation</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="workflows.html" title="next page">
+    <a class='right-next' id="next-link" href="skim-dataset.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Workflows</p>
+        <p class="prev-next-title">Using Skim Dataset</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -641,7 +658,7 @@ few specific names by joining them with the pipe operator (|).</p>
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.0.dev413+gd9cd6e5d, documentation last updated Sep 28, 2022.<br/>
+ActivitySim 1.2.0.dev415+gc4fea702, documentation last updated Sep 29, 2022.<br/>
 </p>
     </div>
     
