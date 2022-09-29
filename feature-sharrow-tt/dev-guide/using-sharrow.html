@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Using Sharrow &#8212; ActivitySim 1.2.0.dev417+ga58b691c</title>
+    <title>Using Sharrow &#8212; ActivitySim 1.2.0.dev419+g19fe95ef</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -282,6 +282,13 @@ function checkPageExistsAndRedirect(event) {
   <a class="reference internal nav-link" href="#model-design-requirements">
    Model Design Requirements
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#zero-based-recoding-of-zones">
+     Zero-based Recoding of Zones
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#measuring-performance">
@@ -395,6 +402,66 @@ gh pr checkout <span class="m">579</span>  <span class="c1"># use `gh auth login
 <a class="reference internal" href="skim-dataset.html#skim-datasets"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">SkimDataset</span></code></span></a> interface for skims instead of the legacy
 <a class="reference internal" href="../core.html#activitysim.core.skim_dictionary.SkimDict" title="activitysim.core.skim_dictionary.SkimDict"><span class="xref myst py py-class"><code class="docutils literal notranslate"><span class="pre">SkimDict</span></code></span></a>, and internally
 recoding zones into a zero-based contiguous indexing scheme.</p>
+<section id="zero-based-recoding-of-zones">
+<h3>Zero-based Recoding of Zones<a class="headerlink" href="#zero-based-recoding-of-zones" title="Permalink to this headline">#</a></h3>
+<p>Using sharrow requires recoding zone id’s to be zero-based contiguous index
+values, at least for internal usage.  This recoding needs to be written into
+the input table list explicitly.  For example, the following snippet of a
+<code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code> settings file shows the process of recoding zone ids in
+the input files.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">input_table_list</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use</span><span class="w"></span>
+<span class="w">    </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.csv</span><span class="w"></span>
+<span class="w">    </span><span class="nt">index_col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zone_id</span><span class="w"></span>
+<span class="w">    </span><span class="nt">recode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zero-based</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">households</span><span class="w"></span>
+<span class="w">    </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">households.csv</span><span class="w"></span>
+<span class="w">    </span><span class="nt">index_col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">household_id</span><span class="w"></span>
+<span class="w">    </span><span class="nt">recode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">home_zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For the <code class="docutils literal notranslate"><span class="pre">land_use</span></code> table, the <code class="docutils literal notranslate"><span class="pre">zone_id</span></code> field is marked for recoding explicitly
+as <code class="docutils literal notranslate"><span class="pre">zero-based</span></code>, which will turn whatever nominal id’s appear in that column into
+zero-based index values, as well as store a mapping of the original values that
+is used to recode and decode zone id’s when used elsewhere.</p>
+<p>The first “elsewhere” recoding is in the households input table, where we will
+map the <code class="docutils literal notranslate"><span class="pre">home_zone_id</span></code> to the new zone id’s by pointing the recoding instruction
+at the <code class="docutils literal notranslate"><span class="pre">land_use.zone_id</span></code> field.  If zone id’s appear in other input files, they
+need to be recoded in those fields as well, using the same process.</p>
+<p>The other places where we need to handle zone id’s is in output files.  The
+following snippet of a <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code> settings file shows how those id’s are
+decoded in various output files.  Generally, for columns that are fully populated
+with zone id’s (e.g. tour and trip ends) we can apply the <code class="docutils literal notranslate"><span class="pre">decode_columns</span></code> settings
+to reverse the mapping and restore the nominal zone id’s globally for the entire
+column of data.  For columns where there is some missing data flagged by negative
+values, the “nonnegative” filter is prepended to the instruction.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">output_tables</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">include</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tables</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use</span><span class="w"></span>
+<span class="w">      </span><span class="nt">decode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">households</span><span class="w"></span>
+<span class="w">      </span><span class="nt">decode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">home_zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">persons</span><span class="w"></span>
+<span class="w">      </span><span class="nt">decode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">home_zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">school_zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nonnegative | land_use.zone_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">workplace_zone_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nonnegative | land_use.zone_id</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tours</span><span class="w"></span>
+<span class="w">      </span><span class="nt">decode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">tablename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trips</span><span class="w"></span>
+<span class="w">      </span><span class="nt">decode_columns</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+<span class="w">        </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">land_use.zone_id</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="measuring-performance">
 <h2>Measuring Performance<a class="headerlink" href="#measuring-performance" title="Permalink to this headline">#</a></h2>
@@ -667,7 +734,7 @@ few specific names by joining them with the pipe operator (|).</p>
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.0.dev417+ga58b691c, documentation last updated Sep 29, 2022.<br/>
+ActivitySim 1.2.0.dev419+g19fe95ef, documentation last updated Sep 29, 2022.<br/>
 </p>
     </div>
     
