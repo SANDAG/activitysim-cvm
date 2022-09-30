@@ -60,7 +60,7 @@ input_table_list:
   # land_use (table index 'zone_id')
   #
   - tablename: land_use
-    filename: land_use.csv
+    filename: land_use_fixed.csv # change to land_use once everything's finalized
     index_col: zone_id
     rename_columns:
       TAZ: zone_id  # person_id is the required index column
