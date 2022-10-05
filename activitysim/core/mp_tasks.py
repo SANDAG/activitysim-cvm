@@ -1157,6 +1157,17 @@ def run_sub_simulations(
                     warning(f"process {p.name} failed with exitcode {p.exitcode}")
                     failed.add(p.name)
                     mem.trace_memory_info(f"{p.name}.failed")
+                    if os.environ.get("GITHUB_ACTIONS") == "true":
+                        # regurgitate failed subprocess log to main log
+                        failed_log = config.log_file_path(f"{p.name}-activitysim.log")
+                        if os.path.isfile(failed_log):
+                            error(f"$$$$$$$$ FAILED SUBPROC LOG @ {failed_log}")
+                            with open(failed_log, 'rt') as flog:
+                                for line in flog:
+                                    error(f"$ {line.rstrip()}")
+                            error(f"$$$$$$$$ END OF {failed_log}")
+                        else:
+                            error(f"MISSING FAILED SUBPROC LOG @ {failed_log}")
                     if fail_fast:
                         warning(f"fail_fast terminating remaining running processes")
                         for op in procs:

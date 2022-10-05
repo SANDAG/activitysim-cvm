@@ -392,6 +392,8 @@ class Random(object):
             either a domain_df for a channel being added or extended
             or a df for which random values are to be generated
         """
+        logger.debug(f"asking for channel with index name {df.index.name}")
+        logger.debug(f"available channel index names include {list(self.index_to_channel.keys())}")
 
         channel_name = self.index_to_channel.get(df.index.name, None)
         if channel_name is None:
@@ -478,7 +480,7 @@ class Random(object):
 
         else:
             logger.debug(
-                "Adding channel '%s' %s ids" % (channel_name, len(domain_df.index))
+                "Adding channel '%s' %s ids index=%s" % (channel_name, len(domain_df.index), domain_df.index.name)
             )
 
             channel = SimpleChannel(
