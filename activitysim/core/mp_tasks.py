@@ -1219,9 +1219,10 @@ def run_sub_simulations(
     completed = set(previously_completed)
     failed = set([])  # so we can log process failure first time it happens
     drop_breadcrumb(step_name, "completed", list(completed))
+    ctx = multiprocessing.get_context("spawn")
 
     for i, process_name in enumerate(process_names):
-        q = multiprocessing.Queue()
+        q = ctx.Queue()
         locutor = i == 0
 
         args = OrderedDict(
@@ -1238,7 +1239,7 @@ def run_sub_simulations(
         # for k in shared_data_buffers:
         #     debug(f"create_process {process_name} shared_data_buffers {k}={shared_data_buffers[k]}")
 
-        p = multiprocessing.Process(
+        p = ctx.Process(
             target=mp_run_simulation,
             name=process_name,
             args=(
@@ -1318,7 +1319,7 @@ def run_sub_task(p):
 
     Parameters
     ----------
-    p : multiprocessing.Process
+    p : multiprocessing.process.BaseProcess
     """
     info(f"#run_model running sub_process {p.name}")
 
@@ -1450,10 +1451,12 @@ def run_multiprocess(injectables):
     t0 = tracing.print_elapsed_time("allocate shared shadow_pricing choice buffer", t0)
     mem.trace_memory_info("allocate_shared_shadow_pricing_buffers_choice.completed")
 
+    ctx = multiprocessing.get_context("spawn")
+
     # - mp_setup_skims
     if len(shared_data_buffers) > 0:
         run_sub_task(
-            multiprocessing.Process(
+            ctx.Process(
                 target=mp_setup_skims,
                 name="mp_setup_skims",
                 args=(injectables,),
@@ -1479,7 +1482,7 @@ def run_multiprocess(injectables):
         # - mp_apportion_pipeline
         if not skip_phase("apportion") and num_processes > 1:
             run_sub_task(
-                multiprocessing.Process(
+                ctx.Process(
                     target=mp_apportion_pipeline,
                     name="%s_apportion" % step_name,
                     args=(injectables, sub_proc_names, step_info),
@@ -1513,7 +1516,7 @@ def run_multiprocess(injectables):
         # - mp_coalesce_pipelines
         if not skip_phase("coalesce") and num_processes > 1:
             run_sub_task(
-                multiprocessing.Process(
+                ctx.Process(
                     target=mp_coalesce_pipelines,
                     name="%s_coalesce" % step_name,
                     args=(injectables, sub_proc_names, slice_info),
