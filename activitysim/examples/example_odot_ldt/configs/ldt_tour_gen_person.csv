@@ -12,16 +12,16 @@ util_hhsize_4_up,4+ household,hhsize > 3,,coef_hhsize_4_up
 util_hhincome_20k_40k,"income ranging from $20,000 to $40,000",(INCOME>=20000) & (INCOME<40000),,coef_hhincome_20k_40k
 util_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) & (INCOME<60000),,coef_hhincome_40k_60k
 util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome_60k_up
-util_single_family_dwelling,lives in a single family home,@(df.BLD==ONE_FAMILY_HOUSE_DETACHED_CATEGORY) | (df.BLD==ONE_FAMILY_HOUSE_ATTACHED_CATEGORY),,coef_single_family_dwelling
+util_single_family_dwelling,lives in a single family home,@(df.BLD==BLD_ONE_FAMILY_HOUSE_ATTACHED) | (df.BLD==BLD_ONE_FAMILY_HOUSE_DETACHED),,coef_single_family_dwelling
 util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
-util_occupation_farming,Works in agriculture/extraction,@(df.SW_OCCUP == AGR_CATEGORY),,coef_occupation_farming
-util_occupation_manufacturing,Works in manufacturing,@(df.SW_OCCUP == MFG_CATEGORY),,coef_occupation_manufacturing
-util_occupation_transportation,Works in transportation,@(df.SW_OCCUP == TRN_CATEGORY),,coef_occupation_transportation
-util_occupation_wholesale,Works as non-retail sales worker?,@(df.SW_OCCUP == WHL_CATEGORY),,coef_occupation_wholesale
-util_occupation_finance,Works in business/finance,@(df.SW_OCCUP == FIN_CATEGORY),,coef_occupation_finance
-util_occupation_other,"Works in some other service (retail, food, service)",@(df.SW_OCCUP == RET_CATEGORY) | (df.SW_OCCUP == FOD_CATEGORY) | (df.SW_OCCUP == SRV_CATEGORY),,coef_occupation_other
-util_college_student,Person is College Student,@(df.SCH != NOT_IN_SCHOOL_CATEGORY) & (df.AGE>=18),,coef_college_student
-util_male,Male,@df.SEX==MALE_CATEGORY,,coef_male
+util_occupation_farming,Works in agriculture/extraction,@(df.SW_OCCUP == OCC_AGR) | (df.SW_OCCUP == OCC_EXT),,coef_occupation_farming
+util_occupation_manufacturing,Works in manufacturing,@df.SW_OCCUP == OCC_MFG,,coef_occupation_manufacturing
+util_occupation_transportation,Works in transportation handling,@(df.SW_OCCUP == OCC_TRANS),,coef_occupation_transportation
+util_occupation_wholesale,Works in wholesale offices,@(df.SW_OCCUP == OCC_WHL),,coef_occupation_wholesale
+util_occupation_finance,Works in business/finance,@df.SW_OCCUP == OCC_FIN,,coef_occupation_finance
+util_occupation_other,"Works in some other service (service, managers, professionals, service, entertainment, food, retail, maintenace)",@(df.SW_OCCUP == OCC_SRV) | (df.SW_OCCUP == OCC_MANAGER) | (df.SW_OCCUP == OCC_PROF) | (df.SW_OCCUP == OCC_SRV) | (df.SW_OCCUP == OCC_ENT) | (df.SW_OCCUP == OCC_FOOD) | (df.SW_OCCUP == OCC_RET) | (df.SW_OCCUP == OCC_MAINT),,coef_occupation_other
+util_college_student,Person is College Student,@(df.SCH != SCH_NO_SCHOOL) & (df.AGE>=18),,coef_college_student
+util_male,Male,@df.SEX==MALE,,coef_male
 util_age,Age,AGE,,coef_age
 util_age_squared,Age Squared,AGE*AGE,,coef_age_squared
 util_accessibility,amount of stuff in origin,sdist_accessibility,,coef_accessibility

@@ -12,20 +12,6 @@ SPEC_PURPOSES:
 # put global constants here
 CONSTANTS:
   DUMMY_CONSTANT: 1
-  MALE_CATEGORY: 1
-  TOO_YOUNG_SCH_CATEGORY: 0  # only applies to people too young to be in school (age 3 or lower)
-  NOT_IN_SCHOOL_CATEGORY: 1
-  ONE_FAMILY_HOUSE_DETACHED_CATEGORY: 2
-  ONE_FAMILY_HOUSE_ATTACHED_CATEGORY: 3
-  # see manipulating se at tazlevel word document
-  AGR_CATEGORY: 13
-  MFG_CATEGORY: 16
-  TRN_CATEGORY: 17
-  WHL_CATEGORY: 11
-  FIN_CATEGORY: 2
-  FOD_CATEGORY: 9
-  RET_CATEGORY: 10
-  SRV_CATEGORY: 8
   
 preprocessor:
     SPEC: ldt_tour_gen_person_preprocessor
@@ -33,3 +19,5 @@ preprocessor:
     TABLES:
         - accessibility
         - households
+
+CATEGORY_CONSTANTS: categories.yaml

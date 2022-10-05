@@ -105,6 +105,9 @@ def ldt_pattern_household(
         households["ldt_pattern_household"].isin([-1, 4]), False, True
     )
     households["ldt_pattern"] = households["ldt_pattern_household"]
+    households["tour_generated"] = np.where(
+        households["ldt_pattern_household"].isin([-1, 3, 4]), False, True
+    )
 
     # merging into households
     pipeline.replace_table("households", households)

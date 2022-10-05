@@ -148,7 +148,7 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
 
         # sampling probabilities for the current tour pattern (start/end)
         df = pd.DataFrame(
-            index=choosers.index, columns=["hour_" + str(x) for x in range(24)]
+            index=subset.index, columns=["hour_" + str(x) for x in range(24)]
         )
         for i in range(24):
             key = "hour_" + str(i)
