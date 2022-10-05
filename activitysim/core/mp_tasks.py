@@ -733,9 +733,8 @@ def setup_injectables_and_logging(injectables, locutor=True):
     # other callers (e.g. piopulationsim) will have to arrange to register their own steps and injectables
     # (presumably) in a custom run_simulation.py instead of using the 'activitysim run' command
     if not inject.is_injectable("preload_injectables"):
-        from activitysim import (  # register abm steps and other abm-specific injectables
-            abm,
-        )
+        # register abm steps and other abm-specific injectables
+        from activitysim import abm  # noqa: F401
 
     try:
 
@@ -1162,7 +1161,7 @@ def run_sub_simulations(
                         failed_log = config.log_file_path(f"{p.name}-activitysim.log")
                         if os.path.isfile(failed_log):
                             error(f"$$$$$$$$ FAILED SUBPROC LOG @ {failed_log}")
-                            with open(failed_log, 'rt') as flog:
+                            with open(failed_log, "rt") as flog:
                                 for line in flog:
                                     error(f"$ {line.rstrip()}")
                             error(f"$$$$$$$$ END OF {failed_log}")
