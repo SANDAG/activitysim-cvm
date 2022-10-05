@@ -548,6 +548,8 @@ def open_pipeline(resume_after=None, mode="a"):
         # open new, empty pipeline
         logger.debug("open_pipeline - new, empty pipeline")
         open_pipeline_store(overwrite=True)
+        # report any existing tables, there should be none but apparently sometimes not.
+        logger.debug(f"current registered tables: {registered_tables()}")
         # - not sure why I thought we needed this?
         # could have exogenous tables or prng instantiation under some circumstance??
         _PIPELINE.last_checkpoint[CHECKPOINT_NAME] = INITIAL_CHECKPOINT_NAME

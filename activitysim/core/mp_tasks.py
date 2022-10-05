@@ -736,9 +736,12 @@ def setup_injectables_and_logging(injectables, locutor=True):
         # register abm steps and other abm-specific injectables
         from activitysim import abm  # noqa: F401
 
+    _injectable_record = {}
+
     try:
 
         for k, v in injectables.items():
+            _injectable_record[k] = type(v)
             inject.add_injectable(k, v)
 
         inject.add_injectable("is_sub_task", True)
@@ -761,6 +764,9 @@ def setup_injectables_and_logging(injectables, locutor=True):
     except Exception as e:
         exception(f"{type(e).__name__} exception while configuring logger: {str(e)}")
         raise e
+
+    for k, v in _injectable_record.items():
+        debug(f"added injectable {k!r} of type {v}")
 
 
 def adjust_chunk_size_for_shared_memory(chunk_size, data_buffers, num_processes):
