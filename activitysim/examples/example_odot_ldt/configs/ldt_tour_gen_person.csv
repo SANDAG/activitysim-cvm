@@ -14,7 +14,7 @@ util_hhincome_40k_60k,"income ranging from $40,000 to $60,000",(INCOME>=40000) &
 util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome_60k_up
 util_single_family_dwelling,lives in a single family home,@(df.BLD==BLD_ONE_FAMILY_HOUSE_ATTACHED) | (df.BLD==BLD_ONE_FAMILY_HOUSE_DETACHED),,coef_single_family_dwelling
 util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
-util_occupation_farming,Works in agriculture/extraction,@(df.SW_OCCUP == OCC_AGR) | (df.SW_OCCUP == OCC_EXT),,coef_occupation_farming
+util_occupation_farming,Works in agriculture,@(df.SW_OCCUP == OCC_AGR),,coef_occupation_farming
 util_occupation_manufacturing,Works in manufacturing,@df.SW_OCCUP == OCC_MFG,,coef_occupation_manufacturing
 util_occupation_transportation,Works in transportation handling,@(df.SW_OCCUP == OCC_TRANS),,coef_occupation_transportation
 util_occupation_wholesale,Works in wholesale offices,@(df.SW_OCCUP == OCC_WHL),,coef_occupation_wholesale

@@ -57,8 +57,8 @@ CONSTANTS:
   OCC_MFG: 16 # manufacturing
   OCC_TRANS: 17 # transportation
   OCC_MIL: 18 # military
-  OCC_EXT: 19 # mining
-  OCC_GOV: 20 # government
+  # OCC_EXT: 19 # mining, custom code no longer used
+  # OCC_GOV: 20 # government, custom code no longer used
 
   # employment status (ESR from PUMS)
   ESR_UNDER16: 0 # under 16
