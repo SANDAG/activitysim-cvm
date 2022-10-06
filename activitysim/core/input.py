@@ -7,7 +7,7 @@ import warnings
 
 import pandas as pd
 
-from activitysim.core import config, inject, mem, util
+from ..core import config, inject, util
 
 logger = logging.getLogger(__name__)
 
@@ -230,10 +230,17 @@ def read_from_table_info(table_info):
 
 
 def _read_input_file(filepath, h5_tablename=None, csv_dtypes=None):
+    # prefer parquet if available, it's much faster
+    alt_file = filepath.replace(".csv.gz", ".parquet").replace(".csv", ".parquet")
+    if os.path.exists(alt_file):
+        filepath = alt_file
     assert os.path.exists(filepath), "input file not found: %s" % filepath
 
     if filepath.endswith(".csv") or filepath.endswith(".csv.gz"):
         return _read_csv_with_fallback_encoding(filepath, csv_dtypes)
+
+    if filepath.endswith(".parquet"):
+        return pd.read_parquet(filepath)
 
     if filepath.endswith(".h5"):
         assert h5_tablename is not None, "must provide a tablename to read HDF5 table"
