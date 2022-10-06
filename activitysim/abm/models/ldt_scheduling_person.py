@@ -16,6 +16,7 @@ from activitysim.core import (
     tracing,
 )
 
+from .ldt_pattern import LDT_PATTERN
 from .util import estimation
 
 logger = logging.getLogger(__name__)
@@ -38,7 +39,7 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
     choosers = persons_merged.to_frame()
 
     # limiting ldt_scheduling_persons to applicable patterns - complete, begin, or end
-    choosers = choosers[choosers["ldt_pattern"].isin([0, 1, 2])]
+    choosers = choosers[(choosers["ldt_pattern_person"] & LDT_PATTERN.COMPLETE) > 0]
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
     # preliminary estimation steps
@@ -86,17 +87,27 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
         i += 1
     complete_tour_translation = pd.Series(complete_tour_translation)
 
+    patterns = {
+        "complete": LDT_PATTERN.COMPLETE,
+        "begin": LDT_PATTERN.BEGIN,
+        "end": LDT_PATTERN.END,
+    }
+
     # do prediction for each of the categories encoded on ldt_scheduling yaml
     for category_settings in spec_categories:
         # see function documentation for category_num translation
-        category_num = int(category_settings["CATEGORY"])
+        category_num = patterns.get(
+            category_settings["NAME"].lower().replace("_tour", "")
+        )
         # limiting scheduling to the current tour pattern
-        subset = choosers[choosers["ldt_pattern"] == category_num]
+        subset = choosers[
+            (choosers["ldt_pattern_person"] & LDT_PATTERN.COMPLETE) == category_num
+        ]
         # name of the current tour pattern beign estimated
         category_name = category_settings["NAME"]
 
         # logic for complete tour pattern scheduling
-        if category_num == 0:
+        if category_num == LDT_PATTERN.COMPLETE:
             # read in specification for complete tour pattern scheduling
             model_spec = simulate.read_model_spec(file_name=category_settings["SPEC"])
             coefficients_df = simulate.read_model_coefficients(category_settings)
@@ -142,24 +153,26 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
                 lambda x: x[1]
             ).values
 
-            continue
-
-        constants = config.get_model_constants(category_settings)
-
-        # sampling probabilities for the current tour pattern (start/end)
-        df = pd.DataFrame(
-            index=choosers.index, columns=["hour_" + str(x) for x in range(24)]
-        )
-        for i in range(24):
-            key = "hour_" + str(i)
-            df[key] = constants[key]
-        choices, _ = logit.make_choices(df)
-
-        # merge in scheduled values to the respective tour pattern (start/end)
-        if category_num == 1:
-            persons.loc[subset.index, "ldt_start_hour"] = choices
         else:
-            persons.loc[subset.index, "ldt_end_hour"] = choices
+
+            constants = config.get_model_constants(category_settings)
+
+            # sampling probabilities for the current tour pattern (start/end)
+            df = pd.DataFrame(
+                index=choosers.index, columns=["hour_" + str(x) for x in range(24)]
+            )
+            for i in range(24):
+                key = "hour_" + str(i)
+                df[key] = constants[key]
+            choices, _ = logit.make_choices(df)
+
+            # merge in scheduled values to the respective tour pattern (start/end)
+            if category_num == LDT_PATTERN.BEGIN:
+                persons.loc[subset.index, "ldt_start_hour"] = choices
+            elif category_num == LDT_PATTERN.END:
+                persons.loc[subset.index, "ldt_end_hour"] = choices
+            else:
+                raise ValueError(f"BUG, bad category_num {category_num}")
 
     # merging into persons
     pipeline.replace_table("persons", persons)

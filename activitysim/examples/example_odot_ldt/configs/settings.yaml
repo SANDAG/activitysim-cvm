@@ -38,7 +38,7 @@ input_table_list:
   # persons (table index 'person_id')
   #
   - tablename: persons
-    filename: persons_fixed.csv # can merge with persons to return to original
+    filename: persons.csv # can merge with persons to return to original
     index_col: person_id
     rename_columns:
       index: person_id  # person_id is the required index column
@@ -60,7 +60,7 @@ input_table_list:
   # land_use (table index 'zone_id')
   #
   - tablename: land_use
-    filename: land_use_fixed.csv # change to land_use once everything's finalized
+    filename: land_use.csv # change to land_use once everything's finalized
     index_col: zone_id
     rename_columns:
       TAZ: zone_id  # person_id is the required index column
@@ -197,8 +197,7 @@ trace_od:
 
 
 # to resume after last successful checkpoint, specify resume_after: _
-#resume_after: trip_destination
-resume_after:
+resume_after: ldt_external_destchoice
 
 checkpoints: True
 # if checkpoints is False, no intermediate checkpoints will be written before the end of run

@@ -2,11 +2,9 @@ LOGIT_TYPE: MNL
 
 SPEC_CATEGORIES:
   - NAME: COMPLETE_TOUR
-    CATEGORY: 0
     SPEC: ldt_complete_tour_scheduling.csv
     COEFFICIENTS: ldt_complete_tour_scheduling_coefficients.csv
   - NAME: BEGIN_TOUR
-    CATEGORY: 1
     CONSTANTS:
         hour_0: 0.0008
         hour_1: 0.0017
@@ -33,7 +31,6 @@ SPEC_CATEGORIES:
         hour_22: 0.0008
         hour_23: 0.0012
   - NAME: END_TOUR
-    CATEGORY: 2
     CONSTANTS:
         hour_0: 0.0184
         hour_1: 0.0095
@@ -59,4 +56,3 @@ SPEC_CATEGORIES:
         hour_21: 0.0121
         hour_22: 0.007
         hour_23: 0.0077
-  

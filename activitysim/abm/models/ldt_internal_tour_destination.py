@@ -2,9 +2,10 @@
 # See full license in LICENSE.txt.
 import logging
 
-from activitysim.core import config, inject, pipeline, tracing
-from activitysim.core.util import assign_in_place
+import numpy as np
 
+from ...core import config, inject, pipeline, tracing
+from .ldt_internal_external import LDT_IE_INTERNAL
 from .util import estimation, tour_destination  # noqa: F401
 
 logger = logging.getLogger(__name__)
@@ -40,7 +41,7 @@ def ldt_internal_tour_destination(
 
     # choosers are tours - in a sense tours are choosing their destination
     ldt_tours = longdist_tours.to_frame()
-    pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
+    # pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
 
     # we do NOT filter for tours on the travel day, as we want
     # to know the destination of long distance tours even if they
@@ -132,7 +133,6 @@ def ldt_internal_tour_destination(
         )
 
         seg1 = ldt_tours["tour_type"].apply(lambda x: x.split("_")[-1])
-        import numpy as np
 
         seg2 = np.where(ldt_tours["ldt_pattern"] == 1, "day", "overnight")  # FIXME
 
@@ -167,7 +167,7 @@ def ldt_internal_tour_destination(
     #     estimator.write_model_settings(model_settings, model_settings_file_name)
 
     choices_df, save_sample_df = tour_destination.run_tour_destination(
-        ldt_tours,
+        ldt_tours[ldt_tours.internal_external == LDT_IE_INTERNAL],
         persons_merged,
         want_logsums,
         want_sample_table,
@@ -188,16 +188,25 @@ def ldt_internal_tour_destination(
     #     estimator.write_override_choices(choices_df.choice)
     #     estimator.end_estimation()
 
-    # add column as we want joint_tours table for tracing.
-    ldt_tours["destination"] = choices_df.choice
-    assign_in_place(ldt_tours, ldt_tours[["destination"]])
+    # merge choices and logsums into table
+    renaming = {"choice": "internal_destination"}
+    if want_logsums:
+        renaming["logsum"] = logsum_column_name
+    ldt_tours = ldt_tours.join(
+        choices_df[list(renaming.keys())].rename(columns=renaming)
+    ).fillna({"internal_destination": -1}, downcast={"internal_destination": "int32"})
+
+    # ldt_tours["internal_destination"] = choices_df.choice
+    # assign_in_place(ldt_tours, ldt_tours[["internal_destination"]])
     pipeline.replace_table("longdist_tours", ldt_tours)
 
-    if want_logsums:
-        ldt_tours[logsum_column_name] = choices_df["logsum"]
-        assign_in_place(ldt_tours, ldt_tours[[logsum_column_name]])
+    # if want_logsums:
+    #     ldt_tours[logsum_column_name] = choices_df["logsum"]
+    #     assign_in_place(ldt_tours, ldt_tours[[logsum_column_name]])
 
-    tracing.print_summary("destination", ldt_tours.destination, describe=True)
+    tracing.print_summary(
+        "internal_destination", ldt_tours.internal_destination, describe=True
+    )
 
     if want_sample_table:
         assert len(save_sample_df.index.get_level_values(0).unique()) == len(choices_df)

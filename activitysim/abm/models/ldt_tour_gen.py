@@ -39,7 +39,7 @@ def set_longdist_tour_index(tours):
     assert tour_num_col in tours.columns
 
     # create string tour_id corresonding to keys in possible_tours (e.g. 'work1', 'j_shopping2')
-    tours["tour_id"] = tours.tour_type + tours[tour_num_col].map(str)
+    tours["tour_id"] = tours.tour_type.str.lower() + tours[tour_num_col].map(str)
 
     # map recognized strings to ints
     tours.tour_id = tours.tour_id.replace(

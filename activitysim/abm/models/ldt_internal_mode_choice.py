@@ -201,7 +201,7 @@ def ldt_internal_mode_choice(
 
     # setup skim keys
     orig_col_name = "home_zone_id"
-    dest_col_name = "destination"
+    dest_col_name = "internal_destination"
 
     out_time_col_name = "ldt_start_hour"
     in_time_col_name = "ldt_end_hour"
@@ -287,6 +287,8 @@ def ldt_internal_mode_choice(
         if tour_purpose.startswith("longdist_"):
             tour_purpose = tour_purpose[9:]
 
+        tour_purpose = tour_purpose.lower()
+
         logger.info(
             "ldt_internal_tour_mode_choice tour_type '%s' (%s tours)"
             % (
@@ -302,8 +304,17 @@ def ldt_internal_mode_choice(
         # name index so tracing knows how to slice
         assert tours_segment.index.name == "longdist_tour_id"
 
+        # only do internal mode choice when an internal destination exists
+        choosers = tours_segment[tours_segment.internal_destination >= 0]
+
+        if choosers.empty:
+            choices_list.append(
+                pd.Series(-1, index=tours_segment.index, name="tour_mode").to_frame()
+            )
+            continue
+
         choices_df = run_tour_mode_choice_simulate(
-            tours_segment,
+            choosers,
             tour_purpose,
             model_settings,
             mode_column_name=mode_column_name,
@@ -315,6 +326,10 @@ def ldt_internal_mode_choice(
             chunk_size=chunk_size,
             trace_label=tracing.extend_trace_label(trace_label, tour_purpose),
             trace_choice_name="ldt_internal_mode_choice",
+        )
+
+        choices_df = choices_df.reindex(tours_segment.index).fillna(
+            {"tour_mode": -1}, downcast="infer"
         )
 
         tracing.print_summary(
@@ -374,11 +389,7 @@ def ldt_internal_mode_choice(
     # so we can trace with annotations
     assign_in_place(ldt_tours, choices_df)
 
-    # update tours table with mode choice (and optionally logsums)
-    all_tours = longdist_tours.to_frame()
-    assign_in_place(all_tours, choices_df)
-
-    pipeline.replace_table("longdist_tours", all_tours)
+    pipeline.replace_table("longdist_tours", ldt_tours)
 
     # - annotate tours table
     # if model_settings.get("annotate_tours"):

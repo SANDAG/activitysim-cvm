@@ -367,3 +367,5 @@ def write_tables(output_dir):
             )
 
             df.to_csv(file_path, index=write_index)
+
+    logger.debug("write_tables complete")

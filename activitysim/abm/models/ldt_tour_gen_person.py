@@ -14,6 +14,11 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
     """
     This model determines whether a person goes on an LDT trip
     (whether for a work-related or other purpose) over a period of 2 weeks
+
+    - *Configuration File*: `ldt_tour_gen_person.yaml`
+    - *Core Table*: `persons`
+    - *Result Fields*: `ldt_tour_gen_person_*` (one per purpose)
+    - *Result dtype*: `bool`
     """
 
     trace_label = "ldt_tour_gen_person"

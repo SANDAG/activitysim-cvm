@@ -1,15 +1,13 @@
 # ActivitySim
 # See full license in LICENSE.txt
 
-from inspect import trace
 import logging
 
-from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, logit
-
-from .util import estimation
-
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from ...core import config, inject, logit, pipeline, tracing
+from .util import estimation
 
 logger = logging.getLogger(__name__)
 
@@ -27,12 +25,14 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
     households = households.to_frame()
     choosers = households_merged.to_frame()
 
-    choosers = choosers[choosers["tour_generated"]]
+    choosers = choosers[choosers["on_hh_ldt"]]
 
     choosers[colname] = -1
     households[colname] = -1
 
-    spec_categories = model_settings.get("SPEC_CATEGORIES", {})  # reading in category-specific things
+    spec_categories = model_settings.get(
+        "SPEC_CATEGORIES", {}
+    )  # reading in category-specific things
 
     for category_settings in spec_categories:
         region = category_settings["NAME"]
@@ -57,14 +57,16 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
 
         if estimator:
             estimator.write_choices(choices)
-            choices = estimator.get_survey_values(
-                choices, "households", colname
-            )
+            choices = estimator.get_survey_values(choices, "households", colname)
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        households.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
-        choosers.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
+        households.loc[choices.index, colname] = (
+            pd.Series(data=constants.keys())[choices].str[4:].values
+        )
+        choosers.loc[choices.index, colname] = (
+            pd.Series(data=constants.keys())[choices].str[4:].values
+        )
 
     pipeline.replace_table("households", households)
 
@@ -88,12 +90,14 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
     persons = persons.to_frame()
     choosers = persons_merged.to_frame()
 
-    choosers = choosers[choosers["tour_generated"]]
+    choosers = choosers[choosers["on_person_ldt"]]
 
     choosers[colname] = -1
     persons[colname] = -1
 
-    spec_categories = model_settings.get("SPEC_CATEGORIES", {})  # reading in category-specific things
+    spec_categories = model_settings.get(
+        "SPEC_CATEGORIES", {}
+    )  # reading in category-specific things
 
     for category_settings in spec_categories:
         region = category_settings["NAME"]
@@ -118,14 +122,16 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
 
         if estimator:
             estimator.write_choices(choices)
-            choices = estimator.get_survey_values(
-                choices, "persons", colname
-            )
+            choices = estimator.get_survey_values(choices, "persons", colname)
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        persons.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
-        choosers.loc[choices.index, colname] = pd.Series(data=constants.keys())[choices].str[4:].values
+        persons.loc[choices.index, colname] = (
+            pd.Series(data=constants.keys())[choices].str[4:].values
+        )
+        choosers.loc[choices.index, colname] = (
+            pd.Series(data=constants.keys())[choices].str[4:].values
+        )
 
     pipeline.replace_table("persons", persons)
 
@@ -137,7 +143,9 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
 
 
 @inject.step()
-def ldt_external_destchoice(households, households_merged, persons, persons_merged, chunk_size, trace_hh_id):
+def ldt_external_destchoice(
+    households, households_merged, persons, persons_merged, chunk_size, trace_hh_id
+):
     """
     This model determines the destination of those traveling externally based on a probability distribution.
     """
@@ -154,15 +162,15 @@ def ldt_external_destchoice(households, households_merged, persons, persons_merg
         return persons.loc[x, "external_destchoice"]
 
     longdist_tours["external_destchoice"] = -1
-    longdist_tours["external_destchoice"] = (
-        np.where(longdist_tours["actor_type"] == "person",
-                 longdist_tours["person_id"].apply(fill_in),
-                 longdist_tours["external_destchoice"])
+    longdist_tours["external_destchoice"] = np.where(
+        longdist_tours["actor_type"] == "person",
+        longdist_tours["person_id"].apply(fill_in),
+        longdist_tours["external_destchoice"],
     )
-    longdist_tours["external_destchoice"] = (
-        np.where(longdist_tours["actor_type"] == "household",
-                 households.loc[longdist_tours["household_id"], "external_destchoice"],
-                 longdist_tours["external_destchoice"])
+    longdist_tours["external_destchoice"] = np.where(
+        longdist_tours["actor_type"] == "household",
+        households.loc[longdist_tours["household_id"], "external_destchoice"],
+        longdist_tours["external_destchoice"],
     )
 
     pipeline.replace_table("longdist_tours", longdist_tours)

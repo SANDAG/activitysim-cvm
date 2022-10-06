@@ -587,6 +587,10 @@ def eval_utilities(
 
     utilities = pd.DataFrame(data=utilities, index=choosers.index, columns=spec.columns)
     chunk.log_df(trace_label, "utilities", utilities)
+
+    if utilities.isna().sum().sum():
+        print("oops")
+
     timelogger.mark("assemble utilities")
 
     # sometimes tvpb will drop rows on the fly and we wind up with an empty
@@ -1223,8 +1227,8 @@ def eval_nl(
     nested_exp_utilities = compute_nested_exp_utilities(raw_utilities, nest_spec)
     chunk.log_df(trace_label, "nested_exp_utilities", nested_exp_utilities)
 
-    del raw_utilities
-    chunk.log_df(trace_label, "raw_utilities", None)
+    # del raw_utilities
+    # chunk.log_df(trace_label, "raw_utilities", None)
 
     if have_trace_targets:
         tracing.trace_df(
@@ -1244,8 +1248,8 @@ def eval_nl(
         logsums = pd.Series(np.log(nested_exp_utilities.root), index=choosers.index)
         chunk.log_df(trace_label, "logsums", logsums)
 
-    del nested_exp_utilities
-    chunk.log_df(trace_label, "nested_exp_utilities", None)
+    # del nested_exp_utilities
+    # chunk.log_df(trace_label, "nested_exp_utilities", None)
 
     if have_trace_targets:
         tracing.trace_df(
@@ -1295,8 +1299,8 @@ def eval_nl(
     else:
         choices, rands = logit.make_choices(base_probabilities, trace_label=trace_label)
 
-    del base_probabilities
-    chunk.log_df(trace_label, "base_probabilities", None)
+    # del base_probabilities
+    # chunk.log_df(trace_label, "base_probabilities", None)
 
     if have_trace_targets:
         tracing.trace_df(

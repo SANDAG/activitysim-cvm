@@ -13,6 +13,11 @@ logger = logging.getLogger(__name__)
 def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_id):
     """
     This model predicts whether a household will go on an LDT trip over a 2 week period.
+
+    - *Configuration File*: `ldt_tour_gen_household.yaml`
+    - *Core Table*: `households`
+    - *Result Field*: `ldt_tour_gen_household`
+    - *Result dtype*: `bool`
     """
 
     trace_label = "ldt_tour_gen_household"
@@ -32,7 +37,9 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     category_file_name = model_settings.get("CATEGORY_CONSTANTS", {})
     categories = {}
     if category_file_name is not None:
-        categories = config.get_model_constants(config.read_model_settings(category_file_name))
+        categories = config.get_model_constants(
+            config.read_model_settings(category_file_name)
+        )
     constants.update(categories)
 
     # preprocessor - adds accessiblity of chooser origin for use in estimation

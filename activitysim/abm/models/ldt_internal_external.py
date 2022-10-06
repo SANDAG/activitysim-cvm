@@ -11,6 +11,10 @@ from .util import estimation
 
 logger = logging.getLogger(__name__)
 
+LDT_IE_INTERNAL = 0
+LDT_IE_EXTERNAL = 1
+LDT_IE_NULL = -1
+
 
 @inject.step()
 def ldt_internal_external(
@@ -46,8 +50,8 @@ def ldt_internal_external(
     persons = persons.to_frame()
 
     # setting default value for internal_external choice to -1
-    households[colname] = -1
-    persons[colname] = -1
+    households[colname] = LDT_IE_NULL
+    persons[colname] = LDT_IE_NULL
 
     spec_categories = model_settings.get(
         "SPEC_CATEGORIES", {}
@@ -63,13 +67,15 @@ def ldt_internal_external(
         actor_type = category_settings["TYPE"]  # household or person
 
         if actor_type == "household":
-            choosers = hh_full
+            choosers = hh_full.rename(columns={"ldt_pattern_household": "ldt_pattern"})
+            choosers = choosers[choosers["on_hh_ldt"]]
             logger.info("Running %s with %d households", full_name, len(choosers))
         else:
-            choosers = persons_full
+            choosers = persons_full.rename(
+                columns={"ldt_pattern_person": "ldt_pattern"}
+            )
+            choosers = choosers[choosers["on_person_ldt"]]
             logger.info("Running %s with %d persons", full_name, len(choosers))
-
-        choosers = choosers[choosers["tour_generated"]]
 
         # preprocessor - doesn't add anything
         preprocessor_settings = category_settings.get("preprocessor", None)

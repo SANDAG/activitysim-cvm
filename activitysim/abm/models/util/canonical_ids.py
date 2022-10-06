@@ -5,8 +5,6 @@ import logging
 import numpy as np
 import pandas as pd
 
-from activitysim.core.util import reindex
-
 logger = logging.getLogger(__name__)
 
 
@@ -17,6 +15,7 @@ RANDOM_CHANNELS = [
     "joint_tour_participants",
     "trips",
     "vehicles",
+    "longdist_tours",
 ]
 TRACEABLE_TABLES = [
     "households",
@@ -25,6 +24,7 @@ TRACEABLE_TABLES = [
     "joint_tour_participants",
     "trips",
     "vehicles",
+    "longdist_tours",
 ]
 
 CANONICAL_TABLE_INDEX_NAMES = {
@@ -35,6 +35,7 @@ CANONICAL_TABLE_INDEX_NAMES = {
     "trips": "trip_id",
     "land_use": "zone_id",
     "vehicles": "vehicle_id",
+    "longdist_tours": "logdist_tour_id",
 }
 
 # unfortunately the two places this is needed (joint_tour_participation and estimation.infer

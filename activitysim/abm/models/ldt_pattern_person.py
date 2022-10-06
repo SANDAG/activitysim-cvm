@@ -8,6 +8,7 @@ import pandas as pd
 
 from activitysim.core import config, expressions, inject, logit, pipeline, tracing
 
+from .ldt_pattern import LDT_PATTERN, LDT_PATTERN_BITSHIFT
 from .ldt_tour_gen import process_longdist_tours
 from .util import estimation
 
@@ -54,27 +55,28 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     spec_purposes = model_settings.get("SPEC_PURPOSES", {})
 
     persons = persons.to_frame()
-    # temporary variable for switching between workrelated/other logic
-    temp = False
+    person_already_on_ldt = choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
+    # default value
+    persons["ldt_pattern_person"] = pd.Series(
+        LDT_PATTERN.NOTOUR, index=persons.index, dtype=np.uint8
+    )
 
-    for purpose_settings in spec_purposes:
+    for purpose_num, purpose_settings in enumerate(spec_purposes, start=1):
+        # purpose_num zero is for household patterns
         purpose_name = purpose_settings["NAME"]
-        colname = "ldt_pattern_person_" + purpose_name
-
-        # default value
-        persons[colname] = -1
-        choosers_full[colname] = -1
 
         # only consider people who are predicted to go on LDT tour over 2 week period
-        choosers = choosers_full[choosers_full["ldt_tour_gen_person_" + purpose_name]]
-        # only consider people who aren't scheduled to go on household LDT
-        choosers = choosers[choosers["ldt_pattern_household"].isin([-1, 4])]
+        # and who are not already on an LDT tour today
+        choosers = choosers_full[
+            choosers_full["ldt_tour_gen_person_" + purpose_name]
+            & (~person_already_on_ldt)
+        ]
 
-        if temp:
-            # only consider people who aren't scheduled to go on work LDT when scheduling other LDT
-            choosers = choosers[
-                choosers["ldt_pattern_person_WORKRELATED"].isin([-1, 4])
-            ]
+        # if temp:
+        #     # only consider people who aren't scheduled to go on work LDT when scheduling other LDT
+        #     choosers = choosers[
+        #         choosers["ldt_pattern_person_WORKRELATED"] == LDT_PATTERN.NOTOUR
+        #     ]
 
         # reading in the probability distribution for the current pattern type
         constants = config.get_model_constants(purpose_settings)
@@ -94,16 +96,29 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             - constants["AWAY"]
         )
 
-        # sampling probabilities for tour pattern
-        df = pd.DataFrame(
-            index=choosers.index, columns=["complete", "begin", "end", "away", "none"]
+        pr = np.broadcast_to(
+            np.asarray(
+                [
+                    constants["COMPLETE"],
+                    constants["BEGIN"],
+                    constants["END"],
+                    constants["AWAY"],
+                    notour_prob,
+                ]
+            ),
+            (len(choosers.index), 5),
         )
-        df["complete"], df["begin"], df["end"], df["away"], df["none"] = (
-            constants["COMPLETE"],
-            constants["BEGIN"],
-            constants["END"],
-            constants["AWAY"],
-            notour_prob,
+        # sampling probabilities
+        df = pd.DataFrame(
+            pr,
+            index=choosers.index,
+            columns=[
+                LDT_PATTERN.COMPLETE,
+                LDT_PATTERN.BEGIN,
+                LDT_PATTERN.END,
+                LDT_PATTERN.AWAY,
+                LDT_PATTERN.NOTOUR,
+            ],
         )
 
         # _ is the random value used to make the monte carlo draws, not used
@@ -111,85 +126,81 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
 
         if estimator:
             estimator.write_choices(choices)
-            choices = estimator.get_survey_values(choices, "persons", colname)
+            choices = estimator.get_survey_values(
+                choices, "persons", "ldt_pattern_person"
+            )
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        # making one ldt pattern field instead of segmenting by person/household currently
-        persons.loc[choices.index, colname] = choices
-        # adding it to choosers for downstream integrity check
-        choosers_full.loc[choices.index, colname] = choices
-
-        # switch to other individual ldt logic
-        temp = True
+        # making one ldt pattern field instead of segmenting by person/household
+        persons.loc[choices.index, "ldt_pattern_person"] = (
+            choices.values + (purpose_num << LDT_PATTERN_BITSHIFT)
+        ).astype(np.uint8)
 
         tracing.print_summary(
-            colname,
+            f"ldt_pattern_person/{purpose_name}",
             choices,
             value_counts=True,
         )
 
+        person_already_on_ldt |= persons["ldt_pattern_person"] != LDT_PATTERN.NOTOUR
+
     # adding convenient fields
     # whether or not person is scheduled to be on LDT trip
-    persons["on_ldt"] = np.where(
-        persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2, 3]), True, False
-    )
-    persons["on_ldt"] = np.where(
-        ~persons["on_ldt"],
-        persons["ldt_pattern_person_OTHER"].isin([0, 1, 2, 3]),
-        persons["on_ldt"],
+    persons["on_person_ldt"] = person_already_on_ldt & (
+        ~choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
     )
 
-    persons["tour_generated"] = np.where(
-        persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2]), True, False
-    )
-    persons["tour_generated"] = np.where(
-        ~persons["tour_generated"],
-        persons["ldt_pattern_person_OTHER"].isin([0, 1, 2]),
-        persons["tour_generated"],
-    )
-
-    # -1 is no LDT trip (whether a trip was not generated/not scheduled), 0 is work releated, 1 is other
-    persons["ldt_purpose"] = np.where(persons["on_ldt"], 1, -1)
-    persons["ldt_purpose"] = np.where(
-        persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2, 3]),
-        0,
-        persons["ldt_purpose"],
-    )
+    # -1 is no LDT trip (whether a trip was not generated/not scheduled), 0 is work related, 1 is other
+    # persons["ldt_purpose"] = np.where(persons["on_person_ldt"], 1, -1)
+    # persons["ldt_purpose"] = np.where(
+    #     persons["ldt_pattern_person_WORKRELATED"].isin([0, 1, 2, 3]),
+    #     0,
+    #     persons["ldt_purpose"],
+    # )
 
     # -1 is no LDT trip (whether a trip was not generated/not scheduled), others match up to the pattern for a
     # person's specified ldt_purpose (excluding 4, which means no scheduled LDT--changed to -1)
-    persons["ldt_pattern"] = np.where(persons["on_ldt"], 0, -1)
-    persons["ldt_pattern"] = np.where(
-        persons["ldt_purpose"] == 0,
-        persons["ldt_pattern_person_WORKRELATED"],
-        persons["ldt_pattern"],
-    )
-    persons["ldt_pattern"] = np.where(
-        persons["ldt_purpose"] == 1,
-        persons["ldt_pattern_person_OTHER"],
-        persons["ldt_pattern"],
-    )
+    # persons["ldt_pattern"] = np.where(persons["on_person_ldt"], 0, -1)
+    # persons["ldt_pattern"] = np.where(
+    #     persons["ldt_purpose"] == 0,
+    #     persons["ldt_pattern_person_WORKRELATED"],
+    #     persons["ldt_pattern"],
+    # )
+    # persons["ldt_pattern"] = np.where(
+    #     persons["ldt_purpose"] == 1,
+    #     persons["ldt_pattern_person_OTHER"],
+    #     persons["ldt_pattern"],
+    # )
 
     # merging changes to persons table to the final_persons csv
     pipeline.replace_table("persons", persons)
 
-    # adding gneerated person tours to longdist_trips csv
-    process_person_tours(persons, "workrelated", 0)
-    process_person_tours(persons, "other", 1)
+    ldt_tours = None
+    for purpose_num, purpose_settings in enumerate(spec_purposes, start=1):
+        # purpose_num zero is for household patterns
+        purpose_name = purpose_settings["NAME"]
+        ldt_tours = process_person_tours(persons, purpose_name, purpose_num)
+
+    if ldt_tours is not None:
+        pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
+
+    logger.debug("ldt_pattern_person complete")
 
 
 def process_person_tours(persons, purpose: str, purpose_num: int):
     """
     This function adds the generated individual ldt trips to the longdist_trips csv.
     """
-    # consider the people actually making longdist tours (genereated/valid pattern)
-    persons_making_longdist_tours = persons[persons["ldt_purpose"] == purpose_num]
-    # getting amount of tours generated
+    # consider the people actually making longdist tours (generated/valid pattern)
+    persons_making_longdist_tours = persons[
+        (persons["ldt_pattern_person"].values >> LDT_PATTERN_BITSHIFT) == purpose_num
+    ]
+    # number of tours generated, always 1, but in this format for compatability
     tour_counts = (
-        persons_making_longdist_tours[["on_ldt"]]
+        persons_making_longdist_tours[["on_person_ldt"]]
         .astype(int)
-        .rename(columns={"on_ldt": f"longdist_person_{purpose}"})
+        .rename(columns={"on_person_ldt": f"longdist_person_{purpose}"})
     )
 
     # processing the generated longdist tours to add to longdist_tours csv
@@ -198,7 +209,7 @@ def process_person_tours(persons, purpose: str, purpose_num: int):
     # merging ldt pattern into generated longdist tours
     longdist_tours_person = pd.merge(
         longdist_tours_person,
-        persons[["ldt_pattern"]],
+        persons[["ldt_pattern_person"]],
         how="left",
         left_on="person_id",
         right_index=True,
@@ -208,4 +219,4 @@ def process_person_tours(persons, purpose: str, purpose_num: int):
     longdist_tours_person["actor_type"] = "person"
 
     # merging current individual ldt trips into longdist_tours csv
-    pipeline.extend_table("longdist_tours", longdist_tours_person)
+    return pipeline.extend_table("longdist_tours", longdist_tours_person)

@@ -8,6 +8,7 @@ import pandas as pd
 
 from activitysim.core import config, expressions, inject, logit, pipeline, tracing
 
+from .ldt_pattern_person import LDT_PATTERN
 from .ldt_tour_gen import process_longdist_tours
 from .util import estimation
 
@@ -19,12 +20,19 @@ def ldt_pattern_household(
     households, households_merged, chunk_size, trace_hh_id, persons
 ):
     """
+    Assign a LDT pattern to each household.
+
     This model gives each LDT household one of the possible LDT categories for a given day --
-        - 1: complete tour (start and end tour on same day)
-        - 2: begin tour
-        - 3: end tour
-        - 4: away on tour
-        - no tour
+    NOTOUR = 0
+    BEGIN = 1     # leave home, do not return home today
+    END = 2       # arrive home, did not start at home today
+    COMPLETE = 3  # long distance day-trip completed today
+    AWAY = 4      # away from home, in the middle of a multi-day tour
+
+    - *Configuration File*: `ldt_pattern_household.yaml`
+    - *Core Table*: `households`
+    - *Result Field*: `ldt_pattern_household`
+    - *Result dtype*: `int8`
     """
     trace_label = "ldt_pattern_household"
     model_settings_file_name = "ldt_pattern_household.yaml"
@@ -46,7 +54,7 @@ def ldt_pattern_household(
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
 
-        locals_d = {}
+        locals_d = {"LDT_PATTERN": LDT_PATTERN}
         if constants is not None:
             locals_d.update(constants)
 
@@ -73,16 +81,30 @@ def ldt_pattern_household(
         - constants["AWAY"]
     )
 
+    # probs as array, without using so much memory
+    pr = np.broadcast_to(
+        np.asarray(
+            [
+                constants["COMPLETE"],
+                constants["BEGIN"],
+                constants["END"],
+                constants["AWAY"],
+                notour_prob,
+            ]
+        ),
+        (len(choosers.index), 5),
+    )
     # sampling probabilities
     df = pd.DataFrame(
-        index=choosers.index, columns=["complete", "begin", "end", "away", "none"]
-    )
-    df["complete"], df["begin"], df["end"], df["away"], df["none"] = (
-        constants["COMPLETE"],
-        constants["BEGIN"],
-        constants["END"],
-        constants["AWAY"],
-        notour_prob,
+        pr,
+        index=choosers.index,
+        columns=[
+            LDT_PATTERN.COMPLETE,
+            LDT_PATTERN.BEGIN,
+            LDT_PATTERN.END,
+            LDT_PATTERN.AWAY,
+            LDT_PATTERN.NOTOUR,
+        ],
     )
     # _ is the random value used to make the monte carlo draws, not used
     choices, _ = logit.make_choices(df)
@@ -96,18 +118,14 @@ def ldt_pattern_household(
         estimator.write_override_choices(choices)
         estimator.end_estimation()
 
-    # setting -1 to non-LDT households
+    # setting NOTOUR to non-LDT households
     households = households.to_frame()
-    households["ldt_pattern_household"] = choices.reindex(households.index).fillna(-1)
+    households["ldt_pattern_household"] = (
+        choices.reindex(households.index).fillna(LDT_PATTERN.NOTOUR).astype("int8")
+    )
 
     # adding some convenient fields
-    households["on_ldt"] = np.where(
-        households["ldt_pattern_household"].isin([-1, 4]), False, True
-    )
-    households["ldt_pattern"] = households["ldt_pattern_household"]
-    households["tour_generated"] = np.where(
-        households["ldt_pattern_household"].isin([-1, 3, 4]), False, True
-    )
+    households["on_hh_ldt"] = households["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
 
     # merging into households
     pipeline.replace_table("households", households)
@@ -118,11 +136,11 @@ def ldt_pattern_household(
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
 
     # initializing the longdist tours table with actual household ldt trips (both genereated and scheduled)
-    hh_making_longdist_tours = households[households["on_ldt"]]
+    hh_making_longdist_tours = households[households["on_hh_ldt"]]
     tour_counts = (
-        hh_making_longdist_tours[["on_ldt"]]
+        hh_making_longdist_tours[["on_hh_ldt"]]
         .astype(int)
-        .rename(columns={"on_ldt": "longdist_household"})
+        .rename(columns={"on_hh_ldt": "longdist_household"})
     )
     hh_longdist_tours = process_longdist_tours(
         # making longdist the braoder tour category instead of segmenting by all types of ldt
