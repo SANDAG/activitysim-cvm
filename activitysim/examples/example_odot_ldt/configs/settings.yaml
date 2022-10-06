@@ -197,7 +197,7 @@ trace_od:
 
 
 # to resume after last successful checkpoint, specify resume_after: _
-resume_after: ldt_external_destchoice
+resume_after:
 
 checkpoints: True
 # if checkpoints is False, no intermediate checkpoints will be written before the end of run
