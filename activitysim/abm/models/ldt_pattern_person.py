@@ -213,7 +213,7 @@ def process_person_tours(persons, purpose: str, purpose_num: int):
         how="left",
         left_on="person_id",
         right_index=True,
-    )
+    ).rename(columns={"ldt_pattern_person": "ldt_pattern"})
 
     # adding a convenience field to differentiate between person/household ldt trips
     longdist_tours_person["actor_type"] = "person"

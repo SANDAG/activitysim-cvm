@@ -46,15 +46,15 @@ input_table_list:
     keep_columns:
     # - PERID
       - household_id
-      - SEX
+      - SEX  # (1=Male, 2=Female)
       - AGE
-      - SCH
-      - ESR
-      - NAICSP02
-      - SOCP10
-      - SW_UNSPLIT_IND
-      - SW_OCCUP
-      - SW_SPLIT_IND
+      - SCH  # School Enrollment (b=NA for <3 yrs old, 1=No, 2=Yes Public, 3=Yes Private)
+      - ESR  # Employment Status (b=NA for<16 yrs old, 1=No, 2=Yes Civilian, 3=Unemployed, 4,5=Yes Armed forces, 6=Not in labor force)
+      - NAICSP02        # NAICS Code for industry
+      - SOCP10          # SOCP Standard Occupantional Classification
+      - SW_UNSPLIT_IND  # Ohio SW Model unsplit industry
+      - SW_OCCUP        # Ohio SW Model occupation
+      - SW_SPLIT_IND    # Ohio SW Model split industry
       # don't use pstudent/pemploy if available, specified wrong
   #
   # land_use (table index 'zone_id')

@@ -2,3 +2,4 @@ cache/
 *.csv
 *.csv.gz
 *.omx
+*.parquet
