@@ -150,21 +150,23 @@ def ldt_internal_external(
     # merging into longdist csv
     longdist_tours = pipeline.get_table("longdist_tours")
 
+    # merging into longdist_tours with a custom function to handle cases
+    # where we can't index on person_id (it is -1)
+    def fill_in(x):
+        if x == -1:
+            return -1
+        return persons.loc[x, colname]
+    
+    longdist_tours[colname] = LDT_IE_NULL
+    longdist_tours[colname] = np.where(
+        longdist_tours["actor_type"] == "person",
+        longdist_tours["person_id"].apply(fill_in),
+        longdist_tours[colname]
+    )
     longdist_tours[colname] = np.where(
         longdist_tours["actor_type"] == "household",
         households.loc[longdist_tours["household_id"], colname],
-        -2,
+        longdist_tours[colname]
     )
-
-    # have temp persons_temp df to prevent np.where from throwing an error
-    # since all people have a person_id, this will never be used
-    persons_temp = persons
-    persons_temp.loc[-1, colname] = -2
-
-    longdist_tours[colname] = np.where(
-        longdist_tours["actor_type"] == "person",
-        persons_temp.loc[longdist_tours["person_id"], colname],
-        longdist_tours[colname],
-    )
-
+    
     pipeline.replace_table("longdist_tours", longdist_tours)
