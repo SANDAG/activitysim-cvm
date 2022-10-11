@@ -60,6 +60,11 @@ def ldt_internal_external(
         file_name=model_settings["SPEC"]
     )  # reading in generic model spec
     nest_spec = config.get_logit_model_settings(model_settings)  # all are MNL
+    
+    patterns = {
+        "WORKRELATED": "ldt_tour_gen_person_WORKRELATED",
+        "OTHER": "ldt_tour_gen_person_OTHER"
+    }
 
     for category_settings in spec_categories:  # iterate through all the categories
         category_name = category_settings["NAME"]  # HOUSEHOLD, WORKRELATED, OTHER
@@ -67,14 +72,20 @@ def ldt_internal_external(
         actor_type = category_settings["TYPE"]  # household or person
 
         if actor_type == "household":
+            # need ldt_pattern field for the specification
             choosers = hh_full.rename(columns={"ldt_pattern_household": "ldt_pattern"})
+            # only consider people who are on household ldts
             choosers = choosers[choosers["on_hh_ldt"]]
             logger.info("Running %s with %d households", full_name, len(choosers))
         else:
+            # need ldt_pattern field for the specification
             choosers = persons_full.rename(
                 columns={"ldt_pattern_person": "ldt_pattern"}
             )
+            # only consider people who are on person ldts
             choosers = choosers[choosers["on_person_ldt"]]
+            # restrict to current category
+            choosers = choosers[choosers[patterns.get(category_name)]]
             logger.info("Running %s with %d persons", full_name, len(choosers))
 
         # preprocessor - doesn't add anything
