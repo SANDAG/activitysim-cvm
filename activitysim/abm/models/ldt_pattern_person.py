@@ -99,11 +99,11 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         pr = np.broadcast_to(
             np.asarray(
                 [
+                    notour_prob,
                     constants["COMPLETE"],
                     constants["BEGIN"],
                     constants["END"],
                     constants["AWAY"],
-                    notour_prob,
                 ]
             ),
             (len(choosers.index), 5),
@@ -113,11 +113,11 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             pr,
             index=choosers.index,
             columns=[
+                LDT_PATTERN.NOTOUR,
                 LDT_PATTERN.COMPLETE,
                 LDT_PATTERN.BEGIN,
                 LDT_PATTERN.END,
-                LDT_PATTERN.AWAY,
-                LDT_PATTERN.NOTOUR,
+                LDT_PATTERN.AWAY
             ],
         )
 
@@ -143,14 +143,19 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             choices,
             value_counts=True,
         )
-
-        person_already_on_ldt |= persons["ldt_pattern_person"] != LDT_PATTERN.NOTOUR
+        # TODO: fix logic for the below statement; currently doesn't consider the varying ldt pattern codes due to bitshift
+        # person_already_on_ldt |= persons["ldt_pattern_person"] != LDT_PATTERN.NOTOUR
 
     # adding convenient fields
-    # whether or not person is scheduled to be on LDT trip
-    persons["on_person_ldt"] = person_already_on_ldt & (
+    # whether or not person is scheduled to be on LDT trip (not including away)
+    persons["on_person_ldt"] = persons["ldt_pattern_person"].isin(
+        [x + (y << LDT_PATTERN_BITSHIFT) for x in [LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END] for y in [1, 2]] 
+    ) & (
         choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
     )
+    # persons["on_person_ldt"] = person_already_on_ldt & (
+    #     choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
+    # )
 
     # -1 is no LDT trip (whether a trip was not generated/not scheduled), 0 is work related, 1 is other
     # persons["ldt_purpose"] = np.where(persons["on_person_ldt"], 1, -1)

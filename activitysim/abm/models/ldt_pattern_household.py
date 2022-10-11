@@ -85,11 +85,11 @@ def ldt_pattern_household(
     pr = np.broadcast_to(
         np.asarray(
             [
+                notour_prob,
                 constants["COMPLETE"],
                 constants["BEGIN"],
                 constants["END"],
                 constants["AWAY"],
-                notour_prob,
             ]
         ),
         (len(choosers.index), 5),
@@ -99,11 +99,11 @@ def ldt_pattern_household(
         pr,
         index=choosers.index,
         columns=[
+            LDT_PATTERN.NOTOUR,
             LDT_PATTERN.COMPLETE,
             LDT_PATTERN.BEGIN,
             LDT_PATTERN.END,
             LDT_PATTERN.AWAY,
-            LDT_PATTERN.NOTOUR,
         ],
     )
     # _ is the random value used to make the monte carlo draws, not used
@@ -125,7 +125,10 @@ def ldt_pattern_household(
     )
 
     # adding some convenient fields
-    households["on_hh_ldt"] = households["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
+    # household is scheduled to go on hh ldt (not including away)
+    households["on_hh_ldt"] = (households["ldt_pattern_household"] != LDT_PATTERN.NOTOUR) & (
+        households["ldt_pattern_household"] != LDT_PATTERN.AWAY
+    )
 
     # merging into households
     pipeline.replace_table("households", households)
