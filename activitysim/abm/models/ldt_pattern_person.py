@@ -133,6 +133,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             estimator.end_estimation()
 
         # making one ldt pattern field instead of segmenting by person/household
+        # bitshift makes all combinations of pattern/purpose unique
         persons.loc[choices.index, "ldt_pattern_person"] = (
             choices.values + (purpose_num << LDT_PATTERN_BITSHIFT)
         ).astype(np.uint8)
@@ -148,7 +149,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     # adding convenient fields
     # whether or not person is scheduled to be on LDT trip
     persons["on_person_ldt"] = person_already_on_ldt & (
-        ~choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
+        choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
     )
 
     # -1 is no LDT trip (whether a trip was not generated/not scheduled), 0 is work related, 1 is other
