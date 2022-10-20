@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 from ...core import config, inject, logit, pipeline, tracing
-from .util import estimation
 from .ldt_internal_external import LDT_IE_EXTERNAL
+from .util import estimation
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
     households = households.to_frame()
     choosers = households_merged.to_frame()
 
-    choosers = choosers[choosers["on_hh_ldt"]]
+    choosers = choosers[choosers["ldt_pattern_household"] != 0]
     choosers = choosers[choosers["internal_external"] == LDT_IE_EXTERNAL]
 
     choosers[colname] = -1
@@ -35,8 +35,10 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
     spec_categories = model_settings.get(
         "SPEC_CATEGORIES", {}
     )  # reading in category-specific things
-    
-    external_probabilities_file_path = config.config_file_path(model_settings.get("REGION_PROBABILITIES"))
+
+    external_probabilities_file_path = config.config_file_path(
+        model_settings.get("REGION_PROBABILITIES")
+    )
     external_probabilities = pd.read_csv(external_probabilities_file_path, index_col=0)
 
     for category_settings in spec_categories:
@@ -52,15 +54,19 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
             estimator.write_choosers(choosers)
 
         constants = config.get_model_constants(category_settings)
-        
+
         prob_list = np.zeros(len(external_probabilities))
 
         for i, taz in enumerate(external_probabilities.index):
             prob_list[i] = external_probabilities.loc[taz][region]
         # prob_list[-1] = 1 - np.sum(prob_list[:-1])
-        
-        pr = np.broadcast_to(prob_list, (len(region_choosers.index), len(external_probabilities)))
-        df = pd.DataFrame(pr, index=region_choosers.index, columns=external_probabilities.index)
+
+        pr = np.broadcast_to(
+            prob_list, (len(region_choosers.index), len(external_probabilities))
+        )
+        df = pd.DataFrame(
+            pr, index=region_choosers.index, columns=external_probabilities.index
+        )
 
         choices, _ = logit.make_choices(df)
         df = df.reset_index()
@@ -71,12 +77,12 @@ def ldt_external_destchoice_households(households, households_merged, trace_hh_i
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        households.loc[choices.index, colname] = (
-            pd.Series(data=external_probabilities.index)[choices].values
-        )
-        choosers.loc[choices.index, colname] = (
-            pd.Series(data=external_probabilities.index)[choices].values
-        )
+        households.loc[choices.index, colname] = pd.Series(
+            data=external_probabilities.index
+        )[choices].values
+        choosers.loc[choices.index, colname] = pd.Series(
+            data=external_probabilities.index
+        )[choices].values
 
     pipeline.replace_table("households", households)
 
@@ -109,8 +115,10 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
     spec_categories = model_settings.get(
         "SPEC_CATEGORIES", {}
     )  # reading in category-specific things
-    
-    external_probabilities_file_path = config.config_file_path(model_settings.get("REGION_PROBABILITIES"))
+
+    external_probabilities_file_path = config.config_file_path(
+        model_settings.get("REGION_PROBABILITIES")
+    )
     external_probabilities = pd.read_csv(external_probabilities_file_path, index_col=0)
 
     for category_settings in spec_categories:
@@ -132,9 +140,13 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
         for i, taz in enumerate(external_probabilities.index):
             prob_list[i] = external_probabilities.loc[taz][region]
         # prob_list[-1] = 1 - np.sum(prob_list[:-1])
-        
-        pr = np.broadcast_to(prob_list, (len(region_choosers.index), len(external_probabilities)))
-        df = pd.DataFrame(pr, index=region_choosers.index, columns=external_probabilities.index)
+
+        pr = np.broadcast_to(
+            prob_list, (len(region_choosers.index), len(external_probabilities))
+        )
+        df = pd.DataFrame(
+            pr, index=region_choosers.index, columns=external_probabilities.index
+        )
 
         choices, _ = logit.make_choices(df)
         df = df.reset_index()
@@ -145,12 +157,12 @@ def ldt_external_destchoice_persons(persons, persons_merged, trace_hh_id):
             estimator.write_override_choices(choices)
             estimator.end_estimation()
 
-        persons.loc[choices.index, colname] = (
-            pd.Series(data=external_probabilities.index)[choices].values
-        )
-        choosers.loc[choices.index, colname] = (
-            pd.Series(data=external_probabilities.index)[choices].values
-        )
+        persons.loc[choices.index, colname] = pd.Series(
+            data=external_probabilities.index
+        )[choices].values
+        choosers.loc[choices.index, colname] = pd.Series(
+            data=external_probabilities.index
+        )[choices].values
 
     pipeline.replace_table("persons", persons)
 

@@ -60,7 +60,7 @@ input_table_list:
   # land_use (table index 'zone_id')
   #
   - tablename: land_use
-    filename: land_use_fixed.csv # change to land_use once everything's finalized
+    filename: land_use.parquet # change to land_use once everything's finalized
     index_col: zone_id
     rename_columns:
       TAZ: zone_id  # person_id is the required index column
@@ -123,7 +123,7 @@ input_table_list:
 #input_store: ../output/input_data.h5
 
 # number of households to simulate
-households_sample_size:  1000
+households_sample_size:  5000
 # simulate all households
 # households_sample_size: 0
 
@@ -188,7 +188,7 @@ keep_mem_logs: True
 # trace household id; comment out or leave empty for no trace
 # households with all tour types
 #  [ 728370 1234067 1402924 1594625 1595333 1747572 1896849 1931818 2222690 2344951 2677154]
-trace_hh_id: 982875
+trace_hh_id: 1588465
 
 # trace origin, destination in accessibility calculation; comment out or leave empty for no trace
 # trace_od: [5, 11]

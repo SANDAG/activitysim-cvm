@@ -60,10 +60,10 @@ def ldt_internal_external(
         file_name=model_settings["SPEC"]
     )  # reading in generic model spec
     nest_spec = config.get_logit_model_settings(model_settings)  # all are MNL
-    
+
     patterns = {
         "WORKRELATED": "ldt_tour_gen_person_WORKRELATED",
-        "OTHER": "ldt_tour_gen_person_OTHER"
+        "OTHER": "ldt_tour_gen_person_OTHER",
     }
 
     for category_settings in spec_categories:  # iterate through all the categories
@@ -75,7 +75,7 @@ def ldt_internal_external(
             # need ldt_pattern field for the specification
             choosers = hh_full.rename(columns={"ldt_pattern_household": "ldt_pattern"})
             # only consider people who are on household ldts
-            choosers = choosers[choosers["on_hh_ldt"]]
+            choosers = choosers[choosers["ldt_pattern"] != 0]
             logger.info("Running %s with %d households", full_name, len(choosers))
         else:
             # need ldt_pattern field for the specification
@@ -156,17 +156,17 @@ def ldt_internal_external(
         if x == -1:
             return -1
         return persons.loc[x, colname]
-    
+
     longdist_tours[colname] = LDT_IE_NULL
     longdist_tours[colname] = np.where(
         longdist_tours["actor_type"] == "person",
         longdist_tours["person_id"].apply(fill_in),
-        longdist_tours[colname]
+        longdist_tours[colname],
     )
     longdist_tours[colname] = np.where(
         longdist_tours["actor_type"] == "household",
         households.loc[longdist_tours["household_id"], colname],
-        longdist_tours[colname]
+        longdist_tours[colname],
     )
-    
+
     pipeline.replace_table("longdist_tours", longdist_tours)

@@ -23,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh_id):
+def ldt_scheduling_household(
+    households, households_merged, chunk_size, trace_hh_id, network_los
+):
     """
     This model schedules the start/end times for households that were assigned
     to be beginning and/or ending a tour on a given day
@@ -39,7 +41,7 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     choosers = households_merged.to_frame()
 
     # limiting ldt_scheduling_households to patterns whose begin/end times can be scheduled - complete/begin/end
-    choosers = choosers[choosers["ldt_pattern_household"].isin([0, 1, 2])]
+    choosers = choosers[(choosers["ldt_pattern_household"] & LDT_PATTERN.COMPLETE) > 0]
     logger.info("Running %s with %d hosueholds", trace_label, len(choosers))
 
     # preliminary estimation steps
@@ -171,6 +173,15 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
             else:
                 raise ValueError(f"BUG, bad category_num {category_num}")
 
+    households["ldt_start_period"] = network_los.skim_time_period_label(
+        households["ldt_start_hour"],
+        fillna=0,
+    )
+    households["ldt_end_period"] = network_los.skim_time_period_label(
+        households["ldt_end_hour"],
+        fillna=0,
+    )
+
     # merging into the final_households csv
     pipeline.replace_table("households", households)
 
@@ -202,6 +213,15 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
         longdist_tours["actor_type"] == "household",
         households.loc[longdist_tours["household_id"], "ldt_end_hour"],
         -2,
+    )
+
+    longdist_tours["ldt_start_period"] = network_los.skim_time_period_label(
+        longdist_tours["ldt_start_hour"],
+        fillna=0,
+    )
+    longdist_tours["ldt_end_period"] = network_los.skim_time_period_label(
+        longdist_tours["ldt_end_hour"],
+        fillna=0,
     )
 
     pipeline.replace_table("longdist_tours", longdist_tours)

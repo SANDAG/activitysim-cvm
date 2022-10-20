@@ -124,12 +124,6 @@ def ldt_pattern_household(
         choices.reindex(households.index).fillna(LDT_PATTERN.NOTOUR).astype("int8")
     )
 
-    # adding some convenient fields
-    # household is scheduled to go on hh ldt (not including away)
-    households["on_hh_ldt"] = (households["ldt_pattern_household"] != LDT_PATTERN.NOTOUR) & (
-        households["ldt_pattern_household"] != LDT_PATTERN.AWAY
-    )
-
     # merging into households
     pipeline.replace_table("households", households)
 
@@ -139,14 +133,12 @@ def ldt_pattern_household(
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)
 
     # initializing the longdist tours table with actual household ldt trips (both genereated and scheduled)
-    hh_making_longdist_tours = households[households["on_hh_ldt"]]
-    tour_counts = (
-        hh_making_longdist_tours[["on_hh_ldt"]]
-        .astype(int)
-        .rename(columns={"on_hh_ldt": "longdist_household"})
-    )
+    hh_making_longdist_tours = households[households["ldt_pattern_household"] > 0]
+    tour_counts = pd.Series(
+        1, index=hh_making_longdist_tours.index, name="longdist_household"
+    ).to_frame()
     hh_longdist_tours = process_longdist_tours(
-        # making longdist the braoder tour category instead of segmenting by all types of ldt
+        # making longdist the broader tour category instead of segmenting by all types of ldt
         households,
         tour_counts,
         "longdist",

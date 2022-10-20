@@ -203,8 +203,8 @@ def ldt_internal_mode_choice(
     orig_col_name = "home_zone_id"
     dest_col_name = "internal_destination"
 
-    out_time_col_name = "ldt_start_hour"
-    in_time_col_name = "ldt_end_hour"
+    out_time_col_name = "ldt_start_period"
+    in_time_col_name = "ldt_end_period"
     odt_skim_stack_wrapper = skim_dict.wrap_3d(
         orig_key=orig_col_name, dest_key=dest_col_name, dim3_key="out_period"
     )

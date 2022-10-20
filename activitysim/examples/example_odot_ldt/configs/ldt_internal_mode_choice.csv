@@ -3,7 +3,9 @@ income_less_than_20k,AUTO - income less than 20k,INCOME <= 20000,coef_wt_upto_60
 income_20k_to_60k,AUTO - income between 20k to 60k,(INCOME > 20000) & (INCOME <= 60000),coef_cost_inc_0to20k,coef_cost_inc_20kto60k,coef_cost_inc_20kto60k,coef_cost_inc_20kto60k,coef_cost_inc_20kto60k,coef_cost_inc_20kto60k
 income_more_than_60k,AUTO - income greater than 60k,INCOME > 60000,coef_cost_inc_20kto60k,coef_cost_inc_gt60k,coef_cost_inc_gt60k,coef_cost_inc_gt60k,coef_cost_inc_gt60k,coef_cost_inc_gt60k
 # Auto,,,,,,,,
-util_AUTO_ tourt_lt_travelt,Tour Time > Travel Time,@((df.ldt_end_hour - df.ldt_start_hour) > (odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'])),-999,,,,,
+util_AUTO_traveltime,Tour Time > Travel Time,@(df.ldt_end_hour - df.ldt_start_hour),-0.00000000999,,,,,
+util_AUTO_tourtime,Tour Time > Travel Time,@(odt_skims['CAR_TIME'] + dot_skims['CAR_TIME']),-0.00000000999,,,,,
+util_AUTO_tourt_lt_traveltime,Tour Time > Travel Time,@(((df.ldt_end_hour - df.ldt_start_hour) * 60 > (odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'])) & (df.ldt_end_hour >= 0) & (df.ldt_start_hour >= 0)),-999,,,,,
 util_AUTO_in_vehicle_time,AUTO - In-vehicle time,@odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'],coef_ivt,,,,,
 # Air,,,,,,,,
 util_AIR_ tourt_lt_travelt,Tour Time > Travel Time,@((df.ldt_end_hour - df.ldt_start_hour) > (odt_skims['AIR_IVT'] + odt_skims['AIR_BRD'] + dot_skims['AIR_IVT'] + dot_skims['AIR_BRD'])),,-999,,,,

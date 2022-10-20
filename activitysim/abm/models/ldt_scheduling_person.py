@@ -23,7 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 @inject.step()
-def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
+def ldt_scheduling_person(
+    persons, persons_merged, chunk_size, trace_hh_id, network_los
+):
     """
     This model schedules the start/end times for persons that were assigned
     to be beginning and/or ending a tour on a given day
@@ -174,6 +176,15 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
             else:
                 raise ValueError(f"BUG, bad category_num {category_num}")
 
+    persons["ldt_start_period"] = network_los.skim_time_period_label(
+        persons["ldt_start_hour"],
+        fillna=0,
+    )
+    persons["ldt_end_period"] = network_los.skim_time_period_label(
+        persons["ldt_end_hour"],
+        fillna=0,
+    )
+
     # merging into persons
     pipeline.replace_table("persons", persons)
 
@@ -209,6 +220,15 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
         longdist_tours["actor_type"] == "person",
         longdist_tours["person_id"].apply(lambda x: fill_in(x, "ldt_end_hour")),
         longdist_tours["ldt_end_hour"],
+    )
+
+    longdist_tours["ldt_start_period"] = network_los.skim_time_period_label(
+        longdist_tours["ldt_start_hour"],
+        fillna=0,
+    )
+    longdist_tours["ldt_end_period"] = network_los.skim_time_period_label(
+        longdist_tours["ldt_end_hour"],
+        fillna=0,
     )
 
     pipeline.replace_table("longdist_tours", longdist_tours)

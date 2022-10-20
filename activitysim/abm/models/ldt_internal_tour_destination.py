@@ -96,6 +96,8 @@ def ldt_internal_tour_destination(
         chunk_size,
         trace_hh_id,
         trace_label,
+        in_period_col="ldt_start_hour",
+        out_period_col="ldt_end_hour",
     )
 
     # TODO

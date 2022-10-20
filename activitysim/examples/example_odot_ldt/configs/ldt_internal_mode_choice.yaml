@@ -63,6 +63,8 @@ LOGSUM_CHOOSER_COLUMNS:  # TODO trim this list
   - ldt_pattern
   - ldt_start_hour
   - ldt_end_hour
+  - ldt_start_period
+  - ldt_end_period
   - internal_external
   - external_destchoice
   - hhsize

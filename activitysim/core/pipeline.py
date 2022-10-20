@@ -210,7 +210,10 @@ def write_df(df, table_name, checkpoint_name=None):
 
     store = get_pipeline_store()
 
-    store[pipeline_table_key(table_name, checkpoint_name)] = df
+    if any(df.dtypes == "category"):
+        store.put(pipeline_table_key(table_name, checkpoint_name), df, "table")
+    else:
+        store[pipeline_table_key(table_name, checkpoint_name)] = df
 
     store.flush()
 
