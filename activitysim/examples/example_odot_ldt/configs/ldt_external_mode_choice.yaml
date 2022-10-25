@@ -6,16 +6,13 @@ NESTS:
   name: root
   coefficient: 1.0
   alternatives:
-    - name: NOT_TRANSIT
-      coefficient: coef_nest_not_transit
-      alternatives:
-      - Drive
-      - Air
+    - DRIVE
+    - AIR
     - name: TRANSIT
-      coefficient: coef_nest_transit
+      coefficient: 0.65
       alternatives:
-      - WalkTransit
-      - DriveTransit
+      - WALK_TRANSIT
+      - DRIVE_TRANSIT
 
 SPEC_CATEGORIES: 
   - NAME: HOUSEHOLD

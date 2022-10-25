@@ -18,6 +18,7 @@ from . import (  # noqa: F401
     joint_tour_participation,
     joint_tour_scheduling,
     ldt_external_destchoice,
+    ldt_external_mode_choice,
     ldt_internal_external,
     ldt_internal_mode_choice,
     ldt_internal_tour_destination,
