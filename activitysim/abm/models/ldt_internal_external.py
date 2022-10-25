@@ -104,7 +104,7 @@ def ldt_internal_external(
             chunk_size=chunk_size,
             trace_label=tracing.extend_trace_label(trace_label, tour_purpose),
             trace_choice_name=colname,
-            estimator=estimator
+            estimator=estimator,
         )
         
         if isinstance(choices, pd.Series):
@@ -133,3 +133,6 @@ def ldt_internal_external(
     assign_in_place(ldt_tours, choices_df)
     
     pipeline.replace_table("longdist_tours", ldt_tours)
+    
+    if trace_hh_id:
+        tracing.trace_df(longdist_tours, label=trace_label)

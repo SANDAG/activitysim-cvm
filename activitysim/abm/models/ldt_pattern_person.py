@@ -128,7 +128,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         )
 
         # _ is the random value used to make the monte carlo draws, not used
-        choices, _ = logit.make_choices(df)
+        choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
 
         if estimator:
             estimator.write_choices(choices)
@@ -205,6 +205,9 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
 
     logger.debug("ldt_pattern_person complete")
+    
+    if trace_hh_id:
+        tracing.trace_df(persons, label=trace_label)
 
 
 def process_person_tours(persons, purpose: str, purpose_num: int):

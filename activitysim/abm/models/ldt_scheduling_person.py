@@ -164,7 +164,7 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
             for i in range(24):
                 key = "hour_" + str(i)
                 df[key] = constants[key]
-            choices, _ = logit.make_choices(df)
+            choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
 
             # merge in scheduled values to the respective tour pattern (start/end)
             if category_num == LDT_PATTERN.BEGIN:
@@ -212,3 +212,6 @@ def ldt_scheduling_person(persons, persons_merged, chunk_size, trace_hh_id):
     )
 
     pipeline.replace_table("longdist_tours", longdist_tours)
+    
+    if trace_hh_id:
+        tracing.trace_df(persons, label=trace_label)
