@@ -1,6 +1,6 @@
 
 # columns from land_use table to add to df
-land_use_columns: ['Total_Employment']
+land_use_columns: ['Total_Employment', 'Retail_Production']
 
 CONSTANTS:
   # dispersion parameters
