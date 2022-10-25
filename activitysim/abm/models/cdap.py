@@ -135,11 +135,6 @@ def cdap_simulate(persons_merged, persons, households, chunk_size, trace_hh_id):
             estimator.write_table(spec, "spec_%s" % hhsize, append=False)
 
     logger.info("Running cdap_simulate with %d persons", len(persons_merged.index))
-    
-    try:
-        persons_merged = persons_merged[(~persons_merged.on_person_ldt) & (~persons_merged.on_hh_ldt)]
-    except KeyError:
-        logger.info("ldt fields not found - ldt is not enabled")
 
     choices = cdap.run_cdap(
         persons=persons_merged,
@@ -162,7 +157,6 @@ def cdap_simulate(persons_merged, persons, households, chunk_size, trace_hh_id):
     # - assign results to persons table and annotate
     persons = persons.to_frame()
 
-    choices = choices.reindex(persons.index).fillna(-1)
     persons["cdap_activity"] = choices
 
     # expressions.assign_columns(
@@ -173,6 +167,7 @@ def cdap_simulate(persons_merged, persons, households, chunk_size, trace_hh_id):
 
     pipeline.replace_table("persons", persons)
 
+    # TODO - get annotation stuff to work
     # - annotate households table
     # households = households.to_frame()
     # expressions.assign_columns(

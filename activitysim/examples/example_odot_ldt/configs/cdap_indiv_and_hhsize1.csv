@@ -1,5 +1,5 @@
 Description,Expression,M,N,H
-# Person is on LDT trip,(on_person_ldt == 1) | (on_hh_ldt == 1),coef_UNAVAILABLE,coef_UNAVAILABLE,coef_UNAVAILABLE
+Person is on LDT trip,(on_person_ldt == 1) | (on_hh_ldt == 1),coef_UNAVAILABLE,coef_UNAVAILABLE,
 Full-time worker alternative-specific constants,ptype == 1,coef_full_time_worker_asc_M,coef_full_time_worker_asc_N,
 Part-time worker alternative-specific constants,ptype == 2,coef_part_time_worker_asc_M,coef_part_time_worker_asc_N,
 University student alternative-specific constants,ptype == 3,coef_university_student_asc_M,coef_university_student_asc_N,
