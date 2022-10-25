@@ -134,7 +134,6 @@ def ldt_external_destchoice(
         choices_df[choices_df[colname] != -1][colname],
         describe=True
     )
-    print(choices_df)
 
     assign_in_place(ldt_tours, choices_df)
 

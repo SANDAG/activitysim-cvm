@@ -1,14 +1,8 @@
 SPEC: ldt_internal_external.csv
+COEFFICIENTS: ldt_internal_external_coefficients.csv
+COEFFICIENT_TEMPLATE: ldt_internal_external_coefficient_template.csv
 
 LOGIT_TYPE: MNL
-
-SPEC_CATEGORIES:
-  - NAME: HOUSEHOLD
-    COEFFICIENTS: ldt_internal_external_household_coefficients.csv
-  - NAME: WORKRELATED
-    COEFFICIENTS: ldt_internal_external_workrelated_coefficients.csv
-  - NAME: OTHER
-    COEFFICIENTS: ldt_internal_external_other_coefficients.csv
 
 CONSTANTS: 
   DUMMY_CONSTANT: 1
