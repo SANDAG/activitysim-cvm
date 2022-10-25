@@ -197,5 +197,11 @@ def ldt_external_mode_choice(
     pipeline.replace_table("longdist_tours", ldt_tours)
     
     if trace_hh_id:
-        tracing.trace_df(longdist_tours, label=trace_label)
+        tracing.trace_df(
+            ldt_tours,
+            label=trace_label,
+            slicer="tour_id",
+            index_label="tour_id",
+            warn_if_empty=True,
+        )
 
