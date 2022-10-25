@@ -7,8 +7,9 @@ import numpy as np
 from activitysim.abm.models.ldt_internal_external import LDT_IE_EXTERNAL
 
 from activitysim.core import config, expressions, inject, pipeline, simulate, tracing, los
+from activitysim.core.util import assign_in_place, reindex
 
-
+import pandas as pd
 
 from .util import estimation
 
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 @inject.step()
 def ldt_external_mode_choice(
-    persons, persons_merged, households, households_merged, network_los, chunk_size, trace_hh_id
+    longdist_tours, persons_merged, network_los, chunk_size, trace_hh_id
 ):
     """
     This model determines if a person on an LDT is going/will go/is at an internal location (within Ohio/0)
@@ -25,32 +26,36 @@ def ldt_external_mode_choice(
     """
 
     trace_label = "ldt_external_mode_choice"
-    colname = "external_mode_choice"
+    colname = "external_tour_mode"
     model_settings_file_name = "ldt_external_mode_choice.yaml"
+    segment_column_name = "tour_type"
 
     # preliminary estimation steps
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation(trace_label)
-    constants = config.get_model_constants(model_settings)  # constants shared by all
+    
+    constants = {}
+    constants.update(config.get_model_constants(model_settings))  # constants shared by all
 
     # converting parameters to dataframes
-    hh_full = households_merged.to_frame()
-    persons_full = persons_merged.to_frame()
-    households = households.to_frame()
-    persons = persons.to_frame()
+    ldt_tours = longdist_tours.to_frame()
+    logger.info("Running %s with %d tours" % (trace_label, ldt_tours.shape[0]))
+    
+    persons_merged = persons_merged.to_frame()
+    ldt_tours_merged = pd.merge(
+        ldt_tours,
+        persons_merged,
+        left_on="person_id",
+        right_index=True,
+        how="left",
+        suffixes=("", "_r"),
+    )
 
-    # setting default value for internal_external choice to -1
-    households[colname] = -1
-    persons[colname] = -1
-
-    spec_categories = model_settings.get(
-        "SPEC_CATEGORIES", {}
-    )  # reading in category-specific things
     model_spec = simulate.read_model_spec(
         file_name=model_settings["SPEC"]
     )  # reading in generic model spec
     nest_spec = config.get_logit_model_settings(model_settings)  # NL
-    
+
     # setup skims and skim keys
     orig_col = "home_zone_id"
     dest_col = "external_destchoice"
@@ -109,65 +114,44 @@ def ldt_external_mode_choice(
     # specification csv expressions
     constants.update(skims)
     
-    patterns = {
-        "WORKRELATED": "ldt_tour_gen_person_WORKRELATED",
-        "OTHER": "ldt_tour_gen_person_OTHER"
-    }
-
-    for category_settings in spec_categories:  # iterate through all the categories
-        category_name = category_settings["NAME"]  # HOUSEHOLD, WORKRELATED, OTHER
-        full_name = colname + "_" + category_name
-        actor_type = category_name.lower() # household or person
-
-        if actor_type == "household":
-            # need ldt_pattern field for the specification
-            choosers = hh_full.rename(columns={"ldt_pattern_household": "ldt_pattern"})
-            # only consider people going externally
-            choosers = choosers[choosers["internal_external"] == LDT_IE_EXTERNAL]
-            # only consider people who are on household ldts
-            choosers = choosers[choosers["on_hh_ldt"]]
-            logger.info("Running %s with %d households", full_name, len(choosers))
-        else:
-            # need ldt_pattern field for the specification
-            choosers = persons_full.rename(
-                columns={"ldt_pattern_person": "ldt_pattern"}
+    choices_list = []
+    for tour_purpose, tours_segment in ldt_tours_merged.groupby(segment_column_name):
+        if tour_purpose.startswith("longdist_"):
+            tour_purpose = tour_purpose[9:]
+        tour_purpose = tour_purpose.lower()
+        
+        if network_los.zone_system == los.THREE_ZONE:
+            tvpb_logsum_odt.extend_trace_label(tour_purpose)
+            tvpb_logsum_dot.extend_trace_label(tour_purpose)
+            
+        choosers = tours_segment[tours_segment.internal_external == LDT_IE_EXTERNAL]
+        
+        logger.info(
+            "ldt_external_tour_mode_choice tour_type '%s' (%s tours)"
+            % (
+                tour_purpose,
+                len(choosers.index),
             )
-            # only consider people who are on person ldts
-            choosers = choosers[choosers["on_person_ldt"]]
-            # only consider people going externally
-            choosers = choosers[choosers["internal_external"] == LDT_IE_EXTERNAL]
-            # restrict to current category
-            choosers = choosers[choosers[patterns.get(category_name)]]
-            logger.info("Running %s with %d persons", full_name, len(choosers))
-
-        # preprocessor - doesn't add anything
-        preprocessor_settings = category_settings.get("preprocessor", None)
-        if preprocessor_settings:
-            locals_d = {}
-            if constants is not None:
-                locals_d.update(constants)
-
-            expressions.assign_columns(
-                df=choosers,
-                model_settings=preprocessor_settings,
-                locals_dict=locals_d,
-                trace_label=full_name,
+        )
+        
+        if choosers.empty:
+            choices_list.append(
+                pd.Series(-1, index=tours_segment.index, name=colname).to_frame()
             )
-
-        # reading in specific category coefficients & evaluate them
-        coefficients_df = simulate.read_model_coefficients(category_settings)
+            continue
+        
+        coefficients_df = simulate.get_segment_coefficients(model_settings, tour_purpose)
         nest_category_spec = simulate.eval_nest_coefficients(nest_spec, coefficients_df, estimator)
         category_spec = simulate.eval_coefficients(
             model_spec, coefficients_df, estimator
         )
 
         if estimator:
-            estimator.write_model_settings(category_settings, model_settings_file_name)
-            estimator.write_spec(category_settings)
-            estimator.write_coefficients(coefficients_df, category_settings)
+            estimator.write_model_settings(model_settings, model_settings_file_name)
+            estimator.write_spec(model_settings)
+            estimator.write_coefficients(coefficients_df, model_settings)
             estimator.write_choosers(choosers)
-
-        # run the nested logit models for the current category
+        
         choices = simulate.simple_simulate(
             choosers=choosers,
             spec=category_spec,
@@ -175,58 +159,40 @@ def ldt_external_mode_choice(
             locals_d=constants,
             chunk_size=chunk_size,
             skims=skims,
-            trace_label=trace_label,
-            trace_choice_name=full_name,
-            estimator=estimator,
+            trace_label=tracing.extend_trace_label(trace_label, tour_purpose),
+            trace_choice_name=colname,
+            estimator=estimator
         )
         
         alts = category_spec.columns
         choices = choices.map(
             dict(list(zip(list(range(len(alts))), alts)))
         )
-
-        if estimator:
-            estimator.write_choices(choices)
-            choices = estimator.get_survey_values(choices, actor_type, full_name)
-            estimator.write_override_choices(choices)
-            estimator.end_estimation()
-
-        # merge in results into relevant df
-        if actor_type == "household":
-            households.loc[choices.index, colname] = choices.values
-        else:
-            persons.loc[choices.index, colname] = choices.values
-
-        # print out summary of estimated internal_external choices for the current category
-        tracing.print_summary(
-            full_name, choices, value_counts=True
+        
+        if isinstance(choices, pd.Series):
+            choices = choices.to_frame(colname)
+        
+        choices = choices.reindex(tours_segment.index).fillna(
+            {colname: -1}, downcast="infer"
         )
-
-    # merging into final csvs
-    pipeline.replace_table("households", households)
-    pipeline.replace_table("persons", persons)
-
-    # merging into longdist csv
-    longdist_tours = pipeline.get_table("longdist_tours")
-
-    # merging into longdist_tours with a custom function to handle cases
-    # where we can't index on person_id (it is -1)
-    def fill_in(x):
-        if x == -1:
-            return -1
-        return persons.loc[x, colname]
-
-    longdist_tours[colname] = -1
-    longdist_tours[colname] = np.where(
-        longdist_tours["actor_type"] == "person",
-        longdist_tours["person_id"].apply(fill_in),
-        longdist_tours[colname]
-    )
-    longdist_tours[colname] = np.where(
-        longdist_tours["actor_type"] == "household",
-        households.loc[longdist_tours["household_id"], colname],
-        longdist_tours[colname]
+        
+        tracing.print_summary(
+            "ldt_external_tour_mode %s choices" % tour_purpose,
+            choices[colname],
+            value_counts=True,
+        )
+        
+        choices_list.append(choices)
+        
+    choices_df = pd.concat(choices_list)
+    
+    tracing.print_summary(
+        "ldt_external_mode_choice all tour type choices",
+        choices_df[colname],
+        value_counts=True,
     )
     
-    pipeline.replace_table("longdist_tours", longdist_tours)
+    assign_in_place(ldt_tours, choices_df)
+    
+    pipeline.replace_table("longdist_tours", ldt_tours)
 

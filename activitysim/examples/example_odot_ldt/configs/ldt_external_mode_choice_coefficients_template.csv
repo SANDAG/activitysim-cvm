@@ -1,0 +1,8 @@
+﻿coefficient_name,household,person_workrelated,person_other
+coef_air_constant,coef_air_constant_household,coef_air_constant_work,coef_air_constant_other
+coef_transit_constant,coef_transit_constant_household,coef_transit_constant_work,coef_transit_constant_other
+coef_air_logdist,coef_air_logdist_household,coef_air_logdist_work,coef_air_logdist_other
+coef_air_income_60k_up,coef_air_income_60k_up_household,coef_air_income_60k_up_work,coef_air_income_60k_up_other
+# shared by all,,,
+coef_nest_transit,,,
+coef_nest_root,,,

@@ -1,7 +1,0 @@
-﻿coefficient_name,value,constrain
-coef_air_constant,-16.935,F
-coef_transit_constant,-8.184,F
-coef_air_logdist,2.289,F
-coef_air_income_60k_up,0.745,F
-coef_nest_transit,0.65,T
-coef_nest_root,1,T
