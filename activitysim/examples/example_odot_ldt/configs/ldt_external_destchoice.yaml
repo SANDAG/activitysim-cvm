@@ -1,6 +1,6 @@
 REGION_PROBABILITIES: ldt_external_destchoice_probabilities.csv
 
-SPEC_CATEGORIES:
+REGION_CATEGORIES:
   - NAME: Central
   - NAME: NE
   - NAME: NW

@@ -20,7 +20,7 @@ util_worktravel_occupation_transportation,TODO - Fix with correct values,SW_OCCU
 util_worktravel_occupation_wholesale,TODO - Fix with correct values,SW_OCCUP==4,,coef_worktravel_occupation_wholesale
 util_worktravel_occupation_finance,TODO - Fix with correct values,SW_OCCUP==5,,coef_worktravel_occupation_finance
 util_worktravel_occupation_other,TODO - Fix with correct values,SW_OCCUP==6,,coef_worktravel_occupation_other
-util_worktravel_college_student,Person is College Student,(SCH>1) & (AGE>=18),,coef_worktravel_college_student
+util_worktravel_college_student,Person is College Student,(SCH>1) & (age>=18),,coef_worktravel_college_student
 util_worktravel_male,Male,SEX==1,,coef_worktravel_male
-util_worktravel_age,Age,AGE,,coef_worktravel_age
-util_worktravel_age_squared,Age Squared,AGE*AGE,,coef_worktravel_age_squared
+util_worktravel_age,Age,age,,coef_worktravel_age
+util_worktravel_age_squared,Age Squared,age*age,,coef_worktravel_age_squared

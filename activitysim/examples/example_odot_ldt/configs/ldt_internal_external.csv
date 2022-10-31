@@ -11,7 +11,7 @@ util_occupation_administration,occupation is military,@df.SW_OCCUP == OCC_MIL,,c
 util_occupation_education,occupation is education,@(df.SW_OCCUP == OCC_GRADE_EDU) | (df.SW_OCCUP == OCC_POSTSEC_EDU),,coef_occupation_education
 util_occupation_medical,occupation is medical,@df.SW_OCCUP == OCC_HEALTH,,coef_occupation_medical
 util_person_worker,person is a worker,@(df.ESR != ESR_UNEMP) & (df.ESR != ESR_NOT_LABOR) & (df.ESR != ESR_UNDER16),,coef_person_worker
-util_age_below_25,age 25 and below,AGE < 25,,coef_age_below_25
-util_age_55_up,age 55 and below 65,(AGE >=55) & (AGE < 65),,coef_age_55_65
-util_age_65_up,age 65+,AGE >= 65,,coef_age_65_up
+util_age_below_25,age 25 and below,age < 25,,coef_age_below_25
+util_age_55_up,age 55 and below 65,(age >=55) & (age < 65),,coef_age_55_65
+util_age_65_up,age 65+,age >= 65,,coef_age_65_up
 util_complete_travel_one_day,complete travel in one day,@(df.ldt_pattern == LDT_COMPLETE),,coef_complete_travel_one_day

@@ -55,9 +55,14 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     spec_purposes = model_settings.get("SPEC_PURPOSES", {})
 
     persons = persons.to_frame()
-    person_already_on_ldt = choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
+    person_on_hh_ldt = choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
     # default value
     persons["ldt_pattern_person"] = pd.Series(
+        LDT_PATTERN.NOTOUR, index=persons.index, dtype=np.uint8
+    )
+    # use choosers_full with normal (non bit shifted) pattern numbers as proxy to avoid complex calculations
+    # all changes to choosers_full will be dumped after this step
+    choosers_full["ldt_pattern_person"] = pd.Series(
         LDT_PATTERN.NOTOUR, index=persons.index, dtype=np.uint8
     )
 
@@ -68,8 +73,9 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         # only consider people who are predicted to go on LDT tour over 2 week period
         # and who are not already on an LDT tour today
         choosers = choosers_full[
-            choosers_full["ldt_tour_gen_person_" + purpose_name]
-            & (~person_already_on_ldt)
+            (choosers_full["ldt_tour_gen_person_" + purpose_name])
+            & (~person_on_hh_ldt)
+            & (choosers_full["ldt_pattern_person"] == LDT_PATTERN.NOTOUR)
         ]
 
         # if temp:
@@ -122,7 +128,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         )
 
         # _ is the random value used to make the monte carlo draws, not used
-        choices, _ = logit.make_choices(df)
+        choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
 
         if estimator:
             estimator.write_choices(choices)
@@ -137,6 +143,9 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         persons.loc[choices.index, "ldt_pattern_person"] = (
             choices.values + (purpose_num << LDT_PATTERN_BITSHIFT)
         ).astype(np.uint8)
+        choosers_full.loc[choices.index, "ldt_pattern_person"] = (
+            choices.values
+        ).astype(np.uint8)
 
         tracing.print_summary(
             f"ldt_pattern_person/{purpose_name}",
@@ -145,14 +154,18 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         )
         # TODO: fix logic for the below statement; currently doesn't consider the varying ldt pattern codes due to bitshift
         # person_already_on_ldt |= persons["ldt_pattern_person"] != LDT_PATTERN.NOTOUR
-
+    
     # adding convenient fields
     # whether or not person is scheduled to be on LDT trip (not including away)
-    persons["on_person_ldt"] = persons["ldt_pattern_person"].isin(
-        [x + (y << LDT_PATTERN_BITSHIFT) for x in [LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END] for y in [1, 2]] 
-    ) & (
-        choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
+    persons["on_person_ldt"] = (
+        (choosers_full["ldt_pattern_person"].isin([LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END]))
+        & (~person_on_hh_ldt)
     )
+    # persons["ldt_pattern_person"].isin(
+    #     [x + (y << LDT_PATTERN_BITSHIFT) for x in [LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END] for y in [1, 2]] 
+    # ) & (
+    #     choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
+    # )
     # persons["on_person_ldt"] = person_already_on_ldt & (
     #     choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
     # )
@@ -192,6 +205,9 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
 
     logger.debug("ldt_pattern_person complete")
+    
+    if trace_hh_id:
+        tracing.trace_df(persons, label=trace_label)
 
 
 def process_person_tours(persons, purpose: str, purpose_num: int):

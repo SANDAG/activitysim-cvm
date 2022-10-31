@@ -38,16 +38,17 @@ input_table_list:
   # persons (table index 'person_id')
   #
   - tablename: persons
-    filename: persons_fixed.csv # can merge with persons to return to original
+    filename: persons_fixed_cdap.csv # can merge with persons to return to original
     index_col: person_id
     rename_columns:
       index: person_id  # person_id is the required index column
       HHID: household_id
+      AGE: age
     keep_columns:
     # - PERID
       - household_id
       - SEX  # (1=Male, 2=Female)
-      - AGE
+      - age
       - SCH  # School Enrollment (b=NA for <3 yrs old, 1=No, 2=Yes Public, 3=Yes Private)
       - ESR  # Employment Status (b=NA for<16 yrs old, 1=No, 2=Yes Civilian, 3=Unemployed, 4,5=Yes Armed forces, 6=Not in labor force)
       - NAICSP02        # NAICS Code for industry
@@ -55,6 +56,7 @@ input_table_list:
       - SW_UNSPLIT_IND  # Ohio SW Model unsplit industry
       - SW_OCCUP        # Ohio SW Model occupation
       - SW_SPLIT_IND    # Ohio SW Model split industry
+      - ptype
       # don't use pstudent/pemploy if available, specified wrong
   #
   # land_use (table index 'zone_id')
@@ -226,9 +228,10 @@ models:
   - ldt_scheduling_person
   - ldt_internal_external
   - ldt_external_destchoice
+  - ldt_external_mode_choice
   - ldt_internal_tour_destination
   - ldt_internal_mode_choice
-  # - cdap_simulate
+  - cdap_simulate
   - write_data_dictionary
   - track_skim_usage
   - write_trip_matrices

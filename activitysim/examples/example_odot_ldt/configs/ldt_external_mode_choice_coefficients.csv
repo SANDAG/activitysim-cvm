@@ -1,0 +1,15 @@
+﻿coefficient_name,value,constrain
+coef_air_constant_work,-16.19,F
+coef_transit_constant_work,-8.257,F
+coef_air_logdist_work,2.472,F
+coef_air_income_60k_up_work,1.294,F
+coef_air_constant_household,-20.362,F
+coef_transit_constant_household,-7.782,F
+coef_air_logdist_household,2.704,F
+coef_air_income_60k_up_household,0.438,F
+coef_air_constant_other,-16.935,F
+coef_transit_constant_other,-8.184,F
+coef_air_logdist_other,2.289,F
+coef_air_income_60k_up_other,0.745,F
+coef_nest_transit,0.65,T
+coef_nest_root,1,T

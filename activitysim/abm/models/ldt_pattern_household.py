@@ -107,7 +107,8 @@ def ldt_pattern_household(
         ],
     )
     # _ is the random value used to make the monte carlo draws, not used
-    choices, _ = logit.make_choices(df)
+    # this is safe, case where trace_hh_id isn't being considered here is covered
+    choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
 
     # overwriting estimator
     if estimator:
@@ -130,7 +131,7 @@ def ldt_pattern_household(
     tracing.print_summary("ldt_pattern_household", choices, value_counts=True)
 
     if trace_hh_id:
-        tracing.trace_df(households, label=trace_label, warn_if_empty=True)
+        tracing.trace_df(households, label=trace_label)
 
     # initializing the longdist tours table with actual household ldt trips (both genereated and scheduled)
     hh_making_longdist_tours = households[households["ldt_pattern_household"] > 0]
@@ -155,3 +156,6 @@ def ldt_pattern_household(
     hh_longdist_tours["actor_type"] = "household"
 
     pipeline.extend_table("longdist_tours", hh_longdist_tours)
+
+    if trace_hh_id:
+        tracing.trace_df(households, label=trace_label, warn_if_empty=True)
