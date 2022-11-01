@@ -15,4 +15,3 @@ preprocessor:
         - accessibility
 
 CATEGORY_CONSTANTS: categories.yaml
-    

@@ -1,37 +1,37 @@
 gde 3.22.2022
 jmh 3.25.2022
 
-Get full data files from Dropbox site. Currently in development. Contact greg.erhardt@uky.edu. 
+Get full data files from Dropbox site. Currently in development. Contact greg.erhardt@uky.edu.
 
-These inputs are derived from the Ohio Statewide Model for use in the ActivitySim LDT 
+These inputs are derived from the Ohio Statewide Model for use in the ActivitySim LDT
 implementation.  They are converted for year 2010 from Baseline_EC Scenario of the
-Model of Record (MOR) as of 3.22.2022.  The source folder on the ODOT servers is: 
+Model of Record (MOR) as of 3.22.2022.  The source folder on the ODOT servers is:
 
     T:\MOR\osmp\Base\Baseline_EC\t10
 
 The relevant input files are:
 
 land_use_updated.csv
-    
+
     For use in the ActivitySim framework, we have consolidated data from multiple files
     into a single land_use.csv file with one record for each TAZ (both internal and external).
     The fields are listed below.  For each field, we a description as well as the orignal
-    source file and field name.  In this combined file, we have standardized the field 
+    source file and field name.  In this combined file, we have standardized the field
     names to remove spaces, and to be consistent in capitalization and notation.
-    
+
     Because the ODOT employment data cannot be shared publicly, we have derived
-    the equivalent data from LEHD.  
-    
+    the equivalent data from LEHD.
+
     TAZ - TAZ ID (TAZ column in TAZtoAMZ.csv)
-    MODELAREA - Binary flag indicating if the TAZ is within the model area (MODELAREA column in TAZtoAMZ.csv)    
+    MODELAREA - Binary flag indicating if the TAZ is within the model area (MODELAREA column in TAZtoAMZ.csv)
     CORDONZONE - Binary flag indicating if the TAZ is within the cordon zone
     AMZ
     LDTdistrict - 'SW', 'Central', 'NE', 'SE', 'NW'
-    STATE - 
+    STATE -
     CountyName
     FIPS - FIPS code by county
-    AreaType - 
-    Total_Employment - Total employment in by the Workplace Area Characteristics data for each census block within the TAZ boundary. 
+    AreaType -
+    Total_Employment - Total employment in by the Workplace Area Characteristics data for each census block within the TAZ boundary.
                        Obtained from LEHD 2020 wac data for the TAZ inside Ohio. For external zones, the data is obtained from the ETAZs.csv
     'Utlities_Services' - WAC data NAICS code 'CNS03':'Utilities'
     'Construction' - WAC data NAICS code CNS04 : Construction
@@ -78,23 +78,23 @@ land_use_updated.csv
     'HH100Kplus1to2',
     'HH100Kplus3plus',
     'TotHH'
-    
-    
+
+
 households.csv
     Household records from the synthetic population.  This is copied from
-    zzSynPopH.csv, but with only the relevant fields retained. 
-    
+    zzSynPopH.csv, but with only the relevant fields retained.
+
     HHID     - Household ID
     TAZ      - TAZ ID
     PERSONS  - Number of persons in HH
     BLD      - Building Size (see ACS PUMS documentation)
-    INCOME   - Annual household income    
-    
+    INCOME   - Annual household income
+
 persons.csv
     Person records from the synthetic population.  This is copied from
     zzSynPopP.csv, but with the names slightly modified for ActivitySim.
-    See PUMS documentation for definition of codes/categories. 
-    
+    See PUMS documentation for definition of codes/categories.
+
     HHID            Household ID
     PERSID          Person ID
     SEX             Sex (1=Male, 2=Female)
@@ -106,8 +106,6 @@ persons.csv
     SW_UNSPLIT_IND  Ohio SW Model unsplit industry
     SW_OCCUP        Ohio SW Model occupation
     SW_SPLIT_IND    Ohio SW Model split industry
-    
-skims.omx 
-    Skim matrices converted from TP+ to OMX format. 
 
-
+skims.omx
+    Skim matrices converted from TP+ to OMX format.

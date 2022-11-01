@@ -1,6 +1,6 @@
 # Ohio DOT Long Distance ActivitySim Implementation
 
-Example data and configuration files for the long distance travel models.  The default setup contains data for a small subset.  data_full is the full data for the 2010_EC model of record that can be provided upon request. 
+Example data and configuration files for the long distance travel models.  The default setup contains data for a small subset.  data_full is the full data for the 2010_EC model of record that can be provided upon request.
 
 ## Suggested Install Process for Development
 
@@ -29,7 +29,7 @@ python -m pip install -e .
 
 # Running
 
-Use the batch file, or: 
+Use the batch file, or:
 
 conda activate ASIM-LDT
 activitysim run -c configs -d data_full -o output
@@ -37,5 +37,5 @@ activitysim run -c configs -d data_full -o output
 
 # Random issues
 
-- in ldt_trip_generation_houeseholds, the ODOT model specification includes person-level variables in a household-level choice model.  I'm not sure why we did that or how that works.  Need to go back and look at ODOT code to figure it out. 
-- In LDT trip generation for persons, is there a more elegant way to segment by trip purpose. 
+- in ldt_trip_generation_houeseholds, the ODOT model specification includes person-level variables in a household-level choice model.  I'm not sure why we did that or how that works.  Need to go back and look at ODOT code to figure it out.
+- In LDT trip generation for persons, is there a more elegant way to segment by trip purpose.

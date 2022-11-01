@@ -13,8 +13,8 @@ SPEC_PURPOSES:
         BEGIN: 0.0211
         END: 0.0171
         AWAY: 0.0543
-        # NOTOUR: 0.8788    
-        
+        # NOTOUR: 0.8788
+
 preprocessor:
     SPEC: ldt_pattern_person_preprocessor
     DF: persons
