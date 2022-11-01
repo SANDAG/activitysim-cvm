@@ -38,7 +38,7 @@ input_table_list:
   # persons (table index 'person_id')
   #
   - tablename: persons
-    filename: persons_fixed_cdap.csv # can merge with persons to return to original
+    filename: persons_fixed.parquet # can merge with persons to return to original
     index_col: person_id
     rename_columns:
       index: person_id  # person_id is the required index column
@@ -56,7 +56,6 @@ input_table_list:
       - SW_UNSPLIT_IND  # Ohio SW Model unsplit industry
       - SW_OCCUP        # Ohio SW Model occupation
       - SW_SPLIT_IND    # Ohio SW Model split industry
-      - ptype
       # don't use pstudent/pemploy if available, specified wrong
   #
   # land_use (table index 'zone_id')

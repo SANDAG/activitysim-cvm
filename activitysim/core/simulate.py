@@ -407,6 +407,17 @@ def eval_coefficients(spec, coefficients, estimator):
     # drop any rows with all zeros since they won't have any effect (0 marginal utility)
     # (do not drop rows in estimation mode as it may confuse the estimation package (e.g. larch)
     zero_rows = (spec == 0).all(axis=1)
+    # keep temp variables even if zeros
+    if spec.index.nlevels > 1:
+        zero_rows &= (
+            ~spec.index.get_level_values("Expression").astype(str).str.startswith("_")
+        )
+        zero_rows &= (
+            ~spec.index.get_level_values("Label").astype(str).str.startswith("_")
+        )
+    else:
+        zero_rows &= ~spec.index.astype(str).str.startswith("_")
+
     if zero_rows.any():
         if estimator:
             logger.debug("keeping %s all-zero rows in SPEC" % (zero_rows.sum(),))
@@ -520,14 +531,16 @@ def eval_utilities(
         if isinstance(spec.index, pd.MultiIndex):
             # spec MultiIndex with expression and label
             exprs = spec.index.get_level_values(SPEC_EXPRESSION_NAME)
+            labels = spec.index.get_level_values(SPEC_LABEL_NAME)
         else:
             exprs = spec.index
+            labels = [""] * len(exprs)
 
         expression_values = np.empty((spec.shape[0], choosers.shape[0]))
         chunk.log_df(trace_label, "expression_values", expression_values)
 
         i = 0
-        for expr, coefficients in zip(exprs, spec.values):
+        for expr, coefficients, label in zip(exprs, spec.values, labels):
 
             try:
                 with warnings.catch_warnings(record=True) as w:
@@ -564,6 +577,9 @@ def eval_utilities(
 
             expression_values[i] = expression_value
             i += 1
+
+            if label.startswith("_"):
+                locals_dict[label] = expression_value
 
         chunk.log_df(trace_label, "expression_values", expression_values)
 

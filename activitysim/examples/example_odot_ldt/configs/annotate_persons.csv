@@ -1,3 +1,29 @@
 Description,Target,Expression
 home_zone_id,home_zone_id,"reindex(households.home_zone_id, persons.household_id)"
 ,univ_student_status,"(persons.age >= 18) & (persons.SCH >= 2)"
+# ptype == 1 are full-time workers
+#   Employment status recode (ESR)
+#   0 .N/A (less than 16 years old)
+#   1 .Civilian employed, at work
+#   2 .Civilian employed, with a job but not at work (e.g., teachers during summer, maternity leave)
+#   3 .Unemployed
+#   4 .Armed forces, at work
+#   5 .Armed forces, with a job but not at work (see 2)
+#   6 .Not in labor force
+,_PTYPE,"np.where(persons['ESR'].isin([1, 2, 4, 5]), 1, 0)"
+# ptype == 4, non-working adult
+# include non-working 16-65 year olds only (seems to be what mtc has except with 16 instead of 17 as the lower bound)
+,_PTYPE,"np.where(((df['age'] >= 16) & (df['age'] <= 65) & (df['ESR'].isin([3, 6]))), 4, _PTYPE)"
+# ptype == 5, retirees
+# above 65 and not in labor force/unemployed, follows mtc
+,_PTYPE,"np.where((df['age'] >= 65) & (df['ESR'].isin([3, 6])), 5, _PTYPE)"
+# ptype == 3, univeristy students
+# assume all people above 19 and in school are in university; mtc seems ot be more detailed
+,_PTYPE,"np.where((df['SCH'].isin([2, 3])) & (df['age'] >= 18), 3, _PTYPE)"
+# ptype == 6, driving-age child who is in school
+# 16-18 year olds in school (not mtc, which seems to be more detailed)
+,_PTYPE,"np.where((df['age'] >= 16) & (df['age'] <= 17) & (df['SCH'].isin([2, 3])), 6, _PTYPE)"
+# ptype == 7, pre-driving school-age child
+,_PTYPE,"np.where((df['age'] <= 15) & (df['age'] >= 6), 7, _PTYPE)"
+# ptype == 8, pre-school age child
+,ptype,"np.where(df['age'] <= 5, 8, _PTYPE)"
