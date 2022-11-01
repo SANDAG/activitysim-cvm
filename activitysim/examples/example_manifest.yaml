@@ -914,3 +914,21 @@
     - prototype_mwcog/output
     - prototype_mwcog/README.MD
     - prototype_mwcog/simulation.py
+
+- name: prototype_odot_ldt_full
+  description: long distance model for Ohio
+  include:
+    - prototype_odot_ldt/configs
+    - prototype_odot_ldt/output
+    - https://media.githubusercontent.com/media/camsys/activitysim_resources/ohio_ldt/ohio_longdist_data_full/skims.omx
+      data/skims.omx
+      97afa43601b4c2183d1080b9d712973e6887cb74e128e16fbdd14a3147e93bdb
+    - https://media.githubusercontent.com/media/camsys/activitysim_resources/ohio_ldt/ohio_longdist_data_full/persons.parquet
+      data/persons.parquet
+      183b554a4e7658d78fd17e4357726b8f24e4bce89a8c13a1f0e99697ab4bc5c6
+    - https://media.githubusercontent.com/media/camsys/activitysim_resources/ohio_ldt/ohio_longdist_data_full/households.parquet
+      data/households.parquet
+      2a72795f3e95b824ae7321c39584415ad85be9b233e18b5ee178fd84851237de
+    - https://media.githubusercontent.com/media/camsys/activitysim_resources/ohio_ldt/ohio_longdist_data_full/land_use.parquet
+      data/land_use.parquet
+      8d80312707ddf50657e069de8c272fd95bef1b4bcb54fc71437884a2fbf543bd

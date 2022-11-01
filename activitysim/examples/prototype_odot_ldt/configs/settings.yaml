@@ -20,7 +20,7 @@ input_table_list:
   # households (table index 'household_id')
   #
   - tablename: households
-    filename: households.csv
+    filename: households.parquet
     index_col: household_id
     rename_columns:
       HHID: household_id  # household_id is the required index column
@@ -38,7 +38,7 @@ input_table_list:
   # persons (table index 'person_id')
   #
   - tablename: persons
-    filename: persons_fixed.parquet # can merge with persons to return to original
+    filename: persons.parquet
     index_col: person_id
     rename_columns:
       index: person_id  # person_id is the required index column
