@@ -920,6 +920,7 @@
   include:
     - prototype_odot_ldt/configs
     - prototype_odot_ldt/output
+    - prototype_odot_ldt/extensions
     - https://media.githubusercontent.com/media/camsys/activitysim_resources/ohio_ldt/ohio_longdist_data_full/skims.omx
       data/skims.omx
       97afa43601b4c2183d1080b9d712973e6887cb74e128e16fbdd14a3147e93bdb
