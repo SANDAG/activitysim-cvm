@@ -63,10 +63,10 @@ def ldt_external_mode_choice(
     skim_dict = network_los.get_default_skim_dict()
 
     odt_skim_stack_wrapper = skim_dict.wrap_3d(
-        orig_key=orig_col, dest_key=dest_col, dim3_key="ldt_start_hour"
+        orig_key=orig_col, dest_key=dest_col, dim3_key="ldt_start_period"
     )
     dot_skim_stack_wrapper = skim_dict.wrap_3d(
-        orig_key=dest_col, dest_key=orig_col, dim3_key="ldt_start_hour"
+        orig_key=dest_col, dest_key=orig_col, dim3_key="ldt_end_period"
     )
     od_skim_wrapper = skim_dict.wrap(orig_col, dest_col)
 
@@ -74,6 +74,10 @@ def ldt_external_mode_choice(
         "odt_skims": odt_skim_stack_wrapper,
         "dot_skims": dot_skim_stack_wrapper,
         "od_skims": od_skim_wrapper,
+        "orig_col_name": orig_col,
+        "dest_col_name": dest_col,
+        "out_period": "ldt_start_period",
+        "in_period": "ldt_end_period",
     }
 
     if network_los.zone_system == los.THREE_ZONE:

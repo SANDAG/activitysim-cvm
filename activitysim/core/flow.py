@@ -137,6 +137,8 @@ def get_flow(
     extra_vars = only_simple(local_d)
     orig_col_name = local_d.get("orig_col_name", None)
     dest_col_name = local_d.get("dest_col_name", None)
+    out_period = local_d.get("out_period", "out_period")
+    in_period = local_d.get("in_period", "in_period")
     stop_col_name = None
     parking_col_name = None
     timeframe = local_d.get("timeframe", "tour")
@@ -170,6 +172,8 @@ def get_flow(
         interacts=interacts,
         zone_layer=zone_layer,
         aux_vars=aux_vars,
+        out_period=out_period,
+        in_period=in_period,
     )
     flow.tree.aux_vars = aux_vars
     return flow
@@ -251,6 +255,8 @@ def skims_mapping(
     stop_col_name=None,
     parking_col_name=None,
     zone_layer=None,
+    out_period="out_period",
+    in_period="in_period",
 ):
     logger.info("loading skims_mapping")
     logger.info(f"- orig_col_name: {orig_col_name}")
@@ -330,16 +336,16 @@ def skims_mapping(
                 relationships=(
                     f"df._orig_col_name -> odt_skims.{odim}",
                     f"df._dest_col_name -> odt_skims.{ddim}",
-                    "df.out_period      @  odt_skims.time_period",
+                    f"df.{out_period}    @  odt_skims.time_period",
                     f"df._dest_col_name -> dot_skims.{odim}",
                     f"df._orig_col_name -> dot_skims.{ddim}",
-                    "df.in_period       @  dot_skims.time_period",
+                    f"df.{in_period}     @  dot_skims.time_period",
                     f"df._orig_col_name -> odr_skims.{odim}",
                     f"df._dest_col_name -> odr_skims.{ddim}",
-                    "df.in_period       @  odr_skims.time_period",
+                    f"df.{in_period}     @  odr_skims.time_period",
                     f"df._dest_col_name -> dor_skims.{odim}",
                     f"df._orig_col_name -> dor_skims.{ddim}",
-                    "df.out_period      @  dor_skims.time_period",
+                    f"df.{out_period}    @  dor_skims.time_period",
                     f"df._orig_col_name -> od_skims.{odim}",
                     f"df._dest_col_name -> od_skims.{ddim}",
                 ),
@@ -422,6 +428,8 @@ def new_flow(
     interacts=None,
     zone_layer=None,
     aux_vars=None,
+    out_period="out_period",
+    in_period="in_period",
 ):
     """
     Setup a new sharrow flow.
@@ -498,6 +506,8 @@ def new_flow(
             stop_col_name,
             parking_col_name=parking_col_name,
             zone_layer=zone_layer,
+            in_period=in_period,
+            out_period=out_period,
         )
         if size_term_mapping is None:
             size_term_mapping = {}

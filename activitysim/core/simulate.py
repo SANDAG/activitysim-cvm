@@ -109,6 +109,7 @@ def read_model_spec(file_name):
         spec = spec.drop(SPEC_DESCRIPTION_NAME, axis=1)
 
     spec = spec.set_index(SPEC_EXPRESSION_NAME).fillna(0)
+    spec.index = spec.index.astype(str)
 
     # ensure uniqueness of spec index by appending comment with dupe count
     # this allows us to use pandas dot to compute_utilities

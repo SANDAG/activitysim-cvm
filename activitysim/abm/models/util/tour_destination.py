@@ -12,6 +12,7 @@ from activitysim.core.interaction_sample_simulate import interaction_sample_simu
 from activitysim.core.util import reindex
 
 from . import logsums as logsum
+from .logsums import convert_time_periods_to_skim_periods
 
 logger = logging.getLogger(__name__)
 DUMP = False
@@ -185,7 +186,6 @@ def destination_sample(
             "dot_skims": dot_skims,
         }
         known_time_periods_.update(known_time_periods)
-        from .logsums import convert_time_periods_to_skim_periods
 
         # add in_periods and out_period columns to choosers...
         choosers = convert_time_periods_to_skim_periods(
@@ -723,6 +723,7 @@ def run_destination_simulate(
     estimator,
     chunk_size,
     trace_label,
+    known_time_periods=None,
 ):
     """
     run destination_simulate on tour_destination_sample
@@ -740,7 +741,11 @@ def run_destination_simulate(
     # FIXME - MEMORY HACK - only include columns actually used in spec (omit them pre-merge)
     chooser_columns = model_settings["SIMULATE_CHOOSER_COLUMNS"]
     persons_merged = persons_merged[
-        [c for c in persons_merged.columns if c in chooser_columns]
+        [
+            c
+            for c in persons_merged.columns
+            if c in chooser_columns and c not in tours.columns
+        ]
     ]
     tours = tours[
         [c for c in tours.columns if c in chooser_columns or c == "person_id"]
@@ -780,12 +785,45 @@ def run_destination_simulate(
     skim_dict = network_los.get_default_skim_dict()
     skims = skim_dict.wrap(origin_col_name, alt_dest_col_name)
 
-    locals_d = {
-        "skims": skims,
-        "orig_col_name": skims.orig_key,  # added for sharrow flows
-        "dest_col_name": skims.dest_key,  # added for sharrow flows
-        "timeframe": "timeless",
-    }
+    if known_time_periods is None:
+        locals_d = {
+            "skims": skims,
+            "orig_col_name": skims.orig_key,  # added for sharrow flows
+            "dest_col_name": skims.dest_key,  # added for sharrow flows
+            "timeframe": "timeless",
+        }
+    else:
+        # (logit.interaction_dataset suffixes duplicate chooser column with '_chooser')
+        if origin_col_name == alt_dest_col_name:
+            origin_col_name = f"{origin_col_name}_chooser"
+
+        odt_skims = skim_dict.wrap_3d(origin_col_name, alt_dest_col_name, "out_period")
+        dot_skims = skim_dict.wrap_3d(alt_dest_col_name, origin_col_name, "in_period")
+        locals_d = {
+            "skims": skims,
+            "orig_col_name": skims.orig_key,  # added for sharrow flows
+            "dest_col_name": skims.dest_key,  # added for sharrow flows
+            "timeframe": "tour",
+            "odt_skims": odt_skims,
+            "dot_skims": dot_skims,
+            # "out_period": known_time_periods["out_period"],
+            # "in_period": known_time_periods["in_period"],
+        }
+        skims = [
+            skims,
+            odt_skims,
+            dot_skims,
+        ]
+        # add in_periods and out_period columns to choosers...
+        choosers = convert_time_periods_to_skim_periods(
+            known_time_periods["in_period"],
+            known_time_periods["out_period"],
+            choosers,
+            model_settings,
+            "<tour_purpose>",
+            network_los,
+        )
+
     if constants is not None:
         locals_d.update(constants)
 
@@ -922,6 +960,7 @@ def run_tour_destination(
             estimator=estimator,
             chunk_size=chunk_size,
             trace_label=tracing.extend_trace_label(segment_trace_label, "simulate"),
+            known_time_periods=known_time_periods,
         )
 
         choices_list.append(choices)

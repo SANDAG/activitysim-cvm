@@ -26,14 +26,13 @@ input_table_list:
       HHID: household_id  # household_id is the required index column
       PERSONS: hhsize
       TAZ: home_zone_id
+    recode_columns:
+      home_zone_id: land_use.zone_id
     keep_columns:
       - home_zone_id
       - hhsize
       - INCOME
       - BLD #building size variable
-      # - HHT
-      # - auto_ownership
-      # - num_workers
   #
   # persons (table index 'person_id')
   #
@@ -45,7 +44,6 @@ input_table_list:
       HHID: household_id
       AGE: age
     keep_columns:
-    # - PERID
       - household_id
       - SEX  # (1=Male, 2=Female)
       - age
@@ -65,6 +63,8 @@ input_table_list:
     index_col: zone_id
     rename_columns:
       TAZ: zone_id  # person_id is the required index column
+    recode_columns:
+      zone_id: zero-based
     keep_columns:
       - MODELAREA
       - CORDONZONE
@@ -124,7 +124,7 @@ input_table_list:
 #input_store: ../output/input_data.h5
 
 # number of households to simulate
-households_sample_size:  5000
+households_sample_size:  75000
 # simulate all households
 # households_sample_size: 0
 
@@ -212,6 +212,7 @@ checkpoints: True
 
 
 models:
+  - skims_preprocess
   - initialize_landuse
   - initialize_households
   - compute_accessibility
@@ -267,3 +268,5 @@ household_median_value_of_time:
   2: 8.81
   3: 10.44
   4: 12.86
+
+sharrow: test

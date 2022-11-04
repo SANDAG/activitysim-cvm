@@ -108,4 +108,44 @@ persons.csv
     SW_SPLIT_IND    Ohio SW Model split industry
 
 skims.omx
-    Skim matrices converted from TP+ to OMX format.
+    Skim matrices in OMX format.
+    Skims are available across several dimensions.
+
+    # Mode
+    - AIR
+    - CAR
+    - ICDT (intercity drive to transit)
+    - ICRDT (intercity rail drive to transit)
+    - ICRWT (intercity rail walk to transit)
+    - ICWT (intercity walk to transit)
+
+    # Modes not used in long distance travel model, need not be in skims
+    - DT (intra-region drive to transit)
+    - WT (intra-region walk to transit)
+    - TRK (truck)
+    - FREIGHT
+
+    # Time Periods
+    - PK (peak)
+    - OP (off peak)
+
+    # Common Carrier Modes Level of Service Measures
+    - BRD (boardings)
+    - DRV (drive access time, in ?minutes)
+    - FAR (fare, in ?cents)
+    - IVT (in vehicle travel time)
+    - COST
+    - AWK (access walk time, in ?minutes)
+    - EWK (egress walk time, in ?minutes)
+    - XWK (transfer walk time, in ?minutes)
+    - FWT (first wait time, in ?minutes)
+    - TWT (total wait time, in ?minutes)
+    - RIV (rail in vehicle travel time, in ?minutes)
+    - BIV (bus in vehicle travel time, in ?minutes)
+    - HFRQ ? rail only, headway frequency?
+
+    # Private Car Level of Service Measures
+    - DIST (distance, in ?miles)
+    - TIME (total travel time, in ?minutes)
+    - TOLL (in ?cents)
+    - COST (cost excluding tolls, in ?cents)
