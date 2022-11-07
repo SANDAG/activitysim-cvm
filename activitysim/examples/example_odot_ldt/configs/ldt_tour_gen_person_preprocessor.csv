@@ -1,5 +1,0 @@
-Description,Target,Expression
-#,,adding accessibility
-short-distance destination choice logsum,sdist_accessibility,"reindex(accessibility.auPkTotal, persons.home_zone_id)"
-number of autos in household,auto_ownership,"reindex(households.auto_ownership, persons.household_id)"
-whether or not a person was predicted to go on a household LDT trip,household_ldt,"reindex(households.ldt_tour_gen_household, persons.household_id)"

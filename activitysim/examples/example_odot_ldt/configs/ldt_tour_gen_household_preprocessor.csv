@@ -1,3 +1,0 @@
-Description,Target,Expression
-#,,adding accessibility
-short-distance destination choice logsum,sdist_accessibility,"reindex(accessibility.auPkTotal, households.home_zone_id)"

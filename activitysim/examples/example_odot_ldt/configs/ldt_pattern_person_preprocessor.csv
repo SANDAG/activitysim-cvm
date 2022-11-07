@@ -1,3 +1,0 @@
-Description,Target,Expression
-#,,adding accessibility
-household LDT pattern of a person,ldt_household,"reindex(households.ldt_pattern_household, persons.household_id)"

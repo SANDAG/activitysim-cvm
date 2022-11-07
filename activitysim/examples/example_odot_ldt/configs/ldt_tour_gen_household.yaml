@@ -8,11 +8,5 @@ LOGIT_TYPE: MNL
 CONSTANTS:
   DUMMY_CONSTANT: 1
 
-preprocessor:
-    SPEC: ldt_tour_gen_household_preprocessor
-    DF: households
-    TABLES:
-        - accessibility
-
 CATEGORY_CONSTANTS: categories.yaml
     

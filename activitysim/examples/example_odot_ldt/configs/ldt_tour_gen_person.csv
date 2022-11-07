@@ -24,5 +24,5 @@ util_college_student,Person is College Student,@(df.SCH != SCH_NO_SCHOOL) & (df.
 util_male,Male,@df.SEX==MALE,,coef_male
 util_age,Age,age,,coef_age
 util_age_squared,Age Squared,age*age,,coef_age_squared
-util_accessibility,amount of stuff in origin,sdist_accessibility,,coef_accessibility
-util_hh_ldt,person was predicted to go on household LDT trip,household_ldt==True,,coef_hh_ldt
+util_accessibility,amount of stuff in origin,auPkTotal,,coef_accessibility
+util_hh_ldt,person was predicted to go on household LDT trip,ldt_tour_gen_household==True,,coef_hh_ldt
