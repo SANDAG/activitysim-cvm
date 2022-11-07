@@ -34,13 +34,13 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     # reading in some category constants
     constants = config.get_model_constants(model_settings)
 
-    category_file_name = model_settings.get("CATEGORY_CONSTANTS", {})
-    categories = {}
+    # merging in global constants
+    category_file_name = model_settings.get("CATEGORY_CONSTANTS", None)
     if category_file_name is not None:
         categories = config.get_model_constants(
             config.read_model_settings(category_file_name)
         )
-    constants.update(categories)
+        constants.update(categories)
 
     # preprocessor - adds accessiblity of chooser origin for use in estimation
     preprocessor_settings = model_settings.get("preprocessor", None)

@@ -4,8 +4,7 @@ CONSTANTS:
   FEMALE: 2
 
   # units in structure (BLD)
-  BLD_ONE_FAMILY_HOUSE_DETACHED: 2
-  BLD_ONE_FAMILY_HOUSE_ATTACHED: 3
+  BLD_ONE_FAMILY_HOUSE: [2, 3]
 
   # school enrollment (SCH)
   # SCH_TOO_YOUNG: 0
@@ -38,35 +37,24 @@ CONSTANTS:
   # IND_GOVT: 23  # government and other
 
   # occupations (sourced from another docx in docs folder, also some custom created based off industries)
-  OCC_UNEMP: 0 # unemployed
-  OCC_MANAGER: 1 # managers
+  OCC_UNEMP: 0 # unemployed (unused)
+  OCC_OTHER_SERVICES: [1, 3, 6, 8, 9, 10, 15] # managers (1), professionals (3), entertainment (6), service (8), food (9), retail (10), maintenance/repair (15)
   OCC_FIN: 2 # finance
-  OCC_PROF: 3 # professionals
-  OCC_POSTSEC_EDU: 4 # post secondary education
-  OCC_GRADE_EDU: 5 # grade education
-  OCC_ENT: 6 # entertainent
+  OCC_EDU: [4, 5] # post secondary education (4), grade school education (5)
   OCC_HEALTH: 7 # healthcare
-  OCC_SRV: 8 # service
-  OCC_FOOD: 9 # food
-  OCC_RET: 10 # retail
   OCC_WHL: 11 # wholesale (non-retail sales worker)
-  OCC_OFF: 12 # office/administration workers
+  OCC_OFF: 12 # office/administration workers (currently unused)
   OCC_AGR: 13 # agriculture
   OCC_CON: 14 # construction
-  OCC_MAINT: 15 # maintenace/repair
   OCC_MFG: 16 # manufacturing
   OCC_TRANS: 17 # transportation
   OCC_MIL: 18 # military
-  # OCC_EXT: 19 # mining, custom code no longer used
-  # OCC_GOV: 20 # government, custom code no longer used
 
   # employment status (ESR from PUMS)
   ESR_UNDER16: 0 # under 16
-  ESR_EMP_1: 1  # 2 different categories for employed people
-  ESR_EMP_2: 2
+  ESR_EMP: [1, 2] # 2 different categories for employed people (not used)
   ESR_UNEMP: 3 # unemployed
-  ESR_ARMY_1: 4  # 2 different categories for people in the army
-  ESR_ARMY_2: 5
+  ESR_ARMY: [4, 5] # 2 different categories for people in the army (not used)
   ESR_NOT_LABOR: 6 # not in labor force
 
   # LDT tour types (defined by convention, do not change)

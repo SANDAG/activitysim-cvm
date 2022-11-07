@@ -35,4 +35,4 @@ annotate_households:
   TABLES:
     - persons
 
-CATEGORY_CONSTANTS: categories.yaml
+CATEGORY_CONSTANTS: constants.yaml

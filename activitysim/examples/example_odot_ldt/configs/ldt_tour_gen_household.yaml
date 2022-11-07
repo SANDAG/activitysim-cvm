@@ -8,5 +8,5 @@ LOGIT_TYPE: MNL
 CONSTANTS:
   DUMMY_CONSTANT: 1
 
-CATEGORY_CONSTANTS: categories.yaml
+CATEGORY_CONSTANTS: constants.yaml
     

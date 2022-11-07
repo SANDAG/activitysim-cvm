@@ -8,7 +8,7 @@ util_income_60k_up,"income from $60,000 and up",@df.income_in_thousands >= 60,,c
 util_occupation_construction,occupation is construction,@df.SW_OCCUP == OCC_CON,,coef_occupation_construction
 util_occupation_finance,occupation is finance/business,@df.SW_OCCUP == OCC_FIN,,coef_occupation_finance
 util_occupation_administration,occupation is military,@df.SW_OCCUP == OCC_MIL,,coef_occupation_administration
-util_occupation_education,occupation is education,@(df.SW_OCCUP == OCC_GRADE_EDU) | (df.SW_OCCUP == OCC_POSTSEC_EDU),,coef_occupation_education
+util_occupation_education,occupation is education,@df.SW_OCCUP.isin(OCC_EDU),,coef_occupation_education
 util_occupation_medical,occupation is medical,@df.SW_OCCUP == OCC_HEALTH,,coef_occupation_medical
 util_person_worker,person is a worker,@(df.ESR != ESR_UNEMP) & (df.ESR != ESR_NOT_LABOR) & (df.ESR != ESR_UNDER16),,coef_person_worker
 util_age_below_25,age 25 and below,age < 25,,coef_age_below_25

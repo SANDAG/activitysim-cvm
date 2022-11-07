@@ -31,6 +31,14 @@ def ldt_external_destchoice(
     estimator = estimation.manager.begin_estimation("ldt_external_destchoice")
     constants = config.get_model_constants(model_settings)  # constants shared by all
     
+    # merging in global constants
+    category_file_name = model_settings.get("CATEGORY_CONSTANTS", None)
+    if category_file_name is not None:
+        categories = config.get_model_constants(
+            config.read_model_settings(category_file_name)
+        )
+        constants.update(categories)
+    
     # converting parameters to dataframes
     ldt_tours = longdist_tours.to_frame()
     logger.info("Running %s with %d tours" % (trace_label, ldt_tours.shape[0]))

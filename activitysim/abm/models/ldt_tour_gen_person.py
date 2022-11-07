@@ -34,13 +34,13 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
     # reading in category constants
     constants = config.get_model_constants(model_settings)
 
-    category_file_name = model_settings.get("CATEGORY_CONSTANTS", {})
-    categories = {}
+    # merging in global constants
+    category_file_name = model_settings.get("CATEGORY_CONSTANTS", None)
     if category_file_name is not None:
         categories = config.get_model_constants(
             config.read_model_settings(category_file_name)
         )
-    constants.update(categories)
+        constants.update(categories)
 
     # preprocessor - merges auto ownership, accessibility, and whether or not a person has a
     # household ldt generated already for estimation purposes
