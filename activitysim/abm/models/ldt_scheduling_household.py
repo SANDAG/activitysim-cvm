@@ -51,9 +51,7 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     # merging in global constants
     category_file_name = model_settings.get("CATEGORY_CONSTANTS", None)
     if category_file_name is not None:
-        categories = config.get_model_constants(
-            config.read_model_settings(category_file_name)
-        )
+        categories = config.read_settings_file(category_file_name)
         constants.update(categories)
 
     # preprocessor - doesn't import anything

@@ -15,3 +15,17 @@ number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)"
 #,,FIXME households.income can be negative  - so we clip?
 income_in_thousands,income_in_thousands,(households.INCOME / 1000).clip(lower=0)
 min_person_id,min_person_id,"persons.reset_index().groupby('household_id')['person_id'].min().reindex(households.index)"
+#,,we assume that everyone 16 and older is a potential driver
+,_PERSON_COUNT,"lambda query, persons, households: persons.query(query).groupby('household_id').size().reindex(households.index).fillna(0).astype(np.int8)"
+number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)"
+num_adults,num_adults,"_PERSON_COUNT('adult', persons, households)"
+num_children,num_children,"_PERSON_COUNT('~adult', persons, households)"
+num_young_children,num_young_children,"_PERSON_COUNT('age <= 5', persons, households)"
+num_children_5_to_15,num_children_5_to_15,"_PERSON_COUNT('5 <= age <= 15', persons, households)"
+num_children_16_to_17,num_children_16_to_17,"_PERSON_COUNT('16 <= age <= 17', persons, households)"
+num_college_age,num_college_age,"_PERSON_COUNT('18 <= age <= 24', persons, households)"
+num_young_adults,num_young_adults,"_PERSON_COUNT('25 <= age <= 34', persons, households)"
+#,non_family,non_family,households.HHT.isin(HHT_NONFAMILY)
+#,family,family,households.HHT.isin(HHT_FAMILY)
+#,home_is_urban,home_is_urban,"reindex(land_use.area_type, households.home_zone_id) < setting('urban_threshold')"
+#,home_is_rural,home_is_rural,"reindex(land_use.area_type, households.home_zone_id) > setting('rural_threshold')"

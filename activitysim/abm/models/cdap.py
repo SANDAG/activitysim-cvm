@@ -91,15 +91,6 @@ def cdap_simulate(persons_merged, persons, households, chunk_size, trace_hh_id):
     )
 
     constants = config.get_model_constants(model_settings)
-    
-    # merging in category constants
-    category_file_name = model_settings.get("CATEGORY_CONSTANTS", {})
-    categories = {}
-    if category_file_name is not None:
-        categories = config.get_model_constants(
-            config.read_model_settings(category_file_name)
-        )
-    constants.update(categories)
 
     cdap_interaction_coefficients = cdap.preprocess_interaction_coefficients(
         cdap_interaction_coefficients
@@ -159,26 +150,25 @@ def cdap_simulate(persons_merged, persons, households, chunk_size, trace_hh_id):
 
     persons["cdap_activity"] = choices
 
-    # expressions.assign_columns(
-    #     df=persons,
-    #     model_settings=model_settings.get("annotate_persons"),
-    #     trace_label=tracing.extend_trace_label(trace_label, "annotate_persons"),
-    # )
+    expressions.assign_columns(
+        df=persons,
+        model_settings=model_settings.get("annotate_persons"),
+        trace_label=tracing.extend_trace_label(trace_label, "annotate_persons"),
+    )
 
     pipeline.replace_table("persons", persons)
 
-    # TODO - get annotation stuff to work
     # - annotate households table
-    # households = households.to_frame()
-    # expressions.assign_columns(
-    #     df=households,
-    #     model_settings=model_settings.get("annotate_households"),
-    #     trace_label=tracing.extend_trace_label(trace_label, "annotate_households"),
-    # )
-    # pipeline.replace_table("households", households)
+    households = households.to_frame()
+    expressions.assign_columns(
+        df=households,
+        model_settings=model_settings.get("annotate_households"),
+        trace_label=tracing.extend_trace_label(trace_label, "annotate_households"),
+    )
+    pipeline.replace_table("households", households)
 
-    # tracing.print_summary("cdap_activity", persons.cdap_activity, value_counts=True)
-    # logger.info(
-    #     "cdap crosstabs:\n%s"
-    #     % pd.crosstab(persons.ptype, persons.cdap_activity, margins=True)
-    # )
+    tracing.print_summary("cdap_activity", persons.cdap_activity, value_counts=True)
+    logger.info(
+        "cdap crosstabs:\n%s"
+        % pd.crosstab(persons.ptype, persons.cdap_activity, margins=True)
+    )

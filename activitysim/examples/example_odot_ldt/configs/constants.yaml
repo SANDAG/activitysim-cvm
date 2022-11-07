@@ -1,98 +1,97 @@
-CONSTANTS:
-  # sex (SEX)
-  MALE: 1
-  FEMALE: 2
+# sex (SEX)
+MALE: 1
+FEMALE: 2
 
-  # units in structure (BLD)
-  BLD_ONE_FAMILY_HOUSE: [2, 3]
+# units in structure (BLD)
+BLD_ONE_FAMILY_HOUSE: [2, 3]
 
-  # school enrollment (SCH)
-  # SCH_TOO_YOUNG: 0
-  SCH_NO_SCHOOL: 1
+# school enrollment (SCH)
+# SCH_TOO_YOUNG: 0
+SCH_NO_SCHOOL: 1
 
-  # # industries (sourced from that one docx file in docs folder) (SW_SPLIT_IND)
-  # IND_UNEMP: 0  # unemployed
-  # IND_AGR_PROD: 1  # agriculture production
-  # IND_AGR_OFF: 2  # agriculture office
-  # IND_MET_PROD: 3  # metals
-  # IND_MET_OFF: 4
-  # IND_LIND_PROD: 5  # light industry
-  # IND_LIND_OFF: 6
-  # IND_HIND_PROD: 7  # heavy industry
-  # IND_HIND_OFF: 8
-  # IND_TEQP_PROD: 9  # transportation equipment
-  # IND_TEQP_OFF: 10
-  # IND_WHL_PROD: 11  # wholesale
-  # IND_WHL_OFF: 12
-  # IND_RET_PROD: 13  # retail
-  # IND_RET_OFF: 14
-  # IND_HOTEL: 15  # hotels/accomodations
-  # IND_CONSTRUCT: 16  # construction
-  # IND_HEALTH: 17  # heatlhcare
-  # IND_TRN_HANDLE: 18  # transporation handling
-  # IND_UTL: 19  # utilities services
-  # IND_MISC_SRV: 20  # other services
-  # IND_GRADE_EDU: 21  # gradeschool education
-  # IND_POSTSEC_EDU: 22  # postsecondary education
-  # IND_GOVT: 23  # government and other
+# # industries (sourced from that one docx file in docs folder) (SW_SPLIT_IND)
+# IND_UNEMP: 0  # unemployed
+# IND_AGR_PROD: 1  # agriculture production
+# IND_AGR_OFF: 2  # agriculture office
+# IND_MET_PROD: 3  # metals
+# IND_MET_OFF: 4
+# IND_LIND_PROD: 5  # light industry
+# IND_LIND_OFF: 6
+# IND_HIND_PROD: 7  # heavy industry
+# IND_HIND_OFF: 8
+# IND_TEQP_PROD: 9  # transportation equipment
+# IND_TEQP_OFF: 10
+# IND_WHL_PROD: 11  # wholesale
+# IND_WHL_OFF: 12
+# IND_RET_PROD: 13  # retail
+# IND_RET_OFF: 14
+# IND_HOTEL: 15  # hotels/accomodations
+# IND_CONSTRUCT: 16  # construction
+# IND_HEALTH: 17  # heatlhcare
+# IND_TRN_HANDLE: 18  # transporation handling
+# IND_UTL: 19  # utilities services
+# IND_MISC_SRV: 20  # other services
+# IND_GRADE_EDU: 21  # gradeschool education
+# IND_POSTSEC_EDU: 22  # postsecondary education
+# IND_GOVT: 23  # government and other
 
-  # occupations (sourced from another docx in docs folder, also some custom created based off industries)
-  OCC_UNEMP: 0 # unemployed (unused)
-  OCC_OTHER_SERVICES: [1, 3, 6, 8, 9, 10, 15] # managers (1), professionals (3), entertainment (6), service (8), food (9), retail (10), maintenance/repair (15)
-  OCC_FIN: 2 # finance
-  OCC_EDU: [4, 5] # post secondary education (4), grade school education (5)
-  OCC_HEALTH: 7 # healthcare
-  OCC_WHL: 11 # wholesale (non-retail sales worker)
-  OCC_OFF: 12 # office/administration workers (currently unused)
-  OCC_AGR: 13 # agriculture
-  OCC_CON: 14 # construction
-  OCC_MFG: 16 # manufacturing
-  OCC_TRANS: 17 # transportation
-  OCC_MIL: 18 # military
+# occupations (sourced from another docx in docs folder, also some custom created based off industries)
+OCC_UNEMP: 0 # unemployed (unused)
+OCC_OTHER_SERVICES: [1, 3, 6, 8, 9, 10, 15] # managers (1), professionals (3), entertainment (6), service (8), food (9), retail (10), maintenance/repair (15)
+OCC_FIN: 2 # finance
+OCC_EDU: [4, 5] # post secondary education (4), grade school education (5)
+OCC_HEALTH: 7 # healthcare
+OCC_WHL: 11 # wholesale (non-retail sales worker)
+OCC_OFF: 12 # office/administration workers (currently unused)
+OCC_AGR: 13 # agriculture
+OCC_CON: 14 # construction
+OCC_MFG: 16 # manufacturing
+OCC_TRANS: 17 # transportation
+OCC_MIL: 18 # military
 
-  # employment status (ESR from PUMS)
-  ESR_UNDER16: 0 # under 16
-  ESR_EMP: [1, 2] # 2 different categories for employed people (not used)
-  ESR_UNEMP: 3 # unemployed
-  ESR_ARMY: [4, 5] # 2 different categories for people in the army (not used)
-  ESR_NOT_LABOR: 6 # not in labor force
+# employment status (ESR from PUMS)
+ESR_UNDER16: 0 # under 16
+ESR_EMP: [1, 2] # 2 different categories for employed people (not used)
+ESR_UNEMP: 3 # unemployed
+ESR_ARMY: [4, 5] # 2 different categories for people in the army (not used)
+ESR_NOT_LABOR: 6 # not in labor force
 
-  # LDT tour types (defined by convention, do not change)
-  LDT_BEGIN: 1
-  LDT_END: 2
-  LDT_COMPLETE: 3
-  LDT_AWAY: 4
-  LDT_NOTOUR: 0
+# LDT tour types (defined by convention, do not change)
+LDT_BEGIN: 1
+LDT_END: 2
+LDT_COMPLETE: 3
+LDT_AWAY: 4
+LDT_NOTOUR: 0
 
-  # internal-external categories (defined by convention, do not change)
-  LDT_INTERNAL: 0
-  LDT_EXTERNAL: 1
+# internal-external categories (defined by convention, do not change)
+LDT_INTERNAL: 0
+LDT_EXTERNAL: 1
 
-  PEMPLOY_FULL: 1
-  PEMPLOY_PART: 2
-  PEMPLOY_NOT: 3
-  PEMPLOY_CHILD: 4
+PEMPLOY_FULL: 1
+PEMPLOY_PART: 2
+PEMPLOY_NOT: 3
+PEMPLOY_CHILD: 4
 
-  PTYPE_FULL: &ptype_full 1
-  PTYPE_PART: &ptype_part 2
-  PTYPE_UNIVERSITY: &ptype_university 3
-  PTYPE_NONWORK: &ptype_nonwork 4
-  PTYPE_RETIRED: &ptype_retired 5
-  PTYPE_DRIVING: &ptype_driving 6
-  PTYPE_SCHOOL: &ptype_school 7
-  PTYPE_PRESCHOOL:  &ptype_preschool 8
+PTYPE_FULL: &ptype_full 1
+PTYPE_PART: &ptype_part 2
+PTYPE_UNIVERSITY: &ptype_university 3
+PTYPE_NONWORK: &ptype_nonwork 4
+PTYPE_RETIRED: &ptype_retired 5
+PTYPE_DRIVING: &ptype_driving 6
+PTYPE_SCHOOL: &ptype_school 7
+PTYPE_PRESCHOOL:  &ptype_preschool 8
 
-  # these appear as column headers in non_mandatory_tour_frequency.csv
-  PTYPE_NAME:
-    *ptype_full: PTYPE_FULL
-    *ptype_part: PTYPE_PART
-    *ptype_university: PTYPE_UNIVERSITY
-    *ptype_nonwork: PTYPE_NONWORK
-    *ptype_retired: PTYPE_RETIRED
-    *ptype_driving: PTYPE_DRIVING
-    *ptype_school: PTYPE_SCHOOL
-    *ptype_preschool: PTYPE_PRESCHOOL
+# these appear as column headers in non_mandatory_tour_frequency.csv
+PTYPE_NAME:
+  *ptype_full: PTYPE_FULL
+  *ptype_part: PTYPE_PART
+  *ptype_university: PTYPE_UNIVERSITY
+  *ptype_nonwork: PTYPE_NONWORK
+  *ptype_retired: PTYPE_RETIRED
+  *ptype_driving: PTYPE_DRIVING
+  *ptype_school: PTYPE_SCHOOL
+  *ptype_preschool: PTYPE_PRESCHOOL
 
-  CDAP_ACTIVITY_MANDATORY: M
-  CDAP_ACTIVITY_NONMANDATORY: N
-  CDAP_ACTIVITY_HOME: H
+CDAP_ACTIVITY_MANDATORY: M
+CDAP_ACTIVITY_NONMANDATORY: N
+CDAP_ACTIVITY_HOME: H
