@@ -36,18 +36,29 @@ SCH_NO_SCHOOL: 1
 # IND_GOVT: 23  # government and other
 
 # occupations (sourced from another docx in docs folder, also some custom created based off industries)
-OCC_UNEMP: 0 # unemployed (unused)
-OCC_OTHER_SERVICES: [1, 3, 6, 8, 9, 10, 15] # managers (1), professionals (3), entertainment (6), service (8), food (9), retail (10), maintenance/repair (15)
-OCC_FIN: 2 # finance
-OCC_EDU: [4, 5] # post secondary education (4), grade school education (5)
-OCC_HEALTH: 7 # healthcare
-OCC_WHL: 11 # wholesale (non-retail sales worker)
-OCC_OFF: 12 # office/administration workers (currently unused)
-OCC_AGR: 13 # agriculture
-OCC_CON: 14 # construction
-OCC_MFG: 16 # manufacturing
-OCC_TRANS: 17 # transportation
-OCC_MIL: 18 # military
+OCC_UNEMP: 0 # unemployed
+OCC_MNG: 1 # managers
+OCC_FIN: 2 # finance (used)
+OCC_PROF: 3 # professionals/science
+OCC_EDU_POST: 4 # post secondary education
+OCC_EDU_PRIM: 5 # primary education
+OCC_ENT: 6 # entertainment
+OCC_HEALTH: 7 # healthcare (used)
+OCC_SRV: 8 # service
+OCC_FOOD: 9 # food
+OCC_RET: 10 # retail
+OCC_WHL: 11 # wholesale (non-retail sales worker) (used)
+OCC_OFF: 12 # office/administration workers
+OCC_AGR: 13 # agriculture (used)
+OCC_CON: 14 # construction (used)
+OCC_MAINT: 15 # maintenance/repair 
+OCC_MFG: 16 # manufacturing (used)
+OCC_TRANS: 17 # transportation (used)
+OCC_MIL: 18 # military (used)
+
+# possibly remove OCC_PROF later if add dedicated field
+OCC_OTHER_SERVICES: [OCC_MNG, OCC_PROF, OCC_EDU_POST, OCC_EDU_PRIM, OCC_ENT, OCC_HEALTH, OCC_SRV, OCC_FOOD, OCC_RET, OCC_OFF, OCC_CON, OCC_MAINT, OCC_MIL] # all occupations except agriculture, transportation, wholesale, and finance
+OCC_EDU: [OCC_EDU_POST, OCC_EDU_PRIM] # education occupations
 
 # employment status (ESR from PUMS)
 ESR_UNDER16: 0 # under 16
