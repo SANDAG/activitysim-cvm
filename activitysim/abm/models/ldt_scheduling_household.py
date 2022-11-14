@@ -27,11 +27,11 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     """
     This model schedules the start/end times for households that were assigned
     to be beginning and/or ending a tour on a given day
-        - 0/complete: schedules both start/end of tour
+        - 0/notour: schedules both start/end of tour
         - 1/begin: schedules beginning of tour
         - 2/end: schedules end of tour
-        - 3/away: does not schedule
-        - 4/notour/-1/no lDT generated - does not schedule
+        - 3/complete: does not schedule
+        - 4/away/-1/no lDT generated - does not schedule
     """
     trace_label = "ldt_scheduling_households"
     model_settings_file_name = "ldt_scheduling.yaml"
@@ -39,7 +39,7 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
     choosers = households_merged.to_frame()
 
     # limiting ldt_scheduling_households to patterns whose begin/end times can be scheduled - complete/begin/end
-    choosers = choosers[choosers["ldt_pattern_household"].isin([0, 1, 2])]
+    choosers = choosers[choosers["ldt_pattern_household"].isin([1, 2, 3])]
     logger.info("Running %s with %d hosueholds", trace_label, len(choosers))
 
     # preliminary estimation steps
@@ -105,13 +105,16 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
         category_name = category_settings["NAME"]
         # see function documentation for category_num translation
         category_num = patterns.get(category_name.lower().replace("_tour", ""))
+
         # limiting scheduling to the current tour pattern
         subset = choosers[choosers["ldt_pattern_household"] == category_num]
+        
         if subset.empty:
             continue  # nothing to do here, move along
 
         # logic for complete tour pattern scheduling
         if category_num == LDT_PATTERN.COMPLETE:
+
             # read in specification for complete tour pattern scheduling
             model_spec = simulate.read_model_spec(file_name=category_settings["SPEC"])
             coefficients_df = simulate.read_model_coefficients(category_settings)
@@ -149,6 +152,7 @@ def ldt_scheduling_household(households, households_merged, chunk_size, trace_hh
 
             # get the start/end hours associated with the estimated values
             starts_ends = complete_tour_translation.loc[choices.values]
+
             # merge start/end hours to the households file
             households.loc[choices.index, "ldt_start_hour"] = starts_ends.apply(
                 lambda x: x[0]
