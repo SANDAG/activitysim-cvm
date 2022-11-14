@@ -86,9 +86,9 @@ def ldt_pattern_household(
         np.asarray(
             [
                 notour_prob,
-                constants["COMPLETE"],
                 constants["BEGIN"],
                 constants["END"],
+                constants["COMPLETE"],
                 constants["AWAY"],
             ]
         ),
@@ -99,13 +99,14 @@ def ldt_pattern_household(
         pr,
         index=choosers.index,
         columns=[
-            LDT_PATTERN.NOTOUR,
-            LDT_PATTERN.COMPLETE,
-            LDT_PATTERN.BEGIN,
-            LDT_PATTERN.END,
-            LDT_PATTERN.AWAY,
+                LDT_PATTERN.NOTOUR,
+                LDT_PATTERN.BEGIN,
+                LDT_PATTERN.END,
+                LDT_PATTERN.COMPLETE,
+                LDT_PATTERN.AWAY
         ],
     )
+    print(df)
     # _ is the random value used to make the monte carlo draws, not used
     # this is safe, case where trace_hh_id isn't being considered here is covered
     choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
