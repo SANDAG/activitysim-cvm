@@ -89,6 +89,7 @@ SIMULATE_CHOOSER_COLUMNS:
   - tour_type
   - home_zone_id
   - person_id
+  - ldt_pattern
 
 LOGSUM_SETTINGS: ldt_internal_mode_choice.yaml
 
