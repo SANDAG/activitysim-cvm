@@ -14,6 +14,7 @@ coef_age_below_25_work,0,F
 coef_age_55_65_work,0,F
 coef_age_65_up_work,-1.155,F
 coef_complete_travel_one_day_work,-2.707,F
+coef_exit_time_work,0,F
 coef_constant_other,0.242,F
 coef_income_below_20k_other,0,F
 coef_income_20k_40k_other,0,F
@@ -29,6 +30,7 @@ coef_age_below_25_other,-0.189,F
 coef_age_55_65_other,0.436,F
 coef_age_65_up_other,0.436,F
 coef_complete_travel_one_day_other,-1.855,F
+coef_exit_time_other,-0.0125,F
 coef_constant_household,1.035,F
 coef_income_below_20k_household,0,F
 coef_income_20k_40k_household,0,F
@@ -44,3 +46,4 @@ coef_age_below_25_household,0,F
 coef_age_55_65_household,0,F
 coef_age_65_up_household,0,F
 coef_complete_travel_one_day_household,-2.365,F
+coef_exit_time_household,-0.0084,F

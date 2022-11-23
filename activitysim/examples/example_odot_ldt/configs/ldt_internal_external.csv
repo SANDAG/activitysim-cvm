@@ -15,3 +15,4 @@ util_age_below_25,age 25 and below,age < 25,,coef_age_below_25
 util_age_55_up,age 55 and below 65,(age >=55) & (age < 65),,coef_age_55_65
 util_age_65_up,age 65+,age >= 65,,coef_age_65_up
 util_complete_travel_one_day,complete travel in one day,@(df.ldt_pattern == LDT_COMPLETE),,coef_complete_travel_one_day
+util_exit_time,time to exit model area,min_external_taz_time,,coef_exit_time
