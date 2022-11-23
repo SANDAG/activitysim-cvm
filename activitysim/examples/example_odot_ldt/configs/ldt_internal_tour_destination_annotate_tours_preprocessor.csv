@@ -1,6 +1,6 @@
 Description,Target,Expression
 # compute destination segmentations
-,travelers_occupation,"reindex(persons.SW_OCCUP, df.person_id).astype('int8')"
+,travelers_occupation,"reindex(persons.SW_SPLIT_IND, df.person_id).astype('int8')"
 ,_OCCUP,"travelers_occupation.apply(lambda x: f'_{x:.0f}')"
 ,_STUDENT,"np.where(reindex(persons.univ_student_status, df.person_id), '_student','_nonstudent')"
 ,_PART1,"df.tour_type.str.split('_').apply(lambda x: x[-1]).str.lower()"

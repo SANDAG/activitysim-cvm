@@ -31,43 +31,53 @@ SEGMENTS:
   - [household_overnight, household]
   # individual work related tours are sub-segmented by daytrip / overnight and worker industry category
   - [workrelated_day_0, person_workrelated]         # not employed
-  - [workrelated_day_1, person_workrelated]         # managers
-  - [workrelated_day_2, person_workrelated]         # finance
-  - [workrelated_day_3, person_workrelated]         # professionals
-  - [workrelated_day_4, person_workrelated]         # post secondary education
-  - [workrelated_day_5, person_workrelated]         # primary education
-  - [workrelated_day_6, person_workrelated]         # entertainent
-  - [workrelated_day_7, person_workrelated]         # healthcare
-  - [workrelated_day_8, person_workrelated]         # service
-  - [workrelated_day_9, person_workrelated]         # food
-  - [workrelated_day_10, person_workrelated]        # retail
-  - [workrelated_day_11, person_workrelated]        # wholesale (non-retail sales worker)
-  - [workrelated_day_12, person_workrelated]        # office/administration workers
-  - [workrelated_day_13, person_workrelated]        # agriculture
-  - [workrelated_day_14, person_workrelated]        # construction
-  - [workrelated_day_15, person_workrelated]        # maintenace/repair
-  - [workrelated_day_16, person_workrelated]        # manufacturing
-  - [workrelated_day_17, person_workrelated]        # transportation
-  - [workrelated_day_18, person_workrelated]        # military
-  - [workrelated_overnight_0, person_workrelated]   # not employed
-  - [workrelated_overnight_1, person_workrelated]   # managers
-  - [workrelated_overnight_2, person_workrelated]   # finance
-  - [workrelated_overnight_3, person_workrelated]   # professionals
-  - [workrelated_overnight_4, person_workrelated]   # post secondary education
-  - [workrelated_overnight_5, person_workrelated]   # primary education
-  - [workrelated_overnight_6, person_workrelated]   # entertainent
-  - [workrelated_overnight_7, person_workrelated]   # healthcare
-  - [workrelated_overnight_8, person_workrelated]   # service
-  - [workrelated_overnight_9, person_workrelated]   # food
-  - [workrelated_overnight_10, person_workrelated]  # retail
-  - [workrelated_overnight_11, person_workrelated]  # wholesale (non-retail sales worker)
-  - [workrelated_overnight_12, person_workrelated]  # office/administration workers
-  - [workrelated_overnight_13, person_workrelated]  # agriculture
-  - [workrelated_overnight_14, person_workrelated]  # construction
-  - [workrelated_overnight_15, person_workrelated]  # maintenace/repair
-  - [workrelated_overnight_16, person_workrelated]  # manufacturing
-  - [workrelated_overnight_17, person_workrelated]  # transportation
-  - [workrelated_overnight_18, person_workrelated]  # military
+  - [workrelated_day_1, person_workrelated]         # agriculture production
+  - [workrelated_day_2, person_workrelated]         # agriculture office
+  - [workrelated_day_3, person_workrelated]         # metal production
+  - [workrelated_day_4, person_workrelated]         # metla office
+  - [workrelated_day_5, person_workrelated]         # light industry production
+  - [workrelated_day_6, person_workrelated]         # light industry office
+  - [workrelated_day_7, person_workrelated]         # heavy industry production
+  - [workrelated_day_8, person_workrelated]         # heavy industry office
+  - [workrelated_day_9, person_workrelated]         # transportation equipment production
+  - [workrelated_day_10, person_workrelated]        # transportation equipement office
+  - [workrelated_day_11, person_workrelated]        # wholesale production
+  - [workrelated_day_12, person_workrelated]        # wholesale office
+  - [workrelated_day_13, person_workrelated]        # retail production
+  - [workrelated_day_14, person_workrelated]        # retail office
+  - [workrelated_day_15, person_workrelated]        # hotel/accomodation
+  - [workrelated_day_16, person_workrelated]        # construction
+  - [workrelated_day_17, person_workrelated]        # heatlhcare
+  - [workrelated_day_18, person_workrelated]        # tarnsportation handling
+  - [workrelated_day_19, person_workrelated]        # utilities
+  - [workrelated_day_20, person_workrelated]        # other services
+  - [workrelated_day_21, person_workrelated]        # primary education
+  - [workrelated_day_22, person_workrelated]        # post-secondary education
+  - [workrelated_day_23, person_workrelated]        # government
+  - [workrelated_overnight_0, person_workrelated]         # not employed
+  - [workrelated_overnight_1, person_workrelated]         # agriculture production
+  - [workrelated_overnight_2, person_workrelated]         # agriculture office
+  - [workrelated_overnight_3, person_workrelated]         # metal production
+  - [workrelated_overnight_4, person_workrelated]         # metla office
+  - [workrelated_overnight_5, person_workrelated]         # light industry production
+  - [workrelated_overnight_6, person_workrelated]         # light industry office
+  - [workrelated_overnight_7, person_workrelated]         # heavy industry production
+  - [workrelated_overnight_8, person_workrelated]         # heavy industry office
+  - [workrelated_overnight_9, person_workrelated]         # transportation equipment production
+  - [workrelated_overnight_10, person_workrelated]        # transportation equipement office
+  - [workrelated_overnight_11, person_workrelated]        # wholesale production
+  - [workrelated_overnight_12, person_workrelated]        # wholesale office
+  - [workrelated_overnight_13, person_workrelated]        # retail production
+  - [workrelated_overnight_14, person_workrelated]        # retail office
+  - [workrelated_overnight_15, person_workrelated]        # hotel/accomodation
+  - [workrelated_overnight_16, person_workrelated]        # construction
+  - [workrelated_overnight_17, person_workrelated]        # heatlhcare
+  - [workrelated_overnight_18, person_workrelated]        # tarnsportation handling
+  - [workrelated_overnight_19, person_workrelated]        # utilities
+  - [workrelated_overnight_20, person_workrelated]        # other services
+  - [workrelated_overnight_21, person_workrelated]        # primary education
+  - [workrelated_overnight_22, person_workrelated]        # post-secondary education
+  - [workrelated_overnight_23, person_workrelated]        # government
   # individual other tours are sub-segmented by daytrip / overnight and student status
   - [other_day_student, person_other]
   - [other_overnight_student, person_other]
