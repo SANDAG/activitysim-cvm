@@ -25,8 +25,6 @@ from . import (  # noqa: F401
     ldt_pattern_household,
     ldt_pattern_person,
     ldt_scheduling,
-    ldt_scheduling_household,
-    ldt_scheduling_person,
     ldt_tour_gen_household,
     ldt_tour_gen_person,
     location_choice,

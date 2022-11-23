@@ -1,5 +1,5 @@
 coefficient_name,value,constrain
-coef_constant,-6.152,F
+coef_constant,-8.497,F
 coef_hhworkers_1,0,F
 coef_hhworkers_2,-0.293,F
 coef_hhworkers_3_up,-0.346,F
@@ -19,6 +19,7 @@ coef_occupation_manufacturing,-0.43,F
 coef_occupation_transportation,0,F
 coef_occupation_wholesale,0.884,F
 coef_occupation_finance,0.778,F
+coef_occupation_profsci,0,F
 coef_occupation_other,0,F
 coef_college_student,0,F
 coef_male,0.806,F

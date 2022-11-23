@@ -1,0 +1,4 @@
+﻿Description,Target,Expression
+#,,needs to have at least one entry for some reason
+#,, annotate landuse table after import
+normalized total accessibility,auNormPkTotal,"(accessibility.auPkTotalAdj - np.mean(accessibility.auPkTotalAdj)) / np.std(accessibility.auPkTotalAdj)"

@@ -126,11 +126,9 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
                 LDT_PATTERN.AWAY
             ],
         )
-        print(df)
 
         # _ is the random value used to make the monte carlo draws, not used
         choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
-        print(choices)
 
         if estimator:
             estimator.write_choices(choices)
