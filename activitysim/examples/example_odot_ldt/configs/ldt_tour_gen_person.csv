@@ -27,3 +27,4 @@ util_age,Age,age,,coef_age
 util_age_squared,Age Squared,age*age,,coef_age_squared
 util_accessibility,amount of stuff in origin,auNormPkTotal,,coef_accessibility
 util_hh_ldt,person was predicted to go on household LDT trip,ldt_tour_gen_household==True,,coef_hh_ldt
+util_unemployed,person is unemployed,@df.SW_OCCUP == OCC_UNEMP,,coef_unemployed
