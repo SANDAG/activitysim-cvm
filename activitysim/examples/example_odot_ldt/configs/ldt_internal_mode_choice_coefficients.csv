@@ -30,3 +30,9 @@ coef_cost_inc_gt60k_other,-0.00023,F
 coef_daily_freq_service_hh,0.05,F
 coef_daily_freq_service_work,0.1,F
 coef_daily_freq_service_other,0.05,F
+coef_air_hh,6.313,F
+coef_air_work,5.24,F
+coef_air_other,4.69,F
+coef_compound_hh,-1.924,F
+coef_compound_work,-3.782,F
+coef_compound_other,-2.388,F
