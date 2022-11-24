@@ -24,7 +24,7 @@ coef_occupation_other,-0.101,F
 coef_college_student,0.455,F
 coef_male,0,F
 coef_age,0.051,F
-coef_age_squared,-0.001,F
+coef_age_squared,-0.0005,F
 coef_accessibility,-1.07,F
 coef_hh_ldt,-0.324,F
 coef_unemployed,0,F

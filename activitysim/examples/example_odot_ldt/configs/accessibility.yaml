@@ -9,3 +9,5 @@ CONSTANTS:
 annotate_accessibility:
   SPEC: annotate_accessibility
   DF: accessibility
+  TABLES:
+    - land_use
