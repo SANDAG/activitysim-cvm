@@ -183,9 +183,6 @@ def compute_accessibility(land_use, accessibility, network_los, chunk_size, trac
             model_settings=annotate,
             trace_label="annotate_accessibility"
         )
-        
-    print(accessibility_df)
-    print(accessibility_df.columns)
 
     # - write table to pipeline
     pipeline.replace_table("accessibility", accessibility_df)

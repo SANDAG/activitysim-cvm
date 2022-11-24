@@ -140,6 +140,11 @@ def ldt_internal_external(
     
     pipeline.replace_table("longdist_tours", ldt_tours)
     
+    trips = pipeline.get_table("longdist_trips")
+    trips["internal_external"] = choices_df.loc[trips.longdist_tour_id.values].values
+    trips["internal_external"] = trips["internal_external"].map({0: "INTERNAL", 1: "EXTERNAL"})
+    pipeline.replace_table("longdist_trips", trips)
+    
     if trace_hh_id:
         tracing.trace_df(
             ldt_tours,

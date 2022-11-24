@@ -9,7 +9,7 @@ import pandas as pd
 from activitysim.core import config, expressions, inject, logit, pipeline, tracing
 
 from .ldt_pattern import LDT_PATTERN, LDT_PATTERN_BITSHIFT
-from .ldt_tour_gen import process_longdist_tours
+from .ldt_tour_gen import process_longdist_tours, process_longdist_trips
 from .util import estimation
 
 logger = logging.getLogger(__name__)
@@ -203,6 +203,9 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
 
     if ldt_tours is not None:
         pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
+        
+    trips = process_longdist_trips(pipeline.get_table("longdist_tours"))
+    pipeline.replace_table("longdist_trips", trips)
 
     logger.debug("ldt_pattern_person complete")
     

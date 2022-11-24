@@ -147,6 +147,11 @@ def ldt_external_destchoice(
 
     pipeline.replace_table("longdist_tours", ldt_tours)
     
+    trips = pipeline.get_table("longdist_trips")
+    trips["destination"] = np.where((trips["purpose"] == "travel_out") & (trips["internal_external"] == "EXTERNAL"), choices_df.loc[trips.longdist_tour_id].iloc[:, 0], trips["destination"])
+    trips["origin"] = np.where((trips["purpose"] == "travel_home") & (trips["internal_external"] == "EXTERNAL"), choices_df.loc[trips.longdist_tour_id].iloc[:, 0], trips["origin"])
+    pipeline.replace_table("longdist_trips", trips)
+    
     if trace_hh_id:
         tracing.trace_df(
             ldt_tours,

@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 from ...core.util import reindex
+from .ldt_pattern import LDT_PATTERN
 from .util.tour_frequency import create_tours
 
 logger = logging.getLogger(__name__)
@@ -113,3 +114,26 @@ def process_longdist_tours(df, tour_counts, tour_category):
     set_longdist_tour_index(tours)
 
     return tours
+
+def process_longdist_trips(df):
+    new_rows = []
+    res = df.copy().reset_index().drop(["tour_type_count", "tour_type_num", "tour_num", "tour_count"], axis=1)
+    
+    res["purpose"] = np.where(((res["ldt_pattern"] & 3) == LDT_PATTERN.BEGIN) | ((res["ldt_pattern"] & 3) == LDT_PATTERN.COMPLETE), "travel_out", "")
+    res["purpose"] = np.where((res["ldt_pattern"] & 3) == LDT_PATTERN.END, "travel_home", res["purpose"])
+    
+    res["destination"] = np.where((res["ldt_pattern"] & 3) == LDT_PATTERN.END, res["origin"], np.nan)
+    res["origin"] = np.where((res["ldt_pattern"] & 3) == LDT_PATTERN.END, np.nan, res["origin"])
+    
+    for _, row in res[(res["ldt_pattern"] & 3) == LDT_PATTERN.COMPLETE].iterrows():
+        new_row = row.copy()
+        new_row["destination"] = new_row["origin"]
+        new_row["origin"] = np.nan
+        new_row["purpose"] = "travel_home"
+        new_rows.append(pd.DataFrame(new_row).T)
+    new_rows.append(res)
+    
+    res = pd.concat(new_rows)
+    res = res.sort_values("longdist_tour_id").reset_index(drop=True)
+    
+    return res 
