@@ -24,11 +24,15 @@ class SizeTermCalculator(object):
     returns size terms for specified segment in df or series form
     """
 
-    def __init__(self, size_term_selector):
+    def __init__(self, size_term_selector, size_term_file=None):
 
         # do this once so they can request size_terms for various segments (tour_type or purpose)
         land_use = inject.get_table("land_use")
-        size_terms = inject.get_injectable("size_terms")
+        if size_term_file != None:
+            f = config.config_file_path(size_term_file)
+            size_terms = pd.read_csv(f, comment="#", index_col="segment")
+        else:
+            size_terms = inject.get_injectable("size_terms")
         self.destination_size_terms = tour_destination_size_terms(
             land_use, size_terms, size_term_selector
         )
@@ -777,7 +781,7 @@ def run_tour_destination(
     trace_label,
 ):
 
-    size_term_calculator = SizeTermCalculator(model_settings["SIZE_TERM_SELECTOR"])
+    size_term_calculator = SizeTermCalculator(model_settings["SIZE_TERM_SELECTOR"], model_settings.get("SIZE_TERM_PATH", None))
 
     # maps segment names to compact (integer) ids
     segments = model_settings["SEGMENTS"]

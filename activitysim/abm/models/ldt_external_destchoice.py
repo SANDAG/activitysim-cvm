@@ -60,7 +60,6 @@ def ldt_external_destchoice(
     assert dim3 != None and time_key != None and model_area_key != None and model_area_external_category != None
     
     taz_dists = get_car_dist_skim(network_los, land_use.to_frame(), dim3, time_key, model_area_key, model_area_external_category)
-    print(taz_dists)
     
     external_probabilities_file_path = config.config_file_path(model_settings.get("REGION_PROBABILITIES"))
     external_probabilities = pd.read_csv(external_probabilities_file_path, index_col=0)
@@ -121,7 +120,6 @@ def ldt_external_destchoice(
             
             for i in df.index:
                 origin = ldt_tours_merged.loc[i, "home_zone_id"]
-                print(taz_dists.loc[origin, df.columns])
                 df.loc[i] = df.loc[i] * np.where(taz_dists.loc[origin, df.columns] >= 50, 1, 0)
             df = df.apply(lambda x: x / x.sum(), axis=1)     
 
