@@ -2,6 +2,7 @@
 # See full license in LICENSE.txt.
 import logging
 
+import numpy as np
 import pandas as pd
 from orca import orca
 
@@ -400,6 +401,11 @@ def ldt_internal_mode_choice(
     #         trace_label=tracing.extend_trace_label(trace_label, "annotate_tours"),
     #     )
     #     pipeline.replace_table("tours", tours)
+    
+    
+    trips = pipeline.get_table("longdist_trips")
+    trips["mode"] = np.where(trips["internal_external"] == "INTERNAL", choices_df.loc[trips.longdist_tour_id].iloc[:, 0], trips["mode"])
+    pipeline.replace_table("longdist_trips", trips)
 
     if trace_hh_id:
         tracing.trace_df(

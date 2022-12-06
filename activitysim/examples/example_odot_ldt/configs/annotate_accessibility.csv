@@ -1,0 +1,6 @@
+﻿Description,Target,Expression
+#,,needs to have at least one entry for some reason
+#,, annotate landuse table after import
+mean of model area,auPkTotalMean,"np.mean(accessibility.loc[land_use[land_use.MODELAREA == 1].index, 'auPkTotalAdj'])"
+std of model area,auPkTotalStd,"np.std(accessibility.loc[land_use[land_use.MODELAREA == 1].index, 'auPkTotalAdj'])"
+normalized total accessibility,auNormPkTotal,"np.where(accessibility.auPkTotalAdj == 0, 0, (accessibility.auPkTotalAdj - auPkTotalMean) / auPkTotalStd)"

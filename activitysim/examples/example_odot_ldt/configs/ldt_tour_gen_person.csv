@@ -19,10 +19,12 @@ util_occupation_manufacturing,Works in manufacturing,@df.SW_OCCUP == OCC_MFG,,co
 util_occupation_transportation,Works in transportation handling,@(df.SW_OCCUP == OCC_TRANS),,coef_occupation_transportation
 util_occupation_wholesale,Works in wholesale offices,@(df.SW_OCCUP == OCC_WHL),,coef_occupation_wholesale
 util_occupation_finance,Works in business/finance,@df.SW_OCCUP == OCC_FIN,,coef_occupation_finance
+util_occupation_profsci,Works in professional/science occupation,@df.SW_OCCUP == OCC_PROF,,coef_occupation_profsci
 util_occupation_other,"Works in some other service (service, managers, professionals, service, entertainment, food, retail, maintenace)",@df.SW_OCCUP.isin(OCC_OTHER_SERVICES),,coef_occupation_other
 util_college_student,Person is College Student,@(df.SCH != SCH_NO_SCHOOL) & (df.age>=18),,coef_college_student
 util_male,Male,@df.SEX==MALE,,coef_male
 util_age,Age,age,,coef_age
 util_age_squared,Age Squared,age*age,,coef_age_squared
-util_accessibility,amount of stuff in origin,auPkTotal,,coef_accessibility
+util_accessibility,amount of stuff in origin,auNormPkTotal,,coef_accessibility
 util_hh_ldt,person was predicted to go on household LDT trip,ldt_tour_gen_household==True,,coef_hh_ldt
+util_unemployed,person is unemployed,@df.SW_OCCUP == OCC_UNEMP,,coef_unemployed

@@ -106,7 +106,6 @@ def ldt_pattern_household(
                 LDT_PATTERN.AWAY
         ],
     )
-    print(df)
     # _ is the random value used to make the monte carlo draws, not used
     # this is safe, case where trace_hh_id isn't being considered here is covered
     choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)

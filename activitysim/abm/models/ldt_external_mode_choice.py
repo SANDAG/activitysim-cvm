@@ -202,6 +202,10 @@ def ldt_external_mode_choice(
     
     pipeline.replace_table("longdist_tours", ldt_tours)
     
+    trips = pipeline.get_table("longdist_trips")
+    trips["mode"] = choices_df.loc[trips.longdist_tour_id.values].values
+    pipeline.replace_table("longdist_trips", trips)
+    
     if trace_hh_id:
         tracing.trace_df(
             ldt_tours,

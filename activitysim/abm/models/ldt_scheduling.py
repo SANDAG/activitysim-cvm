@@ -191,27 +191,27 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
                     ends_list.append(choices)
                 else:
                     raise ValueError(f"BUG, bad category_num {category_num}")
-                
-    starts_df = pd.concat(starts_list).reindex(ldt_tours_merged.index).fillna(
-        {start_colname: -1}, downcast="infer"
-    )
-    ends_df = pd.concat(ends_list).reindex(ldt_tours_merged.index).fillna(
-        {end_colname: -1}, downcast="infer"
-    )
+    if len(starts_list) != 0:   
+        starts_df = pd.concat(starts_list).reindex(ldt_tours_merged.index).fillna(
+            {start_colname: -1}, downcast="infer"
+        )
+        assign_in_place(ldt_tours, starts_df)
     
-    assign_in_place(ldt_tours, starts_df)
-    assign_in_place(ldt_tours, ends_df)
-    
-    print(ldt_tours)
-    
+    if len(ends_list) != 0:
+        ends_df = pd.concat(ends_list).reindex(ldt_tours_merged.index).fillna(
+            {end_colname: -1}, downcast="infer"
+        )
+        assign_in_place(ldt_tours, ends_df)
+        
     tracing.print_summary(
         "ldt_scheduling all tour type start times",
-        starts_df,
+        ldt_tours[start_colname],
         value_counts=True,
     )
+        
     tracing.print_summary(
         "ldt_scheduling all tour type end times",
-        ends_df,
+        ldt_tours[end_colname],
         value_counts=True,
     )
     
@@ -238,6 +238,12 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
     pipeline.replace_table("households", households)
     pipeline.replace_table("persons", persons)
     
+    # TODO: fix logic for trip start hour for end/complete trips
+    trips = pipeline.get_table("longdist_trips")
+    trips["ldt_start_hour"] = starts_df.loc[trips.longdist_tour_id].values
+    trips["ldt_start_hour"] = np.where(trips["purpose"] == "travel_out", -1, trips["ldt_start_hour"])
+    pipeline.replace_table("longdist_trips", trips)
+ 
     if trace_hh_id:
         tracing.trace_df(
             ldt_tours,

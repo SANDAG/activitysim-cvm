@@ -57,7 +57,7 @@ OCC_TRANS: 17 # transportation (used)
 OCC_MIL: 18 # military (used)
 
 # possibly remove OCC_PROF later if add dedicated field
-OCC_OTHER_SERVICES: [OCC_MNG, OCC_PROF, OCC_EDU_POST, OCC_EDU_PRIM, OCC_ENT, OCC_HEALTH, OCC_SRV, OCC_FOOD, OCC_RET, OCC_OFF, OCC_CON, OCC_MAINT, OCC_MIL] # all occupations except agriculture, transportation, wholesale, and finance
+OCC_OTHER_SERVICES: [OCC_MNG, OCC_EDU_POST, OCC_EDU_PRIM, OCC_ENT, OCC_HEALTH, OCC_SRV, OCC_FOOD, OCC_RET, OCC_OFF, OCC_CON, OCC_MAINT, OCC_MIL] # all occupations except agriculture, transportation, wholesale, and finance
 OCC_EDU: [OCC_EDU_POST, OCC_EDU_PRIM] # education occupations
 
 # employment status (ESR from PUMS)

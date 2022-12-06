@@ -9,7 +9,7 @@ median_value_of_time,median_value_of_time,"income_segment.map({k: v for k, v in 
 hh_value_of_time,hh_value_of_time,"rng.lognormal_for_df(df, mu=np.log(median_value_of_time * _MU), sigma=_SIGMA).clip(_MIN_VOT, _MAX_VOT)"
 #,, annotate households table after import
 ,_PERSON_COUNT,"lambda query, persons, households: persons.query(query).groupby('household_id').size().reindex(households.index).fillna(0).astype(np.int8)"
-number of workers,num_workers,"_PERSON_COUNT('ESR==2 | ESR==5', persons, households)"
+number of workers,num_workers,"_PERSON_COUNT('ESR.isin([1, 2, 4, 5])', persons, households)"
 number of students,num_students,"_PERSON_COUNT('SCH>=2', persons, households)"
 number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)"
 #,,FIXME households.income can be negative  - so we clip?

@@ -1,5 +1,5 @@
 coefficient_name,value,constrain
-coef_constant,-1.23,F
+coef_constant,-2.47,F
 coef_hhworkers_1,0,F
 coef_hhworkers_2,0,F
 coef_hhworkers_3_up,0,F
@@ -16,13 +16,15 @@ coef_single_family_dwelling,-0.161,F
 coef_hhstudents,0,F
 coef_occupation_farming,-0.636,F
 coef_occupation_manufacturing,-0.474,F
-coef_occupation_transportation,-1.23,F
+coef_occupation_transportation,-0.3722,F
 coef_occupation_wholesale,0,F
 coef_occupation_finance,0,F
+coef_occupation_profsci,-0.1601,F
 coef_occupation_other,-0.101,F
 coef_college_student,0.455,F
 coef_male,0,F
 coef_age,0.051,F
-coef_age_squared,-0.001,F
-coef_accessibility,-0.119,F
+coef_age_squared,-0.0005,F
+coef_accessibility,-1.07,F
 coef_hh_ldt,-0.324,F
+coef_unemployed,0,F

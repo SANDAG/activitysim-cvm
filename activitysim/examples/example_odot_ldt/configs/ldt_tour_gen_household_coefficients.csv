@@ -1,5 +1,5 @@
 coefficient_name,value,constrain
-coef_constant,0.187,F
+coef_constant,-5,F
 coef_hhworkers_1,-0.336,F
 coef_hhworkers_2,-0.348,F
 coef_hhworkers_3_up,-1.149,F
@@ -7,8 +7,8 @@ coef_hhautos_1,0,F
 coef_hhautos_2,0,F
 coef_hhautos_3_up,0,F
 coef_hhsize_2,0,F
-coef_hhsize_3,-0.914,F
-coef_hhsize_4_up,-0.993,F
+coef_hhsize_3,-0.589,F
+coef_hhsize_4_up,-1.07,F
 coef_hhincome_20k_40k,0.387,F
 coef_hhincome_40k_60k,0.746,F
 coef_hhincome_60k_up,1.248,F
@@ -19,8 +19,9 @@ coef_occupation_manufacturing,-0.297,F
 coef_occupation_transportation,-0.366,F
 coef_occupation_wholesale,0,F
 coef_occupation_finance,0,F
+coef_occupation_profsci,-0.3169,F
 coef_occupation_other,-0.181,F
 coef_college_student,-0.242,F
 coef_male,0,F
 coef_age,0,F
-coef_accessibility,-0.182,F
+coef_accessibility,-1.63,F

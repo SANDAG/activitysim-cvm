@@ -1,5 +1,6 @@
 # ActivitySim
 # See full license in LICENSE.txt.
+import numpy as np
 import logging
 
 from ...core import config, expressions, inject, pipeline, tracing
@@ -116,6 +117,14 @@ def ldt_internal_tour_destination(
     ).fillna({"internal_destination": -1}, downcast={"internal_destination": "int32"})
 
     pipeline.replace_table("longdist_tours", ldt_tours)
+    
+    trips = pipeline.get_table("longdist_trips")
+    choices = choices_df[["choice"]]
+    choices = choices.reindex(ldt_tours.index).fillna(-1)
+    
+    trips["destination"] = np.where((trips["purpose"] == "travel_out") & (trips["internal_external"] == "INTERNAL"), choices.loc[trips.longdist_tour_id].iloc[:, 0], trips["destination"])
+    trips["origin"] = np.where((trips["purpose"] == "travel_home") & (trips["internal_external"] == "INTERNAL"), choices.loc[trips.longdist_tour_id].iloc[:, 0], trips["origin"])
+    pipeline.replace_table("longdist_trips", trips)
 
     tracing.print_summary(
         "internal_destination", ldt_tours.internal_destination, describe=True

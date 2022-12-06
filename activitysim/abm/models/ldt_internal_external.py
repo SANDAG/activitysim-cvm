@@ -19,7 +19,7 @@ LDT_IE_NULL = -1
 
 @inject.step()
 def ldt_internal_external(
-    longdist_tours, persons_merged, chunk_size, trace_hh_id
+    longdist_tours, persons_merged, network_los, land_use, chunk_size, trace_hh_id
 ):
     """
     This model determines if a person on an LDT is going/will go/is at an internal location (within Ohio/0)
@@ -59,6 +59,15 @@ def ldt_internal_external(
         file_name=model_settings["SPEC"]
     )  # reading in generic model spec
     nest_spec = config.get_logit_model_settings(model_settings)  # MNL
+    
+    dim3 = model_settings.get("SKIM_KEY", None)
+    time_key = model_settings.get("SEGMENT_KEY", None)
+    model_area_key = model_settings.get("MODEL_AREA_KEY", None)
+    model_area_external_category = model_settings.get("MODEL_AREA_EXTERNAL_CATEGORY", None)
+    assert dim3 != None and time_key != None and model_area_key != None and model_area_external_category != None
+    
+    taz_times = get_car_time_skim(network_los, land_use.to_frame(), dim3, time_key, model_area_key, model_area_external_category)
+    ldt_tours_merged["min_external_taz_time"] = ldt_tours_merged["home_zone_id"].apply(lambda x: np.min(taz_times[x - 1]))
     
     choices_list = []
     for tour_purpose, tours_segment in ldt_tours_merged.groupby(segment_column_name):
@@ -131,6 +140,11 @@ def ldt_internal_external(
     
     pipeline.replace_table("longdist_tours", ldt_tours)
     
+    trips = pipeline.get_table("longdist_trips")
+    trips["internal_external"] = choices_df.loc[trips.longdist_tour_id.values].values
+    trips["internal_external"] = trips["internal_external"].map({0: "INTERNAL", 1: "EXTERNAL"})
+    pipeline.replace_table("longdist_trips", trips)
+    
     if trace_hh_id:
         tracing.trace_df(
             ldt_tours,
@@ -139,3 +153,13 @@ def ldt_internal_external(
             index_label="tour_id",
             warn_if_empty=True,
         )
+        
+def get_car_time_skim(network_los, land_use, dim3, time_key, model_area_key, model_area_external_category):
+    skims = network_los.get_default_skim_dict().skim_data._skim_data
+    key_dict = network_los.get_default_skim_dict().skim_dim3
+    key = key_dict[dim3][time_key]
+    skim = skims[key]
+
+    external_tazs = land_use[land_use[model_area_key] == model_area_external_category].index
+
+    return skim[:, external_tazs - 1]
