@@ -69,11 +69,14 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
     i = 5
     x = 0
     while i <= 23:
+        if i > 18:
+            break
         j = i
         while j <= 23:
-            complete_tour_translation[x] = [i, j]
+            if j - i >= 2:
+                complete_tour_translation[x] = [i, j]
+                x += 1
             j += 1
-            x += 1
         i += 1
     complete_tour_translation = pd.Series(complete_tour_translation)
     
