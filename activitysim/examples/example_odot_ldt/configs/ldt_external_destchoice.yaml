@@ -6,3 +6,10 @@ REGION_CATEGORIES:
   - NAME: NW
   - NAME: SE
   - NAME: SW
+
+# land use keys (need to determine whether a taz is internal or external)
+MODEL_AREA_KEY: "LDTdistrict"
+MODEL_AREA_EXTERNAL_CATEGORY: "External"
+# skim category keys (want some car time measurement between tazs)
+SEGMENT_KEY: "PK"
+SKIM_KEY: "CAR_DIST"

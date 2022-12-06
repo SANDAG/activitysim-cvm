@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 @inject.step()
 def ldt_external_destchoice(
-    longdist_tours, persons_merged, chunk_size, trace_hh_id
+    longdist_tours, persons_merged, network_los, land_use, chunk_size, trace_hh_id
 ):
     """
     This model determines the destination of those traveling externally based on a probability distribution.
@@ -52,6 +52,15 @@ def ldt_external_destchoice(
         how="left",
         suffixes=("", "_r"),
     )
+    
+    dim3 = model_settings.get("SKIM_KEY", None)
+    time_key = model_settings.get("SEGMENT_KEY", None)
+    model_area_key = model_settings.get("MODEL_AREA_KEY", None)
+    model_area_external_category = model_settings.get("MODEL_AREA_EXTERNAL_CATEGORY", None)
+    assert dim3 != None and time_key != None and model_area_key != None and model_area_external_category != None
+    
+    taz_dists = get_car_dist_skim(network_los, land_use.to_frame(), dim3, time_key, model_area_key, model_area_external_category)
+    print(taz_dists)
     
     external_probabilities_file_path = config.config_file_path(model_settings.get("REGION_PROBABILITIES"))
     external_probabilities = pd.read_csv(external_probabilities_file_path, index_col=0)
@@ -107,11 +116,16 @@ def ldt_external_destchoice(
                 prob_list[i] = external_probabilities.loc[taz][region]
             # prob_list[-1] = 1 - np.sum(prob_list[:-1])
             
-            pr = np.broadcast_to(prob_list, (len(region_choosers.index), len(external_probabilities)))
+            pr = np.broadcast_to(prob_list, (len(region_choosers.index), len(external_probabilities))).copy()
             df = pd.DataFrame(pr, index=region_choosers.index, columns=external_probabilities.index)
+            
+            for i in df.index:
+                origin = ldt_tours_merged.loc[i, "home_zone_id"]
+                print(taz_dists.loc[origin, df.columns])
+                df.loc[i] = df.loc[i] * np.where(taz_dists.loc[origin, df.columns] >= 50, 1, 0)
+            df = df.apply(lambda x: x / x.sum(), axis=1)     
 
             choices, _ = logit.make_choices(df, trace_choosers=trace_hh_id)
-            df = df.reset_index()
 
             if estimator:
                 estimator.write_choices(choices)
@@ -160,3 +174,13 @@ def ldt_external_destchoice(
             index_label="tour_id",
             warn_if_empty=True,
         )
+        
+def get_car_dist_skim(network_los, land_use, dim3, time_key, model_area_key, model_area_external_category):
+    skims = network_los.get_default_skim_dict().skim_data._skim_data
+    key_dict = network_los.get_default_skim_dict().skim_dim3
+    key = key_dict[dim3][time_key]
+    skim = skims[key]
+
+    external_tazs = land_use[land_use[model_area_key] == model_area_external_category].index
+
+    return pd.DataFrame(skim[:, external_tazs - 1], index=np.arange(1, skim.shape[0] + 1), columns=external_tazs)
