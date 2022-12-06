@@ -1,31 +1,39 @@
-﻿Description,Target,Expression
-# ,,"description describes the field, unimportant in actual program, target refers to the actual variable reference, expression is the value of the target"
-,_MIN_VOT,setting('min_value_of_time')
-,_MAX_VOT,setting('max_value_of_time')
-,_MU,setting('distributed_vot_mu')
-,_SIGMA,setting('distributed_vot_sigma')
-income_segment,income_segment,"np.ceil(households.INCOME/15000).astype(int).clip(1,4)"
-median_value_of_time,median_value_of_time,"income_segment.map({k: v for k, v in setting('household_median_value_of_time').items()})"
-hh_value_of_time,hh_value_of_time,"rng.lognormal_for_df(df, mu=np.log(median_value_of_time * _MU), sigma=_SIGMA).clip(_MIN_VOT, _MAX_VOT)"
-#,, annotate households table after import
-,_PERSON_COUNT,"lambda query, persons, households: persons.query(query).groupby('household_id').size().reindex(households.index).fillna(0).astype(np.int8)"
-number of workers,num_workers,"_PERSON_COUNT('ESR.isin([1, 2, 4, 5])', persons, households)"
-number of students,num_students,"_PERSON_COUNT('SCH>=2', persons, households)"
-number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)"
-#,,FIXME households.income can be negative  - so we clip?
-income_in_thousands,income_in_thousands,(households.INCOME / 1000).clip(lower=0)
-min_person_id,min_person_id,"persons.reset_index().groupby('household_id')['person_id'].min().reindex(households.index)"
-#,,we assume that everyone 16 and older is a potential driver
-,_PERSON_COUNT,"lambda query, persons, households: persons.query(query).groupby('household_id').size().reindex(households.index).fillna(0).astype(np.int8)"
-number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)"
-num_adults,num_adults,"_PERSON_COUNT('adult', persons, households)"
-num_children,num_children,"_PERSON_COUNT('~adult', persons, households)"
-num_young_children,num_young_children,"_PERSON_COUNT('age <= 5', persons, households)"
-num_children_5_to_15,num_children_5_to_15,"_PERSON_COUNT('5 <= age <= 15', persons, households)"
-num_children_16_to_17,num_children_16_to_17,"_PERSON_COUNT('16 <= age <= 17', persons, households)"
-num_college_age,num_college_age,"_PERSON_COUNT('18 <= age <= 24', persons, households)"
-num_young_adults,num_young_adults,"_PERSON_COUNT('25 <= age <= 34', persons, households)"
+﻿Description,Target,Expression,
+# ,,"description describes the field, unimportant in actual program, target refers to the actual variable reference, expression is the value of the target",
+,_MIN_VOT,setting('min_value_of_time'),
+,_MAX_VOT,setting('max_value_of_time'),
+,_MU,setting('distributed_vot_mu'),
+,_SIGMA,setting('distributed_vot_sigma'),
+income_segment,income_segment,"np.ceil(households.INCOME/15000).astype(int).clip(1,4)",
+median_value_of_time,median_value_of_time,"income_segment.map({k: v for k, v in setting('household_median_value_of_time').items()})",
+hh_value_of_time,hh_value_of_time,"rng.lognormal_for_df(df, mu=np.log(median_value_of_time * _MU), sigma=_SIGMA).clip(_MIN_VOT, _MAX_VOT)",
+#,, annotate households table after import,
+,_OCC_COUNT,"lambda category_name, categories, persons, households: persons[persons[category_name].isin(categories)].groupby('household_id').size().reindex(households.index) >= 1",
+,_PERSON_COUNT,"lambda query, persons, households: persons.query(query).groupby('household_id').size().reindex(households.index).fillna(0).astype(np.int8)",
+number of workers,num_workers,"_PERSON_COUNT('ESR.isin([1, 2, 4, 5])', persons, households)",
+number of students,num_students,"_PERSON_COUNT('SCH>=2', persons, households)",
+number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)",
+#,,FIXME households.income can be negative  - so we clip?,
+income_in_thousands,income_in_thousands,(households.INCOME / 1000).clip(lower=0),
+min_person_id,min_person_id,persons.reset_index().groupby('household_id')['person_id'].min().reindex(households.index),
+#,,we assume that everyone 16 and older is a potential driver,
+,_PERSON_COUNT,"lambda query, persons, households: persons.query(query).groupby('household_id').size().reindex(households.index).fillna(0).astype(np.int8)",
+number of drivers,num_drivers,"_PERSON_COUNT('16 <= age', persons, households)",
+num_adults,num_adults,"_PERSON_COUNT('adult', persons, households)",
+num_children,num_children,"_PERSON_COUNT('~adult', persons, households)",
+num_young_children,num_young_children,"_PERSON_COUNT('age <= 5', persons, households)",
+num_children_5_to_15,num_children_5_to_15,"_PERSON_COUNT('5 <= age <= 15', persons, households)",
+num_children_16_to_17,num_children_16_to_17,"_PERSON_COUNT('16 <= age <= 17', persons, households)",
+num_college_age,num_college_age,"_PERSON_COUNT('18 <= age <= 24', persons, households)",
+num_young_adults,num_young_adults,"_PERSON_COUNT('25 <= age <= 34', persons, households)",
 #,non_family,non_family,households.HHT.isin(HHT_NONFAMILY)
 #,family,family,households.HHT.isin(HHT_FAMILY)
 #,home_is_urban,home_is_urban,"reindex(land_use.area_type, households.home_zone_id) < setting('urban_threshold')"
 #,home_is_rural,home_is_rural,"reindex(land_use.area_type, households.home_zone_id) > setting('rural_threshold')"
+any member in the household works in agriculture,any_occup_agr,"_OCC_COUNT('SW_OCCUP', [OCC_AGR], persons, households)",
+any member in the household works in manufacturing,any_occup_mfg,"_OCC_COUNT('SW_OCCUP', [OCC_MFG], persons, households)",
+any member in the household works in transportation,any_occup_trans,"_OCC_COUNT('SW_OCCUP', [OCC_TRANS], persons, households)",
+any member in the household works in wholesale,any_occup_whl,"_OCC_COUNT('SW_OCCUP', [OCC_WHL], persons, households)",
+any member in the household works in finance,any_occup_fin,"_OCC_COUNT('SW_OCCUP', [OCC_FIN], persons, households)",
+any member in the household works in profsci,any_occup_prof,"_OCC_COUNT('SW_OCCUP', [OCC_PROF], persons, households)",
+any member in the household works in other industries,any_occup_other,"_OCC_COUNT('SW_OCCUP', OCC_OTHER_SERVICES, persons, households)",
