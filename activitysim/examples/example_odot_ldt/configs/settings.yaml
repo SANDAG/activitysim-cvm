@@ -250,6 +250,7 @@ output_tables:
     - persons
     - tours
     - longdist_tours
+    - longdist_trips
     - trips
     - joint_tour_participants
 

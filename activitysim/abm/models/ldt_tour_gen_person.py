@@ -24,6 +24,7 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
     trace_label = "ldt_tour_gen_person"
     model_settings_file_name = "ldt_tour_gen_person.yaml"
 
+    # convert persons_merged to dataframe to use as fully-specified choosers file
     choosers = persons_merged.to_frame()
     logger.info("Running %s with %d persons", trace_label, len(choosers))
 
@@ -40,8 +41,7 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
         categories = config.read_settings_file(category_file_name)
         constants.update(categories)
 
-    # preprocessor - merges auto ownership, accessibility, and whether or not a person has a
-    # household ldt generated already for estimation purposes
+    # preprocessor - adds nothing
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
         locals_d = {}
@@ -62,16 +62,19 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
     # needs to be outside the loop so we do it only once
     persons = persons.to_frame()
 
+    # run estimation for all purposes (OTHER and WORKRELATED) using their respective settings
     for purpose_settings in spec_purposes:
+        # the specified purpose name
         purpose_name = purpose_settings["NAME"]
 
+        # read in the specfic purpose model coefficients
         coefficients_df = simulate.read_model_coefficients(purpose_settings)
         # need to differentiate the model_spec read in and the one used for each purpose, need to redeclare
         model_spec_purpose = simulate.eval_coefficients(
             model_spec, coefficients_df, estimator
         )
 
-        nest_spec = config.get_logit_model_settings(model_settings)
+        nest_spec = config.get_logit_model_settings(model_settings) # MNL
 
         if estimator:
             estimator.write_model_settings(model_settings, model_settings_file_name)

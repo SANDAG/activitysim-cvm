@@ -20,7 +20,7 @@ def ldt_pattern_household(
     households, households_merged, chunk_size, trace_hh_id, persons
 ):
     """
-    Assign a LDT pattern to each household.
+    Assign a LDT pattern to each household that had a generated LDT trip.
 
     This model gives each LDT household one of the possible LDT categories for a given day --
     NOTOUR = 0
@@ -81,7 +81,7 @@ def ldt_pattern_household(
         - constants["AWAY"]
     )
 
-    # probs as array, without using so much memory
+    # broadcast probs to array, without using so much memory
     pr = np.broadcast_to(
         np.asarray(
             [
@@ -94,7 +94,7 @@ def ldt_pattern_household(
         ),
         (len(choosers.index), 5),
     )
-    # sampling probabilities
+    # sampling probabilities to draw from
     df = pd.DataFrame(
         pr,
         index=choosers.index,
@@ -161,6 +161,8 @@ def ldt_pattern_household(
         right_index=True,
     ).rename(columns={"ldt_pattern_household": "ldt_pattern"})
 
+    # convenient field to differentiate between person and household tours
+    # actor type for hh longdist tours is household
     hh_longdist_tours["actor_type"] = "household"
 
     pipeline.extend_table("longdist_tours", hh_longdist_tours)

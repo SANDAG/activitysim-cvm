@@ -167,7 +167,12 @@ def ldt_internal_mode_choice(
     longdist_tours, persons_merged, network_los, chunk_size, trace_hh_id
 ):
     """
-    Tour mode choice simulate
+    This model simulates mode choice for those going on internal LDT trips.
+    
+    - *Configuration File*: `ldt_internal_mode_choice.yaml`
+    - *Core Table*: `longdist_tours`
+    - *Result Field*: `ldt_internal_mode_choice`
+    - *Result dtype*: `object (string)`
     """
     trace_label = "ldt_internal_mode_choice"
     model_settings_file_name = "ldt_internal_mode_choice.yaml"

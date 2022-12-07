@@ -1,6 +1,6 @@
 from enum import IntFlag
 
-
+# enum for LDT patterns
 class LDT_PATTERN(IntFlag):
     NOTOUR = 0
     BEGIN = 1  # leave home, do not return home today
@@ -11,5 +11,5 @@ class LDT_PATTERN(IntFlag):
 
 # note that COMPLETE == BEGIN|END, this is used for finding tours that need trips
 
-
+# bitshift used to differentiate patterns by purpose
 LDT_PATTERN_BITSHIFT = 3

@@ -23,11 +23,13 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     trace_label = "ldt_tour_gen_household"
     model_settings_file_name = "ldt_tour_gen_household.yaml"
 
+    # convert the households_merged to a dataframe as a choosers file
     choosers = households_merged.to_frame()
     # if we want to limit choosers, we can do so here
     # choosers = choosers[choosers.workplace_zone_id > -1]
     logger.info("Running %s with %d households", trace_label, len(choosers))
 
+    # read in the model settings from the specified path
     model_settings = config.read_model_settings(model_settings_file_name)
     estimator = estimation.manager.begin_estimation("ldt_tour_gen_household")
 
@@ -40,7 +42,7 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
         categories = config.read_settings_file(category_file_name)
         constants.update(categories)
 
-    # preprocessor - adds accessiblity of chooser origin for use in estimation
+    # preprocessor - adds nothing
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
         locals_d = {}
@@ -59,7 +61,7 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     coefficients_df = simulate.read_model_coefficients(model_settings)
     model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
 
-    nest_spec = config.get_logit_model_settings(model_settings)
+    nest_spec = config.get_logit_model_settings(model_settings) # MNL
 
     if estimator:
         estimator.write_model_settings(model_settings, model_settings_file_name)

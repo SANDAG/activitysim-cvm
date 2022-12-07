@@ -18,12 +18,23 @@ logger = logging.getLogger(__name__)
 @inject.step()
 def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     """
-    This model gives each LDT individual one of the possible LDT categories for a given day --
-        - complete tour (start and end tour on same day)
-        - begin tour
-        - end tour
-        - away on tour
-        - no tour
+    Assign a LDT pattern to each person that had a generated LDT trip. 
+
+    This model gives each LDT household one of the possible LDT categories for a given day --
+    NOTOUR = 0
+    BEGIN = 9/17     # leave home, do not return home today
+    END = 10/18       # arrive home, did not start at home today
+    COMPLETE = 11/19  # long distance day-trip completed today
+    AWAY = 12/20      # away from home, in the middle of a multi-day tour
+    
+    These categories are equal to the base pattern num (0/1/2/3/4) plus a bitshift of the 
+    category num (0 for household, 1 for workrelated, 2 for other)
+    adjusted pattern num = base pattern num + (category num << 3)
+
+    - *Configuration File*: `ldt_pattern_person.yaml`
+    - *Core Table*: `personss`
+    - *Result Field*: `ldt_pattern_person`
+    - *Result dtype*: `int8`
     """
     trace_label = "ldt_pattern_person"
     model_settings_file_name = "ldt_pattern_person.yaml"
@@ -38,7 +49,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
 
     constants = config.get_model_constants(model_settings)
 
-    # preprocessor - adds whether a person has a household ldt trip already generated
+    # preprocessor - adds nothing
     preprocessor_settings = model_settings.get("preprocessor", None)
     if preprocessor_settings:
         locals_d = {}
@@ -51,12 +62,14 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             locals_dict=locals_d,
             trace_label=trace_label,
         )
-
+    # read in settings for all purpose (other/workrelated)
     spec_purposes = model_settings.get("SPEC_PURPOSES", {})
 
+    # create dataframe that contains whether a person is already generated to go on a household LDT trip
     persons = persons.to_frame()
     person_on_hh_ldt = choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
-    # default value
+    
+    # set default pattern to the notour enum
     persons["ldt_pattern_person"] = pd.Series(
         LDT_PATTERN.NOTOUR, index=persons.index, dtype=np.uint8
     )
@@ -66,12 +79,15 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         LDT_PATTERN.NOTOUR, index=persons.index, dtype=np.uint8
     )
 
+    # run pattern assignment for the two individual purposes (workrelated/other)
     for purpose_num, purpose_settings in enumerate(spec_purposes, start=1):
-        # purpose_num zero is for household patterns
+        # WORKRELATED and OTHER
         purpose_name = purpose_settings["NAME"]
 
         # only consider people who are predicted to go on LDT tour over 2 week period
         # and who are not already on an LDT tour today
+        # this follows the hierarchy for LDT pattern: household takes precedence
+        # over workrelated and workrelated takes precedence over other
         choosers = choosers_full[
             (choosers_full["ldt_tour_gen_person_" + purpose_name])
             & (~person_on_hh_ldt)
@@ -102,6 +118,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             - constants["AWAY"]
         )
 
+        # broadcast probabilities
         pr = np.broadcast_to(
             np.asarray(
                 [
@@ -114,7 +131,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
             ),
             (len(choosers.index), 5),
         )
-        # sampling probabilities
+        # sampling probabilities to draw from
         df = pd.DataFrame(
             pr,
             index=choosers.index,
@@ -195,6 +212,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     # merging changes to persons table to the final_persons csv
     pipeline.replace_table("persons", persons)
 
+    # add all scheduled/generated tours to the longdist_tours csv
     ldt_tours = None
     for purpose_num, purpose_settings in enumerate(spec_purposes, start=1):
         # purpose_num zero is for household patterns
@@ -204,6 +222,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     if ldt_tours is not None:
         pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
         
+    # convert longdist_tours csv into a longdist_trips csv
     trips = process_longdist_trips(pipeline.get_table("longdist_tours"))
     pipeline.replace_table("longdist_trips", trips)
 

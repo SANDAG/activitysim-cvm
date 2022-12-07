@@ -21,8 +21,13 @@ def ldt_external_mode_choice(
     longdist_tours, persons_merged, network_los, chunk_size, trace_hh_id
 ):
     """
-    This model determines if a person on an LDT is going/will go/is at an internal location (within Ohio/0)
-    or at an external location (outside of Ohio/1)
+    This model determines the chosen modes of people who are estimated
+    to be going on external LDT trips. 
+
+    - *Configuration File*: `ldt_external_mode_choice.yaml`
+    - *Core Table*: `longdist_tours`
+    - *Result Field*: `ldt_external_mode_choice`
+    - *Result dtype*: `np.object (string)`
     """
 
     trace_label = "ldt_external_mode_choice"
@@ -47,6 +52,7 @@ def ldt_external_mode_choice(
     ldt_tours = longdist_tours.to_frame()
     logger.info("Running %s with %d tours" % (trace_label, ldt_tours.shape[0]))
     
+    # merge in persons data for external data in estimation
     persons_merged = persons_merged.to_frame()
     ldt_tours_merged = pd.merge(
         ldt_tours,
@@ -120,16 +126,21 @@ def ldt_external_mode_choice(
     # specification csv expressions
     constants.update(skims)
     
+    # list to append all results to
     choices_list = []
+    # do mode choice estimation for each purpose separately
     for tour_purpose, tours_segment in ldt_tours_merged.groupby(segment_column_name):
+        # purpose in lowercase
         if tour_purpose.startswith("longdist_"):
             tour_purpose = tour_purpose[9:]
         tour_purpose = tour_purpose.lower()
         
+        # boilerplate network_los logic
         if network_los.zone_system == los.THREE_ZONE:
             tvpb_logsum_odt.extend_trace_label(tour_purpose)
             tvpb_logsum_dot.extend_trace_label(tour_purpose)
             
+        # only consider people who are expected to go on extenral choices
         choosers = tours_segment[tours_segment.internal_external == LDT_IE_EXTERNAL]
         
         logger.info(
@@ -140,12 +151,14 @@ def ldt_external_mode_choice(
             )
         )
         
+        # logic for no choosers - default -1
         if choosers.empty:
             choices_list.append(
                 pd.Series(-1, index=tours_segment.index, name=colname).to_frame()
             )
             continue
         
+        # read purpose-specific coefficient and specification
         coefficients_df = simulate.get_segment_coefficients(model_settings, tour_purpose)
         nest_category_spec = simulate.eval_nest_coefficients(nest_spec, coefficients_df, estimator)
         category_spec = simulate.eval_coefficients(
@@ -158,6 +171,7 @@ def ldt_external_mode_choice(
             estimator.write_coefficients(coefficients_df, model_settings)
             estimator.write_choosers(choosers)
         
+        # run the model
         choices = simulate.simple_simulate(
             choosers=choosers,
             spec=category_spec,
@@ -170,14 +184,17 @@ def ldt_external_mode_choice(
             estimator=estimator
         )
         
+        # translate between choices and actual mode chosens
         alts = category_spec.columns
         choices = choices.map(
             dict(list(zip(list(range(len(alts))), alts)))
         )
         
+        # convert choices to dataframes
         if isinstance(choices, pd.Series):
             choices = choices.to_frame(colname)
         
+        # fit choices to the original segment and make the default (unestimated) -1
         choices = choices.reindex(tours_segment.index).fillna(
             {colname: -1}, downcast="infer"
         )
@@ -188,8 +205,10 @@ def ldt_external_mode_choice(
             value_counts=True,
         )
         
+        # append the result to the master list
         choices_list.append(choices)
         
+    # merge all results into one big dataframe
     choices_df = pd.concat(choices_list)
     
     tracing.print_summary(
@@ -198,10 +217,12 @@ def ldt_external_mode_choice(
         value_counts=True,
     )
     
+    # update ldt_tours with estimated external modes
     assign_in_place(ldt_tours, choices_df)
     
     pipeline.replace_table("longdist_tours", ldt_tours)
     
+    # merge results into longdist_trips
     trips = pipeline.get_table("longdist_trips")
     trips["mode"] = choices_df.loc[trips.longdist_tour_id.values].values
     pipeline.replace_table("longdist_trips", trips)

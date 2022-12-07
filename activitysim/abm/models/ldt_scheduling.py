@@ -22,14 +22,15 @@ logger = logging.getLogger(__name__)
 @inject.step()
 def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
     """
-    This model schedules the start/end times for actors that were assigned
-    to be beginning and/or ending a tour on a given day (only those in
-    the longdist_tours csv)
-        - 0/complete: schedules both start/end of tour
-        - 1/begin: schedules beginning of tour
-        - 2/end: schedules end of tour
-        - 3/away: does not schedule
-        - 4/notour/-1/no lDT generated - does not schedule
+    This model schedules the start/end times for actors are on a trip
+    in a given day (only those in the longdist_tours csv). This specifically estimates 
+    the start hour for begin trips, the end hour for end trips, and both the start/hour
+    hour for complete trips. 
+
+    - *Configuration File*: `ldt_scheduling.yaml`
+    - *Core Table*: `longdist_tours`
+    - *Result Field*: `ldt_start_hour & ldt_end_hour`
+    - *Result dtype*: `int8`
     """
     trace_label = "ldt_scheduling"
     model_settings_file_name = "ldt_scheduling.yaml"
@@ -52,6 +53,7 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
     ldt_tours = longdist_tours.to_frame()
     logger.info("Running %s with %d tours" % (trace_label, ldt_tours.shape[0]))
     
+    # merging in the persons_merged data into ldt_tours for estimation
     persons_merged = persons_merged.to_frame()
     ldt_tours_merged = pd.merge(
         ldt_tours,
@@ -62,9 +64,14 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
         suffixes=("", "_r"),
     )
 
+    # read in settings for all estimation categories (start, end, complete)
     spec_categories = model_settings.get("SPEC_CATEGORIES", {})
     nest_spec = config.get_logit_model_settings(model_settings)  # MNL
     
+    # create a dictionary to translate estimated complete tour choices to 
+    # start and end hours 
+    # earliest start hour is 5, latest end hour is 23, minimum duration is 2
+    # duration = end hour - start hour
     complete_tour_translation = {}
     i = 5
     x = 0
@@ -80,15 +87,20 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
         i += 1
     complete_tour_translation = pd.Series(complete_tour_translation)
     
+    # map patterns in settings to their respective enums
     patterns = {
         "complete": LDT_PATTERN.COMPLETE,
         "begin": LDT_PATTERN.BEGIN,
         "end": LDT_PATTERN.END,
     }
 
+    # lists to append all results to
     starts_list = []
     ends_list = []
+    
+    # estimate schedules for households/persons separately 
     for actor_type, tours_segment in ldt_tours_merged.groupby(actor_column_name):
+        # the segment to estimate on
         choosers = tours_segment
         
         logger.info(
@@ -99,6 +111,7 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
             )
         )
         
+        # if there are no choosers, set default to -1
         if choosers.empty:
             starts_list.append(
                 pd.Series(-1, index=tours_segment.index, name=start_colname).to_frame()
@@ -108,6 +121,7 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
             )
             continue
         
+        # estimate schedules for begin/end/complete tours separately
         for category_settings in spec_categories:
             # see function documentation for category_num translation
             category_num = patterns.get(
@@ -167,8 +181,9 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
                 
                 starts_list.append(start_choices)
                 ends_list.append(end_choices)                
-
+            # logic for start/end pattern scheduling
             else:
+                # get the freuqencies for the specific category type
                 constants = config.get_model_constants(category_settings)
 
                 # sampling probabilities for the current tour pattern (start/end)
@@ -191,12 +206,15 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
                     ends_list.append(choices)
                 else:
                     raise ValueError(f"BUG, bad category_num {category_num}")
+          
+    # merge in start hours if there are any, default -1
     if len(starts_list) != 0:   
         starts_df = pd.concat(starts_list).reindex(ldt_tours_merged.index).fillna(
             {start_colname: -1}, downcast="infer"
         )
         assign_in_place(ldt_tours, starts_df)
     
+    # merge in end hours if there are any, default -1
     if len(ends_list) != 0:
         ends_df = pd.concat(ends_list).reindex(ldt_tours_merged.index).fillna(
             {end_colname: -1}, downcast="infer"
@@ -215,8 +233,10 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
         value_counts=True,
     )
     
+    # update ldt_tours
     pipeline.replace_table("longdist_tours", ldt_tours)
     
+    # merge start/end hours into households/persons for use in the internal mode model
     households = pipeline.get_table("households")
     persons = pipeline.get_table("persons")
     
@@ -238,6 +258,7 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
     pipeline.replace_table("households", households)
     pipeline.replace_table("persons", persons)
     
+    # merge start/end hours into longdist_trips
     # TODO: fix logic for trip start hour for end/complete trips
     trips = pipeline.get_table("longdist_trips")
     trips["ldt_start_hour"] = starts_df.loc[trips.longdist_tour_id].values
