@@ -171,7 +171,7 @@ def ldt_internal_mode_choice(
     
     - *Configuration File*: `ldt_internal_mode_choice.yaml`
     - *Core Table*: `longdist_tours`
-    - *Result Field*: `ldt_internal_mode_choice`
+    - *Result Field*: `tour_mode`
     - *Result dtype*: `object (string)`
     """
     trace_label = "ldt_internal_mode_choice"
@@ -406,11 +406,6 @@ def ldt_internal_mode_choice(
     #         trace_label=tracing.extend_trace_label(trace_label, "annotate_tours"),
     #     )
     #     pipeline.replace_table("tours", tours)
-    
-    
-    trips = pipeline.get_table("longdist_trips")
-    trips["mode"] = np.where(trips["internal_external"] == "INTERNAL", choices_df.loc[trips.longdist_tour_id].iloc[:, 0], trips["mode"])
-    pipeline.replace_table("longdist_trips", trips)
 
     if trace_hh_id:
         tracing.trace_df(

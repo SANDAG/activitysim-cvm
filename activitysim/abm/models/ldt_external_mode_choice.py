@@ -26,7 +26,7 @@ def ldt_external_mode_choice(
 
     - *Configuration File*: `ldt_external_mode_choice.yaml`
     - *Core Table*: `longdist_tours`
-    - *Result Field*: `ldt_external_mode_choice`
+    - *Result Field*: `external_tour_mode`
     - *Result dtype*: `np.object (string)`
     """
 
@@ -221,11 +221,6 @@ def ldt_external_mode_choice(
     assign_in_place(ldt_tours, choices_df)
     
     pipeline.replace_table("longdist_tours", ldt_tours)
-    
-    # merge results into longdist_trips
-    trips = pipeline.get_table("longdist_trips")
-    trips["mode"] = choices_df.loc[trips.longdist_tour_id.values].values
-    pipeline.replace_table("longdist_trips", trips)
     
     if trace_hh_id:
         tracing.trace_df(

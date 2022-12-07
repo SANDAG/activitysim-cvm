@@ -125,7 +125,7 @@ input_table_list:
 #input_store: ../output/input_data.h5
 
 # number of households to simulate
-households_sample_size:  1000
+households_sample_size:  10000
 # simulate all households
 # households_sample_size: 0
 
@@ -232,6 +232,7 @@ models:
   - ldt_external_mode_choice
   - ldt_internal_tour_destination
   - ldt_internal_mode_choice
+  - create_longdist_trips
   - cdap_simulate
   - write_data_dictionary
   - track_skim_usage

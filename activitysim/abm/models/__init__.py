@@ -8,6 +8,7 @@ from . import (  # noqa: F401
     atwork_subtour_scheduling,
     auto_ownership,
     cdap,
+    create_longdist_trips,
     free_parking,
     initialize,
     initialize_los,
