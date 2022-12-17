@@ -58,19 +58,19 @@ def enumerate_tour_types(tour_flavors):
 def read_alts_file(file_name, set_index=None):
     try:
         alts = simulate.read_model_alts(file_name, set_index=set_index)
-    except RuntimeError:
+    except (RuntimeError, FileNotFoundError):
         logger.warning(f"Could not find file {file_name} to determine tour flavors.")
         return pd.DataFrame()
     return alts
 
 
-def read_spec_file(file_name, set_index=None):
+def read_spec_file(file_name):
     try:
-        alts = simulate.read_model_alts(file_name, set_index=set_index)
-    except RuntimeError:
+        spec = simulate.read_model_spec(file_name)
+    except (RuntimeError, FileNotFoundError):
         logger.warning(f"Could not find file {file_name} to determine tour flavors.")
         return pd.DataFrame()
-    return alts
+    return spec
 
 
 def parse_tour_flavor_from_columns(columns, tour_flavor):
@@ -438,18 +438,6 @@ def canonical_tours():
     mtf_model_settings = config.read_model_settings(mtf_model_settings_file_name)
     mtf_spec = mtf_model_settings.get("SPEC", "mandatory_tour_frequency.csv")
     mtf_model_spec = read_spec_file(file_name=mtf_spec)
-    default_mandatory_tour_flavors = {"work": 2, "school": 2}
-
-    mandatory_tour_flavors = determine_mandatory_tour_flavors(
-        mtf_model_settings, mtf_model_spec, default_mandatory_tour_flavors
-    )
-    logger.info(f"Non-Mandatory tour flavors used are {non_mandatory_tour_flavors}")
-
-    # ---- mandatory_channels
-    mtf_model_settings_file_name = "mandatory_tour_frequency.yaml"
-    mtf_model_settings = config.read_model_settings(mtf_model_settings_file_name)
-    mtf_spec = mtf_model_settings.get("SPEC", "mandatory_tour_frequency.csv")
-    mtf_model_spec = read_alts_file(file_name=mtf_spec)
     default_mandatory_tour_flavors = {"work": 2, "school": 2}
 
     mandatory_tour_flavors = determine_mandatory_tour_flavors(
