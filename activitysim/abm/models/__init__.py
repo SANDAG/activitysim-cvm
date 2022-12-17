@@ -1,5 +1,4 @@
-# ActivitySim
-# See full license in LICENSE.txt.
+# flake8: noqa
 from . import (
     accessibility,
     atwork_subtour_destination,
@@ -24,6 +23,7 @@ from . import (
     non_mandatory_scheduling,
     non_mandatory_tour_frequency,
     parking_location_choice,
+    school_escorting,
     stop_frequency,
     summarize,
     telecommute_frequency,
