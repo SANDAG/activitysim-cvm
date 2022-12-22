@@ -34,5 +34,3 @@ annotate_households:
   DF: households
   TABLES:
     - persons
-
-CATEGORY_CONSTANTS: constants.yaml

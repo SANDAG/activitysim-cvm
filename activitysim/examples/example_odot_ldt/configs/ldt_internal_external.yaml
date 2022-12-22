@@ -7,8 +7,6 @@ LOGIT_TYPE: MNL
 CONSTANTS: 
   DUMMY_CONSTANT: 1
 
-CATEGORY_CONSTANTS: constants.yaml
-
 # land use keys (need to determine whether a taz is internal or external)
 MODEL_AREA_KEY: "LDTdistrict"
 MODEL_AREA_EXTERNAL_CATEGORY: "External"

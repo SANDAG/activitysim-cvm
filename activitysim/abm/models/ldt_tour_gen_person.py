@@ -36,10 +36,8 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
     constants = config.get_model_constants(model_settings)
 
     # merging in global constants
-    category_file_name = model_settings.get("CATEGORY_CONSTANTS", None)
-    if category_file_name is not None:
-        categories = config.read_settings_file(category_file_name)
-        constants.update(categories)
+    categories = config.get_global_constants()
+    constants.update(categories)
 
     # preprocessor - adds nothing
     preprocessor_settings = model_settings.get("preprocessor", None)

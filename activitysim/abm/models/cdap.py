@@ -90,7 +90,7 @@ def cdap_simulate(persons_merged, persons, households, chunk_size, trace_hh_id):
         household_chunk_ids, persons_merged.household_id
     )
 
-    constants = config.get_model_constants(model_settings)
+    constants = config.get_global_constants()
 
     cdap_interaction_coefficients = cdap.preprocess_interaction_coefficients(
         cdap_interaction_coefficients
