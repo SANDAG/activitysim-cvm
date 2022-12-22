@@ -91,6 +91,8 @@ SIMULATE_CHOOSER_COLUMNS:
   - home_zone_id
   - person_id
   - ldt_pattern
+  - ldt_start_hour
+  - ldt_end_hour
 
 LOGSUM_SETTINGS: ldt_internal_mode_choice.yaml
 
