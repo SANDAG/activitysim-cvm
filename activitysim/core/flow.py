@@ -4,6 +4,7 @@ import logging
 import os
 import time
 from datetime import timedelta
+from functools import partial
 from numbers import Number
 from stat import ST_MTIME
 
@@ -139,6 +140,7 @@ def get_flow(
     dest_col_name = local_d.get("dest_col_name", None)
     stop_col_name = None
     parking_col_name = None
+    primary_origin_col_name = None
     timeframe = local_d.get("timeframe", "tour")
     if timeframe == "trip":
         orig_col_name = local_d.get("ORIGIN", orig_col_name)
@@ -150,6 +152,8 @@ def get_flow(
             dest_col_name = local_d["od_skims"].dest_key
         if stop_col_name is None and "dp_skims" in local_d:
             stop_col_name = local_d["dp_skims"].dest_key
+        if primary_origin_col_name is None and "dnt_skims" in local_d:
+            primary_origin_col_name = local_d["dnt_skims"].dest_key
     local_d = size_terms_on_flow(local_d)
     size_term_mapping = local_d.get("size_array", {})
     if "tt" in local_d:
@@ -170,6 +174,7 @@ def get_flow(
         interacts=interacts,
         zone_layer=zone_layer,
         aux_vars=aux_vars,
+        primary_origin_col_name=primary_origin_col_name,
     )
     flow.tree.aux_vars = aux_vars
     return flow
@@ -251,11 +256,13 @@ def skims_mapping(
     stop_col_name=None,
     parking_col_name=None,
     zone_layer=None,
+    primary_origin_col_name=None,
 ):
     logger.info("loading skims_mapping")
     logger.info(f"- orig_col_name: {orig_col_name}")
     logger.info(f"- dest_col_name: {dest_col_name}")
     logger.info(f"- stop_col_name: {stop_col_name}")
+    logger.info(f"- primary_origin_col_name: {primary_origin_col_name}")
     skim_dataset = inject.get_injectable("skim_dataset")
     if zone_layer == "maz" or zone_layer is None:
         odim = "omaz" if "omaz" in skim_dataset.dims else "otaz"
@@ -348,15 +355,22 @@ def skims_mapping(
         return dict(
             od_skims=skim_dataset,
             dp_skims=skim_dataset,
+            op_skims=skim_dataset,
             odt_skims=skim_dataset,
             dot_skims=skim_dataset,
             dpt_skims=skim_dataset,
             pdt_skims=skim_dataset,
+            opt_skims=skim_dataset,
+            pot_skims=skim_dataset,
+            ndt_skims=skim_dataset,
+            dnt_skims=skim_dataset,
             relationships=(
                 f"df._orig_col_name -> od_skims.{odim}",
                 f"df._dest_col_name -> od_skims.{ddim}",
                 f"df._dest_col_name -> dp_skims.{odim}",
                 f"df._stop_col_name -> dp_skims.{ddim}",
+                f"df._orig_col_name -> op_skims.{odim}",
+                f"df._stop_col_name -> op_skims.{ddim}",
                 f"df._orig_col_name -> odt_skims.{odim}",
                 f"df._dest_col_name -> odt_skims.{ddim}",
                 "df.trip_period     -> odt_skims.time_period",
@@ -364,11 +378,23 @@ def skims_mapping(
                 f"df._orig_col_name -> dot_skims.{ddim}",
                 "df.trip_period     -> dot_skims.time_period",
                 f"df._dest_col_name -> dpt_skims.{odim}",
-                f"df._stop_col_name  -> dpt_skims.{ddim}",
+                f"df._stop_col_name -> dpt_skims.{ddim}",
                 "df.trip_period     -> dpt_skims.time_period",
-                f"df._stop_col_name    -> pdt_skims.{odim}",
+                f"df._stop_col_name -> pdt_skims.{odim}",
                 f"df._dest_col_name -> pdt_skims.{ddim}",
                 "df.trip_period     -> pdt_skims.time_period",
+                f"df._orig_col_name -> opt_skims.{odim}",
+                f"df._stop_col_name -> opt_skims.{ddim}",
+                "df.trip_period     -> opt_skims.time_period",
+                f"df._stop_col_name -> pot_skims.{odim}",
+                f"df._orig_col_name -> pot_skims.{ddim}",
+                "df.trip_period     -> pot_skims.time_period",
+                f"df._primary_origin_col_name -> ndt_skims.{odim}",
+                f"df._dest_col_name -> ndt_skims.{ddim}",
+                "df.trip_period     -> ndt_skims.time_period",
+                f"df._dest_col_name -> dnt_skims.{odim}",
+                f"df._primary_origin_col_name -> dnt_skims.{ddim}",
+                "df.trip_period     -> dnt_skims.time_period",
             ),
         )
     elif parking_col_name is not None:  # parking location
@@ -422,6 +448,7 @@ def new_flow(
     interacts=None,
     zone_layer=None,
     aux_vars=None,
+    primary_origin_col_name=None,
 ):
     """
     Setup a new sharrow flow.
@@ -498,9 +525,18 @@ def new_flow(
             stop_col_name,
             parking_col_name=parking_col_name,
             zone_layer=zone_layer,
+            primary_origin_col_name=primary_origin_col_name,
         )
         if size_term_mapping is None:
             size_term_mapping = {}
+
+        def _apply_filter(_dataset, renames: list):
+            renames_keys = set(i for (i, j) in rename_dataset_cols)
+            ds = _dataset.ensure_integer(renames_keys)
+            for _k, _v in renames:
+                if _k in ds:
+                    ds[_v] = ds[_k]
+            return ds
 
         if interacts is None:
             if choosers is None:
@@ -509,25 +545,21 @@ def new_flow(
                 logger.info(f"{len(choosers)} chooser rows on {trace_label}")
             flow_tree = sh.DataTree(df=[] if choosers is None else choosers)
             idx_name = choosers.index.name or "index"
-            rename_dataset_cols = {
-                idx_name: "chooserindex",
-            }
+            rename_dataset_cols = [
+                (idx_name, "chooserindex"),
+            ]
             if orig_col_name is not None:
-                rename_dataset_cols[orig_col_name] = "_orig_col_name"
+                rename_dataset_cols.append((orig_col_name, "_orig_col_name"))
             if dest_col_name is not None:
-                rename_dataset_cols[dest_col_name] = "_dest_col_name"
+                rename_dataset_cols.append((dest_col_name, "_dest_col_name"))
             if stop_col_name is not None:
-                rename_dataset_cols[stop_col_name] = "_stop_col_name"
+                rename_dataset_cols.append((stop_col_name, "_stop_col_name"))
             if parking_col_name is not None:
-                rename_dataset_cols[parking_col_name] = "_park_col_name"
-
-            def _apply_filter(_dataset, renames: dict):
-                ds = _dataset.rename(renames).ensure_integer(renames.values())
-                for _k, _v in renames.items():
-                    ds[_k] = ds[_v]
-                return ds
-
-            from functools import partial
+                rename_dataset_cols.append((parking_col_name, "_park_col_name"))
+            if primary_origin_col_name is not None:
+                rename_dataset_cols.append(
+                    (primary_origin_col_name, "_primary_origin_col_name")
+                )
 
             flow_tree.replacement_filters[flow_tree.root_node_name] = partial(
                 _apply_filter, renames=rename_dataset_cols
@@ -542,37 +574,29 @@ def new_flow(
                 pd.RangeIndex(len(interacts), name="interactindex"),
             )
             flow_tree = sh.DataTree(start=top)
-            rename_dataset_cols = {
-                orig_col_name: "_orig_col_name",
-                dest_col_name: "_dest_col_name",
-            }
+            rename_dataset_cols = []
+            if orig_col_name is not None:
+                rename_dataset_cols.append((orig_col_name, "_orig_col_name"))
+            if dest_col_name is not None:
+                rename_dataset_cols.append((dest_col_name, "_dest_col_name"))
             if stop_col_name is not None:
-                rename_dataset_cols[stop_col_name] = "_stop_col_name"
+                rename_dataset_cols.append((stop_col_name, "_stop_col_name"))
             if parking_col_name is not None:
-                rename_dataset_cols[parking_col_name] = "_park_col_name"
-            choosers_ = (
-                sh.dataset.construct(choosers)
-                .rename_or_ignore(rename_dataset_cols)
-                .ensure_integer(
-                    [
-                        "_orig_col_name",
-                        "_dest_col_name",
-                        "_stop_col_name",
-                        "_park_col_name",
-                    ]
+                rename_dataset_cols.append((parking_col_name, "_park_col_name"))
+            if primary_origin_col_name is not None:
+                rename_dataset_cols.append(
+                    (primary_origin_col_name, "_primary_origin_col_name")
                 )
-            )
-            for _k, _v in rename_dataset_cols.items():
-                if _v in choosers_:
-                    choosers_[_k] = choosers_[_v]
+
+            choosers_ = sh.dataset.construct(choosers)
+            choosers_ = _apply_filter(choosers_, rename_dataset_cols)
             flow_tree.add_dataset(
                 "df",
                 choosers_,
                 f"start.chooserindex -> df.{next(iter(choosers_.dims))}",
             )
-            interacts_ = sh.dataset.construct(interacts).rename_or_ignore(
-                rename_dataset_cols
-            )
+            interacts_ = sh.dataset.construct(interacts)
+            interacts_ = _apply_filter(interacts_, rename_dataset_cols)
             flow_tree.add_dataset(
                 "interact_table",
                 interacts_,

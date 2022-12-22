@@ -1,6 +1,7 @@
 # ActivitySim
 # See full license in LICENSE.txt.
 import logging
+
 import numpy as np
 import pandas as pd
 
@@ -14,9 +15,9 @@ from activitysim.core import (
     simulate,
     tracing,
 )
+from activitysim.core.util import reindex
 
 from .util import estimation
-from activitysim.core.util import reindex
 from .util.school_escort_tours_trips import split_out_school_escorting_trips
 
 logger = logging.getLogger(__name__)
@@ -72,9 +73,7 @@ def choose_intermediate_trip_purpose(
 
     # probs should sum to 1 across rows
     sum_probs = probs_spec[purpose_cols].sum(axis=1)
-    probs_spec.loc[:, purpose_cols] = probs_spec.loc[:, purpose_cols].div(
-        sum_probs, axis=0
-    )
+    probs_spec[purpose_cols] = probs_spec[purpose_cols].div(sum_probs, axis=0)
 
     # left join trips to probs (there may be multiple rows per trip for multiple depart ranges)
     choosers = pd.merge(
