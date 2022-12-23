@@ -712,6 +712,17 @@ def filter_warnings():
         ),
     )
 
+    # the following future warning is emitted from a simple pd.concat in the school escort
+    # model.  There is probably an opportunity to fix this dtype but this warning looks like
+    # an accident in pandas 1.5.2, see https://github.com/pandas-dev/pandas/issues/50163
+    warnings.filterwarnings(
+        "ignore",
+        category=FutureWarning,
+        message=(
+            ".*object-dtype columns with all-bool values will not be included in reductions.*"
+        ),
+    )
+
     # beginning in sharrow version 2.5, a CacheMissWarning is emitted when a sharrow
     # flow cannot be loaded from cache and needs to be compiled.  These are performance
     # warnings for production runs and totally expected when running test or on new
