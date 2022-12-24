@@ -20,7 +20,7 @@ from .util import estimation
 logger = logging.getLogger(__name__)
 
 @inject.step()
-def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
+def ldt_scheduling(longdist_tours, persons_merged, land_use, network_los, chunk_size, trace_hh_id):
     """
     This model schedules the start/end times for actors are on a trip
     in a given day (only those in the longdist_tours csv). This specifically estimates 
@@ -44,13 +44,12 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
     constants = config.get_model_constants(model_settings)  # constants shared by all
 
     # merging in global constants
-    category_file_name = model_settings.get("CATEGORY_CONSTANTS", None)
-    if category_file_name is not None:
-        categories = config.read_settings_file(category_file_name)
-        constants.update(categories)
+    categories = config.get_global_constants()
+    constants.update(categories)
 
     # converting parameters to dataframes
     ldt_tours = longdist_tours.to_frame()
+    land_use = land_use.to_frame()
     logger.info("Running %s with %d tours" % (trace_label, ldt_tours.shape[0]))
     
     # merging in the persons_merged data into ldt_tours for estimation
@@ -93,7 +92,25 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
         "begin": LDT_PATTERN.BEGIN,
         "end": LDT_PATTERN.END,
     }
-
+    
+    # read in and create time/dist skims between TAZs and internal TAZs
+    model_area_key = model_settings.get("MODEL_AREA_KEY", None)
+    segment_key = model_settings.get("SEGMENT_KEY", None)
+    time_key = model_settings.get("TIME_KEY", None)
+    dist_key = model_settings.get("DIST_KEY", None)
+    
+    assert model_area_key != None and segment_key != None and time_key != None and dist_key != None
+    
+    times, dists = get_skims(network_los, land_use, dist_key, time_key, segment_key, model_area_key)
+    
+    # get the TAZs that don't have possible destinations for a 2 hour complete ldt--can't travel there/back and spend the min time in the destination
+    # merge them into the choosers dataframe to prevent these 2 hour complete ldt tours
+    invalid_tazs = []
+    for taz in times.index:
+        if land_use.loc[taz][model_area_key] == 1 and 2 * np.where(dists.loc[taz] >= 50, times.loc[taz], 9999).min() + constants["min_time_in_dest"] >= 119:
+            invalid_tazs.append(taz)
+    ldt_tours_merged["no_2_hour_tour"] = ldt_tours_merged["home_zone_id"].isin(invalid_tazs)
+    
     # lists to append all results to
     starts_list = []
     ends_list = []
@@ -266,3 +283,20 @@ def ldt_scheduling(longdist_tours, persons_merged, chunk_size, trace_hh_id):
             index_label="tour_id",
             warn_if_empty=True,
         )
+        
+def get_skims(network_los, land_use, dist_key, time_key, segment_key, model_area_key):
+    """
+        This function returns the time and distance skims for 
+    """
+    skims = network_los.get_default_skim_dict().skim_data._skim_data
+    key_dict = network_los.get_default_skim_dict().skim_dim3
+    time_val = key_dict[time_key][segment_key]
+    time_skim = skims[time_val]
+    
+    dist_val = key_dict[dist_key][segment_key]
+    dist_skim = skims[dist_val] 
+    internal_tazs = land_use[land_use[model_area_key] == 1].index
+    print(internal_tazs)
+    print(time_skim[:, internal_tazs - 1])
+
+    return pd.DataFrame(time_skim[:, internal_tazs - 1], index=np.arange(1, time_skim.shape[0] + 1), columns=internal_tazs), pd.DataFrame(dist_skim[:, internal_tazs - 1], index=np.arange(1, dist_skim.shape[0] + 1), columns=internal_tazs)

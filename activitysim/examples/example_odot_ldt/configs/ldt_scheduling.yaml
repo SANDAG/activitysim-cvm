@@ -56,3 +56,11 @@ SPEC_CATEGORIES:
         hour_21: 0.0121
         hour_22: 0.007
         hour_23: 0.0077
+
+# land use keys (need to determine whether a taz is internal or external)
+# should be binary--1 if in area, 0 if not
+MODEL_AREA_KEY: "MODELAREA"
+# skim category keys (want some both time/distance measure between LDTs)
+SEGMENT_KEY: "PK"
+TIME_KEY: "CAR_TIME"
+DIST_KEY: "CAR_DIST"

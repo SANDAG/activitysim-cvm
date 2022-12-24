@@ -113,6 +113,9 @@ def _destination_sample(
     if constants is not None:
         locals_d.update(constants)
 
+    categories = config.get_global_constants()
+    locals_d.update(categories)
+    
     log_alt_losers = config.setting("log_alt_losers", False)
 
     choices = interaction_sample(

@@ -66,13 +66,12 @@ def ldt_internal_external(
     
     # import data from settings file 
     dim3 = model_settings.get("SKIM_KEY", None)
-    time_key = model_settings.get("SEGMENT_KEY", None)
+    segment_key = model_settings.get("SEGMENT_KEY", None)
     model_area_key = model_settings.get("MODEL_AREA_KEY", None)
-    model_area_external_category = model_settings.get("MODEL_AREA_EXTERNAL_CATEGORY", None)
-    assert dim3 != None and time_key != None and model_area_key != None and model_area_external_category != None
+    assert dim3 != None and segment_key != None and model_area_key != None
     
     # create a taz_times dataframe to get distances to external TAZs from all other TAZs
-    taz_times = get_car_time_skim(network_los, land_use.to_frame(), dim3, time_key, model_area_key, model_area_external_category)
+    taz_times = get_car_time_skim(network_los, land_use.to_frame(), dim3, segment_key, model_area_key)
     # create a new field for the minimum time to exit the model area
     ldt_tours_merged["min_external_taz_time"] = ldt_tours_merged["home_zone_id"].apply(lambda x: np.min(taz_times[x - 1]))
     
@@ -169,16 +168,16 @@ def ldt_internal_external(
             warn_if_empty=True,
         )
         
-def get_car_time_skim(network_los, land_use, dim3, time_key, model_area_key, model_area_external_category):
+def get_car_time_skim(network_los, land_use, dim3, segment_key, model_area_key):
     """
         This model handles the logic for converting the network_los into a dataframe for travel times between
         TAZs and all external TAZs
     """
     skims = network_los.get_default_skim_dict().skim_data._skim_data
     key_dict = network_los.get_default_skim_dict().skim_dim3
-    key = key_dict[dim3][time_key]
+    key = key_dict[dim3][segment_key]
     skim = skims[key]
 
-    external_tazs = land_use[land_use[model_area_key] == model_area_external_category].index
+    external_tazs = land_use[land_use[model_area_key] == 0].index
 
     return skim[:, external_tazs - 1]

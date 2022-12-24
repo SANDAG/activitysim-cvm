@@ -65,11 +65,10 @@ def ldt_external_destchoice(
     dim3 = model_settings.get("SKIM_KEY", None)
     time_key = model_settings.get("SEGMENT_KEY", None)
     model_area_key = model_settings.get("MODEL_AREA_KEY", None)
-    model_area_external_category = model_settings.get("MODEL_AREA_EXTERNAL_CATEGORY", None)
-    assert dim3 != None and time_key != None and model_area_key != None and model_area_external_category != None
+    assert dim3 != None and time_key != None and model_area_key != None
     
     # get skim for travel distances between origin TAZs to external TAZs
-    taz_dists = get_car_dist_skim(network_los, land_use.to_frame(), dim3, time_key, model_area_key, model_area_external_category)
+    taz_dists = get_car_dist_skim(network_los, land_use.to_frame(), dim3, time_key, model_area_key)
     
     # read in external probabilities file & respective csv
     external_probabilities_file_path = config.config_file_path(model_settings.get("REGION_PROBABILITIES"))
@@ -201,16 +200,16 @@ def ldt_external_destchoice(
             warn_if_empty=True,
         )
         
-def get_car_dist_skim(network_los, land_use, dim3, time_key, model_area_key, model_area_external_category):
+def get_car_dist_skim(network_los, land_use, dim3, dist_key, model_area_key):
     """
     This method handles the logic for converting network_los to a skim for distances between
     TAZs and external TAZs
     """
     skims = network_los.get_default_skim_dict().skim_data._skim_data
     key_dict = network_los.get_default_skim_dict().skim_dim3
-    key = key_dict[dim3][time_key]
+    key = key_dict[dim3][dist_key]
     skim = skims[key]
 
-    external_tazs = land_use[land_use[model_area_key] == model_area_external_category].index
+    external_tazs = land_use[land_use[model_area_key] == 0].index
 
     return pd.DataFrame(skim[:, external_tazs - 1], index=np.arange(1, skim.shape[0] + 1), columns=external_tazs)

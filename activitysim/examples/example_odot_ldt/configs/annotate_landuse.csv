@@ -2,3 +2,4 @@
 #,,needs to have at least one entry for some reason
 #,, annotate landuse table after import
 tot_hh,tot_hh,land_use.TotHH
+MODELAREA inverted,MODELAREA_INVERT,"np.where(df.MODELAREA == 1, 0, 1)"
