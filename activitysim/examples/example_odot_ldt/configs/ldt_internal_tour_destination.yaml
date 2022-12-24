@@ -7,6 +7,11 @@ SAMPLE_SIZE: 30
 SIZE_TERM_SELECTOR: ldt
 SIZE_TERM_PATH: internal_destination_choice_size_terms.csv
 
+CONSTANTS:
+  # defines the minimum time an actor must spend in the destination of a complete LDT trip (in minutes)
+  # minimum is 1 as a threshold to guarantee a possible LDT destination
+  min_time_in_dest: 10
+
 # we can't use use household income_segment as this will also be set for non-workers
 CHOOSER_SEGMENT_COLUMN_NAME: ldt_tour_segment
 

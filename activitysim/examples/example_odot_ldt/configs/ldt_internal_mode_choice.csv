@@ -1,6 +1,6 @@
 Label,Description,Expression,PRIVATEAUTO,AIR,WALK_TRANSIT,DRIVE_TRANSIT,WALK_HSR,DRIVE_HSR
 # Auto,,,,,,,,
-util_AUTO_not_possible,auto is not possible between origin/destination,@odt_skims['CAR_TIME'] == 0,-999,,,,,
+# util_AUTO_not_possible,auto is not possible between origin/destination,@odt_skims['CAR_TIME'] == 0,-999,,,,,
 util_AUTO_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & (60 * (df.ldt_end_hour - df.ldt_start_hour) < (odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'])),-999,,,,,
 util_AUTO_in_vehicle_time,AUTO - In-vehicle time,@odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'],coef_ivt,,,,,
 util_AUTO_cost_income_less_than_20k,AUTO - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['CAR_COST'] + dot_skims['CAR_COST'] + odt_skims['CAR_TOLL'] + dot_skims['CAR_TOLL']),coef_cost_inc_0to20k,,,,,

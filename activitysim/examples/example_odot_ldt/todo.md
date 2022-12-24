@@ -12,7 +12,15 @@
     <ul>
         <li>Most models seem to line up with the Java model roughly, aside from the tour gen model for households/workrelated trips, which overestimate/underestimate respectively</li>
         <li>Seems to be due to some specification difference (see notebooks in the script folder)</li>
-        <li>Some edge cases may break the LDT model (e.g., a subsection of trips have no members)</li>
+        <li>Some edge cases may break the LDT model (e.g., a subsection of trips have no members for a pd.concat)</li>
     </ul>
     <li>Rename/standardize the input files (e.g., make sure all land use inputs are the current land_use_fixed file and get rid of all older versions)</li>
+    <li>Make the internal destination choice more robust<li>
+    <ul>
+        <li>Can the -99999 hard coded things for 50 mile guarantee be made more elegant?</li>
+        <li>There is one TAZ (4974)that has no possible LDT destinations that can are compatible with a 2 hour complete tour</li>
+        <li>Currently just hard code people of TAZ 4974 to have duration of at least 3 for complete tours</li>
+        <li>See the taz notebook in the scripts folder</li>
+    </ul>
+    <li>Make the longdist_trips index non-dependent on sample size--i.e., define it like with longdist_tours</li>
 </ul>
