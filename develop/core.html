@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Core Components &#8212; ActivitySim 1.1.4.dev54+g50ed9656</title>
+    <title>Core Components &#8212; ActivitySim 1.1.4.dev94+g1e8164b4</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -725,6 +725,19 @@ essentially the same tables and results as if the whole simulation had been run 
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.mp_tasks.allocate_shared_shadow_pricing_buffers">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.mp_tasks.</span></span><span class="sig-name descname"><span class="pre">allocate_shared_shadow_pricing_buffers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.mp_tasks.allocate_shared_shadow_pricing_buffers" title="Permalink to this definition">#</a></dt>
+<dd><p>This is called by the main process to allocate memory buffer to share with subprocs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>multiprocessing.RawArray</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.core.mp_tasks.allocate_shared_shadow_pricing_buffers_choice">
+<span class="sig-prename descclassname"><span class="pre">activitysim.core.mp_tasks.</span></span><span class="sig-name descname"><span class="pre">allocate_shared_shadow_pricing_buffers_choice</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.mp_tasks.allocate_shared_shadow_pricing_buffers_choice" title="Permalink to this definition">#</a></dt>
 <dd><p>This is called by the main process to allocate memory buffer to share with subprocs</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -5021,7 +5034,7 @@ However, panning and zooming on any one map object controls all maps on both sid
 of chunk_size simplifies model setup since it is the approximate amount of RAM available to
 ActivitySim as opposed to the obscure number of doubles (64-bit numbers) in a chunk of a choosers table.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> is the approximate amount of RAM in GBs to allocate to ActivitySim for batch
+<p>The <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> is the approximate amount of RAM in bytes (1 Gigabyte or 1 GB is equal to 1,000,000,000 bytes) to allocate to ActivitySim for batch
 processing choosers across all processes.  It is specified in bytes, for example <code class="docutils literal notranslate"><span class="pre">chunk_size:</span> <span class="pre">500_000_000_000</span></code> is 500 GBs.
 If set <code class="docutils literal notranslate"><span class="pre">chunk_training_mode:</span> <span class="pre">disabled</span></code> then no chunking will be performed and ActivitySim will attempt to solve all the
 choosers at once across all the processes.  Chunking is required when all the chooser data required to process all the
@@ -5758,7 +5771,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.1.4.dev54+g50ed9656, documentation last updated Dec 12, 2022.<br/>
+ActivitySim 1.1.4.dev94+g1e8164b4, documentation last updated Dec 29, 2022.<br/>
 </p>
     </div>
     
