@@ -13,7 +13,13 @@ from activitysim.core import chunk, config, inject, mem, pipeline, tracing
 logger = logging.getLogger(__name__)
 
 
-INJECTABLES = ["data_dir", "configs_dir", "output_dir", "settings_file_name"]
+INJECTABLES = [
+    "data_dir",
+    "configs_dir",
+    "output_dir",
+    "settings_file_name",
+    "imported_extensions",
+]
 
 
 def add_run_args(parser, multiprocess=True):
@@ -134,14 +140,20 @@ def handle_standard_args(args, multiprocess=True):
             basepath, extpath = os.path.split(e)
             if not basepath:
                 basepath = "."
-            sys.path.insert(0, basepath)
+            sys.path.insert(0, os.path.abspath(basepath))
             try:
-                importlib.import_module(e)
+                importlib.import_module(extpath)
             except ImportError as err:
                 logger.exception("ImportError")
                 raise
+            except Exception as err:
+                logger.exception(f"Error {err}")
+                raise
             finally:
                 del sys.path[0]
+        inject_arg("imported_extensions", args.ext)
+    else:
+        inject_arg("imported_extensions", ())
 
     # settings_file_name should be cached or else it gets squashed by config.py
     if args.settings_file:
@@ -292,7 +304,12 @@ def run(args):
     # OMP_NUM_THREADS: openmp
     # OPENBLAS_NUM_THREADS: openblas
     # MKL_NUM_THREADS: mkl
-    for env in ["MKL_NUM_THREADS", "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS"]:
+    for env in [
+        "MKL_NUM_THREADS",
+        "OMP_NUM_THREADS",
+        "OPENBLAS_NUM_THREADS",
+        "NUMBA_NUM_THREADS",
+    ]:
         logger.info(f"ENV {env}: {os.getenv(env)}")
 
     np_info_keys = [
@@ -375,6 +392,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     add_run_args(parser)
     args = parser.parse_args()
-
-    parser.parse_args(["--sum", "7", "-1", "42"])
     sys.exit(run(args))

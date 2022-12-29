@@ -11,12 +11,12 @@ steps:
       compile: True
       sharrow: True
       legacy: True
-      reference: False
-      tag: '2022-06-1zone'
+      reference: True
+      tag:
       resume_after:
       fast: False
-      compile_n_households: 10000
-      main_n_households: 100000
+      compile_n_households: 500
+      main_n_households: 50000
       config_dirs:
       - configs_1_zone
       - prototype_mtc/configs

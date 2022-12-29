@@ -6,9 +6,17 @@ import os
 
 import pandas as pd
 import pandas.testing as pdt
-import pytest
+
+from activitysim.core import inject
 
 from ..tour_frequency import process_mandatory_tours
+
+
+def setup_function():
+    configs_dir = os.path.join(os.path.dirname(__file__), "configs")
+    inject.add_injectable("configs_dir", configs_dir)
+    output_dir = os.path.join(os.path.dirname(__file__), "output")
+    inject.add_injectable("output_dir", output_dir)
 
 
 def mandatory_tour_frequency_alternatives():

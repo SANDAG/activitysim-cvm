@@ -65,7 +65,7 @@ def pipeline_file_name(settings):
 
 @inject.injectable()
 def rng_base_seed():
-    return 0
+    return setting("rng_base_seed", 0)
 
 
 @inject.injectable(cache=True)
@@ -76,6 +76,14 @@ def settings_file_name():
 @inject.injectable(cache=True)
 def settings(settings_file_name):
     settings_dict = read_settings_file(settings_file_name, mandatory=True)
+
+    # basic settings validation for sharrow
+    sharrow_enabled = settings_dict.get("sharrow", False)
+    recode_pipeline_columns = settings_dict.get("recode_pipeline_columns", True)
+    if sharrow_enabled and not recode_pipeline_columns:
+        warnings.warn(
+            "use of `sharrow` setting generally requires `recode_pipeline_columns`"
+        )
 
     return settings_dict
 
@@ -692,6 +700,42 @@ def filter_warnings():
     from pandas.errors import PerformanceWarning
 
     warnings.filterwarnings("default", category=PerformanceWarning)
+
+    # pandas 1.5
+    # beginning in pandas version 1.5, a new warning is emitted when a column is set via iloc
+    # from an array of different dtype, the update will eventually be done in-place in future
+    # versions. This is actually the preferred outcome for ActivitySim and no code changes are
+    # needed.
+    warnings.filterwarnings(
+        "ignore",
+        category=FutureWarning,
+        message=(
+            ".*will attempt to set the values inplace instead of always setting a new array. "
+            "To retain the old behavior, use either.*"
+        ),
+    )
+
+    # the following future warning is emitted from a simple pd.concat in the school escort
+    # model.  There is probably an opportunity to fix this dtype but this warning looks like
+    # an accident in pandas 1.5.2, see https://github.com/pandas-dev/pandas/issues/50163
+    warnings.filterwarnings(
+        "ignore",
+        category=FutureWarning,
+        message=(
+            ".*object-dtype columns with all-bool values will not be included in reductions.*"
+        ),
+    )
+
+    # beginning in sharrow version 2.5, a CacheMissWarning is emitted when a sharrow
+    # flow cannot be loaded from cache and needs to be compiled.  These are performance
+    # warnings for production runs and totally expected when running test or on new
+    # machines
+    try:
+        from sharrow import CacheMissWarning
+    except ImportError:
+        pass
+    else:
+        warnings.filterwarnings("default", category=CacheMissWarning)
 
 
 def handle_standard_args(parser=None):

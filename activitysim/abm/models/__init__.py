@@ -1,6 +1,5 @@
-# ActivitySim
-# See full license in LICENSE.txt.
-from . import (  # noqa: F401
+# flake8: noqa
+from . import (
     accessibility,
     atwork_subtour_destination,
     atwork_subtour_frequency,
@@ -35,6 +34,7 @@ from . import (  # noqa: F401
     non_mandatory_scheduling,
     non_mandatory_tour_frequency,
     parking_location_choice,
+    school_escorting,
     stop_frequency,
     summarize,
     telecommute_frequency,

@@ -2,6 +2,7 @@
 # See full license in LICENSE.txt.
 import logging
 from builtins import range
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -27,7 +28,9 @@ from activitysim.core.skim_dictionary import DataFrameMatrix
 from activitysim.core.tracing import print_elapsed_time
 from activitysim.core.util import assign_in_place, reindex
 
+from ...core.configuration.base import Any, PydanticBase
 from .util import estimation
+from .util.school_escort_tours_trips import split_out_school_escorting_trips
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +40,38 @@ NO_DESTINATION = -1
 ALT_DEST_TAZ = "ALT_DEST_TAZ"
 # PRIMARY_DEST_TAZ = 'PRIMARY_DEST_TAZ'
 # DEST_MAZ = 'dest_maz'
+
+
+class TripDestinationSettings(PydanticBase):
+    """Settings for the trip_destination component.
+
+    .. versionadded:: 1.2
+
+    Note that this implementation is presently used only for generating
+    documentation, but future work may migrate the settings implementation to
+    actually use this pydantic code to validate the settings before running
+    the model.
+    """
+
+    SAMPLE_SPEC: Path
+    SPEC: Path
+    COEFFICIENTS: Path
+    SAMPLE_SIZE: int
+    """This many candidate stop locations will be sampled for each choice."""
+    DESTINATION_SAMPLE_SPEC: Path
+    DESTINATION_SPEC: Path
+    LOGSUM_SETTINGS: Path
+    DEST_CHOICE_LOGSUM_COLUMN_NAME: str = None
+    DEST_CHOICE_SAMPLE_TABLE_NAME: str = None
+    TRIP_ORIGIN: str = "origin"
+    ALT_DEST_COL_NAME: str = "dest_taz"
+    PRIMARY_DEST: str = "tour_leg_dest"  # must be created in preprocessor
+    REDUNDANT_TOURS_MERGED_CHOOSER_COLUMNS: list[str] = None
+    CONSTANTS: dict[str, Any] = None
+    preprocessor: Any
+    CLEANUP: bool
+    fail_some_trips_for_testing: bool = False
+    """This setting is used by testing code to force failed trip_destination."""
 
 
 def _destination_sample(
@@ -949,6 +984,7 @@ class SkimHotel(object):
 
         o = self.model_settings["TRIP_ORIGIN"]
         d = self.model_settings["ALT_DEST_COL_NAME"]
+        n = self.model_settings.get("PRIMARY_ORIGIN", "origin")
         p = self.model_settings["PRIMARY_DEST"]
 
         if presample:
@@ -960,6 +996,8 @@ class SkimHotel(object):
         skims = {
             "od_skims": skim_dict.wrap(o, d),
             "dp_skims": skim_dict.wrap(d, p),
+            "op_skims": skim_dict.wrap(o, p),
+            "nd_skims": skim_dict.wrap(n, d),
             "odt_skims": skim_dict.wrap_3d(
                 orig_key=o, dest_key=d, dim3_key="trip_period"
             ),
@@ -971,6 +1009,18 @@ class SkimHotel(object):
             ),
             "pdt_skims": skim_dict.wrap_3d(
                 orig_key=p, dest_key=d, dim3_key="trip_period"
+            ),
+            "opt_skims": skim_dict.wrap_3d(
+                orig_key=o, dest_key=p, dim3_key="trip_period"
+            ),
+            "pot_skims": skim_dict.wrap_3d(
+                orig_key=p, dest_key=o, dim3_key="trip_period"
+            ),
+            "ndt_skims": skim_dict.wrap_3d(
+                orig_key=n, dest_key=d, dim3_key="trip_period"
+            ),
+            "dnt_skims": skim_dict.wrap_3d(
+                orig_key=d, dest_key=n, dim3_key="trip_period"
             ),
         }
 
@@ -1301,11 +1351,28 @@ def run_trip_destination(
 @inject.step()
 def trip_destination(trips, tours_merged, chunk_size, trace_hh_id):
     """
-    Choose a destination for all 'intermediate' trips based on trip purpose.
+    Choose a destination for all intermediate trips based on trip purpose.
 
-    Final trips already have a destination (the primary tour destination for outbound trips,
-    and home for inbound trips.)
+    The trip (or stop) location choice model predicts the location of trips
+    (or stops) along the tour other than the primary destination. This model is
+    structured as a multinomial logit model using a zone attraction size
+    variable and route deviation measure as impedance. The alternatives are
+    sampled from the full set of zones, subject to availability of a zonal
+    attraction size term (i.e., it is non-zero). The sampling mechanism is also
+    usually based on accessibility between tour origin and primary destination,
+    and can be subject to certain rules based on tour mode.
 
+    Parameters
+    ----------
+    trips : orca.DataFrameWrapper
+        The trips table.  This table is edited in-place to add the trip
+        destinations.
+    tours_merged : orca.DataFrameWrapper
+        The tours table, with columns merge from persons and households as well.
+    chunk_size : int
+        If non-zero, iterate over trips using this chunk size.
+    trace_hh_id : int or list[int]
+        Generate trace output for these households.
 
     """
     trace_label = "trip_destination"
@@ -1320,6 +1387,13 @@ def trip_destination(trips, tours_merged, chunk_size, trace_hh_id):
 
     trips_df = trips.to_frame()
     tours_merged_df = tours_merged.to_frame()
+
+    if pipeline.is_table("school_escort_trips"):
+        school_escort_trips = pipeline.get_table("school_escort_trips")
+        # separate out school escorting trips to exclude them from the model and estimation data bundle
+        trips_df, se_trips_df, full_trips_index = split_out_school_escorting_trips(
+            trips_df, school_escort_trips
+        )
 
     estimator = estimation.manager.begin_estimation("trip_destination")
 
@@ -1392,6 +1466,23 @@ def trip_destination(trips, tours_merged, chunk_size, trace_hh_id):
             trips_df = cleanup_failed_trips(trips_df)
 
         trips_df.drop(columns="failed", inplace=True, errors="ignore")
+
+    if pipeline.is_table("school_escort_trips"):
+        # setting destination for school escort trips
+        se_trips_df["destination"] = reindex(
+            school_escort_trips.destination, se_trips_df.index
+        )
+        # merge trips back together preserving index order
+        trips_df = pd.concat([trips_df, se_trips_df])
+        trips_df["destination"] = trips_df["destination"].astype(int)
+        trips_df = trips_df.reindex(full_trips_index)
+        # Origin is previous destination
+        # (leaving first origin alone as it's already set correctly)
+        trips_df["origin"] = np.where(
+            (trips_df["trip_num"] == 1) & (trips_df["outbound"] == True),  # noqa
+            trips_df["origin"],
+            trips_df.groupby("tour_id")["destination"].shift(),
+        ).astype(int)
 
     pipeline.replace_table("trips", trips_df)
 

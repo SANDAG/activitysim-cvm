@@ -17,6 +17,10 @@ POSITIONS_AS_DICT = True
 
 
 class SkimDataset:
+    """
+    A wrapper around xarray.Dataset containing skim data, with time period management.
+    """
+
     def __init__(self, dataset):
         self.dataset = dataset
         self.time_map = {
@@ -50,19 +54,49 @@ class SkimDataset:
 
     def wrap(self, orig_key, dest_key):
         """
-        return a SkimWrapper for self
+        Get a wrapper for the given keys.
+
+        Parameters
+        ----------
+        orig_key, dest_key : str
+
+        Returns
+        -------
+        DatasetWrapper
         """
         return DatasetWrapper(self.dataset, orig_key, dest_key, time_map=self.time_map)
 
     def wrap_3d(self, orig_key, dest_key, dim3_key):
         """
-        return a SkimWrapper for self
+        Get a 3d wrapper for the given keys.
+
+        Parameters
+        ----------
+        orig_key, dest_key : str
+
+        Returns
+        -------
+        DatasetWrapper
         """
         return DatasetWrapper(
             self.dataset, orig_key, dest_key, dim3_key, time_map=self.time_map
         )
 
     def lookup(self, orig, dest, key):
+        """
+        Return list of skim values of skims(s) at orig/dest in skim with the specified key (e.g. 'DIST')
+
+        Parameters
+        ----------
+        orig: list of orig zone_ids
+        dest: list of dest zone_ids
+        key: str
+
+        Returns
+        -------
+        Numpy.ndarray: list of skim values for od pairs
+        """
+
         self.usage.add(key)
         use_index = None
 
@@ -86,11 +120,9 @@ class SkimDataset:
             else:
                 raise KeyError(key)
 
-        result = self.dataset.iat(**positions, _name=key)  # iat strips data encoding
-        # result = igather(self.dataset[key], positions)
-        #
-        # if 'digital_encoding' in self.dataset[key].attrs:
-        #     result = array_decode(result, self.dataset[key].attrs['digital_encoding'])
+        result = self.dataset.iat(
+            **positions, _name=key
+        )  # Dataset.iat as implemented by sharrow strips data encoding
 
         result = result.to_series()
 
@@ -108,17 +140,25 @@ class SkimDataset:
 
 
 class DatasetWrapper:
+    """
+    Mimics the SkimWrapper interface to allow legacy code to access data.
+
+    Parameters
+    ----------
+    dataset: Dataset
+    orig_key, dest_key: str
+        name of columns in target dataframe to use as origin and destination
+        lookups, respectively
+    time_key : str, optional
+    time_map : Mapping, optional
+        A mapping from time period index numbers to (more aggregate) time
+        period names.
+    """
+
     def __init__(self, dataset, orig_key, dest_key, time_key=None, *, time_map=None):
         """
+        Mimics the SkimWrapper interface to allow legacy code to access data.
 
-        Parameters
-        ----------
-        skim_dict: SkimDict
-
-        orig_key: str
-            name of column in dataframe to use as implicit orig for lookups
-        dest_key: str
-            name of column in dataframe to use as implicit dest for lookups
         """
         self.dataset = dataset
         self.orig_key = orig_key
@@ -605,7 +645,18 @@ def load_sparse_maz_skims(
     return dataset
 
 
-def _skim_dataset(skim_tag="taz"):
+def load_skim_dataset_to_shared_memory(skim_tag="taz"):
+    """
+    Load skims from disk into shared memory.
+
+    Parameters
+    ----------
+    skim_tag : str, default "taz"
+
+    Returns
+    -------
+    xarray.Dataset
+    """
     from ..core.los import ONE_ZONE
 
     # TODO:SHARROW: taz and maz are the same
@@ -766,9 +817,9 @@ def _skim_dataset(skim_tag="taz"):
 
 @inject.injectable(cache=True)
 def skim_dataset():
-    return _skim_dataset()
+    return load_skim_dataset_to_shared_memory()
 
 
 @inject.injectable(cache=True)
 def tap_dataset():
-    return _skim_dataset("tap")
+    return load_skim_dataset_to_shared_memory("tap")

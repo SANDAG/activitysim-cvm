@@ -478,7 +478,11 @@ class Network_LOS(object):
 
         Parameters
         ----------
-        skim_tag: str
+        skim_tag : str
+        _override_offset_int : int, optional
+            Override the offset int for this dictionary.  Use this to set that
+            offset to zero when zone id's have been pre-processed to be zero-based
+            contiguous integers.
 
         Returns
         -------
@@ -582,7 +586,7 @@ class Network_LOS(object):
         return self.setting(f"{skim_tag}_skims.max_float_precision", 32)
 
     def skim_digital_encoding(self, skim_tag):
-        return self.setting(f"{skim_tag}_skims.digital_encoding", [])
+        return self.setting(f"{skim_tag}_skims.digital-encoding", [])
 
     def multiprocess(self):
         """
@@ -673,10 +677,10 @@ class Network_LOS(object):
         -------
         SkimDict or subclass (e.g. MazSkimDict)
         """
-        # TODO:SHARROW: TAZ and MAZ are the same
         sharrow_enabled = config.setting("sharrow", False)
         if sharrow_enabled and skim_tag in ("taz", "maz"):
             skim_dataset = inject.get_injectable("skim_dataset")
+            # non-global import avoids circular references
             from .skim_dataset import SkimDataset
 
             if skim_tag == "maz":

@@ -103,21 +103,21 @@ Core Table: ``skims`` | Result Table: ``accessibility`` | Skims Keys: ``O-D, D-O
 Work From Home
 --------------
 
-Telecommuting is defined as workers who work from home instead of going 
-to work. It only applies to workers with a regular workplace outside of home. 
-The telecommute model consists of two submodels - this work from home model and a 
-person :ref:`telecommute_frequency` model. This model predicts for all workers whether they 
+Telecommuting is defined as workers who work from home instead of going
+to work. It only applies to workers with a regular workplace outside of home.
+The telecommute model consists of two submodels - this work from home model and a
+person :ref:`telecommute_frequency` model. This model predicts for all workers whether they
 usually work from home.
 
 The work from home model includes the ability to adjust a work from home alternative
-constant to attempt to realize a work from home percent for what-if type analysis.  
-This iterative single process procedure takes as input a number of iterations, a filter on 
-the choosers to use for the calculation, a target work from home percent, a tolerance percent 
-for convergence, and the name of the coefficient to adjust.  An example setup is provided and 
-the coefficient adjustment at each iteration is: 
+constant to attempt to realize a work from home percent for what-if type analysis.
+This iterative single process procedure takes as input a number of iterations, a filter on
+the choosers to use for the calculation, a target work from home percent, a tolerance percent
+for convergence, and the name of the coefficient to adjust.  An example setup is provided and
+the coefficient adjustment at each iteration is:
 ``new_coefficient = log( target_percent / current_percent ) + current_coefficient``.
 
-The main interface to the work from home model is the 
+The main interface to the work from home model is the
 :py:func:`~activitysim.abm.models.work_from_home` function.  This
 function is registered as an Inject step in the example Pipeline.
 
@@ -197,40 +197,81 @@ The shadow pricing calculator used by work and school location choice.
 
 **Turning on and saving shadow prices**
 
-Shadow pricing is activated by setting the ``use_shadow_pricing`` to True in the settings.yaml file. Once this setting has
-been activated, ActivitySim will search for shadow pricing configuration in the shadow_pricing.yaml file. When shadow pricing is
-activated, the shadow pricing outputs will be exported by the tracing engine. As a result, the shadow pricing output files will
-be prepended with ``trace`` followed by the iteration number the results represent. For example, the shadow pricing outputs
-for iteration 3 of the school location model will be called ``trace.shadow_price_school_shadow_prices_3.csv``.
+Shadow pricing is activated by setting the ``use_shadow_pricing`` to True in the settings.yaml file.
+Once this setting has been activated, ActivitySim will search for shadow pricing configuration in
+the shadow_pricing.yaml file. When shadow pricing is activated, the shadow pricing outputs will be
+exported by the tracing engine. As a result, the shadow pricing output files will be prepended with
+``trace`` followed by the iteration number the results represent. For example, the shadow pricing
+outputs for iteration 3 of the school location model will be called
+``trace.shadow_price_school_shadow_prices_3.csv``.
 
 In total, ActivitySim generates three types of output files for each model with shadow pricing:
 
-- ``trace.shadow_price_<model>_desired_size.csv``
-  The size terms by zone that shadow pricing is attempting to target. These usually will match the size terms identified
-  in the land_use input file.
+- ``trace.shadow_price_<model>_desired_size.csv`` The size terms by zone that the ctramp and daysim
+  methods are attempting to target. These equal the size term columns in the land use data
+  multiplied by size term coefficients.
 
-- ``trace.shadow_price_<model>_modeled_size_<iteration>.csv``
-  These are the modeled size terms after the iteration of shadow pricing identified by the <iteration> number. In other
-  words, these are the predicted choices by zone for the model after the iteration completes.
+- ``trace.shadow_price_<model>_modeled_size_<iteration>.csv`` These are the modeled size terms after
+  the iteration of shadow pricing identified by the <iteration> number. In other words, these are
+  the predicted choices by zone and segment for the model after the iteration completes. (Not
+  applicable for ``simulation`` option.)
 
-- ``trace.shadow_price_<model>_shadow_prices_<iteration>.csv``
-  The actual shadow price for each zone and segment after the <iteration> of shadow pricing. This the file that can be
-  used to warm start the shadow pricing mechanism in ActivitySim.
+- ``trace.shadow_price_<model>_shadow_prices_<iteration>.csv`` The actual shadow price for each zone
+  and segment after the <iteration> of shadow pricing. This is the file that can be used to warm
+  start the shadow pricing mechanism in ActivitySim. (Not applicable for ``simulation`` option.)
+
+There are three shadow pricing methods in activitysim: ``ctramp``, ``daysim``, and ``simulation``.
+The first two methods try to match model output with workplace/school location model size terms,
+while the last method matches model output with actual employment/enrollmment data.
+
+The simulation approach operates the following steps.  First, every worker / student will be
+assigned without shadow prices applied. The modeled share and the target share for each zone are
+compared. If the zone is overassigned, a sample of people from the over-assigned zones will be
+selected for re-simulation.  Shadow prices are set to -999 for the next iteration for overassigned
+zones which removes the zone from the set of alternatives in the next iteration. The sampled people
+will then be forced to choose from one of the under-assigned zones that still have the initial
+shadow price of 0. (In this approach, the shadow price variable is really just a switch turning that
+zone on or off for selection in the subsequent iterations. For this reason, warm-start functionality
+for this approach is not applicable.)  This process repeats until the overall convergence criteria
+is met or the maximum number of allowed iterations is reached.
+
+Because the simulation approach only re-simulates workers / students who were over-assigned in the
+previous iteration, run time is significantly less (~90%) than the CTRAMP or DaySim approaches which
+re-simulate all workers and students at each iteration.
 
 **shadow_pricing.yaml Attributes**
 
-- ``shadow_pricing_models`` List model_selectors and model_names of models that use shadow pricing. This list identifies which size_terms to preload which must be done in single process mode, so predicted_size tables can be scaled to population)
-- ``LOAD_SAVED_SHADOW_PRICES`` global switch to enable/disable loading of saved shadow prices. From the above example, this would be trace.shadow_price_<model>_shadow_prices_<iteration>.csv renamed and stored in the ``data_dir``.
-- ``MAX_ITERATIONS`` If no loaded shadow prices, maximum number of times shadow pricing can be run on each model before proceeding to the next model.
-- ``MAX_ITERATIONS_SAVED`` If loaded shadow prices, maximum number of times shadow pricing can be run.
-- ``SIZE_THRESHOLD`` Ignore zones in failure calculation with fewer choices than specified here.
+- ``shadow_pricing_models`` List model_selectors and model_names of models that use shadow pricing.
+  This list identifies which size_terms to preload which must be done in single process mode, so
+  predicted_size tables can be scaled to population
+- ``LOAD_SAVED_SHADOW_PRICES`` global switch to enable/disable loading of saved shadow prices. From
+  the above example, this would be trace.shadow_price_<model>_shadow_prices_<iteration>.csv renamed
+  and stored in the ``data_dir``.
+- ``MAX_ITERATIONS`` If no loaded shadow prices, maximum number of times shadow pricing can be run
+  on each model before proceeding to the next model.
+- ``MAX_ITERATIONS_SAVED`` If loaded shadow prices, maximum number of times shadow pricing can be
+  run.
+- ``SIZE_THRESHOLD`` Ignore zones in failure calculation (ctramp or daysim method) with smaller size
+  term value than size_threshold.
+- ``TARGET_THRESHOLD`` Ignore zones in failure calculation (simulation method) with smaller
+  employment/enrollment than target_threshold.
 - ``PERCENT_TOLERANCE`` Maximum percent difference between modeled and desired size terms
-- ``FAIL_THRESHOLD`` Number of zones exceeding the PERCENT_TOLERANCE considered a failure
-- ``SHADOW_PRICE_METHOD`` [ctramp | daysim]
-- ``DAMPING_FACTOR`` On each iteration, ActivitySim will attempt to adjust the model to match desired size terms. The number is multiplied by adjustment factor to dampen or amplify the ActivitySim calculation. (only for CT-RAMP)
-- ``DAYSIM_ABSOLUTE_TOLERANCE``
+- ``FAIL_THRESHOLD`` percentage of zones exceeding the PERCENT_TOLERANCE considered a failure
+- ``SHADOW_PRICE_METHOD`` [ctramp | daysim | simulation]
+- ``workplace_segmentation_targets`` dict matching school segment to landuse employment column
+  target. Only used as part of simulation option. If mutiple segments list the same target column,
+  the segments will be added together for comparison. (Same with the school option below.)
+- ``school_segmentation_targets`` dict matching school segment to landuse enrollment column target.
+  Only used as part of simulation option.
+- ``DAMPING_FACTOR`` On each iteration, ActivitySim will attempt to adjust the model to match
+  desired size terms. The number is multiplied by adjustment factor to dampen or amplify the
+  ActivitySim calculation. (only for CTRAMP)
+- ``DAYSIM_ABSOLUTE_TOLERANCE`` Absolute tolerance for DaySim option
+- ``DAYSIM_PERCENT_TOLERANCE`` Relative tolerance for DaySim option
+- ``WRITE_ITERATION_CHOICES`` [True | False ] Writes the choices of each person out to the trace
+  folder. Used for debugging or checking itration convergence. WARNING: every person is written for
+  each sub-process so the disc space can get large.
 
-- ``DAYSIM_PERCENT_TOLERANCE``
 
 .. automodule:: activitysim.abm.tables.shadow_pricing
    :members:
@@ -281,11 +322,11 @@ Core Table: ``persons`` | Result Field: ``transit_pass_ownership`` | Skims Keys:
 Auto Ownership
 --------------
 
-The auto ownership model selects a number of autos for each household in the simulation. 
+The auto ownership model selects a number of autos for each household in the simulation.
 The primary model components are household demographics, zonal density, and accessibility.
 
-The main interface to the auto ownership model is the 
-:py:func:`~activitysim.abm.models.auto_ownership.auto_ownership_simulate` 
+The main interface to the auto ownership model is the
+:py:func:`~activitysim.abm.models.auto_ownership.auto_ownership_simulate`
 function.  This function is registered as an Inject step in the example Pipeline.
 
 Core Table: ``households`` | Result Field: ``auto_ownership`` | Skims Keys: NA
@@ -293,7 +334,7 @@ Core Table: ``households`` | Result Field: ``auto_ownership`` | Skims Keys: NA
 
 .. automodule:: activitysim.abm.models.auto_ownership
    :members:
-   
+
 .. _vehicle_type_choice:
 
 Vehicle Type Choice
@@ -389,12 +430,12 @@ Free Parking Eligibility
 ------------------------
 
 The Free Parking Eligibility model predicts the availability of free parking at a person's
-workplace.  It is applied for people who work in zones that have parking charges, which are 
-generally located in the Central Business Districts. The purpose of the model is to adequately 
-reflect the cost of driving to work in subsequent models, particularly in mode choice. 
+workplace.  It is applied for people who work in zones that have parking charges, which are
+generally located in the Central Business Districts. The purpose of the model is to adequately
+reflect the cost of driving to work in subsequent models, particularly in mode choice.
 
-The main interface to the free parking eligibility model is the 
-:py:func:`~activitysim.abm.models.free_parking.free_parking` function.  This function is registered 
+The main interface to the free parking eligibility model is the
+:py:func:`~activitysim.abm.models.free_parking.free_parking` function.  This function is registered
 as an Inject step in the example Pipeline.
 
 Core Table: ``persons`` | Result Field: ``free_parking_at_work`` | Skims Keys: NA
@@ -490,6 +531,155 @@ function.  This function is registered as an Inject step in the example Pipeline
 Core Table: ``tours`` | Result Field: ``start, end, duration`` | Skims Keys: ``TAZ, workplace_taz, school_taz, start, end``
 
 .. automodule:: activitysim.abm.models.mandatory_scheduling
+   :members:
+
+
+.. _school_escorting:
+
+School Escorting
+----------------
+
+The school escort model determines whether children are dropped-off at or picked-up from school,
+simultaneously with the chaperone responsible for chauffeuring the children,
+which children are bundled together on half-tours, and the type of tour (pure escort versus rideshare).
+The model is run after work and school locations have been chosen for all household members,
+and after work and school tours have been generated and scheduled.
+The model labels household members of driving age as potential ‘chauffeurs’ and children with school tours as potential ‘escortees’.
+The model then attempts to match potential chauffeurs with potential escortees in a choice model whose alternatives
+consist of ‘bundles’ of escortees with a chauffeur for each half tour.
+
+School escorting is a household level decision – each household will choose an alternative from the ``school_escorting_alts.csv`` file,
+with the first alternative being no escorting. This file contains the following columns:
+
++------------------------------------------------+--------------------------------------------------------------------+
+|  Column Name                                   |    Column Description                                              |
++================================================+====================================================================+
+|  Alt                                           |  Alternative number                                                |
++------------------------------------------------+--------------------------------------------------------------------+
+|  bundle[1,2,3]                                 |  bundle number for child 1,2, and 3                                |
++------------------------------------------------+--------------------------------------------------------------------+
+|  chauf[1,2,3]                                  |  chauffeur number for child 1,2, and 3                             |
+|                                                |  - 0 = child not escorted                                          |
+|                                                |  - 1 = chauffeur 1 as ride share                                   |
+|                                                |  - 2 = chauffeur 1 as pure escort                                  |
+|                                                |  - 3 = chauffeur 2 as ride share                                   |
+|                                                |  - 4 = chauffeur 3 as pure escort                                  |
++------------------------------------------------+--------------------------------------------------------------------+
+|  nbund[1,2]                                    |  - number of escorting bundles for chauffeur 1 and 2               |
++------------------------------------------------+--------------------------------------------------------------------+
+|  nbundles                                      |  - total number of bundles                                         |
+|                                                |  - equals nbund1 + nbund2                                          |
++------------------------------------------------+--------------------------------------------------------------------+
+|  nrs1                                          |  - number of ride share bundles for chauffeur 1                    |
++------------------------------------------------+--------------------------------------------------------------------+
+|  npe1                                          |  - number of pure escort bundles for chauffeur 1                   |
++------------------------------------------------+--------------------------------------------------------------------+
+|  nrs2                                          |  - number of ride share bundles for chauffeur 2                    |
++------------------------------------------------+--------------------------------------------------------------------+
+|  npe2                                          |  - number of pure escort bundles for chauffeur 2                   |
++------------------------------------------------+--------------------------------------------------------------------+
+|  Description                                   |  - text description of alternative                                 |
++------------------------------------------------+--------------------------------------------------------------------+
+
+The model as currently implemented contains three escortees and two chauffeurs.
+Escortees are students under age 16 with a mandatory tour whereas chaperones are all persons in the household over the age of 18.
+For households that have more than three possible escortees, the three youngest children are selected for the model.
+The two chaperones are selected as the adults of the household with the highest weight according to the following calculation:
+:math:`Weight = 100*personType + 10*gender + 1*age(0,1)`
+Where *personType* is the person type number from 1 to 5, *gender* is 1 for male and 2 for female, and
+*age* is a binary indicator equal to 1 if age is over 25 else 0.
+
+The model is run sequentially three times, once in the outbound direction, once in the inbound direction,
+and again in the outbound direction with additional conditions on what happened in the inbound direction.
+There are therefore three sets of utility specifications, coefficients, and pre-processor files.
+Each of these files is specified in the school_escorting.yaml file along with the number of escortees and number of chaperones.
+
+There is also a constants section in the school_escorting.yaml file which contain two constants.
+One which sets the maximum time bin difference to match school and work tours for ride sharing
+and another to set the number of minutes per time bin.
+In the :ref:`prototype_mtc_extended` example, these are set to 1 and 60 respectively.
+
+After a school escorting alternative is chosen for the inbound and outbound direction, the model will
+create the tours and trips associated with the decision.  Pure escort tours are created,
+and the mandatory tour start and end times are changed to match the school escort bundle start and end times.
+(Outbound tours have their start times matched and inbound tours have their end times matched.)
+Escortee drop-off / pick-up order is determined by the distance from home to the school locations.
+They are ordered from smallest to largest in the outbound direction, and largest to smallest in the inbound direction.
+Trips are created for each half-tour that includes school escorting according to the provided order.
+
+The created pure escort tours are joined to the already created mandatory tour table in the pipeline
+and are also saved separately to the pipeline under the table name “school_escort_tours”.
+Created school escorting trips are saved to the pipeline under the table name “school_escort_trips”.
+By saving these to the pipeline, their data can be queried in downstream models to set correct purposes,
+destinations, and schedules to satisfy the school escorting model choice.
+
+There are a host of downstream model changes that are involved when including the school escorting model.
+The following list contains the models that are changed in some way when school escorting is included:
+
+ * **Joint tour scheduling:** Joint tours are not allowed to be scheduled over school escort tours.
+   This happens automatically by updating the timetable object with the updated mandatory tour times
+   and created pure escort tour times after the school escorting model is run.
+   There were no code or config changes in this model, but it is still affected by school escorting.
+ * **Non-Mandatory tour frequency:**  Pure school escort tours are joined to the tours created in the
+   non-mandatory tour frequency model and tour statistics (such as tour_count and tour_num) are re-calculated.
+ * **Non-Mandatory tour destination:** Since the primary destination of pure school escort tours is known,
+   they are removed from the choosers table and have their destination set according to the destination in\
+   school_escort_tours table.  They are also excluded from the estimation data bundle.
+ * **Non-Mandatory tour scheduling:** Pure escort tours need to have the non-escorting portion of their tour scheduled.
+   This is done by inserting availability conditions in the model specification that ensures the alternative
+   chosen for the start of the tour is equal to the alternative start time for outbound tours and the end time
+   is equal to the alternative end time for the inbound tours.  There are additional terms that ensure the tour
+   does not overlap with subsequent school escorting tours as well.  Beware -- If the availability conditions
+   in the school escorting model are not set correctly, the tours created may not be consistent with each other
+   and this model will fail.
+ * **Tour mode choice:** Availability conditions are set in tour mode choice to prohibit the drive alone mode
+   if the tour contains an escortee and the shared-ride 2 mode if the tour contains more than one escortee.
+ * **Stop Frequency:** No stops are allowed on half-tours that include school escorting.
+   This is enforced by adding availability conditions in the stop frequency model.  After the stop frequency
+   model is run, the school escorting trips are merged from the trips created by the stop frequency model
+   and a new stop frequency is computed along with updated trip numbers.
+ * **Trip purpose, destination, and scheduling:** Trip purpose, destination, and departure times are known
+   for school escorting trips.  As such they are removed from their respective chooser tables and the estimation
+   data bundles, and set according to the values in the school_escort_trips table residing in the pipeline.
+ * **Trip mode choice:** Like in tour mode choice, availability conditions are set to prohibit trip containing
+   an escortee to use the drive alone mode or the shared-ride 2 mode for trips with more than one escortee.
+
+Many of the changes discussed in the above list are handled in the code and the user is not required to make any
+changes when implementing the school escorting model.  However, it is the users responsibility to include the
+changes in the following model configuration files for models downstream of the school escorting model:
+
++--------------------------------------------------------------------+------------------------------------------------------------------+
+| File Name(s)                                                       | Change(s) Needed                                                 |
++====================================================================+==================================================================+
+|  - `non_mandatory_tour_scheduling_annotate_tours_preprocessor.csv` |                                                                  |
+|  - `tour_scheduling_nonmandatory.csv`                              | - Set availability conditions based on those times               |
+|                                                                    | - Do not schedule over other school escort tours                 |
++--------------------------------------------------------------------+------------------------------------------------------------------+
+|  - `tour_mode_choice_annotate_choosers_preprocessor.csv`           |  - count number of escortees on tour by parsing the              |
+|  - `tour_mode_choice.csv`                                          |  ``escort_participants`` column                                  |
+|                                                                    |  - set mode choice availability based on number of escortees     |
+|                                                                    |                                                                  |
++--------------------------------------------------------------------+------------------------------------------------------------------+
+| - `stop_frequency_school.csv`                                      |  Do not allow stops for half-tours that include school escorting |
+| - `stop_frequency_work.csv`                                        |                                                                  |
+| - `stop_frequency_univ.csv`                                        |                                                                  |
+| - `stop_frequency_escort.csv`                                      |                                                                  |
++--------------------------------------------------------------------+------------------------------------------------------------------+
+|  - `trip_mode_choice_annotate_trips_preprocessor.csv`              |  - count number of escortees on trip by parsing the              |
+|  - `trip_mode_choice.csv`                                          |  ``escort_participants`` column                                  |
+|                                                                    |  - set mode choice availability based on number of escortees     |
+|                                                                    |                                                                  |
++--------------------------------------------------------------------+------------------------------------------------------------------+
+
+When not including the school escorting model, all of the escort trips to and from school are counted implicitly in
+escort tours determined in the non-mandatory tour frequency model. Thus, when including the school escort model and
+accounting for these tours explicitly, extra care should be taken not to double count them in the non-mandatory
+tour frequency model. The non-mandatory tour frequency model should be re-evaluated and likely changed to decrease
+the number of escort tours generated by that model.  This was not implemented in the :ref:`prototype_mtc_extended`
+implementation due to a lack of data surrounding the number of escort tours in the region.
+
+
+.. automodule:: activitysim.abm.models.school_escorting
    :members:
 
 
@@ -904,7 +1094,7 @@ function.  This function is registered as an Inject step in the example Pipeline
 Core Table: ``trips`` | Result Field: ``purpose`` | Skims Keys: NA
 
 .. note::
-   Trip purpose and trip destination choice can be run iteratively together via :ref:`trip_purpose_and_destination`.
+   Trip purpose and trip destination choice can be run iteratively together via :ref:`trip_purpose_and_destination_model`.
 
 
 .. automodule:: activitysim.abm.models.trip_purpose
@@ -916,48 +1106,10 @@ Core Table: ``trips`` | Result Field: ``purpose`` | Skims Keys: NA
 Trip Destination Choice
 -----------------------
 
-The trip (or stop) location choice model predicts the location of trips (or stops) along the tour other than the primary
-destination. The stop-location model is structured as a multinomial logit model using a zone
-attraction size variable and route deviation measure as impedance. The alternatives are sampled from
-the full set of zones, subject to availability of a zonal attraction size term. The sampling mechanism
-is also based on accessibility between tour origin and primary destination, and is subject to certain rules
-based on tour mode.
-
-All destinations are available for auto tour modes, so long as there is a positive
-size term for the zone. Intermediate stops on walk tours must be within X miles of both the tour
-origin and primary destination zones. Intermediate stops on bike tours must be within X miles of both
-the tour origin and primary destination zones. Intermediate stops on walk-transit tours must either be
-within X miles walking distance of both the tour origin and primary destination, or have transit access to
-both the tour origin and primary destination. Additionally, only short and long walk zones are
-available destinations on walk-transit tours.
-
-The intermediate stop location choice model works by cycling through stops on tours. The level-of-service
-variables (including mode choice logsums) are calculated as the additional utility between the
-last location and the next known location on the tour. For example, the LOS variable for the first stop
-on the outbound direction of the tour is based on additional impedance between the tour origin and the
-tour primary destination. The LOS variable for the next outbound stop is based on the additional
-impedance between the previous stop and the tour primary destination. Stops on return tour legs work
-similarly, except that the location of the first stop is a function of the additional impedance between the
-tour primary destination and the tour origin. The next stop location is based on the additional
-impedance between the first stop on the return leg and the tour origin, and so on.
-
-Trip location choice for :ref:`multiple_zone_systems` models uses :ref:`presampling` by default.
-
-The main interface to the trip destination choice model is the
-:py:func:`~activitysim.abm.models.trip_destination.trip_destination` function.
-This function is registered as an Inject step in the example Pipeline.
-See :ref:`writing_logsums` for how to write logsums for estimation.
-
-Core Table: ``trips`` | Result Field: ``(trip) destination`` | Skims Keys: ``origin, (tour primary) destination, dest_taz, trip_period``
-
-.. note::
-   Trip purpose and trip destination choice can be run iteratively together via :ref:`trip_purpose_and_destination`.
+See :ref:`Trip Destination <component-trip-destination>`.
 
 
-.. automodule:: activitysim.abm.models.trip_destination
-   :members:
-
-.. _trip_purpose_and_destination:
+.. _trip_purpose_and_destination_model:
 
 Trip Purpose and Destination
 ----------------------------
