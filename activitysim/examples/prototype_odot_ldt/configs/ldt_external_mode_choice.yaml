@@ -4,7 +4,7 @@ COEFFICIENT_TEMPLATE: ldt_external_mode_choice_coefficients_template.csv
 
 LOGIT_TYPE: NL
 
-NESTS: 
+NESTS:
   name: root
   coefficient: coef_nest_root
   alternatives:

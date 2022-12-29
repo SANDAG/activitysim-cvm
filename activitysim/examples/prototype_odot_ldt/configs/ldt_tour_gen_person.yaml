@@ -12,4 +12,3 @@ SPEC_PURPOSES:
 # put global constants here
 CONSTANTS:
   DUMMY_CONSTANT: 1
-

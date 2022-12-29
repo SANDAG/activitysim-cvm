@@ -4,7 +4,7 @@ COEFFICIENT_TEMPLATE: ldt_internal_external_coefficient_template.csv
 
 LOGIT_TYPE: MNL
 
-CONSTANTS: 
+CONSTANTS:
   DUMMY_CONSTANT: 1
 
 # land use keys (need to determine whether a taz is internal or external)

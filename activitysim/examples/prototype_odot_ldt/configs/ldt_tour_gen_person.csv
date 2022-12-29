@@ -1,4 +1,4 @@
-Label,Description,Expression,No_Travel,Travel 
+Label,Description,Expression,No_Travel,Travel
 util_constant,Constants,1,,coef_constant
 util_hhworkers_1,1 household worker,num_workers== 1,,coef_hhworkers_1
 util_hhworkers_2,2 household workers,num_workers== 2,,coef_hhworkers_2
