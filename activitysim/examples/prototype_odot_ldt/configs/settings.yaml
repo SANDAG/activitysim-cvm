@@ -20,32 +20,30 @@ input_table_list:
   # households (table index 'household_id')
   #
   - tablename: households
-    filename: households.csv
+    filename: households.parquet
     index_col: household_id
     rename_columns:
       HHID: household_id  # household_id is the required index column
       PERSONS: hhsize
       TAZ: home_zone_id
+    recode_columns:
+      home_zone_id: land_use.zone_id
     keep_columns:
       - home_zone_id
       - hhsize
       - INCOME
       - BLD #building size variable
-      # - HHT
-      # - auto_ownership
-      # - num_workers
   #
   # persons (table index 'person_id')
   #
   - tablename: persons
-    filename: persons_fixed_cdap.csv # can merge with persons to return to original
+    filename: persons.parquet
     index_col: person_id
     rename_columns:
       index: person_id  # person_id is the required index column
       HHID: household_id
       AGE: age
     keep_columns:
-    # - PERID
       - household_id
       - SEX  # (1=Male, 2=Female)
       - age
@@ -56,16 +54,17 @@ input_table_list:
       - SW_UNSPLIT_IND  # Ohio SW Model unsplit industry
       - SW_OCCUP        # Ohio SW Model occupation
       - SW_SPLIT_IND    # Ohio SW Model split industry
-      - ptype
       # don't use pstudent/pemploy if available, specified wrong
   #
   # land_use (table index 'zone_id')
   #
   - tablename: land_use
-    filename: land_use_final.csv # change to land_use once everything's finalized
+    filename: land_use.parquet # change to land_use once everything's finalized
     index_col: zone_id
     rename_columns:
       TAZ: zone_id  # person_id is the required index column
+    recode_columns:
+      zone_id: zero-based
     keep_columns:
       - MODELAREA
       - CORDONZONE
@@ -213,6 +212,7 @@ checkpoints: True
 
 
 models:
+  # - skims_preprocess
   - initialize_landuse
   - initialize_households
   - compute_accessibility
@@ -272,3 +272,5 @@ household_median_value_of_time:
   2: 8.81
   3: 10.44
   4: 12.86
+
+sharrow: test

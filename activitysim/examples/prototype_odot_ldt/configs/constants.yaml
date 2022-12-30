@@ -62,9 +62,8 @@ OCC_EDU: [OCC_EDU_POST, OCC_EDU_PRIM] # education occupations
 
 # employment status (ESR from PUMS)
 ESR_UNDER16: 0 # under 16
-ESR_EMP: [1, 2] # 2 different categories for employed people (not used)
+ESR_EMP: [1, 2, 4, 5] # categories for employed people (1,2 civilian, 4,5 military)
 ESR_UNEMP: 3 # unemployed
-ESR_ARMY: [4, 5] # 2 different categories for people in the army (not used)
 ESR_NOT_LABOR: 6 # not in labor force
 
 # LDT tour types (defined by convention, do not change)
