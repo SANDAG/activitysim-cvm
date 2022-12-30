@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 @inject.step()
 def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     """
-    Assign a LDT pattern to each person that had a generated LDT trip. 
+    Assign a LDT pattern to each person that had a generated LDT trip.
 
     This model gives each LDT household one of the possible LDT categories for a given day --
     NOTOUR = 0
@@ -26,8 +26,8 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     END = 10/18       # arrive home, did not start at home today
     COMPLETE = 11/19  # long distance day-trip completed today
     AWAY = 12/20      # away from home, in the middle of a multi-day tour
-    
-    These categories are equal to the base pattern num (0/1/2/3/4) plus a bitshift of the 
+
+    These categories are equal to the base pattern num (0/1/2/3/4) plus a bitshift of the
     category num (0 for household, 1 for workrelated, 2 for other)
     adjusted pattern num = base pattern num + (category num << 3)
 
@@ -68,7 +68,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
     # create dataframe that contains whether a person is already generated to go on a household LDT trip
     persons = persons.to_frame()
     person_on_hh_ldt = choosers_full["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
-    
+
     # set default pattern to the notour enum
     persons["ldt_pattern_person"] = pd.Series(
         LDT_PATTERN.NOTOUR, index=persons.index, dtype=np.uint8
@@ -140,7 +140,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
                 LDT_PATTERN.BEGIN,
                 LDT_PATTERN.END,
                 LDT_PATTERN.COMPLETE,
-                LDT_PATTERN.AWAY
+                LDT_PATTERN.AWAY,
             ],
         )
 
@@ -171,15 +171,16 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         )
         # TODO: fix logic for the below statement; currently doesn't consider the varying ldt pattern codes due to bitshift
         # person_already_on_ldt |= persons["ldt_pattern_person"] != LDT_PATTERN.NOTOUR
-    
+
     # adding convenient fields
     # whether or not person is scheduled to be on LDT trip (not including away)
     persons["on_person_ldt"] = (
-        (choosers_full["ldt_pattern_person"].isin([LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END]))
-        & (~person_on_hh_ldt)
-    )
+        choosers_full["ldt_pattern_person"].isin(
+            [LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END]
+        )
+    ) & (~person_on_hh_ldt)
     # persons["ldt_pattern_person"].isin(
-    #     [x + (y << LDT_PATTERN_BITSHIFT) for x in [LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END] for y in [1, 2]] 
+    #     [x + (y << LDT_PATTERN_BITSHIFT) for x in [LDT_PATTERN.COMPLETE, LDT_PATTERN.BEGIN, LDT_PATTERN.END] for y in [1, 2]]
     # ) & (
     #     choosers_full["ldt_pattern_household"] == LDT_PATTERN.NOTOUR
     # )
@@ -223,7 +224,7 @@ def ldt_pattern_person(persons, persons_merged, chunk_size, trace_hh_id):
         pipeline.get_rn_generator().add_channel("longdist_tours", ldt_tours)
 
     logger.debug("ldt_pattern_person complete")
-    
+
     if trace_hh_id:
         tracing.trace_df(persons, label=trace_label)
 

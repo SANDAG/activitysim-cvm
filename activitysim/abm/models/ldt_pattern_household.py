@@ -99,11 +99,11 @@ def ldt_pattern_household(
         pr,
         index=choosers.index,
         columns=[
-                LDT_PATTERN.NOTOUR,
-                LDT_PATTERN.BEGIN,
-                LDT_PATTERN.END,
-                LDT_PATTERN.COMPLETE,
-                LDT_PATTERN.AWAY
+            LDT_PATTERN.NOTOUR,
+            LDT_PATTERN.BEGIN,
+            LDT_PATTERN.END,
+            LDT_PATTERN.COMPLETE,
+            LDT_PATTERN.AWAY,
         ],
     )
     # _ is the random value used to make the monte carlo draws, not used
@@ -127,9 +127,9 @@ def ldt_pattern_household(
 
     # adding some convenient fields
     # household is scheduled to go on hh ldt (not including away)
-    households["on_hh_ldt"] = (households["ldt_pattern_household"] != LDT_PATTERN.NOTOUR) & (
-        households["ldt_pattern_household"] != LDT_PATTERN.AWAY
-    )
+    households["on_hh_ldt"] = (
+        households["ldt_pattern_household"] != LDT_PATTERN.NOTOUR
+    ) & (households["ldt_pattern_household"] != LDT_PATTERN.AWAY)
 
     # merging into households
     pipeline.replace_table("households", households)
@@ -166,6 +166,6 @@ def ldt_pattern_household(
     hh_longdist_tours["actor_type"] = "household"
 
     pipeline.extend_table("longdist_tours", hh_longdist_tours)
-    
+
     if trace_hh_id:
         tracing.trace_df(households, label=trace_label, warn_if_empty=True)

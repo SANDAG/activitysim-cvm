@@ -1,12 +1,13 @@
-# ActivitySim
-# See full license in LICENSE.txt.
-import numpy as np
 import logging
 
 from ...core import config, expressions, inject, pipeline, tracing
 from .ldt_internal_external import LDT_IE_INTERNAL
 from .ldt_pattern import LDT_PATTERN
 from .util import estimation, tour_destination  # noqa: F401
+
+# ActivitySim
+# See full license in LICENSE.txt.
+
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,7 @@ def ldt_internal_tour_destination(
     destination, so in this case tours are the choosers (with the associated
     person that's making the tour). This model assigns each purpose
     going on an internal LDT trip an internal destination.
-    
+
     - *Configuration File*: `ldt_internal_destination.yaml`
     - *Core Table*: `longdist_tours`
     - *Result Field*: `ldt_internal_destination`

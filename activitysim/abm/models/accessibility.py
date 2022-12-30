@@ -5,8 +5,16 @@ import logging
 import numpy as np
 import pandas as pd
 
-from activitysim.core import assign, chunk, config, expressions, inject, los, mem, pipeline, tracing
-from activitysim.core.pathbuilder import TransitVirtualPathBuilder
+from activitysim.core import (
+    assign,
+    chunk,
+    config,
+    expressions,
+    inject,
+    los,
+    pipeline,
+    tracing,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -175,13 +183,13 @@ def compute_accessibility(land_use, accessibility, network_los, chunk_size, trac
     accessibility_df = pd.concat(accessibilities_list)
 
     logger.info(f"{trace_label} computed accessibilities {accessibility_df.shape}")
-    
+
     annotate = model_settings.get("annotate_accessibility", None)
     if annotate:
         expressions.assign_columns(
             df=accessibility_df,
             model_settings=annotate,
-            trace_label="annotate_accessibility"
+            trace_label="annotate_accessibility",
         )
 
     # - write table to pipeline

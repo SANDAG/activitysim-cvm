@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 
 from ...core.util import reindex
-from .ldt_pattern import LDT_PATTERN
 from .util.tour_frequency import create_tours
 
 logger = logging.getLogger(__name__)

@@ -59,7 +59,7 @@ def ldt_tour_gen_household(households, households_merged, chunk_size, trace_hh_i
     coefficients_df = simulate.read_model_coefficients(model_settings)
     model_spec = simulate.eval_coefficients(model_spec, coefficients_df, estimator)
 
-    nest_spec = config.get_logit_model_settings(model_settings) # MNL
+    nest_spec = config.get_logit_model_settings(model_settings)  # MNL
 
     if estimator:
         estimator.write_model_settings(model_settings, model_settings_file_name)

@@ -2,13 +2,11 @@
 # See full license in LICENSE.txt.
 import logging
 
-import numpy as np
 import pandas as pd
 from orca import orca
 
-from activitysim.core import config, inject, logit, los, pipeline, simulate, tracing
-from activitysim.core.util import assign_in_place, reindex
-
+from ...core import config, inject, logit, los, pipeline, simulate, tracing
+from ...core.util import assign_in_place, reindex
 from .util import trip
 from .util.mode import run_tour_mode_choice_simulate
 
@@ -168,7 +166,7 @@ def ldt_internal_mode_choice(
 ):
     """
     This model simulates mode choice for those going on internal LDT trips.
-    
+
     - *Configuration File*: `ldt_internal_mode_choice.yaml`
     - *Core Table*: `longdist_tours`
     - *Result Field*: `tour_mode`

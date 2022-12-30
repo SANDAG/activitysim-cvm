@@ -72,7 +72,7 @@ def ldt_tour_gen_person(persons, persons_merged, chunk_size, trace_hh_id):
             model_spec, coefficients_df, estimator
         )
 
-        nest_spec = config.get_logit_model_settings(model_settings) # MNL
+        nest_spec = config.get_logit_model_settings(model_settings)  # MNL
 
         if estimator:
             estimator.write_model_settings(model_settings, model_settings_file_name)

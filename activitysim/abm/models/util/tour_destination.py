@@ -5,12 +5,11 @@ import logging
 import numpy as np
 import pandas as pd
 
-from activitysim.abm.tables.size_terms import tour_destination_size_terms
-from activitysim.core import config, inject, los, pipeline, simulate, tracing
-from activitysim.core.interaction_sample import interaction_sample
-from activitysim.core.interaction_sample_simulate import interaction_sample_simulate
-from activitysim.core.util import reindex
-
+from ....core import config, inject, los, pipeline, simulate, tracing
+from ....core.interaction_sample import interaction_sample
+from ....core.interaction_sample_simulate import interaction_sample_simulate
+from ....core.util import reindex
+from ...tables.size_terms import tour_destination_size_terms
 from . import logsums as logsum
 
 logger = logging.getLogger(__name__)
@@ -28,7 +27,7 @@ class SizeTermCalculator(object):
 
         # do this once so they can request size_terms for various segments (tour_type or purpose)
         land_use = inject.get_table("land_use")
-        if size_term_file != None:
+        if size_term_file is not None:
             f = config.config_file_path(size_term_file)
             size_terms = pd.read_csv(f, comment="#", index_col="segment")
         else:
@@ -115,7 +114,7 @@ def _destination_sample(
 
     categories = config.get_global_constants()
     locals_d.update(categories)
-    
+
     log_alt_losers = config.setting("log_alt_losers", False)
 
     choices = interaction_sample(
@@ -784,7 +783,9 @@ def run_tour_destination(
     trace_label,
 ):
 
-    size_term_calculator = SizeTermCalculator(model_settings["SIZE_TERM_SELECTOR"], model_settings.get("SIZE_TERM_PATH", None))
+    size_term_calculator = SizeTermCalculator(
+        model_settings["SIZE_TERM_SELECTOR"], model_settings.get("SIZE_TERM_PATH", None)
+    )
 
     # maps segment names to compact (integer) ids
     segments = model_settings["SEGMENTS"]
