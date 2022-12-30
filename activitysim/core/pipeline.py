@@ -210,7 +210,10 @@ def write_df(df, table_name, checkpoint_name=None):
 
     store = get_pipeline_store()
 
-    store[pipeline_table_key(table_name, checkpoint_name)] = df
+    try:
+        store[pipeline_table_key(table_name, checkpoint_name)] = df
+    except NotImplementedError:
+        store.put(pipeline_table_key(table_name, checkpoint_name), df, "table")
 
     store.flush()
 
