@@ -333,16 +333,14 @@ def get_skims(network_los, land_use, dist_key, time_key, segment_key, model_area
         dist_val = key_dict[dist_key][segment_key]
         dist_skim = skims[dist_val]
         internal_tazs = land_use[land_use[model_area_key] == 1].index
-        # print(internal_tazs)
-        # print(time_skim[:, internal_tazs - 1])
 
         return pd.DataFrame(
             time_skim[:, internal_tazs - 1],
-            index=np.arange(1, time_skim.shape[0] + 1),
+            index=land_use.index,
             columns=internal_tazs,
         ), pd.DataFrame(
             dist_skim[:, internal_tazs - 1],
-            index=np.arange(1, dist_skim.shape[0] + 1),
+            index=land_use.index,
             columns=internal_tazs,
         )
     elif isinstance(skim_dict, SkimDataset):

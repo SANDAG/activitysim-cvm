@@ -236,7 +236,7 @@ def get_car_dist_skim(network_los, land_use, dim3, dist_key, model_area_key):
         skim = skims[key]
         return pd.DataFrame(
             skim[:, external_tazs - 1],
-            index=np.arange(1, skim.shape[0] + 1),
+            index=land_use.index,
             columns=external_tazs,
         )
     elif isinstance(skim_dict, SkimDataset):
