@@ -1,17 +1,36 @@
 # Ohio DOT Long Distance ActivitySim Implementation
 
-Example data and configuration files for the long distance travel models.  The default setup contains data for a small subset.  data_full is the full data for the 2010_EC model of record that can be provided upon request.
+Example data and configuration files for the long distance travel models.
+
+Data files based on the 2010_EC Ohio DOT model of record are stored in the
+activitysim_resources repo.  They can be installed automatically with
+the `activitysim create` command:
+
+```
+activitysim create -e prototype_odot_ldt_full -d .
+```
+
+Note employment data in this published dataset is modified from the original
+proprietary data used by Ohio DOT in the actual model of record.
 
 ## Suggested Install Process for Development
 
-ActivitySim has a lot of dependencies. It’s easiest and fastest to install them using a package manager like conda. There’s a faster version called [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge).  If you've already installed conda but not mamba, you can add it after the fact, but you  should only install mamba in the base environment. If you install mamba itself in other environments, it will not function correctly. If you’ve got an existing conda installation and you want to install mamba into it, you can install mamba into the base environment like this:
+ActivitySim has a lot of dependencies. It’s easiest and fastest to install them
+using a package manager like conda. There’s a faster version called
+[Mambaforge](https://github.com/conda-forge/miniforge#mambaforge).  If you've
+already installed conda but not mamba, you can add it after the fact, but you
+should only install mamba in the base environment. If you install mamba itself
+in other environments, it will not function correctly. If you’ve got an existing
+conda installation and you want to install mamba into it, you can install mamba
+into the base environment like this:
 
 ```
 conda update conda -n base
 conda install -n base -c conda-forge mamba
 ```
 
-Once you've got mamba, you can install all the other dependencies in a single workspace directory (rename "workspace" to something else if you like):
+Once you've got mamba, you can install all the other dependencies in a single
+workspace directory (rename "workspace" to something else if you like):
 
 ```
 mkdir workspace
@@ -29,11 +48,10 @@ python -m pip install -e .
 
 # Running
 
-Use the batch file, or:
-
+```
 conda activate ASIM-LDT
-activitysim run -c configs -d data_full -o output
-
+activitysim run -c configs -d data -o output --ext extensions
+```
 
 # Random issues
 
