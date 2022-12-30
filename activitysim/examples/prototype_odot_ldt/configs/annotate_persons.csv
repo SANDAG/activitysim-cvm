@@ -1,5 +1,7 @@
 Description,Target,Expression
 home_zone_id,home_zone_id,"reindex(households.home_zone_id, persons.household_id)"
+# fix the government split category - before, it combined government and unemployed people
+,SW_SPLIT_IND,"np.where(persons['SW_UNSPLIT_IND'] == 0, 0, persons['SW_SPLIT_IND'])"
 ,univ_student_status,"(persons.age >= 18) & (persons.SCH >= 2)"
 # ptype == 1 are full-time workers
 #   Employment status recode (ESR)

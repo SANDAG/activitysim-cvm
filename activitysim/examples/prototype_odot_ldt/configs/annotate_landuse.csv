@@ -2,4 +2,18 @@
 #,,needs to have at least one entry for some reason
 #,, annotate landuse table after import
 tot_hh,tot_hh,land_use.TotHH
+,MODELAREA,"np.where(land_use.MODELAREA == 1, 1, 0)"
 MODELAREA inverted,MODELAREA_INVERT,"np.where(df.MODELAREA == 1, 0, 1)"
+,HHlt20K1to2,df.HHlt20K1to2.fillna(0).astype(np.int32)
+,HHlt20K3plus,df.HHlt20K3plus.fillna(0).astype(np.int32)
+,HH20to40K1to2,df.HH20to40K1to2.fillna(0).astype(np.int32)
+,HH20to40K3plus,df.HH20to40K3plus.fillna(0).astype(np.int32)
+,HH40to60K1to2,df.HH40to60K1to2.fillna(0).astype(np.int32)
+,HH40to60K3plus,df.HH40to60K3plus.fillna(0).astype(np.int32)
+,HH60to75K1to2,df.HH60to75K1to2.fillna(0).astype(np.int32)
+,HH60to75K3plus,df.HH60to75K3plus.fillna(0).astype(np.int32)
+,HH75to100K1to2,df.HH75to100K1to2.fillna(0).astype(np.int32)
+,HH75to100K3plus,df.HH75to100K3plus.fillna(0).astype(np.int32)
+,HH100Kplus1to2,df.HH100Kplus1to2.fillna(0).astype(np.int32)
+,HH100Kplus3plus,df.HH100Kplus3plus.fillna(0).astype(np.int32)
+,TotHH,df.TotHH.fillna(0).astype(np.int32)

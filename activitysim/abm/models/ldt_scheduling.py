@@ -333,8 +333,8 @@ def get_skims(network_los, land_use, dist_key, time_key, segment_key, model_area
         dist_val = key_dict[dist_key][segment_key]
         dist_skim = skims[dist_val]
         internal_tazs = land_use[land_use[model_area_key] == 1].index
-        print(internal_tazs)
-        print(time_skim[:, internal_tazs - 1])
+        # print(internal_tazs)
+        # print(time_skim[:, internal_tazs - 1])
 
         return pd.DataFrame(
             time_skim[:, internal_tazs - 1],
@@ -346,25 +346,19 @@ def get_skims(network_los, land_use, dist_key, time_key, segment_key, model_area
             columns=internal_tazs,
         )
     elif isinstance(skim_dict, SkimDataset):
-        skims = skim_dict.skim_data._skim_data
-        key_dict = network_los.get_default_skim_dict().skim_dim3
-        time_val = key_dict[time_key][segment_key]
-        time_skim = skims[time_val]
-
-        dist_val = key_dict[dist_key][segment_key]
-        dist_skim = skims[dist_val]
+        time_array = skim_dict.dataset[time_key].sel(time_period=segment_key)
+        dist_array = skim_dict.dataset[dist_key].sel(time_period=segment_key)
         internal_tazs = land_use[land_use[model_area_key] == 1].index
-        print(internal_tazs)
-        print(time_skim[:, internal_tazs - 1])
-
-        return pd.DataFrame(
-            time_skim[:, internal_tazs - 1],
-            index=np.arange(1, time_skim.shape[0] + 1),
-            columns=internal_tazs,
-        ), pd.DataFrame(
-            dist_skim[:, internal_tazs - 1],
-            index=np.arange(1, dist_skim.shape[0] + 1),
+        time_df = pd.DataFrame(
+            time_array.isel(dtaz=internal_tazs),
+            index=time_array.coords["otaz"],
             columns=internal_tazs,
         )
+        dist_df = pd.DataFrame(
+            dist_array.isel(dtaz=internal_tazs),
+            index=time_array.coords["otaz"],
+            columns=internal_tazs,
+        )
+        return time_df, dist_df
     else:
         raise NotImplementedError(type(skim_dict))
