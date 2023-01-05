@@ -99,5 +99,5 @@ LOGSUM_SETTINGS: ldt_internal_mode_choice.yaml
 # model-specific logsum-related settings
 CHOOSER_ORIG_COL_NAME: home_zone_id
 ALT_DEST_COL_NAME: alt_dest
-IN_PERIOD: 14
-OUT_PERIOD: 14
+IN_PERIOD: 0
+OUT_PERIOD: 0

@@ -545,7 +545,11 @@ def read_settings_file(
 
             with open(file_path) as f:
 
-                s = yaml.load(f, Loader=yaml.SafeLoader)
+                try:
+                    s = yaml.load(f, Loader=yaml.SafeLoader)
+                except Exception as err:
+                    logger.exception(str(err))
+                    raise
                 if s is None:
                     s = {}
 

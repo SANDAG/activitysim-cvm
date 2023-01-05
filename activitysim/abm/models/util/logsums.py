@@ -3,7 +3,6 @@
 import logging
 
 from activitysim.core import config, expressions, los, simulate, tracing
-from activitysim.core.pathbuilder import TransitVirtualPathBuilder
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +27,35 @@ def filter_chooser_columns(choosers, logsum_settings, model_settings):
     chooser_columns = [c for c in chooser_columns if c in choosers]
 
     choosers = choosers[chooser_columns]
+    return choosers
+
+
+def convert_time_periods_to_skim_periods(
+    in_period_col, out_period_col, choosers, model_settings, tour_purpose, network_los
+):
+    fillna_in = None
+    fillna_out = None
+    if (
+        type(model_settings["IN_PERIOD"]) is dict
+        and type(model_settings["OUT_PERIOD"]) is dict
+    ):
+        if (
+            tour_purpose in model_settings["IN_PERIOD"]
+            and tour_purpose in model_settings["OUT_PERIOD"]
+        ):
+            fillna_in = model_settings["IN_PERIOD"][tour_purpose]
+            fillna_out = model_settings["OUT_PERIOD"][tour_purpose]
+    else:
+        fillna_in = model_settings["IN_PERIOD"]
+        fillna_out = model_settings["OUT_PERIOD"]
+    choosers["in_period"] = network_los.skim_time_period_label(
+        choosers[in_period_col],
+        fillna=fillna_in,
+    )
+    choosers["out_period"] = network_los.skim_time_period_label(
+        choosers[out_period_col],
+        fillna=fillna_out,
+    )
     return choosers
 
 
@@ -72,11 +100,13 @@ def compute_logsums(
 
     # FIXME - are we ok with altering choosers (so caller doesn't have to set these)?
     if (in_period_col is not None) and (out_period_col is not None):
-        choosers["in_period"] = network_los.skim_time_period_label(
-            choosers[in_period_col]
-        )
-        choosers["out_period"] = network_los.skim_time_period_label(
-            choosers[out_period_col]
+        choosers = convert_time_periods_to_skim_periods(
+            in_period_col,
+            out_period_col,
+            choosers,
+            model_settings,
+            tour_purpose,
+            network_los,
         )
     elif ("in_period" not in choosers.columns) and (
         "out_period" not in choosers.columns

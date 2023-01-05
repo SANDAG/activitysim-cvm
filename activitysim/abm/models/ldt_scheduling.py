@@ -192,10 +192,7 @@ def ldt_scheduling(
                     locals_d=constants,
                     chunk_size=chunk_size,
                     trace_label=trace_label,
-                    trace_choice_name="ldt_scheduling_"
-                    + actor_type
-                    + "_"
-                    + category_name,
+                    trace_choice_name=f"ldt_scheduling_{actor_type}_{category_name}",
                     estimator=estimator,
                 )
 
@@ -204,7 +201,7 @@ def ldt_scheduling(
                     choices = estimator.get_survey_values(
                         choices,
                         "persons",
-                        "ldt_scheduling_" + actor_type + "_" + category_name,
+                        f"ldt_scheduling_{actor_type}_{category_name}",
                     )
                     estimator.write_override_choices(choices)
                     estimator.end_estimation()
@@ -288,19 +285,32 @@ def ldt_scheduling(
     households = pipeline.get_table("households")
     persons = pipeline.get_table("persons")
 
-    # why do we need to merge to households/persons to get internal stuff to run?
-    households[start_colname] = starts_df.reindex(households.index).fillna(
-        {start_colname: -1}, downcast="infer"
+    household_tours = ldt_tours.query(f"{actor_column_name} == 'household'")
+    households[start_colname] = (
+        household_tours[start_colname]
+        .set_axis(household_tours["household_id"])
+        .reindex(households.index)
+        .fillna(-1, downcast="infer")
     )
-    households[end_colname] = ends_df.reindex(households.index).fillna(
-        {end_colname: -1}, downcast="infer"
+    households[end_colname] = (
+        household_tours[end_colname]
+        .set_axis(household_tours["household_id"])
+        .reindex(households.index)
+        .fillna(-1, downcast="infer")
     )
 
-    persons[start_colname] = starts_df.reindex(persons.index).fillna(
-        {start_colname: -1}, downcast="infer"
+    person_tours = ldt_tours.query(f"{actor_column_name} == 'person'")
+    persons[start_colname] = (
+        person_tours[start_colname]
+        .set_axis(person_tours["person_id"])
+        .reindex(persons.index)
+        .fillna(-1, downcast="infer")
     )
-    persons[end_colname] = ends_df.reindex(persons.index).fillna(
-        {end_colname: -1}, downcast="infer"
+    persons[end_colname] = (
+        person_tours[end_colname]
+        .set_axis(person_tours["person_id"])
+        .reindex(persons.index)
+        .fillna(-1, downcast="infer")
     )
 
     pipeline.replace_table("households", households)

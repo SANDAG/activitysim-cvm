@@ -11,6 +11,7 @@ from ....core.interaction_sample_simulate import interaction_sample_simulate
 from ....core.util import reindex
 from ...tables.size_terms import tour_destination_size_terms
 from . import logsums as logsum
+from .logsums import convert_time_periods_to_skim_periods
 
 logger = logging.getLogger(__name__)
 DUMP = False
@@ -80,6 +81,7 @@ def _destination_sample(
     chunk_tag,
     trace_label,
     zone_layer=None,
+    known_time_periods=None,
 ):
 
     model_spec = simulate.spec_for_segment(
@@ -102,12 +104,28 @@ def _destination_sample(
         )
         sample_size = 0
 
-    locals_d = {
-        "skims": skims,
-        "orig_col_name": skims.orig_key,  # added for sharrow flows
-        "dest_col_name": skims.dest_key,  # added for sharrow flows
-        "timeframe": "timeless",
-    }
+    if known_time_periods is None:
+        locals_d = {
+            "skims": skims,
+            "orig_col_name": skims.orig_key,  # added for sharrow flows
+            "dest_col_name": skims.dest_key,  # added for sharrow flows
+            "timeframe": "timeless",
+        }
+    else:
+        locals_d = {
+            "skims": skims,
+            "orig_col_name": skims.orig_key,  # added for sharrow flows
+            "dest_col_name": skims.dest_key,  # added for sharrow flows
+            "timeframe": "tour",
+            "odt_skims": known_time_periods["odt_skims"],
+            "dot_skims": known_time_periods["dot_skims"],
+        }
+        skims = [
+            skims,
+            known_time_periods["odt_skims"],
+            known_time_periods["dot_skims"],
+        ]
+    locals_d.update(config.get_global_constants())
     constants = config.get_model_constants(model_settings)
     if constants is not None:
         locals_d.update(constants)
@@ -148,6 +166,7 @@ def destination_sample(
     estimator,
     chunk_size,
     trace_label,
+    known_time_periods=None,
 ):
 
     chunk_tag = "tour_destination.sample"
@@ -162,6 +181,30 @@ def destination_sample(
 
     skim_dict = network_los.get_default_skim_dict()
     skims = skim_dict.wrap(skim_origin_col_name, skim_dest_col_name)
+    if known_time_periods is not None:
+        odt_skims = skim_dict.wrap_3d(
+            skim_origin_col_name, skim_dest_col_name, "out_period"
+        )
+        dot_skims = skim_dict.wrap_3d(
+            skim_dest_col_name, skim_origin_col_name, "in_period"
+        )
+        known_time_periods_ = {
+            "odt_skims": odt_skims,
+            "dot_skims": dot_skims,
+        }
+        known_time_periods_.update(known_time_periods)
+
+        # add in_periods and out_period columns to choosers...
+        choosers = convert_time_periods_to_skim_periods(
+            known_time_periods["in_period"],
+            known_time_periods["out_period"],
+            choosers,
+            model_settings,
+            "<tour_purpose>",
+            network_los,
+        )
+    else:
+        known_time_periods_ = None
 
     # the name of the dest column to be returned in choices
     alt_dest_col_name = model_settings["ALT_DEST_COL_NAME"]
@@ -177,6 +220,7 @@ def destination_sample(
         chunk_size,
         chunk_tag=chunk_tag,
         trace_label=trace_label,
+        known_time_periods=known_time_periods_,
     )
 
     return choices
@@ -529,12 +573,17 @@ def run_destination_sample(
     estimator,
     chunk_size,
     trace_label,
+    known_time_periods=None,
 ):
 
     # FIXME - MEMORY HACK - only include columns actually used in spec (omit them pre-merge)
     chooser_columns = model_settings["SIMULATE_CHOOSER_COLUMNS"]
     persons_merged = persons_merged[
-        [c for c in persons_merged.columns if c in chooser_columns]
+        [
+            c
+            for c in persons_merged.columns
+            if c in chooser_columns and c not in tours.columns
+        ]
     ]
     tours = tours[
         [c for c in tours.columns if c in chooser_columns or c == "person_id"]
@@ -542,6 +591,12 @@ def run_destination_sample(
     choosers = pd.merge(
         tours, persons_merged, left_on="person_id", right_index=True, how="left"
     )
+
+    if "ldt_start_hour" not in choosers.columns:
+        print()
+    else:
+        _temp = choosers["ldt_start_hour"]
+        print(_temp)
 
     # interaction_sample requires that choosers.index.is_monotonic_increasing
     if not choosers.index.is_monotonic_increasing:
@@ -586,6 +641,7 @@ def run_destination_sample(
             estimator,
             chunk_size,
             trace_label,
+            known_time_periods=known_time_periods,
         )
 
     # remember person_id in chosen alts so we can merge with persons in subsequent steps
@@ -603,6 +659,9 @@ def run_destination_logsums(
     network_los,
     chunk_size,
     trace_label,
+    in_period_col=None,
+    out_period_col=None,
+    duration_col=None,
 ):
     """
     add logsum column to existing tour_destination_sample table
@@ -657,6 +716,9 @@ def run_destination_logsums(
         chunk_size,
         chunk_tag,
         trace_label,
+        in_period_col=in_period_col,
+        out_period_col=out_period_col,
+        duration_col=duration_col,
     )
 
     destination_sample["mode_choice_logsum"] = logsums
@@ -676,6 +738,7 @@ def run_destination_simulate(
     estimator,
     chunk_size,
     trace_label,
+    known_time_periods=None,
 ):
     """
     run destination_simulate on tour_destination_sample
@@ -693,7 +756,11 @@ def run_destination_simulate(
     # FIXME - MEMORY HACK - only include columns actually used in spec (omit them pre-merge)
     chooser_columns = model_settings["SIMULATE_CHOOSER_COLUMNS"]
     persons_merged = persons_merged[
-        [c for c in persons_merged.columns if c in chooser_columns]
+        [
+            c
+            for c in persons_merged.columns
+            if c in chooser_columns and c not in tours.columns
+        ]
     ]
     tours = tours[
         [c for c in tours.columns if c in chooser_columns or c == "person_id"]
@@ -733,12 +800,45 @@ def run_destination_simulate(
     skim_dict = network_los.get_default_skim_dict()
     skims = skim_dict.wrap(origin_col_name, alt_dest_col_name)
 
-    locals_d = {
-        "skims": skims,
-        "orig_col_name": skims.orig_key,  # added for sharrow flows
-        "dest_col_name": skims.dest_key,  # added for sharrow flows
-        "timeframe": "timeless",
-    }
+    if known_time_periods is None:
+        locals_d = {
+            "skims": skims,
+            "orig_col_name": skims.orig_key,  # added for sharrow flows
+            "dest_col_name": skims.dest_key,  # added for sharrow flows
+            "timeframe": "timeless",
+        }
+    else:
+        # (logit.interaction_dataset suffixes duplicate chooser column with '_chooser')
+        if origin_col_name == alt_dest_col_name:
+            origin_col_name = f"{origin_col_name}_chooser"
+
+        odt_skims = skim_dict.wrap_3d(origin_col_name, alt_dest_col_name, "out_period")
+        dot_skims = skim_dict.wrap_3d(alt_dest_col_name, origin_col_name, "in_period")
+        locals_d = {
+            "skims": skims,
+            "orig_col_name": skims.orig_key,  # added for sharrow flows
+            "dest_col_name": skims.dest_key,  # added for sharrow flows
+            "timeframe": "tour",
+            "odt_skims": odt_skims,
+            "dot_skims": dot_skims,
+            # "out_period": known_time_periods["out_period"],
+            # "in_period": known_time_periods["in_period"],
+        }
+        skims = [
+            skims,
+            odt_skims,
+            dot_skims,
+        ]
+        # add in_periods and out_period columns to choosers...
+        choosers = convert_time_periods_to_skim_periods(
+            known_time_periods["in_period"],
+            known_time_periods["out_period"],
+            choosers,
+            model_settings,
+            "<tour_purpose>",
+            network_los,
+        )
+
     if constants is not None:
         locals_d.update(constants)
 
@@ -781,6 +881,9 @@ def run_tour_destination(
     chunk_size,
     trace_hh_id,
     trace_label,
+    in_period_col=None,
+    out_period_col=None,
+    duration_col=None,
 ):
 
     size_term_calculator = SizeTermCalculator(
@@ -795,6 +898,12 @@ def run_tour_destination(
         assert (
             len(segments) == 1
         ), f"CHOOSER_SEGMENT_COLUMN_NAME not specified in model_settings to slice SEGMENTS: {segments}"
+
+    known_time_periods = {}
+    if in_period_col is not None:
+        known_time_periods["in_period"] = in_period_col
+    if out_period_col is not None:
+        known_time_periods["out_period"] = out_period_col
 
     choices_list = []
     sample_list = []
@@ -837,6 +946,7 @@ def run_tour_destination(
             estimator,
             chunk_size=chunk_size,
             trace_label=tracing.extend_trace_label(segment_trace_label, "sample"),
+            known_time_periods=known_time_periods,
         )
 
         # - destination_logsums
@@ -848,6 +958,9 @@ def run_tour_destination(
             network_los,
             chunk_size=chunk_size,
             trace_label=tracing.extend_trace_label(segment_trace_label, "logsums"),
+            in_period_col=in_period_col,
+            out_period_col=out_period_col,
+            duration_col=duration_col,
         )
 
         # - destination_simulate
@@ -864,6 +977,7 @@ def run_tour_destination(
             estimator=estimator,
             chunk_size=chunk_size,
             trace_label=tracing.extend_trace_label(segment_trace_label, "simulate"),
+            known_time_periods=known_time_periods,
         )
 
         choices_list.append(choices)

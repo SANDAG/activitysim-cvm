@@ -24,13 +24,7 @@ def ldt_internal_tour_destination(
     """
     Given the tour generation from the above, each tour needs to have a
     destination, so in this case tours are the choosers (with the associated
-    person that's making the tour). This model assigns each purpose
-    going on an internal LDT trip an internal destination.
-
-    - *Configuration File*: `ldt_internal_destination.yaml`
-    - *Core Table*: `longdist_tours`
-    - *Result Field*: `ldt_internal_destination`
-    - *Result dtype*: `int16`
+    person that's making the tour)
     """
 
     trace_label = "ldt_internal_tour_destination"
@@ -104,6 +98,8 @@ def ldt_internal_tour_destination(
         chunk_size,
         trace_hh_id,
         trace_label,
+        in_period_col="ldt_start_hour",
+        out_period_col="ldt_end_hour",
     )
 
     # TODO
