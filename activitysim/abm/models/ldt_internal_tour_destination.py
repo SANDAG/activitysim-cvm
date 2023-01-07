@@ -51,6 +51,10 @@ def ldt_internal_tour_destination(
 
     persons_merged = persons_merged.to_frame()
 
+    persons_merged["ldt_pattern"] = (
+        persons_merged["ldt_pattern_person"] | persons_merged["ldt_pattern_household"]
+    )
+
     # - if no ldt tours
     if ldt_tours.shape[0] == 0:
         tracing.no_results("ldt_tour_destination")
@@ -98,8 +102,8 @@ def ldt_internal_tour_destination(
         chunk_size,
         trace_hh_id,
         trace_label,
-        in_period_col="ldt_start_hour",
-        out_period_col="ldt_end_hour",
+        out_period_col="ldt_start_hour",
+        in_period_col="ldt_end_hour",
     )
 
     # TODO
@@ -118,6 +122,13 @@ def ldt_internal_tour_destination(
     ldt_tours = ldt_tours.join(
         choices_df[list(renaming.keys())].rename(columns=renaming)
     ).fillna({"internal_destination": -1}, downcast={"internal_destination": "int32"})
+
+    if "annotate_ldt_tours" in model_settings:
+        expressions.assign_columns(
+            df=ldt_tours,
+            model_settings=model_settings.get("annotate_ldt_tours"),
+            trace_label=tracing.extend_trace_label(trace_label, "annotate_ldt_tours"),
+        )
 
     pipeline.replace_table("longdist_tours", ldt_tours)
 

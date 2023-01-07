@@ -1,4 +1,4 @@
 ﻿Label,Description,Expression,DRIVE,AIR,DRIVE_TRANSIT,WALK_TRANSIT
 util_constant,Constants,1,,coef_air_constant,coef_transit_constant,coef_transit_constant
-util_logdist,Logdist of trip,"@np.log(od_skims[(""CAR_DIST"", ""OP"")])",,coef_air_logdist,,
+util_logdist,Logdist of trip,"@np.log(od_skims[('CAR_DIST', 'OP')])",,coef_air_logdist,,
 util_income_60k_up,Actor has a household income of 60k+,@(df.income_in_thousands >= 60),,coef_air_income_60k_up,,

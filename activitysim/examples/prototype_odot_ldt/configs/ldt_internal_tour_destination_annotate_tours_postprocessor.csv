@@ -1,0 +1,2 @@
+Description,Target,Expression
+,distance_to_internal_dest,"np.where(df.internal_destination>=0,skim_dict.lookup(df.origin, df.internal_destination, ('CAR_DIST', 'PK')),np.nan)"

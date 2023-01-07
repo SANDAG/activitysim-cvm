@@ -22,6 +22,11 @@ preprocessor:
   TABLES:
     - persons
 
+annotate_ldt_tours:
+  SPEC: ldt_internal_tour_destination_annotate_tours_postprocessor.csv
+  DF: longdist_tours
+  TABLES:
+    - persons
 
 # segments here are 2-tuples, they give
 #   `segment_name` for destination segmenting, and
@@ -89,6 +94,7 @@ SEGMENTS:
 SIMULATE_CHOOSER_COLUMNS:
   - tour_type
   - home_zone_id
+  - household_id
   - person_id
   - ldt_pattern
   - ldt_start_hour

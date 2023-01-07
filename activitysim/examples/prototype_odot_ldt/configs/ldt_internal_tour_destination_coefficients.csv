@@ -1,5 +1,4 @@
 coefficient_name,value,constrain
-coef_mode_logsum,0.6755,F
 coef_dist_50_60_hh,-0.205,F
 coef_dist_50_60_work,0.65,F
 coef_dist_50_60_other,-1.201,F

@@ -3,7 +3,8 @@ Label,Description,Expression,PRIVATEAUTO,AIR,WALK_TRANSIT,DRIVE_TRANSIT,WALK_HSR
 # Auto,,,,,,,,
 # util_AUTO_not_possible,auto is not possible between origin/destination,@odt_skims['CAR_TIME'] == 0,-999,,,,,
 util_AUTO_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'])),-999,,,,,
-util_AUTO_in_vehicle_time,AUTO - In-vehicle time,@odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'],coef_ivt,,,,,
+util_AUTO_in_vehicle_time,AUTO - In-vehicle time,"@np.where(df['ldt_pattern'] & 0x1, odt_skims['CAR_TIME'], 0) + np.where(df['ldt_pattern'] & 0x2, dot_skims['CAR_TIME'],0)",coef_ivt,,,,,
+# TODO split cost on pattern
 util_AUTO_cost_income_less_than_20k,AUTO - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['CAR_COST'] + dot_skims['CAR_COST'] + odt_skims['CAR_TOLL'] + dot_skims['CAR_TOLL']),coef_cost_inc_0to20k,,,,,
 util_AUTO_cost_income_20k_to_60k,AUTO - cost in cents if income between 20k to 60k,@((df.INCOME > 20000) & (df.INCOME <= 60000)) * (odt_skims['CAR_COST'] + dot_skims['CAR_COST'] + odt_skims['CAR_TOLL'] + dot_skims['CAR_TOLL']),coef_cost_inc_20kto60k,,,,,
 util_AUTO_cost_income_more_than_60k,AUTO - cost in cents if income greater than 60k,@(df.INCOME > 60000) * (odt_skims['CAR_COST'] + dot_skims['CAR_COST'] + odt_skims['CAR_TOLL'] + dot_skims['CAR_TOLL']),coef_cost_inc_gt60k,,,,,
@@ -13,9 +14,9 @@ util_AIR_not_possible,air is not possible between origin/destination,@odt_skims[
 util_AIR_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['AIR_GROSS_TIME'] + dot_skims['AIR_GROSS_TIME'])),,-999,,,,
 util_AIR_in_vehicle_time,AIR-In-vehicle time,@odt_skims['AIR_IVT'] + dot_skims['AIR_IVT'],,coef_ivt,,,,
 util_AIR_drive_access,AIR drive access time,@odt_skims['AIR_DRV'] + dot_skims['AIR_DRV'],,coef_dracc_time,,,,
-util_AIR_frequency,AIR daily frequency service,@odt_skims['AIR_FWT'] + dot_skims['AIR_FWT'],,coef_wacc_time,,,,
-#util_AIR_wait_time_upto_60min,air has frequency instead of wait time,@odt_skims[''],,coef_wt_upto_60min,,,,
-#util_AIR_wait_time_greater_than_60min,air has frequency instead of wait time,@odt_skims[''],,coef_wt_gt_60min,,,,
+#util_AIR_frequency,AIR daily frequency service,@odt_skims['AIR_FWT'] + dot_skims['AIR_FWT'],,coef_wacc_time,,,,
+util_AIR_wait_time_upto_60min,air has frequency instead of wait time,"@np.clip(odt_skims['AIR_FWT'] + dot_skims['AIR_FWT'], 0, 60)",,coef_wt_upto_60min,,,,
+util_AIR_wait_time_greater_than_60min,air has frequency instead of wait time,"@np.clip(odt_skims['AIR_FWT'] + dot_skims['AIR_FWT'], 60, None)-60",,coef_wt_gt_60min,,,,
 util_AIR_cost_income_less_than_20k,AIR - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['AIR_FAR'] + dot_skims['AIR_FAR']),,coef_cost_inc_0to20k,,,,
 util_AIR_cost_income_20k_to_60k,AIR - cost in cents if income between 20k to 60k,@((df.INCOME > 20000) & (df.INCOME <= 60000)) * (odt_skims['AIR_FAR'] + dot_skims['AIR_FAR']),,coef_cost_inc_20kto60k,,,,
 util_AIR_cost_income_more_than_60k,AIR - cost in cents if income greater than 60k,@(df.INCOME > 60000) *  (odt_skims['AIR_FAR'] + dot_skims['AIR_FAR']),,coef_cost_inc_gt60k,,,,
@@ -25,8 +26,8 @@ util_WALKTRANSIT_not_possible,walktransit is not possible between origin/destina
 util_WALKTRANSIT_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['ICWT_IVT'] + odt_skims['ICWT_TWT'] + odt_skims['ICWT_AWK'] + odt_skims['ICWT_EWK'] +odt_skims['ICWT_FWT'] + odt_skims['ICWT_XWK'] + dot_skims['ICWT_IVT'] + dot_skims['ICWT_TWT'] + dot_skims['ICWT_AWK'] + dot_skims['ICWT_EWK'] + dot_skims['ICWT_FWT'] + dot_skims['ICWT_XWK'])),,,-999,,,
 util_WALKTRANSIT_in_vehicle_time,WALK Transit in-vehicle time,@odt_skims['ICWT_IVT'] + dot_skims['ICWT_IVT'],,,coef_ivt,,,
 util_WALKTRANSIT_walk_access,WALK Transit walk access time,@odt_skims['ICWT_AWK'] + odt_skims['ICWT_EWK'] + dot_skims['ICWT_AWK'] + dot_skims['ICWT_EWK'],,,coef_wacc_time,,,
-util_WALKTRANSIT_wait_time_upto_60min,WALK Transit wait time upto 60 min,@odt_skims['ICWT_TWT'] + dot_skims['ICWT_TWT'] <=60,,,coef_wt_upto_60min,,,
-util_WALKTRANSIT_wait_time_greater_than_60min,WALK Transit wait time greater than 60 min,@odt_skims['ICWT_TWT'] + dot_skims['ICWT_TWT'] > 60,,,coef_wt_gt_60min,,,
+util_WALKTRANSIT_wait_time_upto_60min,WALK Transit wait time upto 60 min,"@np.clip(odt_skims['ICWT_TWT'] + dot_skims['ICWT_TWT'], 0, 60)",,,coef_wt_upto_60min,,,
+util_WALKTRANSIT_wait_time_greater_than_60min,WALK Transit wait time greater than 60 min,"@np.clip(odt_skims['ICWT_TWT'] + dot_skims['ICWT_TWT'], 60, None) - 60",,,coef_wt_gt_60min,,,
 util_WALKTRANSIT_cost_income_less_than_20k,WALK Transit - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['ICWT_FAR'] + dot_skims['ICWT_FAR']),,,coef_cost_inc_0to20k,,,
 util_WALKTRANSIT_cost_income_20k_to_60k,WALK Transit - cost in cents if income between 20k to 60k,@((df.INCOME > 20000) & (df.INCOME <= 60000)) * (odt_skims['ICWT_FAR'] + dot_skims['ICWT_FAR']),,,coef_cost_inc_20kto60k,,,
 util_WALKTRANSIT_cost_income_more_than_60k,WALK Transit- cost in cents if income greater than 60k,@(df.INCOME > 60000) *  (odt_skims['ICWT_FAR'] + dot_skims['ICWT_FAR']),,,coef_cost_inc_gt60k,,,
@@ -36,8 +37,8 @@ util_DRIVETRANSIT_not_possible,drivetransit is not possible between orig/dest,@o
 util_DRIVETRANSIT_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['ICDT_GROSS_TIME'] + dot_skims['ICDT_GROSS_TIME'])),,,,-999,,
 util_DRIVETRANSIT_in_vehicle_time,DRIVE Transit in-vehicle time,@odt_skims['ICDT_IVT'] + dot_skims['ICDT_IVT'],,,,coef_ivt,,
 util_DRIVETRANSIT_drive_access,DRIVE Transit drive access time,@odt_skims['ICDT_DRV'] + dot_skims['ICDT_DRV'],,,,coef_dracc_time,,
-util_DRIVETRANSIT_wait_time_upto_60min,DRIVE Transit wait time upto 60 min,@odt_skims['ICDT_TWT'] + dot_skims['ICDT_TWT'] <=60,,,,coef_wt_upto_60min,,
-util_DRIVETRANSIT_wait_time_greater_than_60min,DRIVE Transit wait time greater than 60 min,@odt_skims['ICDT_TWT'] + dot_skims['ICDT_TWT'] > 60,,,,coef_wt_gt_60min,,
+util_DRIVETRANSIT_wait_time_upto_60min,DRIVE Transit wait time upto 60 min,"@np.clip(odt_skims['ICDT_TWT'] + dot_skims['ICDT_TWT'], 0, 60)",,,,coef_wt_upto_60min,,
+util_DRIVETRANSIT_wait_time_greater_than_60min,DRIVE Transit wait time greater than 60 min,"@np.clip(odt_skims['ICDT_TWT'] + dot_skims['ICDT_TWT'], 60, None) - 60",,,,coef_wt_gt_60min,,
 util_DRIVETRANSIT_cost_income_less_than_20k,DRIVE Transit - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['ICDT_FAR'] + dot_skims['ICDT_FAR']),,,,coef_cost_inc_0to20k,,
 util_DRIVETRANSIT_cost_income_20k_to_60k,DRIVE Transit - cost in cents if income between 20k to 60k,@((df.INCOME > 20000) & (df.INCOME <= 60000)) * (odt_skims['ICDT_FAR'] + dot_skims['ICDT_FAR']),,,,coef_cost_inc_20kto60k,,
 util_DRIVETRANSIT_cost_income_more_than_60k,DRIVE Transit- cost in cents if income greater than 60k,@(df.INCOME > 60000) *  (odt_skims['ICDT_FAR'] + dot_skims['ICDT_FAR']),,,,coef_cost_inc_gt60k,,
@@ -47,8 +48,8 @@ util_HSRWALKTRANSIT_not_possible,hsrwalktransit not possible between origin/dest
 util_HSRWALKTRANSIT_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['ICRWT_GROSS_TIME'] + dot_skims['ICRWT_GROSS_TIME'])),,,,,-999,
 util_HSRWALKTRANSIT_in_vehicle_time,HSR Walk Transit in-vehicle time,@odt_skims['ICRWT_IVT'] + dot_skims['ICRWT_IVT'],,,,,coef_ivt,
 util_HSRWALKTRANSIT_walk_access,HSR Walk Transit walk access time,@odt_skims['ICRWT_AWK'] + odt_skims['ICRWT_EWK'] + dot_skims['ICRWT_AWK'] + dot_skims['ICRWT_EWK'],,,,,coef_wacc_time,
-util_HSRWALKTRANSIT_wt_wait_time_upto_60min,HSR Walk Transit wait time upto 60 min,@odt_skims['ICRWT_TWT'] + dot_skims['ICRWT_TWT'] <=60,,,,,coef_wt_upto_60min,
-util_HSRWALKTRANSIT_wait_time_greater_than_60min,HSR Walk Transit wait time greater than 60 min,@odt_skims['ICRWT_TWT'] + dot_skims['ICRWT_TWT'] > 60,,,,,coef_wt_gt_60min,
+util_HSRWALKTRANSIT_wt_wait_time_upto_60min,HSR Walk Transit wait time upto 60 min,"@np.clip(odt_skims['ICRWT_TWT'] + dot_skims['ICRWT_TWT'], 0, 60)",,,,,coef_wt_upto_60min,
+util_HSRWALKTRANSIT_wait_time_greater_than_60min,HSR Walk Transit wait time greater than 60 min,"@np.clip(odt_skims['ICRWT_TWT'] + dot_skims['ICRWT_TWT'], 60, None) - 60",,,,,coef_wt_gt_60min,
 util_HSRWALKTRANSIT_cost_income_less_than_20k,HSR Walk Transit - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['ICRWT_FAR'] + dot_skims['ICRWT_FAR']),,,,,coef_cost_inc_0to20k,
 util_HSRWALKTRANSIT_cost_income_20k_to_60k,HSR Walk Transit - cost in cents if income between 20k to 60k,@((df.INCOME > 20000) & (df.INCOME <= 60000)) * (odt_skims['ICRWT_FAR'] + dot_skims['ICRWT_FAR']),,,,,coef_cost_inc_20kto60k,
 util_HSRWALKTRANSIT_cost_income_more_than_60k,HSR Walk Transit- cost in cents if income greater than 60k,@(df.INCOME > 60000) *  (odt_skims['ICRWT_FAR'] + dot_skims['ICRWT_FAR']),,,,,coef_cost_inc_gt60k,
@@ -58,8 +59,8 @@ util_HSRDRIVETRANSIT_not_possible,hsrdrivetransit not possible between orig/dest
 util_HSRDRIVETRANSIT_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['ICRDT_GROSS_TIME'] + dot_skims['ICRDT_GROSS_TIME'])),,,,,,-999
 util_HSRDRIVETRANSIT_in_vehicle_time,HSR Drive Transit in-vehicle time,@odt_skims['ICRDT_IVT'] + dot_skims['ICRDT_IVT'],,,,,,coef_ivt
 util_HSRDRIVETRANSIT_drive_access,HSR Drive Transit drive access time,@odt_skims['ICRDT_DRV'] + dot_skims['ICRDT_DRV'],,,,,,coef_dracc_time
-util_HSRDRIVETRANSIT_wait_time_upto_60min,HSR Drive Transit wait time upto 60 min,@odt_skims['ICRDT_TWT'] + dot_skims['ICRDT_TWT'] <=60,,,,,,coef_wt_upto_60min
-util_HSRDRIVETRANSIT_time_greater_than_60min,HSR Drive Transit wait time greater than 60 min,@odt_skims['ICRDT_TWT'] + dot_skims['ICRDT_TWT'] > 60,,,,,,coef_wt_gt_60min
+util_HSRDRIVETRANSIT_wait_time_upto_60min,HSR Drive Transit wait time upto 60 min,"@np.clip(odt_skims['ICRDT_TWT'] + dot_skims['ICRDT_TWT'], 0, 60)",,,,,,coef_wt_upto_60min
+util_HSRDRIVETRANSIT_time_greater_than_60min,HSR Drive Transit wait time greater than 60 min,"@np.clip(odt_skims['ICRDT_TWT'] + dot_skims['ICRDT_TWT'], 60, None) - 60",,,,,,coef_wt_gt_60min
 util_HSRDRIVETRANSIT_cost_income_less_than_20k,HSR Drive Transit - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['ICRDT_FAR'] + dot_skims['ICRDT_FAR']),,,,,,coef_cost_inc_0to20k
 util_HSRDRIVETRANSIT_cost_income_20k_to_60k,HSR Drive Transit - cost in cents if income between 20k to 60k,@((df.INCOME > 20000) & (df.INCOME <= 60000)) * (odt_skims['ICRDT_FAR'] + dot_skims['ICRDT_FAR']),,,,,,coef_cost_inc_20kto60k
 util_HSRDRIVETRANSIT_cost_income_more_than_60k,HSR Drive Transit- cost in cents if income greater than 60k,@(df.INCOME > 60000) *  (odt_skims['ICRDT_FAR'] + dot_skims['ICRDT_FAR']),,,,,,coef_cost_inc_gt60k

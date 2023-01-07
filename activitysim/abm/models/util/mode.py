@@ -132,6 +132,8 @@ def run_tour_mode_choice_simulate(
     choosers["out_period"] = network_los.skim_time_period_label(
         choosers[out_time], fillna=default_out_time
     )
+    assert not choosers["in_period"].isna().any()
+    assert not choosers["out_period"].isna().any()
 
     expressions.annotate_preprocessors(
         choosers, locals_dict, skims, model_settings, trace_label

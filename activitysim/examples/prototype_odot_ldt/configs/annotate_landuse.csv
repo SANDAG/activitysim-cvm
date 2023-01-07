@@ -3,7 +3,7 @@
 #,, annotate landuse table after import
 tot_hh,tot_hh,land_use.TotHH
 ,MODELAREA,"np.where(land_use.MODELAREA == 1, 1, 0)"
-MODELAREA inverted,MODELAREA_INVERT,"np.where(df.MODELAREA == 1, 0, 1)"
+MODELAREA inverted,MODELAREA_INVERT,"np.where(df.MODELAREA == 1, 0.0, np.inf)"
 ,HHlt20K1to2,df.HHlt20K1to2.fillna(0).astype(np.int32)
 ,HHlt20K3plus,df.HHlt20K3plus.fillna(0).astype(np.int32)
 ,HH20to40K1to2,df.HH20to40K1to2.fillna(0).astype(np.int32)

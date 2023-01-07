@@ -94,6 +94,12 @@ def ldt_scheduling(
     time_key = model_settings.get("TIME_KEY", None)
     dist_key = model_settings.get("DIST_KEY", None)
 
+    # the schedule buffer is an extra bit of time added to the minimum
+    # round trip travel time, used only when judging whether a 2 or 3
+    # hour complete LDT is even possible.  This helps prevent having
+    # short tours in congested areas where a short LDT isn't feasible.
+    schedule_buffer = model_settings.get("SCHEDULE_BUFFER", 10)
+
     assert (
         model_area_key is not None
         and segment_key is not None
@@ -108,17 +114,24 @@ def ldt_scheduling(
     # get the TAZs that don't have possible destinations for a 2 hour complete ldt
     # --can't travel there/back and spend the min time in the destination
     # merge them into the choosers dataframe to prevent these 2 hour complete ldt tours
-    invalid_tazs = []
+    invalid_tazs_2hour = []
+    invalid_tazs_3hour = []
     for taz in times.index:
-        if (
-            land_use.loc[taz][model_area_key] == 1
-            and 2 * np.where(dists.loc[taz] >= 50, times.loc[taz], 9999).min()
-            + constants["min_time_in_dest"]
-            >= 119
-        ):
-            invalid_tazs.append(taz)
+        if land_use.loc[taz][model_area_key] == 1:
+            minimum_duration_from_here = (
+                2 * np.where(dists.loc[taz] >= 50, times.loc[taz], 9999).min()
+                + constants["min_time_in_dest"]
+                + schedule_buffer
+            )
+            if minimum_duration_from_here >= 119:
+                invalid_tazs_2hour.append(taz)
+            if minimum_duration_from_here >= 179:
+                invalid_tazs_3hour.append(taz)
     ldt_tours_merged["no_2_hour_tour"] = ldt_tours_merged["home_zone_id"].isin(
-        invalid_tazs
+        invalid_tazs_2hour
+    )
+    ldt_tours_merged["no_3_hour_tour"] = ldt_tours_merged["home_zone_id"].isin(
+        invalid_tazs_3hour
     )
 
     # lists to append all results to
