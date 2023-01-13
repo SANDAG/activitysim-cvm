@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Developer Installation &#8212; ActivitySim 1.1.4.dev94+g1e8164b4</title>
+    <title>Developer Installation &#8212; ActivitySim 1.1.4.dev511+g71d3e919</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -35,7 +35,7 @@
     <script src="../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Software Development" href="../development.html" />
+    <link rel="next" title="Using Sharrow" href="using-sharrow.html" />
     <link rel="prev" title="Developers" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -194,6 +194,21 @@ function checkPageExistsAndRedirect(event) {
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="using-sharrow.html">
+   Using Sharrow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="skim-dataset.html">
+   Using Skim Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="workflows.html">
+   Workflows
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../development.html">
    Software Development
   </a>
@@ -202,6 +217,23 @@ function checkPageExistsAndRedirect(event) {
   <a class="reference internal" href="../models.html">
    Models
   </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="components/index.html">
+   Components
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="components/trip_destination.html">
+     Trip Destination
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../core.html">
@@ -275,7 +307,7 @@ testing.</p>
 <section id="package-manager">
 <h2>Package Manager<a class="headerlink" href="#package-manager" title="Permalink to this headline">#</a></h2>
 <p>ActivitySim has a lot of dependencies.  It’s easiest and fastest to install
-them using a package manager like conda. There’s a faster version called
+them using a package manager like conda, or its faster and free sibling
 <a class="reference external" href="https://github.com/conda-forge/miniforge#mambaforge">Mambaforge</a>.
 Depending on your security settings, you might need to install in a
 container like docker, instructions for that are coming soon.</p>
@@ -284,14 +316,14 @@ in the <em>base</em> environment. If you install <code class="docutils literal n
 it will not function correctly.  If you’ve got an existing conda installation
 and you want to install mamba into it, you can install mamba into the <em>base</em>
 environment like this:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda update conda -n base
-conda install -n base -c conda-forge mamba
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>update<span class="w"> </span>conda<span class="w"> </span>-n<span class="w"> </span>base
+conda<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>mamba
 </pre></div>
 </div>
 <p>While you are at it, if you are a Jupyter user you might want to also install
 <code class="docutils literal notranslate"><span class="pre">nb_conda_kernels</span></code> in your base conda environment alongside any other <code class="docutils literal notranslate"><span class="pre">jupyter</span></code>
 libraries:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mamba install -n base nb_conda_kernels -c conda-forge
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mamba<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>nb_conda_kernels<span class="w"> </span>-c<span class="w"> </span>conda-forge
 </pre></div>
 </div>
 <p>This will ensure your development environments are selectable as kernels in
@@ -302,24 +334,35 @@ Jupyter Notebook/Lab/Etc.</p>
 <p>It’s convenient to start from a completely clean conda environment
 and git repository. Assuming you have <code class="docutils literal notranslate"><span class="pre">mamba</span></code> installed, and you
 want to install in a new directory called “workspace” run:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir workspace
-<span class="nb">cd</span> workspace
-mamba env create -p ASIM-ENV --file https://raw.githubusercontent.com/camsys/activitysim/sharrow-black/conda-environments/activitysim-dev-base.yml
-conda activate ./ASIM-ENV
-git clone https://github.com/ActivitySim/sharrow.git
-python -m pip install -e ./sharrow
-git clone https://github.com/camsys/activitysim.git
-<span class="nb">cd</span> activitysim
-git switch sharrow-black
-<span class="nb">cd</span> ..
-python -m pip install -e ./activitysim
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>workspace
+<span class="nb">cd</span><span class="w"> </span>workspace
+mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-p<span class="w"> </span>ASIM-ENV<span class="w"> </span>--file<span class="w"> </span>https://raw.githubusercontent.com/ActivitySim/activitysim/main/conda-environments/activitysim-dev-base.yml
+conda<span class="w"> </span>activate<span class="w"> </span>./ASIM-ENV
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ActivitySim/sharrow.git
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>./sharrow
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ActivitySim/activitysim.git
+<span class="nb">cd</span><span class="w"> </span>activitysim
+git<span class="w"> </span>switch<span class="w"> </span>develop
+<span class="nb">cd</span><span class="w"> </span>..
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>./activitysim
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the environment create step above fails due to a 404 missing error,
+the main repository may not be up to date with these docs, try this instead:
+https://raw.githubusercontent.com/camsys/activitysim/sharrow-black/conda-environments/activitysim-dev-base.yml</p>
 </div>
 <p>Note the above commands will create an environment with all the
 necessary dependencies, clone both ActivitySim and sharrow from GitHub,
 and <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> each of these libraries in editable mode, which
 will allow your code changes to be reflected when running ActivitySim
 in this environment.</p>
+<p>Depending on what you are working on, you may want to check out a branch
+other than <code class="docutils literal notranslate"><span class="pre">develop</span></code>.  To do so, you can point the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span></code> command
+above to any other existing branch name.  If you want to start an new
+branch, first create it with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">cool-new-feature</span></code> and then switch
+to it with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">switch</span> <span class="pre">cool-new-feature</span></code>.</p>
 <p>Now your environment should be ready to use.  Happy coding!</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -343,10 +386,10 @@ and development.</p>
             <p class="prev-next-title">Developers</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../development.html" title="next page">
+    <a class='right-next' id="next-link" href="using-sharrow.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Software Development</p>
+        <p class="prev-next-title">Using Sharrow</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -366,7 +409,7 @@ and development.</p>
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.1.4.dev94+g1e8164b4, documentation last updated Dec 29, 2022.<br/>
+ActivitySim 1.1.4.dev511+g71d3e919, documentation last updated Jan 13, 2023.<br/>
 </p>
     </div>
     
