@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Getting Started &#8212; ActivitySim 1.1.4.dev732+g5eebf18d</title>
+    <title>Getting Started &#8212; ActivitySim 1.1.4.dev740+gd0776af6</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -299,6 +299,11 @@ function checkPageExistsAndRedirect(event) {
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pre-packaged-installer">
+   Pre-packaged Installer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#installation">
    Installation
   </a>
@@ -360,8 +365,29 @@ function checkPageExistsAndRedirect(event) {
 <p class="admonition-title">Note</p>
 <p>ActivitySim is under active development</p>
 </div>
+<section id="pre-packaged-installer">
+<span id="index-0"></span><h2>Pre-packaged Installer<a class="headerlink" href="#pre-packaged-installer" title="Permalink to this headline">#</a></h2>
+<p>Begining with version 1.2, ActivitySim is now available for Windows via a
+pre-packaged installer.  This installer provides everything you need to run
+ActivitySim, including Python, all the necessary supporting packages, and
+ActivitySim itself.  You should only choose this installation process if you
+plan to use ActivitySim but you don’t need or want to do other Python
+development.  Note this installer is provided as an “executable” which (of course)
+installs a variety of things on your system, and it is quite likely to be flagged by
+Windows, anti-virus, or institutional IT policies as “unusual” software, which
+may require special treatment to actually install and use.</p>
+<p>Download the installer from GitHub <a href="#id2"><span class="problematic" id="id3">`here &lt;https://github.com/ActivitySim/activitysim/releases/download/v1.2.0/Activitysim-1.2.0-Windows-x86_64.exe`__</span></a>.
+It is strongly recommended to choose the option to install “for me only”, as this
+should not require administrator privileges on your machine.  Pay attention
+to the <em>complete path</em> of the installation location. You will need to know
+that path to run ActivitySim in the future, as the installer does not modify
+your “PATH” and the location of the <cite>ActivitySim.exe</cite> command line tool will not
+be available without knowing the path to where the install has happened.</p>
+<p>Once the install is complete, ActivitySim can be run directly from any command
+prompt by running <cite>&lt;install_location&gt;/Scripts/ActivitySim.exe</cite>.</p>
+</section>
 <section id="installation">
-<span id="index-0"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
 <p>1. It is recommended that you install and use a <em>conda</em> package manager
 for your system. One easy way to do so is by using
 <a class="reference external" href="https://github.com/conda-forge/miniforge#mambaforge">Mambaforge</a>.
@@ -598,7 +624,7 @@ line as follows: <code class="docutils literal notranslate"><span class="pre">SE
     <div class="footer-item">
       <!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.1.4.dev732+g5eebf18d, documentation last updated Jan 27, 2023.<br/>
+ActivitySim 1.1.4.dev740+gd0776af6, documentation last updated Jan 31, 2023.<br/>
 </p>
     </div>
     
