@@ -15,10 +15,10 @@ util_hhincome_60k_up,"income from $60,000 and up",(INCOME>=60000),,coef_hhincome
 util_single_family_dwelling,lives in a single family home,@df.BLD.isin(BLD_ONE_FAMILY_HOUSE),,coef_single_family_dwelling
 util_hhstudents,3+ household students,num_students > 2,,coef_hhstudents
 util_accessibility,amount of stuff in origin,auNormPkTotal,,coef_accessibility
-util_occupation_farming,Works in agriculture,any_occup_agr,,coef_occupation_farming
-util_occupation_manufacturing,Works in manufacturing,any_occup_mfg,,coef_occupation_manufacturing
-util_occupation_transportation,Works in transportation handling,any_occup_trans,,coef_occupation_transportation
-util_occupation_wholesale,Works in wholesale offices,any_occup_whl,,coef_occupation_wholesale
-util_occupation_finance,Works in business/finance,any_occup_fin,,coef_occupation_finance
-util_occupation_profsci,Works in professional/science occupation,any_occup_prof,,coef_occupation_profsci
-util_occupation_other,"Works in some other service (service, managers, professionals, service, entertainment, food, retail, maintenace)",any_occup_other,,coef_occupation_other
+#util_occupation_farming,Works in agriculture,any_occup_agr,,coef_occupation_farming
+#util_occupation_manufacturing,Works in manufacturing,any_occup_mfg,,coef_occupation_manufacturing
+#util_occupation_transportation,Works in transportation handling,any_occup_trans,,coef_occupation_transportation
+#util_occupation_wholesale,Works in wholesale offices,any_occup_whl,,coef_occupation_wholesale
+#util_occupation_finance,Works in business/finance,any_occup_fin,,coef_occupation_finance
+#util_occupation_profsci,Works in professional/science occupation,any_occup_prof,,coef_occupation_profsci
+#util_occupation_other,"Works in some other service (service, managers, professionals, service, entertainment, food, retail, maintenace)",any_occup_other,,coef_occupation_other

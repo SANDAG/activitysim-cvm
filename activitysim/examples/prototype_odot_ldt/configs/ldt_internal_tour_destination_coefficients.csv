@@ -1,13 +1,13 @@
 coefficient_name,value,constrain
 coef_dist_50_60_hh,-0.205,F
-coef_dist_50_60_work,0.65,F
+coef_dist_50_60_work,0,F
 coef_dist_50_60_other,-1.201,F
-coef_dist_60_70_hh,0.967,F
-coef_dist_60_70_work,1.46,F
+coef_dist_60_70_hh,0,F
+coef_dist_60_70_work,0,F
 coef_dist_60_70_other,-0.609,F
 coef_dist_70_150_hh,0,F
 coef_dist_70_150_work,0,F
-coef_dist_70_150_other,-0.508,F
+coef_dist_70_150_other,0,F
 coef_complete_tour_time_hh,-0.016,F
 coef_complete_tour_time_work,-0.012,F
 coef_complete_tour_time_other,-0.011,F

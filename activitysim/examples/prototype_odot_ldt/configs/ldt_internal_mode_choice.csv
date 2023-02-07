@@ -2,7 +2,7 @@ Label,Description,Expression,PRIVATEAUTO,AIR,WALK_TRANSIT,DRIVE_TRANSIT,WALK_HSR
 #,tour duration,_DURATION_MINUTES@(df.ldt_end_hour - df.ldt_start_hour)*60,1,1,1,1,1,1
 # Auto,,,,,,,,
 # util_AUTO_not_possible,auto is not possible between origin/destination,@odt_skims['CAR_TIME'] == 0,-999,,,,,
-util_AUTO_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'])),-999,,,,,
+util_AUTO_ tourt_lt_travelt,Tour Time > Travel Time,@(df.ldt_end_hour != -1 ) & (df.ldt_start_hour != -1) & ((df.ldt_end_hour - df.ldt_start_hour)*60 < (odt_skims['CAR_TIME'] + dot_skims['CAR_TIME'])),-70,,,,,
 util_AUTO_in_vehicle_time,AUTO - In-vehicle time,"@np.where(df['ldt_pattern'] & 0x1, odt_skims['CAR_TIME'], 0) + np.where(df['ldt_pattern'] & 0x2, dot_skims['CAR_TIME'],0)",coef_ivt,,,,,
 # TODO split cost on pattern
 util_AUTO_cost_income_less_than_20k,AUTO - cost in cents  if income less than 20k,@(df.INCOME <= 20000) * (odt_skims['CAR_COST'] + dot_skims['CAR_COST'] + odt_skims['CAR_TOLL'] + dot_skims['CAR_TOLL']),coef_cost_inc_0to20k,,,,,
