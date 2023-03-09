@@ -291,10 +291,24 @@ class Network_LOS(object):
                 else maz_to_maz_tables
             )
             for file_name in maz_to_maz_tables:
-
                 df = pd.read_csv(config.data_file_path(file_name, mandatory=True))
 
-                df["i"] = df.OMAZ * self.maz_ceiling + df.DMAZ
+                # recode MAZs if needed
+                df["OMAZ"] = recode_based_on_table(df["OMAZ"], "land_use")
+                df["DMAZ"] = recode_based_on_table(df["DMAZ"], "land_use")
+
+                if self.maz_ceiling > (1 << 31):
+                    raise ValueError("maz ceiling too high, will overflow int64")
+                elif self.maz_ceiling > 32767:
+                    # too many MAZs, or un-recoded MAZ ID's that are too large
+                    # will overflow a 32-bit index, so upgrade to 64bit.
+                    typ = np.int64
+                else:
+                    typ = np.int32
+                df["i"] = (
+                    df.OMAZ.astype(typ) * self.maz_ceiling.astype(typ)
+                ) + df.DMAZ.astype(typ)
+
                 df.set_index("i", drop=True, inplace=True, verify_integrity=True)
                 logger.debug(
                     f"loading maz_to_maz table {file_name} with {len(df)} rows"
