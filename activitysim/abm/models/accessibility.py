@@ -21,7 +21,9 @@ def compute_accessibilities_for_zones(
     network_los,
     trace_label,
     chunk_sizer,
+    use_sharrow=False,
 ):
+    logger.info(f"{trace_label} starts")
 
     orig_zones = accessibility_df.index.values
     dest_zones = land_use_df.index.values
@@ -35,12 +37,15 @@ def compute_accessibilities_for_zones(
     )
 
     # create OD dataframe
-    od_df = pd.DataFrame(
-        data={
-            "orig": np.repeat(orig_zones, dest_zone_count),
-            "dest": np.tile(dest_zones, orig_zone_count),
-        }
-    )
+    od_data = {
+        "orig": np.repeat(orig_zones, dest_zone_count),
+        "dest": np.tile(dest_zones, orig_zone_count),
+    }
+    if use_sharrow:
+        # TODO get rid of this duplication, push land_use into the sharrow flow
+        for c in land_use_df.columns:
+            od_data[c] = np.tile(land_use_df[c].to_numpy(), orig_zone_count)
+    od_df = pd.DataFrame(data=od_data)
 
     trace_od = state.settings.trace_od
     if trace_od:
@@ -50,8 +55,11 @@ def compute_accessibilities_for_zones(
         trace_od_rows = None
 
     # merge land_use_columns into od_df
-    logger.info(f"{trace_label}: merge land_use_columns into od_df")
-    od_df = pd.merge(od_df, land_use_df, left_on="dest", right_index=True).sort_index()
+    if not use_sharrow:
+        logger.info(f"{trace_label}: merge land_use_columns into od_df")
+        od_df = pd.merge(
+            od_df, land_use_df, left_on="dest", right_index=True
+        ).sort_index()
     chunk_sizer.log_df(trace_label, "od_df", od_df)
 
     locals_d = {
@@ -64,20 +72,72 @@ def compute_accessibilities_for_zones(
     skim_dict = network_los.get_default_skim_dict()
     locals_d["skim_od"] = skim_dict.wrap("orig", "dest").set_df(od_df)
     locals_d["skim_do"] = skim_dict.wrap("dest", "orig").set_df(od_df)
+    locals_d["timeframe"] = "acc"
+    locals_d["ORIGIN"] = "orig"
+    locals_d["DESTINATION"] = "dest"
 
     if network_los.zone_system == los.THREE_ZONE:
         locals_d["tvpb"] = network_los.tvpb
 
-    logger.info(f"{trace_label}: assign.assign_variables")
-    results, trace_results, trace_assigned_locals = assign.assign_variables(
-        state,
-        assignment_spec,
-        od_df,
-        locals_d,
-        trace_rows=trace_od_rows,
-        trace_label=trace_label,
-        chunk_log=chunk_sizer,
-    )
+    sh_results = results = None
+
+    logger.info(f"{trace_label} main compute")
+
+    if use_sharrow:
+        from activitysim.core.flow import apply_flow
+        from activitysim.core.simulate_consts import (
+            SPEC_EXPRESSION_NAME,
+            SPEC_LABEL_NAME,
+        )
+
+        temp_spec = assignment_spec.set_index("expression")["target"]
+
+        exprs = []
+        labels = []
+        for (expr, label) in temp_spec.items():
+            if label.startswith("_"):
+                exprs.append(f"{label}@{expr}")
+            else:
+                exprs.append(expr)
+            labels.append(label)
+
+        spec_sh = pd.DataFrame(
+            np.eye(len(labels)),
+            index=pd.MultiIndex.from_arrays(
+                [exprs, labels], names=[SPEC_EXPRESSION_NAME, SPEC_LABEL_NAME]
+            ),
+            columns=labels,
+        )
+        spec_sh = spec_sh[[i for i in spec_sh.columns if not i.startswith("_")]]
+
+        sh_results, sh_flow = apply_flow(
+            state,
+            spec_sh,
+            od_df,
+            locals_d=locals_d,
+            trace_label=trace_label,
+            required=False,
+            interacts=None,
+            zone_layer=None,
+        )
+        results = sh_results = pd.DataFrame(
+            sh_results, index=od_df.index, columns=spec_sh.columns
+        )
+
+    if not use_sharrow or use_sharrow == "test":
+        logger.info(f"{trace_label}: assign.assign_variables")
+        results, trace_results, trace_assigned_locals = assign.assign_variables(
+            state,
+            assignment_spec,
+            od_df,
+            locals_d,
+            trace_rows=trace_od_rows,
+            trace_label=trace_label,
+            chunk_log=chunk_sizer,
+        )
+
+    if use_sharrow == "test" and sh_results is not None:
+        pd.testing.assert_frame_equal(sh_results, results, check_dtype=False)
 
     chunk_sizer.log_df(trace_label, "results", results)
     logger.info(f"{trace_label}: have results")
@@ -86,7 +146,7 @@ def compute_accessibilities_for_zones(
     for column in results.columns:
         data = np.asanyarray(results[column])
         data.shape = (orig_zone_count, dest_zone_count)  # (o,d)
-        accessibility_df[column] = np.log(np.sum(data, axis=1) + 1)
+        accessibility_df[column] = np.log1p(np.sum(data, axis=1))
 
     if trace_od:
 
@@ -113,6 +173,7 @@ def compute_accessibilities_for_zones(
                     trace_assigned_locals, file_name="accessibility_locals"
                 )
 
+    logger.info(f"{trace_label} complete")
     return accessibility_df
 
 
@@ -166,6 +227,11 @@ def compute_accessibility(
 
     accessibilities_list = []
 
+    sharrow_enabled = state.settings.sharrow
+    sharrow_skip = model_settings.get("sharrow_skip", True)
+    if sharrow_skip:
+        sharrow_enabled = False
+
     for (
         i,
         chooser_chunk,
@@ -182,6 +248,7 @@ def compute_accessibility(
             network_los,
             trace_label,
             chunk_sizer,
+            use_sharrow=sharrow_enabled,
         )
         accessibilities_list.append(accessibilities)
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 import glob
 import logging
@@ -159,6 +161,9 @@ def get_flow(
             stop_col_name = local_d["dp_skims"].dest_key
         if primary_origin_col_name is None and "dnt_skims" in local_d:
             primary_origin_col_name = local_d["dnt_skims"].dest_key
+    elif timeframe == "acc":
+        orig_col_name = local_d.get("ORIGIN", orig_col_name)
+        dest_col_name = local_d.get("DESTINATION", dest_col_name)
     local_d = size_terms_on_flow(local_d)
     size_term_mapping = local_d.get("size_array", {})
     if "tt" in local_d:
@@ -304,6 +309,17 @@ def skims_mapping(
                 relationships=(
                     f"df._orig_col_name -> skims.{odim}",
                     f"df._dest_col_name -> skims.{ddim}",
+                ),
+            )
+        if timeframe == "acc":
+            return dict(
+                skim_od=skim_dataset,
+                skim_do=skim_dataset,
+                relationships=(
+                    f"df._orig_col_name -> skim_od.{odim}",
+                    f"df._dest_col_name -> skim_od.{ddim}",
+                    f"df._dest_col_name -> skim_do.{odim}",
+                    f"df._orig_col_name -> skim_do.{ddim}",
                 ),
             )
         if timeframe == "timeless_directional":

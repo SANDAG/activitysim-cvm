@@ -290,7 +290,7 @@ class Runner(StateAccessor):
                 return
 
             instrument = self._obj.settings.instrument
-            if instrument is not None:
+            if instrument:
                 try:
                     from pyinstrument import Profiler
                 except ImportError:
