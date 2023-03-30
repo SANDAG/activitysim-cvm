@@ -262,6 +262,9 @@ def assign_variables(
     else:
         _locals_dict["df"] = df
     local_keys = list(_locals_dict.keys())
+    if _locals_dict.get("_native_column_access_", False):
+        for c in df.columns:
+            _locals_dict[c] = df[c]
 
     # build a dataframe of eval results for non-temp targets
     # since we allow targets to be recycled, we want to only keep the last usage
@@ -380,6 +383,8 @@ def assign_variables(
             logger.exception(
                 f"assign_variables - {type(err).__name__} ({str(err)}) evaluating: {str(expression)}"
             )
+            for k in _locals_dict.keys():
+                logger.error(f"_locals_dict: {k}")
             raise err
 
         if not is_temp_series_val(target):

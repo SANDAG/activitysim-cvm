@@ -312,14 +312,18 @@ def skims_mapping(
                 ),
             )
         if timeframe == "acc":
+            land_use = state.get_dataset("land_use")
+            land_use_index = land_use.single_dim.dim_name
             return dict(
                 skim_od=skim_dataset,
                 skim_do=skim_dataset,
+                land_use=land_use,
                 relationships=(
                     f"df._orig_col_name -> skim_od.{odim}",
                     f"df._dest_col_name -> skim_od.{ddim}",
                     f"df._dest_col_name -> skim_do.{odim}",
                     f"df._orig_col_name -> skim_do.{ddim}",
+                    f"df._dest_col_name -> land_use.{land_use_index}",
                 ),
             )
         if timeframe == "timeless_directional":

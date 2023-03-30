@@ -22,6 +22,7 @@ def compute_accessibilities_for_zones(
     trace_label,
     chunk_sizer,
     use_sharrow=False,
+    native_column_access=False,
 ):
     logger.info(f"{trace_label} starts")
 
@@ -41,8 +42,8 @@ def compute_accessibilities_for_zones(
         "orig": np.repeat(orig_zones, dest_zone_count),
         "dest": np.tile(dest_zones, orig_zone_count),
     }
-    if use_sharrow:
-        # TODO get rid of this duplication, push land_use into the sharrow flow
+    if not use_sharrow:
+        # sharrow does not need this duplication
         for c in land_use_df.columns:
             od_data[c] = np.tile(land_use_df[c].to_numpy(), orig_zone_count)
     od_df = pd.DataFrame(data=od_data)
@@ -55,11 +56,6 @@ def compute_accessibilities_for_zones(
         trace_od_rows = None
 
     # merge land_use_columns into od_df
-    if not use_sharrow:
-        logger.info(f"{trace_label}: merge land_use_columns into od_df")
-        od_df = pd.merge(
-            od_df, land_use_df, left_on="dest", right_index=True
-        ).sort_index()
     chunk_sizer.log_df(trace_label, "od_df", od_df)
 
     locals_d = {
@@ -75,6 +71,7 @@ def compute_accessibilities_for_zones(
     locals_d["timeframe"] = "acc"
     locals_d["ORIGIN"] = "orig"
     locals_d["DESTINATION"] = "dest"
+    locals_d["_native_column_access_"] = native_column_access
 
     if network_los.zone_system == los.THREE_ZONE:
         locals_d["tvpb"] = network_los.tvpb
@@ -143,10 +140,11 @@ def compute_accessibilities_for_zones(
     logger.info(f"{trace_label}: have results")
 
     # accessibility_df = accessibility_df.copy()
+    accessibility_data = {}
     for column in results.columns:
         data = np.asanyarray(results[column])
         data.shape = (orig_zone_count, dest_zone_count)  # (o,d)
-        accessibility_df[column] = np.log1p(np.sum(data, axis=1))
+        accessibility_data[column] = np.log1p(np.sum(data, axis=1))
 
     if trace_od:
 
@@ -174,7 +172,7 @@ def compute_accessibilities_for_zones(
                 )
 
     logger.info(f"{trace_label} complete")
-    return accessibility_df
+    return pd.DataFrame(accessibility_data, index=accessibility_df.index)
 
 
 @workflow.step
@@ -231,6 +229,7 @@ def compute_accessibility(
     sharrow_skip = model_settings.get("sharrow_skip", True)
     if sharrow_skip:
         sharrow_enabled = False
+    native_column_access = model_settings.get("native_column_access", False)
 
     for (
         i,
@@ -249,6 +248,7 @@ def compute_accessibility(
             trace_label,
             chunk_sizer,
             use_sharrow=sharrow_enabled,
+            native_column_access=native_column_access,
         )
         accessibilities_list.append(accessibilities)
 
