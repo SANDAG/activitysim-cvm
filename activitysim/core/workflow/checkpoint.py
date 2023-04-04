@@ -955,7 +955,10 @@ class Checkpoints(StateAccessor):
             else:
                 try:
                     pd.testing.assert_frame_equal(
-                        local_table[ref_table.columns], ref_table, check_dtype=False
+                        local_table[ref_table.columns],
+                        ref_table,
+                        check_dtype=False,
+                        check_names=ref_table.index.name is not None,
                     )
                 except Exception as err:
                     raise AssertionError(
