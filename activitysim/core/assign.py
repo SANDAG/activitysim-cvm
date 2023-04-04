@@ -275,7 +275,7 @@ def assign_variables(
     n_randoms = 0
     for expression_idx in assignment_expressions.index:
         expression = assignment_expressions.loc[expression_idx, "expression"]
-        if "rng.lognormal_for_df(df," in expression:
+        if isinstance(expression, str) and "rng.lognormal_for_df(df," in expression:
             expression = expression.replace(
                 "rng.lognormal_for_df(df,", f"rng_lognormal(random_draws[{n_randoms}],"
             )
@@ -356,7 +356,12 @@ def assign_variables(
 
             # FIXME should whitelist globals for security?
             globals_dict = {}
-            expr_values = to_series(eval(expression, globals_dict, _locals_dict))
+            if isinstance(expression, float) and np.isnan(expression):
+                expr_values = to_series(None)
+            else:
+                expr_values = to_series(
+                    eval(str(expression), globals_dict, _locals_dict)
+                )
 
             if (
                 sharrow_enabled
