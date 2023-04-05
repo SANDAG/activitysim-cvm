@@ -944,14 +944,22 @@ class Checkpoints(StateAccessor):
                     f"columns found but not expected: {cols_in_run_but_not_ref}"
                 )
             if len(ref_table.columns) == 0:
-                try:
-                    pd.testing.assert_index_equal(local_table.index, ref_table.index)
-                except Exception as err:
-                    raise AssertionError(
-                        f"checkpoint {checkpoint_name!r} table {table_name!r}, {str(err)}"
-                    )
+                if len(ref_table.index):
+                    try:
+                        pd.testing.assert_index_equal(
+                            local_table.index, ref_table.index
+                        )
+                    except Exception as err:
+                        raise AssertionError(
+                            f"checkpoint {checkpoint_name!r} table {table_name!r}, {str(err)}"
+                        )
+                    else:
+                        logger.info(f"table {table_name!r}: ok")
                 else:
-                    logger.info(f"table {table_name!r}: ok")
+                    assert len(local_table.index) == 0, (
+                        f"checkpoint {checkpoint_name!r} table {table_name!r}, "
+                        f"expected empty but found {len(local_table.index)} rows in index"
+                    )
             else:
                 try:
                     pd.testing.assert_frame_equal(
