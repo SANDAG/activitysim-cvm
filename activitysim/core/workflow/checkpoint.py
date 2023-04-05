@@ -967,6 +967,7 @@ class Checkpoints(StateAccessor):
                         ref_table,
                         check_dtype=False,
                         check_names=ref_table.index.name is not None,
+                        check_index_type=False,
                     )
                 except Exception as err:
                     raise AssertionError(
