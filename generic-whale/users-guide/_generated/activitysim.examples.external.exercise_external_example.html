@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>State.init_state &#8212; ActivitySim</title>
+    <title>exercise_external_example &#8212; ActivitySim</title>
   
   
   
@@ -43,15 +43,15 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'dev-guide/_generated/activitysim.core.workflow.State.init_state';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'users-guide/_generated/activitysim.examples.external.exercise_external_example';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://camsys.github.io/activitysim/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.2.1';
         </script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="State.import_extensions" href="activitysim.core.workflow.State.import_extensions.html" />
-    <link rel="prev" title="State.make_temp" href="activitysim.core.workflow.State.make_temp.html" />
+    <link rel="next" title="list_registered_examples" href="activitysim.examples.external.list_registered_examples.html" />
+    <link rel="prev" title="download_external_example" href="activitysim.examples.external.download_external_example.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -133,15 +133,15 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../users-guide/index.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
                         Users Guide
                       </a>
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="../index.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev-guide/index.html">
                         Developers
                       </a>
                     </li>
@@ -227,15 +227,15 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../users-guide/index.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
                         Users Guide
                       </a>
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="../index.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../dev-guide/index.html">
                         Developers
                       </a>
                     </li>
@@ -273,45 +273,32 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Developer Installation</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../core-workflow.html">Core Workflow</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.html">State</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.make_default.html">State.make_default</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.make_temp.html">State.make_temp</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">State.init_state</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.import_extensions.html">State.import_extensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.initialize_filesystem.html">State.initialize_filesystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.default_settings.html">State.default_settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.load_settings.html">State.load_settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get.html">State.get</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.set.html">State.set</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.drop.html">State.drop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.access.html">State.access</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_injectable.html">State.get_injectable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.add_injectable.html">State.add_injectable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataset.html">State.get_dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataframe.html">State.get_dataframe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataarray.html">State.get_dataarray</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataframe_index_name.html">State.get_dataframe_index_name</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_pyarrow.html">State.get_pyarrow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.add_table.html">State.add_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.is_table.html">State.is_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.registered_tables.html">State.registered_tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_table.html">State.get_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.tracing.register_traceable_table.html">activitysim.core.workflow.State.tracing.register_traceable_table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli-tools.html">Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Built-in Examples</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../external-examples.html">External Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="activitysim.examples.external.registered_external_example.html">registered_external_example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.examples.external.download_external_example.html">download_external_example</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">exercise_external_example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.examples.external.list_registered_examples.html">list_registered_examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.examples.external.default_cache_dir.html">default_cache_dir</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../using-sharrow.html">Using Sharrow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../skim-dataset.html">Using Skim Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflows.html">Workflows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../development.html">Software Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../models.html">Models</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../components/index.html">Components</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../components/trip_destination.html">Trip Destination</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../configuration.html">Configuration</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.Settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.InputTable.html">InputTable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.OutputTable.html">OutputTable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.OutputTables.html">OutputTables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.MultiprocessStep.html">MultiprocessStep</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.MultiprocessStepSlice.html">MultiprocessStepSlice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.NetworkSettings.html">NetworkSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.TAZ_Settings.html">TAZ_Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="activitysim.core.configuration.DigitalEncoding.html">DigitalEncoding</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../core.html">Core Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../estimation.html">Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../howitworks.html">How the System Works</a></li>
 </ul>
 </div>
 </nav></div>
@@ -350,12 +337,12 @@ document.write(`
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Developers</a></li>
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Users Guide</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../core-workflow.html" class="nav-link">Core Workflow</a></li>
+    <li class="breadcrumb-item"><a href="../external-examples.html" class="nav-link">External Examples</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">State.init_state</li>
+    <li class="breadcrumb-item active" aria-current="page">exercise_external_example</li>
   </ul>
 </nav>
 </div>
@@ -372,18 +359,38 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="state-init-state">
-<h1>State.init_state<a class="headerlink" href="#state-init-state" title="Permalink to this headline">#</a></h1>
-<dl class="py method">
-<dt class="sig sig-object py" id="activitysim.core.workflow.State.init_state">
-<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#activitysim.core.workflow.State.init_state" title="Permalink to this definition">#</a></dt>
-<dd><p>Initialize this state.</p>
-<ul class="simple">
-<li><p>All checkpoints are wiped out.</p></li>
-<li><p>All open file objects connected to this state are closed.</p></li>
-<li><p>The status of all random number generators is cleared.</p></li>
-<li><p>The set of traceable table id’s is emptied.</p></li>
-</ul>
+  <section id="exercise-external-example">
+<h1>exercise_external_example<a class="headerlink" href="#exercise-external-example" title="Permalink to this headline">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.examples.external.exercise_external_example">
+<span class="sig-prename descclassname"><span class="pre">activitysim.examples.external.</span></span><span class="sig-name descname"><span class="pre">exercise_external_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">working_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxfail</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#activitysim.examples.external.exercise_external_example" title="Permalink to this definition">#</a></dt>
+<dd><p>Use pytest to ensure that an external example is functioning correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str</span></dt><dd><p>The unique name for the registered external example.  See
+<cite>activitysim/examples/external_example_manifest.yaml</cite> or run
+<cite>list_registered_examples()</cite> for the names of the registered examples.</p>
+</dd>
+<dt><strong>working_dir</strong><span class="classifier">path-like</span></dt><dd><p>The location to install a copy of the external example for testing.</p>
+</dd>
+<dt><strong>maxfail</strong><span class="classifier">int, optional</span></dt><dd><p>Stop testing after this many failures have been detected.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">int, default 2</span></dt><dd><p>Verbosity level given to pytest.</p>
+</dd>
+<dt><strong>durations</strong><span class="classifier">int, default 0</span></dt><dd><p>Report the durations of this many of the slowest tests conducted.
+Leave as 0 to report all durations, or set to None to report no
+durations.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>int</dt><dd><p>The result code returned by pytest.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -400,20 +407,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="activitysim.core.workflow.State.make_temp.html"
+       href="activitysim.examples.external.download_external_example.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">State.make_temp</p>
+        <p class="prev-next-title">download_external_example</p>
       </div>
     </a>
     <a class="right-next"
-       href="activitysim.core.workflow.State.import_extensions.html"
+       href="activitysim.examples.external.list_registered_examples.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">State.import_extensions</p>
+        <p class="prev-next-title">list_registered_examples</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -431,7 +438,7 @@ document.write(`
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/dev-guide/_generated/activitysim.core.workflow.State.init_state.rst.txt">
+    <a href="../../_sources/users-guide/_generated/activitysim.examples.external.exercise_external_example.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

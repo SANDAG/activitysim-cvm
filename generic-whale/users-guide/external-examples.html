@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Command Line Tools &#8212; ActivitySim</title>
+    <title>External Examples &#8212; ActivitySim</title>
   
   
   
@@ -43,15 +43,15 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'users-guide/cli-tools';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'users-guide/external-examples';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://camsys.github.io/activitysim/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.2.1';
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Built-in Examples" href="../examples.html" />
-    <link rel="prev" title="Getting Started" href="../gettingstarted.html" />
+    <link rel="next" title="registered_external_example" href="_generated/activitysim.examples.external.registered_external_example.html" />
+    <link rel="prev" title="Built-in Examples" href="../examples.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -274,9 +274,9 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli-tools.html">Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Built-in Examples</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="external-examples.html">External Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">External Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.examples.external.registered_external_example.html">registered_external_example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.examples.external.download_external_example.html">download_external_example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.examples.external.exercise_external_example.html">exercise_external_example</a></li>
@@ -339,7 +339,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Users Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">Command Line Tools</li>
+    <li class="breadcrumb-item active" aria-current="page">External Examples</li>
   </ul>
 </nav>
 </div>
@@ -356,115 +356,38 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="command-line-tools">
-<h1>Command Line Tools<a class="headerlink" href="#command-line-tools" title="Permalink to this headline">#</a></h1>
-<section id="activitysim-run">
-<h2>activitysim run<a class="headerlink" href="#activitysim-run" title="Permalink to this headline">#</a></h2>
-<p><blockquote>
-<div><p>Run the models. Specify a project folder using the ‘–working_dir’ option,
-or point to the config, data, and output folders directly with
-‘–config’, ‘–data’, and ‘–output’. Both ‘–config’ and ‘–data’ can be
-specified multiple times. Directories listed first take precedence.</p>
-<dl class="simple">
-<dt>returns:</dt><dd><p>int: sys.exit exit code</p>
-</dd>
-</dl>
-</div></blockquote>
-</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">activitysim</span> <span class="n">run</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">PATH</span><span class="p">]</span>
-                       <span class="p">[</span><span class="o">-</span><span class="n">r</span> <span class="n">STEPNAME</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="n">FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span> <span class="n">BYTES</span><span class="p">]</span>
-                       <span class="p">[</span><span class="o">--</span><span class="n">chunk_training_mode</span> <span class="n">CHUNK_TRAINING_MODE</span><span class="p">]</span>
-                       <span class="p">[</span><span class="o">--</span><span class="n">households_sample_size</span> <span class="n">N</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">fast</span><span class="p">]</span>
-                       <span class="p">[</span><span class="o">--</span><span class="n">persist</span><span class="o">-</span><span class="n">sharrow</span><span class="o">-</span><span class="n">cache</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">m</span> <span class="p">[</span><span class="n">N</span><span class="p">]]</span>
-</pre></div>
-</div>
-<section id="named-arguments">
-<h3>Named Arguments<a class="headerlink" href="#named-arguments" title="Permalink to this headline">#</a></h3>
-<dl class="option-list">
-<dt><kbd>-w, --working_dir</kbd></dt>
-<dd><p>path to example/project directory (default: /home/runner/work/activitysim/activitysim/docs)</p>
-</dd>
-<dt><kbd>-c, --config</kbd></dt>
-<dd><p>path to config dir</p>
-</dd>
-<dt><kbd>-o, --output</kbd></dt>
-<dd><p>path to output dir</p>
-</dd>
-<dt><kbd>-d, --data</kbd></dt>
-<dd><p>path to data dir</p>
-</dd>
-<dt><kbd>-r, --resume</kbd></dt>
-<dd><p>resume after step</p>
-</dd>
-<dt><kbd>-p, --pipeline</kbd></dt>
-<dd><p>pipeline file name</p>
-</dd>
-<dt><kbd>-s, --settings_file</kbd></dt>
-<dd><p>settings file name</p>
-</dd>
-<dt><kbd>-g, --chunk_size</kbd></dt>
-<dd><p>chunk size</p>
-</dd>
-<dt><kbd>--chunk_training_mode</kbd></dt>
-<dd><p>chunk training mode, one of [training, adaptive, production, disabled]</p>
-</dd>
-<dt><kbd>--households_sample_size</kbd></dt>
-<dd><p>households sample size</p>
-</dd>
-<dt><kbd>--fast</kbd></dt>
-<dd><p>Do not limit process to one thread. Can make single process runs faster, but will cause thrashing on MP runs.</p>
-<p>Default: False</p>
-</dd>
-<dt><kbd>--persist-sharrow-cache</kbd></dt>
-<dd><p>Store the sharrow cache in a persistent user cache directory.</p>
-<p>Default: False</p>
-</dd>
-<dt><kbd>-e, --ext</kbd></dt>
-<dd><p>Package of extension modules to load. Use of this option is not generally secure.</p>
-</dd>
-<dt><kbd>-m, --multiprocess</kbd></dt>
-<dd><p>run multiprocess. Adds configs_mp settings by default as the first config directory, but only if it is foundand is not already explicitly included elsewhere in the list of configs. Optionally give a number of processes greater than 1, which will override the number of processes written in settings file.</p>
-<p>Default: False</p>
-</dd>
-</dl>
-</section>
-</section>
-<section id="activitysim-create">
-<h2>activitysim create<a class="headerlink" href="#activitysim-create" title="Permalink to this headline">#</a></h2>
-<p><blockquote>
-<div><p>Create a new ActivitySim configuration from an existing template.</p>
-<p>Use the -l flag to view a list of example configurations, then
-copy to your own working directory. These new project files can
-be run with the ‘run’ command.</p>
-</div></blockquote>
-</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">activitysim</span> <span class="n">create</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">(</span><span class="o">-</span><span class="n">l</span> <span class="o">|</span> <span class="o">-</span><span class="n">e</span> <span class="n">PATH</span><span class="p">)</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">link</span><span class="p">]</span>
-</pre></div>
-</div>
-<section id="named-arguments">
-<h3>Named Arguments<a class="headerlink" href="#named-arguments" title="Permalink to this headline">#</a></h3>
-<dl class="option-list">
-<dt><kbd>-l, --list</kbd></dt>
-<dd><p>list available example directories and exit</p>
-<p>Default: False</p>
-</dd>
-<dt><kbd>-e, --example</kbd></dt>
-<dd><p>example directory to copy</p>
-</dd>
-<dt><kbd>-d, --destination</kbd></dt>
-<dd><p>Path to new project directory.  If this directory already exists, the
-newly created example will be copied to a subdirectory within the
-existing directory, and named according to the example name.  Otherwise,
-a new directory is created with this name and the newly created example
-will be copied directly into it.</p>
-</dd>
-<dt><kbd>--link</kbd></dt>
-<dd><p>cache and reuse downloaded files via symlinking</p>
-<p>Default: False</p>
-</dd>
-</dl>
-</section>
-</section>
+  <section id="module-activitysim.examples.external">
+<span id="external-examples"></span><h1>External Examples<a class="headerlink" href="#module-activitysim.examples.external" title="Permalink to this headline">#</a></h1>
+<p>Tools to download and use example models from external sources.</p>
+<p>The tools in this module allow for automated access to <em>external</em> example models,
+which are not necessarily maintained or supported by the ActivitySim Consortium.
+These models can be test-sized or full scale representations of models operated
+by various agencies, and can contain thousands of zones and/or millions of simulated
+households.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.examples.external.registered_external_example.html#activitysim.examples.external.registered_external_example" title="activitysim.examples.external.registered_external_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">registered_external_example</span></code></a>(name, working_dir)</p></td>
+<td><p>Download a registered external example and copy into a working directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.examples.external.download_external_example.html#activitysim.examples.external.download_external_example" title="activitysim.examples.external.download_external_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">download_external_example</span></code></a>(working_dir[, ...])</p></td>
+<td><p>Download an external example.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.examples.external.exercise_external_example.html#activitysim.examples.external.exercise_external_example" title="activitysim.examples.external.exercise_external_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exercise_external_example</span></code></a>(name, working_dir)</p></td>
+<td><p>Use pytest to ensure that an external example is functioning correctly.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.examples.external.list_registered_examples.html#activitysim.examples.external.list_registered_examples" title="activitysim.examples.external.list_registered_examples"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_registered_examples</span></code></a>([registry])</p></td>
+<td><p>Read a list of registered example names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.examples.external.default_cache_dir.html#activitysim.examples.external.default_cache_dir" title="activitysim.examples.external.default_cache_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_cache_dir</span></code></a>()</p></td>
+<td><p>Get the default external example cache directory.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
@@ -479,20 +402,20 @@ will be copied directly into it.</p>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../gettingstarted.html"
+       href="../examples.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Built-in Examples</p>
       </div>
     </a>
     <a class="right-next"
-       href="../examples.html"
+       href="_generated/activitysim.examples.external.registered_external_example.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Built-in Examples</p>
+        <p class="prev-next-title">registered_external_example</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -509,25 +432,8 @@ will be copied directly into it.</p>
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim-run">activitysim run</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#named-arguments">Named Arguments</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim-create">activitysim create</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#named-arguments">Named Arguments</a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-  <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../_sources/users-guide/cli-tools.rst.txt">
+    <a href="../_sources/users-guide/external-examples.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
