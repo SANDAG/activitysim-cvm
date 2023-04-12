@@ -1,0 +1,6 @@
+﻿State.checkpoint.restore
+==================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.restore

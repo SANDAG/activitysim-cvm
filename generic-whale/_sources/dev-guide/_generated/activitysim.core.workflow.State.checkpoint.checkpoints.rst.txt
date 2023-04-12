@@ -1,0 +1,6 @@
+﻿State.checkpoint.checkpoints
+======================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessorattribute:: core.workflow.State.checkpoint.checkpoints

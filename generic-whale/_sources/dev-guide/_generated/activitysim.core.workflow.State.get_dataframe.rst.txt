@@ -1,4 +1,4 @@
-﻿State.get\_dataframe
+State.get\_dataframe
 ====================
 
 .. currentmodule:: activitysim.core.workflow

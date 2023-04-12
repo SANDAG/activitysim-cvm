@@ -1,0 +1,6 @@
+﻿State.tracing.dump_df
+===============================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.tracing.dump_df

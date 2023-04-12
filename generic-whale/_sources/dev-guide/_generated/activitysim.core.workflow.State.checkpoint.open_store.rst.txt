@@ -1,0 +1,6 @@
+﻿State.checkpoint.open_store
+=====================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.open_store

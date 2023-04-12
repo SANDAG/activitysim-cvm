@@ -1,4 +1,4 @@
-﻿State.access
+State.access
 ============
 
 .. currentmodule:: activitysim.core.workflow

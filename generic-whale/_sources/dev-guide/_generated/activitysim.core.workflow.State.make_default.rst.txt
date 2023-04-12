@@ -1,4 +1,4 @@
-﻿State.make\_default
+State.make\_default
 ===================
 
 .. currentmodule:: activitysim.core.workflow

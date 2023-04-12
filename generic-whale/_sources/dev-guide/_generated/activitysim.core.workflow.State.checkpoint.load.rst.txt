@@ -1,0 +1,6 @@
+﻿State.checkpoint.load
+===============================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.load

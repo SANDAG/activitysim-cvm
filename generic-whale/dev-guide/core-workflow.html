@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Core Workflow &#8212; ActivitySim</title>
+    <title>Workflow State API &#8212; ActivitySim</title>
   
   
   
@@ -274,39 +274,14 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Developer Installation</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Core Workflow</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.html">State</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.make_default.html">State.make_default</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.make_temp.html">State.make_temp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.init_state.html">State.init_state</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.import_extensions.html">State.import_extensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.initialize_filesystem.html">State.initialize_filesystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.default_settings.html">State.default_settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.load_settings.html">State.load_settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get.html">State.get</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.set.html">State.set</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.drop.html">State.drop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.access.html">State.access</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_injectable.html">State.get_injectable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.add_injectable.html">State.add_injectable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_dataset.html">State.get_dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_dataframe.html">State.get_dataframe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_dataarray.html">State.get_dataarray</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_dataframe_index_name.html">State.get_dataframe_index_name</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_pyarrow.html">State.get_pyarrow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.add_table.html">State.add_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.is_table.html">State.is_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.registered_tables.html">State.registered_tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_table.html">State.get_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.register_traceable_table.html">activitysim.core.workflow.State.tracing.register_traceable_table</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Workflow State API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="skim-dataset.html">Using Skim Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkpointing.html">Checkpointing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflows.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development.html">Software Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../models.html">Models</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="components/index.html">Components</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="components/index.html">Components</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="components/trip_destination.html">Trip Destination</a></li>
 </ul>
 </li>
@@ -352,7 +327,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Developers</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">Core Workflow</li>
+    <li class="breadcrumb-item active" aria-current="page">Workflow State API</li>
   </ul>
 </nav>
 </div>
@@ -369,8 +344,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="core-workflow">
-<h1>Core Workflow<a class="headerlink" href="#core-workflow" title="Permalink to this headline">#</a></h1>
+  <section id="workflow-state-api">
+<h1>Workflow State API<a class="headerlink" href="#workflow-state-api" title="Permalink to this headline">#</a></h1>
 <p>An ActivitySim model is represented by a few fundamental elements:</p>
 <ul class="simple">
 <li><p><strong>Data tables</strong>, sometimes referred to in older documentation sections as
@@ -382,10 +357,8 @@ of discrete time steps used for modeling.</p></li>
 </ul>
 <p>The general framework of each ActivitySim model is defined within an encapsulated
 <code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
-<section id="state-api">
-<h2>State API<a class="headerlink" href="#state-api" title="Permalink to this headline">#</a></h2>
 <section id="constructors">
-<h3>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">#</a></h3>
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">#</a></h2>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -405,7 +378,7 @@ of discrete time steps used for modeling.</p></li>
 </table>
 </section>
 <section id="model-setup">
-<h3>Model Setup<a class="headerlink" href="#model-setup" title="Permalink to this headline">#</a></h3>
+<h2>Model Setup<a class="headerlink" href="#model-setup" title="Permalink to this headline">#</a></h2>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -427,11 +400,20 @@ of discrete time steps used for modeling.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.load_settings.html#activitysim.core.workflow.State.load_settings" title="activitysim.core.workflow.State.load_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.load_settings</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.settings.html#activitysim.core.workflow.State.settings" title="activitysim.core.workflow.State.settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.settings</span></code></a></p></td>
+<td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="data-access-and-manipulation">
-<h3>Data Access and Manipulation<a class="headerlink" href="#data-access-and-manipulation" title="Permalink to this headline">#</a></h3>
+<section id="basic-context-management">
+<h2>Basic Context Management<a class="headerlink" href="#basic-context-management" title="Permalink to this headline">#</a></h2>
+<p>The most basic function of the <code class="docutils literal notranslate"><span class="pre">State</span></code> object is to serve as a defined
+namespace for storing model-relevant variables.  This includes the top-level
+model settings, data tables, skims, and any other Python variables
+that represent the current state of a particular modeling system (or when
+multiprocessing, sub-system).  Below are the basic methods to get and set values
+in this context in their “raw” form, with minimal additional processing.</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -456,6 +438,23 @@ of discrete time steps used for modeling.</p></li>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.add_injectable.html#activitysim.core.workflow.State.add_injectable" title="activitysim.core.workflow.State.add_injectable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.add_injectable</span></code></a>(key, value)</p></td>
 <td><p>Alias for <a class="reference internal" href="_generated/activitysim.core.workflow.State.set.html#activitysim.core.workflow.State.set" title="activitysim.core.workflow.State.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.set()</span></code></a>.</p></td>
 </tr>
+</tbody>
+</table>
+</section>
+<section id="data-access-and-manipulation">
+<h2>Data Access and Manipulation<a class="headerlink" href="#data-access-and-manipulation" title="Permalink to this headline">#</a></h2>
+<p>In addition to “raw” access to context variable, several methods are provided
+to simplify different kinds access to the “tables” that represent the
+simulation inputs and outputs of ActivitySim.  We say “tables” here in the
+abstract sense – historically these tables have been stored internally by
+ORCA as <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>s, but the exact internal storage format is abstracted
+away here in favor of providing access to the data in several specific formats.</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_dataset.html#activitysim.core.workflow.State.get_dataset" title="activitysim.core.workflow.State.get_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.get_dataset</span></code></a>(table_name[, ...])</p></td>
 <td><p>Get a workflow table or dataset as a xarray.Dataset.</p></td>
 </tr>
@@ -486,20 +485,196 @@ of discrete time steps used for modeling.</p></li>
 </tbody>
 </table>
 </section>
-<section id="tracing">
-<h3>Tracing<a class="headerlink" href="#tracing" title="Permalink to this headline">#</a></h3>
+<section id="run">
+<h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">#</a></h2>
+<p>Executing model components is handled by methods in the <code class="docutils literal notranslate"><span class="pre">run</span></code> accessor.</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.register_traceable_table.html#activitysim.core.workflow.State.tracing.register_traceable_table" title="activitysim.core.workflow.State.tracing.register_traceable_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.register_traceable_table</span></code></a>(...)</p></td>
-<td><p>Register traceable table</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.run.html#activitysim.core.workflow.State.run" title="activitysim.core.workflow.State.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run</span></code></a>(models[, resume_after, ...])</p></td>
+<td><p>run the specified list of models, optionally loading checkpoint and resuming after specified checkpoint.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.run.heading_level.html#activitysim.core.workflow.State.run.heading_level" title="activitysim.core.workflow.State.run.heading_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run.heading_level</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.run.by_name.html#activitysim.core.workflow.State.run.by_name" title="activitysim.core.workflow.State.run.by_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run.by_name</span></code></a>(model_name, **kwargs)</p></td>
+<td><p>Run the specified model and add checkpoint for model_name</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.run.all.html#activitysim.core.workflow.State.run.all" title="activitysim.core.workflow.State.run.all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run.all</span></code></a>([resume_after, ...])</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 </section>
+<section id="checkpoints">
+<h2>Checkpoints<a class="headerlink" href="#checkpoints" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">State</span></code> object provides access to <a class="reference internal" href="checkpointing.html"><span class="doc std std-doc">checkpointing</span></a> functions
+within the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> accessor.</p>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.last_checkpoint.html#activitysim.core.workflow.State.checkpoint.last_checkpoint" title="activitysim.core.workflow.State.checkpoint.last_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.last_checkpoint</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.checkpoints.html#activitysim.core.workflow.State.checkpoint.checkpoints" title="activitysim.core.workflow.State.checkpoint.checkpoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.checkpoints</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.store.html#activitysim.core.workflow.State.checkpoint.store" title="activitysim.core.workflow.State.checkpoint.store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.store</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.store_is_open.html#activitysim.core.workflow.State.checkpoint.store_is_open" title="activitysim.core.workflow.State.checkpoint.store_is_open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.store_is_open</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.open_store.html#activitysim.core.workflow.State.checkpoint.open_store" title="activitysim.core.workflow.State.checkpoint.open_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.open_store</span></code></a>([...])</p></td>
+<td><p>Open the checkpoint store.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.close_store.html#activitysim.core.workflow.State.checkpoint.close_store" title="activitysim.core.workflow.State.checkpoint.close_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.close_store</span></code></a>()</p></td>
+<td><p>Close the checkpoint storage.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.add.html#activitysim.core.workflow.State.checkpoint.add" title="activitysim.core.workflow.State.checkpoint.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.add</span></code></a>(checkpoint_name)</p></td>
+<td><p>Create a new checkpoint with specified name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.list_tables.html#activitysim.core.workflow.State.checkpoint.list_tables" title="activitysim.core.workflow.State.checkpoint.list_tables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.list_tables</span></code></a>()</p></td>
+<td><p>Return a list of the names of all checkpointed tables</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.load.html#activitysim.core.workflow.State.checkpoint.load" title="activitysim.core.workflow.State.checkpoint.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.load</span></code></a>(checkpoint_name[, store])</p></td>
+<td><p>Load dataframes and restore random number channel state from pipeline hdf5 file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.get_inventory.html#activitysim.core.workflow.State.checkpoint.get_inventory" title="activitysim.core.workflow.State.checkpoint.get_inventory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.get_inventory</span></code></a>()</p></td>
+<td><p>Get pandas dataframe of info about all checkpoints stored in pipeline</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.restore.html#activitysim.core.workflow.State.checkpoint.restore" title="activitysim.core.workflow.State.checkpoint.restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.restore</span></code></a>([resume_after, mode])</p></td>
+<td><p>Restore state from checkpoints.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.restore_from.html#activitysim.core.workflow.State.checkpoint.restore_from" title="activitysim.core.workflow.State.checkpoint.restore_from"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.restore_from</span></code></a>(location[, ...])</p></td>
+<td><p>Restore state from an alternative pipeline store.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.check_against.html#activitysim.core.workflow.State.checkpoint.check_against" title="activitysim.core.workflow.State.checkpoint.check_against"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.check_against</span></code></a>(location, ...)</p></td>
+<td><p>Check that the tables in this State match those in an archived pipeline.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.cleanup.html#activitysim.core.workflow.State.checkpoint.cleanup" title="activitysim.core.workflow.State.checkpoint.cleanup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.cleanup</span></code></a>()</p></td>
+<td><p>Remove intermediate checkpoints from pipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.load_dataframe.html#activitysim.core.workflow.State.checkpoint.load_dataframe" title="activitysim.core.workflow.State.checkpoint.load_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.load_dataframe</span></code></a>(table_name)</p></td>
+<td><p>Return pandas dataframe corresponding to table_name</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.last_checkpoint_name.html#activitysim.core.workflow.State.checkpoint.last_checkpoint_name" title="activitysim.core.workflow.State.checkpoint.last_checkpoint_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.last_checkpoint_name</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.is_readonly.html#activitysim.core.workflow.State.checkpoint.is_readonly" title="activitysim.core.workflow.State.checkpoint.is_readonly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.is_readonly</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.default_pipeline_file_path.html#activitysim.core.workflow.State.checkpoint.default_pipeline_file_path" title="activitysim.core.workflow.State.checkpoint.default_pipeline_file_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.default_pipeline_file_path</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tracing">
+<h2>Tracing<a class="headerlink" href="#tracing" title="Permalink to this headline">#</a></h2>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.traceable_tables.html#activitysim.core.workflow.State.tracing.traceable_tables" title="activitysim.core.workflow.State.tracing.traceable_tables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.traceable_tables</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.traceable_table_ids.html#activitysim.core.workflow.State.tracing.traceable_table_ids" title="activitysim.core.workflow.State.tracing.traceable_table_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.traceable_table_ids</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.traceable_table_indexes.html#activitysim.core.workflow.State.tracing.traceable_table_indexes" title="activitysim.core.workflow.State.tracing.traceable_table_indexes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.traceable_table_indexes</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.run_id.html#activitysim.core.workflow.State.tracing.run_id" title="activitysim.core.workflow.State.tracing.run_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.run_id</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.validation_directory.html#activitysim.core.workflow.State.tracing.validation_directory" title="activitysim.core.workflow.State.tracing.validation_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.validation_directory</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.initialize.html#activitysim.core.workflow.State.tracing.initialize" title="activitysim.core.workflow.State.tracing.initialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.initialize</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.register_traceable_table.html#activitysim.core.workflow.State.tracing.register_traceable_table" title="activitysim.core.workflow.State.tracing.register_traceable_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.register_traceable_table</span></code></a>(...)</p></td>
+<td><p>Register traceable table</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.deregister_traceable_table.html#activitysim.core.workflow.State.tracing.deregister_traceable_table" title="activitysim.core.workflow.State.tracing.deregister_traceable_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.deregister_traceable_table</span></code></a>(...)</p></td>
+<td><p>un-register traceable table</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.write_csv.html#activitysim.core.workflow.State.tracing.write_csv" title="activitysim.core.workflow.State.tracing.write_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.write_csv</span></code></a>(df, file_name[, ...])</p></td>
+<td><p>Print write_csv</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.trace_df.html#activitysim.core.workflow.State.tracing.trace_df" title="activitysim.core.workflow.State.tracing.trace_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.trace_df</span></code></a>(df, label[, slicer, ...])</p></td>
+<td><p>Slice dataframe by traced household or person id dataframe and write to CSV</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.trace_interaction_eval_results.html#activitysim.core.workflow.State.tracing.trace_interaction_eval_results" title="activitysim.core.workflow.State.tracing.trace_interaction_eval_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.trace_interaction_eval_results</span></code></a>(...)</p></td>
+<td><p>Trace model design eval results for interaction_simulate</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.get_trace_target.html#activitysim.core.workflow.State.tracing.get_trace_target" title="activitysim.core.workflow.State.tracing.get_trace_target"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.get_trace_target</span></code></a>(df, slicer[, ...])</p></td>
+<td><p>get target ids and column or index to identify target trace rows in df</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.trace_targets.html#activitysim.core.workflow.State.tracing.trace_targets" title="activitysim.core.workflow.State.tracing.trace_targets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.trace_targets</span></code></a>(df[, slicer, column])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.has_trace_targets.html#activitysim.core.workflow.State.tracing.has_trace_targets" title="activitysim.core.workflow.State.tracing.has_trace_targets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.has_trace_targets</span></code></a>(df[, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.dump_df.html#activitysim.core.workflow.State.tracing.dump_df" title="activitysim.core.workflow.State.tracing.dump_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.dump_df</span></code></a>(dump_switch, df, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.delete_output_files.html#activitysim.core.workflow.State.tracing.delete_output_files" title="activitysim.core.workflow.State.tracing.delete_output_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.delete_output_files</span></code></a>(file_type)</p></td>
+<td><p>Delete files in output directory of specified type.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.tracing.delete_trace_files.html#activitysim.core.workflow.State.tracing.delete_trace_files" title="activitysim.core.workflow.State.tracing.delete_trace_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.tracing.delete_trace_files</span></code></a>()</p></td>
+<td><p>Delete CSV files in output_dir</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 
@@ -550,11 +725,19 @@ of discrete time steps used for modeling.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-api">State API</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">Constructors</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-setup">Model Setup</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-access-and-manipulation">Data Access and Manipulation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tracing">Tracing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">Constructors</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-setup">Model Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-context-management">Basic Context Management</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-access-and-manipulation">Data Access and Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoints">Checkpoints</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tracing">Tracing</a><ul class="simple nav section-nav flex-column">
 </ul>
 </li>
 </ul>
@@ -591,7 +774,7 @@ of discrete time steps used for modeling.</p></li>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev183+g59b7d015, documentation last updated Apr 11, 2023.<br/>
+ActivitySim 1.2.1.dev184+gd53e5cd7, documentation last updated Apr 12, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

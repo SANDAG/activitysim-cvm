@@ -1,4 +1,4 @@
-﻿activitysim.core.workflow.State.tracing.register_traceable_table
+﻿State.tracing.register_traceable_table
 ================================================================
 
 .. currentmodule:: activitysim

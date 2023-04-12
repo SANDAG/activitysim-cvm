@@ -1,4 +1,4 @@
-﻿State.set
+State.set
 =========
 
 .. currentmodule:: activitysim.core.workflow

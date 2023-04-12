@@ -1,0 +1,6 @@
+﻿State.tracing.traceable_table_ids
+===========================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessorattribute:: core.workflow.State.tracing.traceable_table_ids

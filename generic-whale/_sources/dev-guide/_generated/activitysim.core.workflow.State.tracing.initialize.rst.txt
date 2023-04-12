@@ -1,0 +1,6 @@
+﻿State.tracing.initialize
+==================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.tracing.initialize

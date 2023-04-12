@@ -1,0 +1,6 @@
+﻿State.tracing.write_csv
+=================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.tracing.write_csv

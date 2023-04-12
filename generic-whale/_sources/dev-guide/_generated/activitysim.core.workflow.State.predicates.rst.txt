@@ -1,0 +1,6 @@
+State.predicates
+================
+
+.. currentmodule:: activitysim.core.workflow
+
+.. autoattribute:: State.predicates

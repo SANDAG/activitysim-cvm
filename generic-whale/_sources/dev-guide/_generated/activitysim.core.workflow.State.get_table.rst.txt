@@ -1,4 +1,4 @@
-﻿State.get\_table
+State.get\_table
 ================
 
 .. currentmodule:: activitysim.core.workflow

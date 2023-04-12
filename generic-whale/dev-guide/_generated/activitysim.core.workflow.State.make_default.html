@@ -51,7 +51,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="State.make_temp" href="activitysim.core.workflow.State.make_temp.html" />
-    <link rel="prev" title="State" href="activitysim.core.workflow.State.html" />
+    <link rel="prev" title="State.load_settings" href="activitysim.core.workflow.State.load_settings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -272,41 +272,16 @@ document.write(`
         <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Developer Installation</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../core-workflow.html">Core Workflow</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.html">State</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">State.make_default</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.make_temp.html">State.make_temp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.init_state.html">State.init_state</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.import_extensions.html">State.import_extensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.initialize_filesystem.html">State.initialize_filesystem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.default_settings.html">State.default_settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.load_settings.html">State.load_settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get.html">State.get</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.set.html">State.set</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.drop.html">State.drop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.access.html">State.access</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_injectable.html">State.get_injectable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.add_injectable.html">State.add_injectable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataset.html">State.get_dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataframe.html">State.get_dataframe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataarray.html">State.get_dataarray</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_dataframe_index_name.html">State.get_dataframe_index_name</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_pyarrow.html">State.get_pyarrow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.add_table.html">State.add_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.is_table.html">State.is_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.registered_tables.html">State.registered_tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.get_table.html">State.get_table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="activitysim.core.workflow.State.tracing.register_traceable_table.html">activitysim.core.workflow.State.tracing.register_traceable_table</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../skim-dataset.html">Using Skim Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../checkpointing.html">Checkpointing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflows.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../development.html">Software Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models.html">Models</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../components/index.html">Components</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../components/index.html">Components</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../components/trip_destination.html">Trip Destination</a></li>
 </ul>
 </li>
@@ -341,6 +316,8 @@ document.write(`
 
 
 
+
+
 <nav aria-label="Breadcrumbs">
   <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
     
@@ -353,7 +330,10 @@ document.write(`
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Developers</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../core-workflow.html" class="nav-link">Core Workflow</a></li>
+    <li class="breadcrumb-item"><i class="fa-solid fa-ellipsis"></i></li>
+    
+    
+    <li class="breadcrumb-item"><a href="activitysim.core.workflow.State.html" class="nav-link">State</a></li>
     
     <li class="breadcrumb-item active" aria-current="page">State.make_default</li>
   </ul>
@@ -415,12 +395,12 @@ initialize_filesystem method.</p>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="activitysim.core.workflow.State.html"
+       href="activitysim.core.workflow.State.load_settings.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">State</p>
+        <p class="prev-next-title">State.load_settings</p>
       </div>
     </a>
     <a class="right-next"
@@ -475,7 +455,7 @@ initialize_filesystem method.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev183+g59b7d015, documentation last updated Apr 11, 2023.<br/>
+ActivitySim 1.2.1.dev184+gd53e5cd7, documentation last updated Apr 12, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

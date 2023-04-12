@@ -1,0 +1,6 @@
+﻿State.tracing.has_trace_targets
+=========================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.tracing.has_trace_targets

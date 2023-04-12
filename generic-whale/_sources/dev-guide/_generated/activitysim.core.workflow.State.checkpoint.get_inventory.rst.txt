@@ -1,0 +1,6 @@
+﻿State.checkpoint.get_inventory
+========================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.get_inventory

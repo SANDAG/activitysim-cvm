@@ -1,4 +1,4 @@
-﻿State.get
+State.get
 =========
 
 .. currentmodule:: activitysim.core.workflow

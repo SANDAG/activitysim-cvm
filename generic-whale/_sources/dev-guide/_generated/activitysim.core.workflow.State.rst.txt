@@ -10,6 +10,7 @@
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
    
       ~State.__init__
       ~State.access
@@ -60,6 +61,7 @@
    .. rubric:: Attributes
 
    .. autosummary::
+      :toctree:
    
       ~State.checkpoint
       ~State.current_model_name

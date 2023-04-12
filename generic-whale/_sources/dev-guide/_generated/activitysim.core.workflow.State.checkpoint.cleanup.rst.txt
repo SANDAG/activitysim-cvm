@@ -1,0 +1,6 @@
+﻿State.checkpoint.cleanup
+==================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.cleanup

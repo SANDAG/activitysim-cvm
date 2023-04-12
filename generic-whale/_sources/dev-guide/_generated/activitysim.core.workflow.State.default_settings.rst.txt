@@ -1,4 +1,4 @@
-﻿State.default\_settings
+State.default\_settings
 =======================
 
 .. currentmodule:: activitysim.core.workflow

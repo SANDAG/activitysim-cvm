@@ -1,4 +1,4 @@
-﻿State.is\_table
+State.is\_table
 ===============
 
 .. currentmodule:: activitysim.core.workflow

@@ -1,0 +1,6 @@
+﻿State.run.heading_level
+=================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessorattribute:: core.workflow.State.run.heading_level

@@ -1,0 +1,6 @@
+﻿State.run.by_name
+===========================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.run.by_name

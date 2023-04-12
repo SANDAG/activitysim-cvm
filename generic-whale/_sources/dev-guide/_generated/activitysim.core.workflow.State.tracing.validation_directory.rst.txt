@@ -1,0 +1,6 @@
+﻿State.tracing.validation_directory
+============================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessorattribute:: core.workflow.State.tracing.validation_directory

@@ -1,4 +1,4 @@
-﻿State.init\_state
+State.init\_state
 =================
 
 .. currentmodule:: activitysim.core.workflow

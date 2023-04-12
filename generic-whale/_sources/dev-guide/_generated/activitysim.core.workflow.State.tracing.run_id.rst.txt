@@ -1,0 +1,6 @@
+﻿State.tracing.run_id
+==============================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessorattribute:: core.workflow.State.tracing.run_id

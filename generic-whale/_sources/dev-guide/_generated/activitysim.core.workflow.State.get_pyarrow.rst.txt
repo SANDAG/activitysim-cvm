@@ -1,4 +1,4 @@
-﻿State.get\_pyarrow
+State.get\_pyarrow
 ==================
 
 .. currentmodule:: activitysim.core.workflow

@@ -1,4 +1,4 @@
-﻿State.import\_extensions
+State.import\_extensions
 ========================
 
 .. currentmodule:: activitysim.core.workflow

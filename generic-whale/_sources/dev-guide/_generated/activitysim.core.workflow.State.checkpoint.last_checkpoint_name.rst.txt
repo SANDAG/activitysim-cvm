@@ -1,0 +1,6 @@
+﻿State.checkpoint.last_checkpoint_name
+===============================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.last_checkpoint_name

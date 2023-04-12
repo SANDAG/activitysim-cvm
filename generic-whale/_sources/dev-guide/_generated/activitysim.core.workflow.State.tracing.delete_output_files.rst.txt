@@ -1,0 +1,6 @@
+﻿State.tracing.delete_output_files
+===========================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.tracing.delete_output_files

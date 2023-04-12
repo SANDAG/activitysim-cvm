@@ -1,0 +1,6 @@
+﻿State.checkpoint.close_store
+======================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.close_store

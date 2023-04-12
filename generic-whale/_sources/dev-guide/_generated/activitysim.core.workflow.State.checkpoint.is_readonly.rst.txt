@@ -1,0 +1,6 @@
+﻿State.checkpoint.is_readonly
+======================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.checkpoint.is_readonly
