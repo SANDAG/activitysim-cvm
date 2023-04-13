@@ -1,0 +1,6 @@
+﻿State.logging.config_logger
+=====================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.logging.config_logger

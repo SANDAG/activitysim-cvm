@@ -1,0 +1,6 @@
+﻿State.logging.rotate_log_directory
+============================================================
+
+.. currentmodule:: activitysim
+
+.. autoaccessormethod:: core.workflow.State.logging.rotate_log_directory

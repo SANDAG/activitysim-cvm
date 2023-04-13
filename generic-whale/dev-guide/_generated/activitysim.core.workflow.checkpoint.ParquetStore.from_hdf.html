@@ -356,8 +356,29 @@ document.write(`
 <h1>ParquetStore.from_hdf<a class="headerlink" href="#parquetstore-from-hdf" title="Permalink to this headline">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="activitysim.core.workflow.checkpoint.ParquetStore.from_hdf">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ParquetStore.</span></span><span class="sig-name descname"><span class="pre">from_hdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'a'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.workflow.checkpoint.ParquetStore.from_hdf" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ParquetStore.</span></span><span class="sig-name descname"><span class="pre">from_hdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'a'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CheckpointStore</span></span></span><a class="headerlink" href="#activitysim.core.workflow.checkpoint.ParquetStore.from_hdf" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a new checkpoint store from an existing HdfStore.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>source_filename</strong><span class="classifier">path-like</span></dt><dd><p>The filename of the source HDF5 checkpoint file.  This file should
+be the output of an ActivitySim run (or constructed alike).</p>
+</dd>
+<dt><strong>dest_filename</strong><span class="classifier">path-like</span></dt><dd><p>The filename or directory where a new checkpoint storage will be
+created.</p>
+</dd>
+<dt><strong>mode</strong><span class="classifier">str</span></dt><dd><p>The file mode used to open the destination.  Must not be a read-only
+mode or this operation will fail.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>CheckpointStore</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -433,7 +454,7 @@ document.write(`
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev184+gd53e5cd7, documentation last updated Apr 12, 2023.<br/>
+ActivitySim 1.2.1.dev186+g8992d9de, documentation last updated Apr 13, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

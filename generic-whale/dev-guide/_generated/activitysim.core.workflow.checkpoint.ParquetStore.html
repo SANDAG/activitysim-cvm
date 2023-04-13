@@ -353,6 +353,9 @@ document.write(`
 <dt class="sig sig-object py" id="activitysim.core.workflow.checkpoint.ParquetStore">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.workflow.checkpoint.</span></span><span class="sig-name descname"><span class="pre">ParquetStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'a'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gitignore</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.workflow.checkpoint.ParquetStore" title="Permalink to this definition">#</a></dt>
 <dd><p>Storage interface for parquet-based table storage.</p>
+<p>This store will store each saved table in a parquet-format archive,
+resulting in a hierarchy of separate files in a defined structure, as
+opposed to a single monolithic repository files containing all the data.</p>
 <p>This interface will fall back to storing tables in a gzipped pickle if
 the parquet format fails (as might happen if datatypes for some columns
 are not homogenous and values are stored as “object”).</p>
@@ -370,7 +373,7 @@ are not homogenous and values are stored as “object”).</p>
 <td><p>Close this store.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.checkpoint.ParquetStore.from_hdf.html#activitysim.core.workflow.checkpoint.ParquetStore.from_hdf" title="activitysim.core.workflow.checkpoint.ParquetStore.from_hdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_hdf</span></code></a>(source_filename, dest_filename[, mode])</p></td>
-<td><p></p></td>
+<td><p>Create a new checkpoint store from an existing HdfStore.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.checkpoint.ParquetStore.get_dataframe.html#activitysim.core.workflow.checkpoint.ParquetStore.get_dataframe" title="activitysim.core.workflow.checkpoint.ParquetStore.get_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dataframe</span></code></a>(table_name[, checkpoint_name])</p></td>
 <td><p>Load table from store as a pandas DataFrame.</p></td>
@@ -486,7 +489,7 @@ are not homogenous and values are stored as “object”).</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev184+gd53e5cd7, documentation last updated Apr 12, 2023.<br/>
+ActivitySim 1.2.1.dev186+g8992d9de, documentation last updated Apr 13, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

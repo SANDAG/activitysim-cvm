@@ -358,6 +358,7 @@ the model.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">benchmarking</span> <span class="pre">(bool)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_for_variability</span> <span class="pre">(bool)</span></code></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkpoint_format</span> <span class="pre">(Literal['hdf',</span> <span class="pre">'parquet'])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkpoints</span> <span class="pre">(Union[bool,</span> <span class="pre">list])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_method</span> <span class="pre">(str)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_size</span> <span class="pre">(int)</span></code></p></li>
@@ -429,6 +430,12 @@ neither integral to that component nor necessarily stable over replication.</p>
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_for_variability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#activitysim.core.configuration.Settings.check_for_variability" title="Permalink to this definition">#</a></dt>
 <dd><p>Debugging feature to find broken model specifications.</p>
 <p>Enabling this check does not alter valid results but slows down model runs.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.core.configuration.Settings.checkpoint_format">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checkpoint_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'hdf'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'parquet'</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'parquet'</span></em><a class="headerlink" href="#activitysim.core.configuration.Settings.checkpoint_format" title="Permalink to this definition">#</a></dt>
+<dd><p>Storage format to use when saving checkpoint files.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -886,7 +893,7 @@ recoding).</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev184+gd53e5cd7, documentation last updated Apr 12, 2023.<br/>
+ActivitySim 1.2.1.dev186+g8992d9de, documentation last updated Apr 13, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
