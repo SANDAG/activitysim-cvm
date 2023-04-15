@@ -9,28 +9,31 @@ import platformdirs
 import pytest
 
 from activitysim.core import workflow
+from activitysim.examples.external import registered_external_example
 
 
 @pytest.fixture(scope="module")
 def est_data():
     cwd = os.getcwd()
     working_dir = Path(platformdirs.user_cache_dir(appname="ActivitySim")).joinpath(
-        f"estimation-test-base"
+        "estimation-test-base"
     )
-    working_dir.mkdir(parents=True, exist_ok=True)
-    os.chdir(working_dir)
+    working_dir = registered_external_example("estimation_example", working_dir)
     if not working_dir.joinpath("success.txt").exists():
-        import activitysim.abm
+        import activitysim.abm  # noqa: F401
 
-        state = workflow.create_example("example_estimation_sf", directory=working_dir)
+        state = workflow.State.make_default(
+            working_dir=working_dir,
+            configs_dir=("configs_estimation", "configs"),
+            data_dir=("data_sf",),
+            output_dir="output",
+        )
         state.run.all()
         working_dir.joinpath("success.txt").write_text(
             datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S.%f")
         )
-
-    os.chdir(working_dir.joinpath("example_estimation_sf"))
-    yield str(working_dir.joinpath("example_estimation_sf"))
-
+    os.chdir(working_dir)
+    yield str(working_dir)
     os.chdir(cwd)
 
 
