@@ -1,6 +1,7 @@
 ﻿State.checkpoint.store
 ================================================
 
-.. currentmodule:: activitysim
 
-.. autoaccessorattribute:: core.workflow.State.checkpoint.store
+.. currentmodule:: activitysim.core.workflow
+
+.. autoaccessorattribute:: State.checkpoint.store

@@ -1,6 +1,7 @@
 ﻿State.run.all
 =======================================
 
-.. currentmodule:: activitysim
 
-.. autoaccessormethod:: core.workflow.State.run.all
+.. currentmodule:: activitysim.core.workflow
+
+.. autoaccessormethod:: State.run.all

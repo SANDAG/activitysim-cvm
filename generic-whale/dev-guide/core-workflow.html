@@ -392,13 +392,13 @@ of discrete time steps used for modeling.</p></li>
 <td><p>Import one or more extension modules for use with this model.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.initialize_filesystem.html#activitysim.core.workflow.State.initialize_filesystem" title="activitysim.core.workflow.State.initialize_filesystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.initialize_filesystem</span></code></a>([working_dir, ...])</p></td>
-<td><p></p></td>
+<td><p>Initialize the state's filesystem.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.default_settings.html#activitysim.core.workflow.State.default_settings" title="activitysim.core.workflow.State.default_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.default_settings</span></code></a>([force])</p></td>
 <td><p>Initialize with all default settings, rather than reading from a file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.load_settings.html#activitysim.core.workflow.State.load_settings" title="activitysim.core.workflow.State.load_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.load_settings</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Read and parse settings file(s) from config dirs.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.settings.html#activitysim.core.workflow.State.settings" title="activitysim.core.workflow.State.settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.settings</span></code></a></p></td>
 <td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
@@ -507,7 +507,7 @@ away here in favor of providing access to the data in several specific formats.<
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.run.heading_level.html#activitysim.core.workflow.State.run.heading_level" title="activitysim.core.workflow.State.run.heading_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run.heading_level</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Individual component heading level to use when running in a notebook.</p></td>
 </tr>
 </tbody>
 </table>
@@ -528,9 +528,20 @@ away here in favor of providing access to the data in several specific formats.<
 </table>
 </section>
 <section id="checkpoints">
-<h2>Checkpoints<a class="headerlink" href="#checkpoints" title="Permalink to this headline">#</a></h2>
+<span id="state-checkpoint"></span><h2>Checkpoints<a class="headerlink" href="#checkpoints" title="Permalink to this headline">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">State</span></code> object provides access to <a class="reference internal" href="checkpointing.html"><span class="doc std std-doc">checkpointing</span></a> functions
 within the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> accessor.</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated2/activitysim.core.workflow.State.checkpoint.html#activitysim.core.workflow.State.checkpoint" title="activitysim.core.workflow.State.checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint</span></code></a></p></td>
+<td><p>State accessor for checkpointing operations.</p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
@@ -539,13 +550,13 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.last_checkpoint.html#activitysim.core.workflow.State.checkpoint.last_checkpoint" title="activitysim.core.workflow.State.checkpoint.last_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.last_checkpoint</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Metadata about the last saved checkpoint.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.checkpoints.html#activitysim.core.workflow.State.checkpoint.checkpoints" title="activitysim.core.workflow.State.checkpoint.checkpoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.checkpoints</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Metadata about various saved checkpoint(s).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.store.html#activitysim.core.workflow.State.checkpoint.store" title="activitysim.core.workflow.State.checkpoint.store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.store</span></code></a></p></td>
-<td><p></p></td>
+<td><p>The store where checkpoints are written.</p></td>
 </tr>
 </tbody>
 </table>
@@ -557,7 +568,7 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.store_is_open.html#activitysim.core.workflow.State.checkpoint.store_is_open" title="activitysim.core.workflow.State.checkpoint.store_is_open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.store_is_open</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Whether this checkpoint store is open.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.checkpoint.open_store.html#activitysim.core.workflow.State.checkpoint.open_store" title="activitysim.core.workflow.State.checkpoint.open_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.checkpoint.open_store</span></code></a>([...])</p></td>
 <td><p>Open the checkpoint store.</p></td>
@@ -794,7 +805,7 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev186+g8992d9de, documentation last updated Apr 13, 2023.<br/>
+ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

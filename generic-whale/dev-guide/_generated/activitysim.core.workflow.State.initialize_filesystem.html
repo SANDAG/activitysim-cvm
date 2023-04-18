@@ -356,8 +356,60 @@ document.write(`
 <h1>State.initialize_filesystem<a class="headerlink" href="#state-initialize-filesystem" title="Permalink to this headline">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="activitysim.core.workflow.State.initialize_filesystem">
-<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">initialize_filesystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">working_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('configs',)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('data',)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'settings.yaml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pipeline'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">silently_ignored_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></span><a class="headerlink" href="#activitysim.core.workflow.State.initialize_filesystem" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">initialize_filesystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">working_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('configs',)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('data',)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'output'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings_file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'settings.yaml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pipeline'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">silently_ignored_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></span><a class="headerlink" href="#activitysim.core.workflow.State.initialize_filesystem" title="Permalink to this definition">#</a></dt>
+<dd><p>Initialize the state’s filesystem.</p>
+<p>ActivitySim has a number of features to extract settings, model configs,
+data, and other inputs automatically from various files, and to write
+outputs to the file system in various locations.  These directories
+are defined very early in a model run, and other settings are loaded
+based on them, so for convenience the filesystem settings are collected
+together in a single pydantic validated object separate from all other
+settings.</p>
+<p>All arguments to this function beyond <cite>working_dir</cite> are keyword-only.
+Keyword arguments other than those listed are silently ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>working_dir</strong><span class="classifier">path-like, optional</span></dt><dd><p>The top-level working directory for the model.  When other
+directories are given as relative paths, those relative paths are
+evaluated relative to this directory.</p>
+</dd>
+<dt><strong>configs_dir</strong><span class="classifier">path-like or tuple of path-like, default “configs”</span></dt><dd><p>Directories containing model configurations and settings. ActivitySim
+model runs can be configured with settings file inheritance to avoid
+duplicating settings across model configurations, e.g. to allow for
+single-process and multiprocess configurations that share most of
+their inputs and settings.</p>
+</dd>
+<dt><strong>data_dir</strong><span class="classifier">path-like or tuple of path-like, default “data”</span></dt><dd><p>The directories where input data files can be found.</p>
+</dd>
+<dt><strong>output_dir</strong><span class="classifier">path-like, default “output”</span></dt><dd><p>Most ActivitySim output will be written to this directory (or
+subdirectories within it).</p>
+</dd>
+<dt><strong>profile_dir</strong><span class="classifier">path-like, optional</span></dt><dd><p>If runtime instrumentation is turned on, pyinstrument profiling
+output will be written in this directory. If not given, a unique
+time-stamped subdirectory will be created in the <cite>output</cite> directory.</p>
+</dd>
+<dt><strong>cache_dir</strong><span class="classifier">path-like, optional</span></dt><dd><p>Various intermediate files may be stored in the cache directory. This
+should be a writable and readable location, and cached files may
+persist and be re-used by various different model runs.  It should
+always be safe to simply delete everything in the cache directory,
+as everything saved here should be recreated automatically from other
+inputs if it is missing (although it may take some time to do so).</p>
+</dd>
+<dt><strong>settings_file_name</strong><span class="classifier">str, default “settings.yaml”</span></dt><dd><p>Top level settings are defined in this file, which should be found
+in one or more <cite>configs_dir</cite> locations.</p>
+</dd>
+<dt><strong>pipeline_file_name</strong><span class="classifier">str, default “pipeline”</span></dt><dd><p>The base filename for checkpointed intermediate outputs.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">State</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -433,7 +485,7 @@ document.write(`
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev186+g8992d9de, documentation last updated Apr 13, 2023.<br/>
+ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
