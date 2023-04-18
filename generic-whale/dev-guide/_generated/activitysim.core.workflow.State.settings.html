@@ -274,7 +274,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Developer Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../skim-dataset.html">Using Skim Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../checkpointing.html">Checkpointing</a></li>
@@ -356,29 +356,14 @@ document.write(`
 <h1>State.settings<a class="headerlink" href="#state-settings" title="Permalink to this headline">#</a></h1>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="activitysim.core.workflow.State.settings">
-<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">settings</span></span><a class="headerlink" href="#activitysim.core.workflow.State.settings" title="Permalink to this definition">#</a></dt>
-<dd><p>Convenience class for defining a context value as an attribute on a State.</p>
-<p>The name of the attribute defined in the <cite>State</cite> object is the key used
-to find the attribute in the context.  The primary use case is to make
-a Pydantic BaseModel available as an attribute.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>member_type</strong><span class="classifier">type</span></dt><dd></dd>
-<dt><strong>default_init</strong><span class="classifier">bool, default False</span></dt><dd><p>When this attribute is accessed but the underlying key is not
-found in the state’s context, the default constructor can be called
-to initialize the object.  If this is False, accessing a missing
-key raises a StateAccessError.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<dl class="simple">
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">activitysim.core.workflow.accessor.StateAccessor</span></code></dt><dd></dd>
-</dl>
-</div>
+<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../users-guide/_generated/activitysim.core.configuration.Settings.html#activitysim.core.configuration.Settings" title="activitysim.core.configuration.top.Settings"><span class="pre">Settings</span></a></em><a class="headerlink" href="#activitysim.core.workflow.State.settings" title="Permalink to this definition">#</a></dt>
+<dd><p>The overall settings for the ActivitySim model system.</p>
+<p>The input for these settings is typically stored in one main YAML file,
+usually called <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code>.</p>
+<p>Note that this implementation is presently used only for generating
+documentation, but future work may migrate the settings implementation to
+actually use this pydantic code to validate the settings before running
+the model.</p>
 </dd></dl>
 
 </section>
@@ -455,7 +440,7 @@ key raises a StateAccessError.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
+ActivitySim 1.2.1.dev199+g309cba6d, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

@@ -274,7 +274,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Developer Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../skim-dataset.html">Using Skim Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../checkpointing.html">Checkpointing</a></li>
@@ -358,6 +358,12 @@ document.write(`
 <dt class="sig sig-object py" id="activitysim.core.workflow.State.dataset">
 <span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">dataset</span></span><a class="headerlink" href="#activitysim.core.workflow.State.dataset" title="Permalink to this definition">#</a></dt>
 <dd><p>This accessor provides easy access to state tables and datasets.</p>
+<p>Named datasets are available as attributes on this accessor, for
+example <cite>State.dataset.persons</cite>, which is the equivalent of calling
+<cite>State.get_dataset(“persons”)</cite>.</p>
+<p>Otherwise, there are no “normal” methods for this accessor, but the
+<cite>__dir__</cite> method is implemented to provide tab-completion capabilities
+inside compatible interactive interpreters (including Jupyter notebooks).</p>
 </dd></dl>
 
 </section>
@@ -434,7 +440,7 @@ document.write(`
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
+ActivitySim 1.2.1.dev199+g309cba6d, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

@@ -274,7 +274,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Developer Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../skim-dataset.html">Using Skim Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../checkpointing.html">Checkpointing</a></li>
@@ -356,8 +356,31 @@ document.write(`
 <h1>State.get<a class="headerlink" href="#state-get" title="Permalink to this headline">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="activitysim.core.workflow.State.get">
-<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'throw</span> <span class="pre">error</span> <span class="pre">if</span> <span class="pre">missing'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.workflow.State.get" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">State.</span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'throw</span> <span class="pre">error</span> <span class="pre">if</span> <span class="pre">missing'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></span><a class="headerlink" href="#activitysim.core.workflow.State.get" title="Permalink to this definition">#</a></dt>
+<dd><p>Automated access to values stored in this state’s context.</p>
+<p>This method takes advantage of ActivitySim’s machinery to provide
+or build missing context values automatically.  If a value is already
+present in this state’s context it is returned, otherwise the set of
+defined methods for loadable objects and tables will be used to
+create values if possible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>key</strong><span class="classifier">str</span></dt><dd><p>The name of the variable to access.</p>
+</dd>
+<dt><strong>default</strong><span class="classifier">Any, optional</span></dt><dd><p>If the variable is not already in the state’s context, and cannot
+be otherwise created automatically, it will be set with this value,
+or else a KeyError is raised instead.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Any</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -433,7 +456,7 @@ document.write(`
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
+ActivitySim 1.2.1.dev199+g309cba6d, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

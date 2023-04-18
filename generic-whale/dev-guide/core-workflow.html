@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Workflow State API &#8212; ActivitySim</title>
+    <title>Workflow State &#8212; ActivitySim</title>
   
   
   
@@ -274,7 +274,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Developer Installation</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Workflow State API</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Workflow State</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="skim-dataset.html">Using Skim Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="checkpointing.html">Checkpointing</a></li>
@@ -327,7 +327,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Developers</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">Workflow State API</li>
+    <li class="breadcrumb-item active" aria-current="page">Workflow State</li>
   </ul>
 </nav>
 </div>
@@ -344,21 +344,29 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="workflow-state-api">
-<h1>Workflow State API<a class="headerlink" href="#workflow-state-api" title="Permalink to this headline">#</a></h1>
-<p>An ActivitySim model is represented by a few fundamental elements:</p>
+  <section id="workflow-state">
+<h1>Workflow State<a class="headerlink" href="#workflow-state" title="Permalink to this headline">#</a></h1>
+<p>The general framework of each ActivitySim model is defined within an encapsulated
+<code class="docutils literal notranslate"><span class="pre">State</span></code> object.  This object maintains references to data and model structures
+in a well-defined context, and allow the user to pass that context around to
+the various functions and methods that progressively build up the simulated
+activity patterns.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">State</span></code> object replaces the ORCA framework, and allows for data from multiple
+models, or multiple versions of the same model, to co-exist in a single Python
+instance simultaneously.</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">State</span></code> object for a typical ActivitySim model are a few fundamental
+elements:</p>
 <ul class="simple">
 <li><p><strong>Data tables</strong>, sometimes referred to in older documentation sections as
 “pipeline tables”.  These tables include households, persons, trips, tours,
 and potentially other tables that represent aspects of the simulated agents.</p></li>
 <li><p><strong>Network Level of Service</strong>, defined by zones, network skims and representations
 of discrete time steps used for modeling.</p></li>
-<li><p><strong>Components</strong>, which define the mathematical structure of various model steps.</p></li>
+<li><p><strong>Settings and Configurations</strong>, which define how models and model components
+operate.</p></li>
 </ul>
-<p>The general framework of each ActivitySim model is defined within an encapsulated
-<code class="docutils literal notranslate"><span class="pre">State</span></code> object.</p>
-<section id="constructors">
-<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">#</a></h2>
+<section id="state-api">
+<h2>State API<a class="headerlink" href="#state-api" title="Permalink to this headline">#</a></h2>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -368,11 +376,28 @@ of discrete time steps used for modeling.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.State"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State</span></code></a>([context])</p></td>
 <td><p>The encapsulated state of an ActivitySim model.</p></td>
 </tr>
+</tbody>
+</table>
+</section>
+<section id="constructors">
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.__init__.html#activitysim.core.workflow.State.__init__" title="activitysim.core.workflow.State.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.__init__</span></code></a>([context])</p></td>
+<td><p>Initialize the encapsulated state of an ActivitySim model.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.make_default.html#activitysim.core.workflow.State.make_default" title="activitysim.core.workflow.State.make_default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.make_default</span></code></a>([working_dir, settings])</p></td>
 <td><p>Convenience constructor for mostly default States.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.make_temp.html#activitysim.core.workflow.State.make_temp" title="activitysim.core.workflow.State.make_temp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.make_temp</span></code></a>([source, checkpoint_name])</p></td>
 <td><p>Initialize state with a temporary directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.create_example.html#activitysim.core.workflow.create_example" title="activitysim.core.workflow.create_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_example</span></code></a>(example_name[, directory, temp])</p></td>
+<td><p>Create an example model.</p></td>
 </tr>
 </tbody>
 </table>
@@ -401,7 +426,13 @@ of discrete time steps used for modeling.</p></li>
 <td><p>Read and parse settings file(s) from config dirs.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.settings.html#activitysim.core.workflow.State.settings" title="activitysim.core.workflow.State.settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.settings</span></code></a></p></td>
-<td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
+<td><p>The overall settings for the ActivitySim model system.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.filesystem.html#activitysim.core.workflow.State.filesystem" title="activitysim.core.workflow.State.filesystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.filesystem</span></code></a></p></td>
+<td><p>Manage finding and loading files for ActivitySim's command line interface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.network_settings.html#activitysim.core.workflow.State.network_settings" title="activitysim.core.workflow.State.network_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.network_settings</span></code></a></p></td>
+<td><p>Network level of service and skims settings</p></td>
 </tr>
 </tbody>
 </table>
@@ -421,7 +452,7 @@ in this context in their “raw” form, with minimal additional processing.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.get.html#activitysim.core.workflow.State.get" title="activitysim.core.workflow.State.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.get</span></code></a>(key[, default])</p></td>
-<td><p></p></td>
+<td><p>Automated access to values stored in this state's context.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.set.html#activitysim.core.workflow.State.set" title="activitysim.core.workflow.State.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.set</span></code></a>(key, value)</p></td>
 <td><p>Set a new value for a key in the context.</p></td>
@@ -429,8 +460,8 @@ in this context in their “raw” form, with minimal additional processing.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.drop.html#activitysim.core.workflow.State.drop" title="activitysim.core.workflow.State.drop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.drop</span></code></a>(key)</p></td>
 <td><p>Remove a key from the context.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.access.html#activitysim.core.workflow.State.access" title="activitysim.core.workflow.State.access"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.access</span></code></a>(key, initializer)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.access.html#activitysim.core.workflow.State.access" title="activitysim.core.workflow.State.access"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.access</span></code></a>(key[, initializer])</p></td>
+<td><p>Raw access to values stored in this state's context.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.get_injectable.html#activitysim.core.workflow.State.get_injectable" title="activitysim.core.workflow.State.get_injectable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.get_injectable</span></code></a>(key[, default])</p></td>
 <td><p>Alias for <a class="reference internal" href="_generated/activitysim.core.workflow.State.get.html#activitysim.core.workflow.State.get" title="activitysim.core.workflow.State.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.get()</span></code></a>.</p></td>
@@ -449,6 +480,7 @@ simulation inputs and outputs of ActivitySim.  We say “tables” here in the
 abstract sense – historically these tables have been stored internally by
 ORCA as <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>s, but the exact internal storage format is abstracted
 away here in favor of providing access to the data in several specific formats.</p>
+<p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -471,10 +503,10 @@ away here in favor of providing access to the data in several specific formats.<
 <td><p>Get a workflow table as a pyarrow.Table.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.add_table.html#activitysim.core.workflow.State.add_table" title="activitysim.core.workflow.State.add_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.add_table</span></code></a>(name, content[, salient])</p></td>
-<td><p></p></td>
+<td><p>Add a data table to this context, and potentially mark it for checkpointing.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.is_table.html#activitysim.core.workflow.State.is_table" title="activitysim.core.workflow.State.is_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.is_table</span></code></a>(name)</p></td>
-<td><p></p></td>
+<td><p>Check if a name corresponds to a table in this state's context.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.registered_tables.html#activitysim.core.workflow.State.registered_tables" title="activitysim.core.workflow.State.registered_tables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.registered_tables</span></code></a>()</p></td>
 <td><p>Return a list of the names of all currently registered dataframe tables</p></td>
@@ -484,17 +516,30 @@ away here in favor of providing access to the data in several specific formats.<
 </tr>
 </tbody>
 </table>
-</section>
-<section id="run">
-<h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">#</a></h2>
-<p>Executing model components is handled by methods in the <code class="docutils literal notranslate"><span class="pre">run</span></code> accessor.</p>
+<p class="rubric">Accessor</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.run.html#activitysim.core.workflow.State.run" title="activitysim.core.workflow.State.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run</span></code></a>(models[, resume_after, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated2/activitysim.core.workflow.State.dataset.html#activitysim.core.workflow.State.dataset" title="activitysim.core.workflow.State.dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.dataset</span></code></a></p></td>
+<td><p>This accessor provides easy access to state tables and datasets.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="run">
+<h2>Run<a class="headerlink" href="#run" title="Permalink to this headline">#</a></h2>
+<p>Executing model components is handled by methods in the <code class="docutils literal notranslate"><span class="pre">run</span></code> accessor.</p>
+<p class="rubric">Accessor</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated2/activitysim.core.workflow.State.run.html#activitysim.core.workflow.State.run" title="activitysim.core.workflow.State.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.run</span></code></a>(models[, resume_after, ...])</p></td>
 <td><p>run the specified list of models, optionally loading checkpoint and resuming after specified checkpoint.</p></td>
 </tr>
 </tbody>
@@ -531,6 +576,7 @@ away here in favor of providing access to the data in several specific formats.<
 <span id="state-checkpoint"></span><h2>Checkpoints<a class="headerlink" href="#checkpoints" title="Permalink to this headline">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">State</span></code> object provides access to <a class="reference internal" href="checkpointing.html"><span class="doc std std-doc">checkpointing</span></a> functions
 within the <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> accessor.</p>
+<p class="rubric">Accessor</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -689,6 +735,7 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
 </section>
 <section id="logging">
 <h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">#</a></h2>
+<p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -700,6 +747,68 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.logging.rotate_log_directory.html#activitysim.core.workflow.State.logging.rotate_log_directory" title="activitysim.core.workflow.State.logging.rotate_log_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.logging.rotate_log_directory</span></code></a>()</p></td>
 <td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reporting">
+<h2>Reporting<a class="headerlink" href="#reporting" title="Permalink to this headline">#</a></h2>
+<p class="rubric">Accessor</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated2/activitysim.core.workflow.State.report.html#activitysim.core.workflow.State.report" title="activitysim.core.workflow.State.report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.report</span></code></a></p></td>
+<td><p>Tools for reporting and visualization</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.report.nominal_distribution.html#activitysim.core.workflow.State.report.nominal_distribution" title="activitysim.core.workflow.State.report.nominal_distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.report.nominal_distribution</span></code></a>(tablename, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.report.ordinal_distribution.html#activitysim.core.workflow.State.report.ordinal_distribution" title="activitysim.core.workflow.State.report.ordinal_distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.report.ordinal_distribution</span></code></a>(...[, target])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.report.histogram.html#activitysim.core.workflow.State.report.histogram" title="activitysim.core.workflow.State.report.histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.report.histogram</span></code></a>(table_name, ...[, target])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="extending">
+<h2>Extending<a class="headerlink" href="#extending" title="Permalink to this headline">#</a></h2>
+<p>Methods to extend ActivitySim’s functionality are available under the <code class="docutils literal notranslate"><span class="pre">extend</span></code>
+accessor.</p>
+<p class="rubric">Accessor</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated2/activitysim.core.workflow.State.extend.html#activitysim.core.workflow.State.extend" title="activitysim.core.workflow.State.extend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.extend</span></code></a></p></td>
+<td><p>Methods to extend the capabilities of ActivitySim.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.State.extend.declare_table.html#activitysim.core.workflow.State.extend.declare_table" title="activitysim.core.workflow.State.extend.declare_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State.extend.declare_table</span></code></a>(table_name[, ...])</p></td>
+<td><p>Declare a new table.</p></td>
 </tr>
 </tbody>
 </table>
@@ -753,12 +862,17 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-api">State API</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructors">Constructors</a><ul class="simple nav section-nav flex-column">
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-setup">Model Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-context-management">Basic Context Management</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-access-and-manipulation">Data Access and Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-access-and-manipulation">Data Access and Manipulation</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a><ul class="simple nav section-nav flex-column">
 </ul>
 </li>
@@ -769,6 +883,12 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging">Logging</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting">Reporting</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending">Extending</a><ul class="simple nav section-nav flex-column">
 </ul>
 </li>
 </ul>
@@ -805,7 +925,7 @@ within the <code class="docutils literal notranslate"><span class="pre">checkpoi
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
+ActivitySim 1.2.1.dev199+g309cba6d, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

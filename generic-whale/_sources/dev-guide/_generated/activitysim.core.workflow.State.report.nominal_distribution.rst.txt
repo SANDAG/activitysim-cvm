@@ -1,0 +1,7 @@
+﻿State.report.nominal_distribution
+===========================================================
+
+
+.. currentmodule:: activitysim.core.workflow
+
+.. autoaccessormethod:: State.report.nominal_distribution

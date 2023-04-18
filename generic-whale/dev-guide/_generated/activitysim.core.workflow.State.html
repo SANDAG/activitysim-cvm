@@ -51,7 +51,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="State.__init__" href="activitysim.core.workflow.State.__init__.html" />
-    <link rel="prev" title="Workflow State API" href="../core-workflow.html" />
+    <link rel="prev" title="Workflow State" href="../core-workflow.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -274,7 +274,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Developer Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core-workflow.html">Workflow State</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using-sharrow.html">Using Sharrow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../skim-dataset.html">Using Skim Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../checkpointing.html">Checkpointing</a></li>
@@ -328,7 +328,7 @@ document.write(`
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Developers</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../core-workflow.html" class="nav-link">Workflow State API</a></li>
+    <li class="breadcrumb-item"><a href="../core-workflow.html" class="nav-link">Workflow State</a></li>
     
     <li class="breadcrumb-item active" aria-current="page">State</li>
   </ul>
@@ -353,14 +353,6 @@ document.write(`
 <dt class="sig sig-object py" id="activitysim.core.workflow.State">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.workflow.</span></span><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.workflow.State" title="Permalink to this definition">#</a></dt>
 <dd><p>The encapsulated state of an ActivitySim model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>context</strong><span class="classifier">pypyr.Context, optional</span></dt><dd><p>An initial context can be provided when the State is created.</p>
-</dd>
-</dl>
-</dd>
-</dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
@@ -369,16 +361,16 @@ document.write(`
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.__init__.html#activitysim.core.workflow.State.__init__" title="activitysim.core.workflow.State.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([context])</p></td>
-<td><p></p></td>
+<td><p>Initialize the encapsulated state of an ActivitySim model.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.access.html#activitysim.core.workflow.State.access" title="activitysim.core.workflow.State.access"><code class="xref py py-obj docutils literal notranslate"><span class="pre">access</span></code></a>(key, initializer)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.access.html#activitysim.core.workflow.State.access" title="activitysim.core.workflow.State.access"><code class="xref py py-obj docutils literal notranslate"><span class="pre">access</span></code></a>(key[, initializer])</p></td>
+<td><p>Raw access to values stored in this state's context.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.add_injectable.html#activitysim.core.workflow.State.add_injectable" title="activitysim.core.workflow.State.add_injectable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_injectable</span></code></a>(key, value)</p></td>
 <td><p>Alias for <a class="reference internal" href="activitysim.core.workflow.State.set.html#activitysim.core.workflow.State.set" title="activitysim.core.workflow.State.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.set()</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.add_table.html#activitysim.core.workflow.State.add_table" title="activitysim.core.workflow.State.add_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_table</span></code></a>(name, content[, salient])</p></td>
-<td><p></p></td>
+<td><p>Add a data table to this context, and potentially mark it for checkpointing.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.close_on_exit.html#activitysim.core.workflow.State.close_on_exit" title="activitysim.core.workflow.State.close_on_exit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_on_exit</span></code></a>(file, name)</p></td>
 <td><p></p></td>
@@ -408,7 +400,7 @@ document.write(`
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.get.html#activitysim.core.workflow.State.get" title="activitysim.core.workflow.State.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(key[, default])</p></td>
-<td><p></p></td>
+<td><p>Automated access to values stored in this state's context.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.get_dataarray.html#activitysim.core.workflow.State.get_dataarray" title="activitysim.core.workflow.State.get_dataarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dataarray</span></code></a>(tablename, item[, as_copy])</p></td>
 <td><p>Get a workflow table item as a xarray.DataArray.</p></td>
@@ -456,7 +448,7 @@ document.write(`
 <td><p>Initialize the state's filesystem.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.is_table.html#activitysim.core.workflow.State.is_table" title="activitysim.core.workflow.State.is_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_table</span></code></a>(name)</p></td>
-<td><p></p></td>
+<td><p>Check if a name corresponds to a table in this state's context.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.load_settings.html#activitysim.core.workflow.State.load_settings" title="activitysim.core.workflow.State.load_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_settings</span></code></a>()</p></td>
 <td><p>Read and parse settings file(s) from config dirs.</p></td>
@@ -506,7 +498,7 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.current_model_name.html#activitysim.core.workflow.State.current_model_name" title="activitysim.core.workflow.State.current_model_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_model_name</span></code></a></p></td>
 <td><p>Name of the currently running model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.dataset.html#activitysim.core.workflow.State.dataset" title="activitysim.core.workflow.State.dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../_generated2/activitysim.core.workflow.State.dataset.html#activitysim.core.workflow.State.dataset" title="activitysim.core.workflow.State.dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset</span></code></a></p></td>
 <td><p>This accessor provides easy access to state tables and datasets.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.existing_table_names.html#activitysim.core.workflow.State.existing_table_names" title="activitysim.core.workflow.State.existing_table_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">existing_table_names</span></code></a></p></td>
@@ -515,11 +507,11 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.existing_table_status.html#activitysim.core.workflow.State.existing_table_status" title="activitysim.core.workflow.State.existing_table_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">existing_table_status</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.extend.html#activitysim.core.workflow.State.extend" title="activitysim.core.workflow.State.extend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extend</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../_generated2/activitysim.core.workflow.State.extend.html#activitysim.core.workflow.State.extend" title="activitysim.core.workflow.State.extend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extend</span></code></a></p></td>
 <td><p>Methods to extend the capabilities of ActivitySim.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.filesystem.html#activitysim.core.workflow.State.filesystem" title="activitysim.core.workflow.State.filesystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filesystem</span></code></a></p></td>
-<td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
+<td><p>Manage finding and loading files for ActivitySim's command line interface.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.known_table_names.html#activitysim.core.workflow.State.known_table_names" title="activitysim.core.workflow.State.known_table_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">known_table_names</span></code></a></p></td>
 <td><p></p></td>
@@ -528,19 +520,19 @@ document.write(`
 <td><p>This accessor provides logging tools.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.network_settings.html#activitysim.core.workflow.State.network_settings" title="activitysim.core.workflow.State.network_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">network_settings</span></code></a></p></td>
-<td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
+<td><p>Network level of service and skims settings</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.predicates.html#activitysim.core.workflow.State.predicates" title="activitysim.core.workflow.State.predicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predicates</span></code></a></p></td>
-<td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.report.html#activitysim.core.workflow.State.report" title="activitysim.core.workflow.State.report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../_generated2/activitysim.core.workflow.State.report.html#activitysim.core.workflow.State.report" title="activitysim.core.workflow.State.report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report</span></code></a></p></td>
 <td><p>Tools for reporting and visualization</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.run.html#activitysim.core.workflow.State.run" title="activitysim.core.workflow.State.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../_generated2/activitysim.core.workflow.State.run.html#activitysim.core.workflow.State.run" title="activitysim.core.workflow.State.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
 <td><p>This accessor provides the tools to actually run ActivitySim workflow steps.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="activitysim.core.workflow.State.settings.html#activitysim.core.workflow.State.settings" title="activitysim.core.workflow.State.settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">settings</span></code></a></p></td>
-<td><p>Convenience class for defining a context value as an attribute on a State.</p></td>
+<td><p>The overall settings for the ActivitySim model system.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="activitysim.core.workflow.State.this_step.html#activitysim.core.workflow.State.this_step" title="activitysim.core.workflow.State.this_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">this_step</span></code></a></p></td>
 <td><p></p></td>
@@ -574,7 +566,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Workflow State API</p>
+        <p class="prev-next-title">Workflow State</p>
       </div>
     </a>
     <a class="right-next"
@@ -629,7 +621,7 @@ document.write(`
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev197+gb965ac8b, documentation last updated Apr 18, 2023.<br/>
+ActivitySim 1.2.1.dev199+g309cba6d, documentation last updated Apr 18, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

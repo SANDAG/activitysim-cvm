@@ -1,0 +1,7 @@
+﻿State.report.histogram
+================================================
+
+
+.. currentmodule:: activitysim.core.workflow
+
+.. autoaccessormethod:: State.report.histogram
