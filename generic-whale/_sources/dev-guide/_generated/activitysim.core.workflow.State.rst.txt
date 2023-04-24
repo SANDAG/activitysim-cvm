@@ -73,7 +73,6 @@
       ~State.known_table_names
       ~State.logging
       ~State.network_settings
-      ~State.predicates
       ~State.report
       ~State.run
       ~State.settings
