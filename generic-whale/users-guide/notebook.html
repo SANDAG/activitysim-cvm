@@ -376,15 +376,15 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
- - min_value_of_time
- - max_value_of_time
- - rural_threshold
- - min_available_chunk_ratio
- - urban_threshold
- - household_median_value_of_time
- - distributed_vot_sigma
  - cbd_threshold
+ - min_value_of_time
+ - min_available_chunk_ratio
+ - distributed_vot_sigma
+ - household_median_value_of_time
+ - rural_threshold
+ - max_value_of_time
  - distributed_vot_mu
+ - urban_threshold
 </pre></div>
 </div>
 </div>
@@ -404,15 +404,15 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
- - min_value_of_time
- - max_value_of_time
- - rural_threshold
- - min_available_chunk_ratio
- - urban_threshold
- - household_median_value_of_time
- - distributed_vot_sigma
  - cbd_threshold
+ - min_value_of_time
+ - min_available_chunk_ratio
+ - distributed_vot_sigma
+ - household_median_value_of_time
+ - rural_threshold
+ - max_value_of_time
  - distributed_vot_mu
+ - urban_threshold
 </pre></div>
 </div>
 </div>
@@ -525,7 +525,8 @@ components in a block together.</p>
 </div>
 <p>Note that when running interactively like this, it is up to the user to
 monitor the correct sequence of components, as the list of components in
-:ref:<code class="docutils literal notranslate"><span class="pre">Settings.models</span></code> is ignored in favor of the user’s interactive
+<a class="reference internal" href="_generated/activitysim.core.configuration.Settings.html#activitysim.core.configuration.Settings.models" title="activitysim.core.configuration.Settings.models"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Settings.models</span></code></a>
+is ignored in favor of the user’s interactive
 instructions.  So it is up to the user to ensure that all necessary
 antecedent data is available for each component, either by running the
 components in the correct order, or otherwise manually preparing the data
@@ -675,13 +676,13 @@ that can work with DataFrames.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-5c90e6acb30d43978b3164c34f20e2cf"></div>
+<div id="altair-viz-4951627e0a66474da83ac22940bbdb97"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-5c90e6acb30d43978b3164c34f20e2cf") {
-      outputDiv = document.getElementById("altair-viz-5c90e6acb30d43978b3164c34f20e2cf");
+    if (outputDiv.id !== "altair-viz-4951627e0a66474da83ac22940bbdb97") {
+      outputDiv = document.getElementById("altair-viz-4951627e0a66474da83ac22940bbdb97");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -743,13 +744,13 @@ that can generate histograms or nominal distributions of data features.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-b82812f1f1b24560931fa95b11a2d07d"></div>
+<div id="altair-viz-61b836a7bfa948049ba27d87cf828e11"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b82812f1f1b24560931fa95b11a2d07d") {
-      outputDiv = document.getElementById("altair-viz-b82812f1f1b24560931fa95b11a2d07d");
+    if (outputDiv.id !== "altair-viz-61b836a7bfa948049ba27d87cf828e11") {
+      outputDiv = document.getElementById("altair-viz-61b836a7bfa948049ba27d87cf828e11");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -818,13 +819,13 @@ that can generate histograms or nominal distributions of data features.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-6591ca1443b94faeaad8c48c6d01ad3e"></div>
+<div id="altair-viz-741862ce414f45b69afae6c6a36083fb"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6591ca1443b94faeaad8c48c6d01ad3e") {
-      outputDiv = document.getElementById("altair-viz-6591ca1443b94faeaad8c48c6d01ad3e");
+    if (outputDiv.id !== "altair-viz-741862ce414f45b69afae6c6a36083fb") {
+      outputDiv = document.getElementById("altair-viz-741862ce414f45b69afae6c6a36083fb");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -960,7 +961,7 @@ that can generate histograms or nominal distributions of data features.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev204+g598c06fe, documentation last updated Apr 25, 2023.<br/>
+ActivitySim 1.2.1.dev208+gd4741e65, documentation last updated Apr 25, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

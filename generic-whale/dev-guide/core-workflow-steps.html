@@ -54,7 +54,7 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Workflow Tables" href="core-workflow-table.html" />
+    <link rel="next" title="step" href="_generated/activitysim.core.workflow.step.html" />
     <link rel="prev" title="State.extend.declare_table" href="_generated/activitysim.core.workflow.State.extend.declare_table.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -357,8 +357,8 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="workflow-steps">
-<h1>Workflow Steps<a class="headerlink" href="#workflow-steps" title="Permalink to this headline">#</a></h1>
-<p>An ActivitySim component is written as a Python function with a <code class="docutils literal notranslate"><span class="pre">workflow.step</span></code>
+<span id="id1"></span><h1>Workflow Steps<a class="headerlink" href="#workflow-steps" title="Permalink to this headline">#</a></h1>
+<p>An ActivitySim component is written as a Python function with a <code class="docutils literal notranslate"><span class="pre">&#64;workflow.step</span></code>
 decorator:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">activitysim.core</span> <span class="kn">import</span> <span class="n">workflow</span>
@@ -373,16 +373,49 @@ decorator:</p>
     <span class="o">...</span> <span class="c1"># do something</span>
 </pre></div>
 </div>
-<p>Similar to a typical Python class method, the first argument to a workflow step
-is always a reference to a <a class="reference internal" href="core-workflow-api.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">State</span></code></span></a> object named <code class="docutils literal notranslate"><span class="pre">state</span></code>.  Unlike a typical Python
-class method, this is rigorously enforced – if you decorate a function as a
-<code class="docutils literal notranslate"><span class="pre">workflow.step</span></code> and the first argument is not named <code class="docutils literal notranslate"><span class="pre">state</span></code> a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> will
-be raised.</p>
-<p>Similar to the legacy ORCA-based implementation of ActivitySim, when called by
-the automated processes that orchestrate component execution, the names of all
-subsequent arguments should generally match objects that are expected to be
-already stored as keys in the <code class="docutils literal notranslate"><span class="pre">state</span></code>’s context, or have decorated constructors
-declared elsewhere in the imported codebase.</p>
+<p>Similar to a typical Python class method, the first argument to a
+workflow step must be a reference to a <a class="reference internal" href="core-workflow-api.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">State</span></code></span></a>
+object named <code class="docutils literal notranslate"><span class="pre">state</span></code>.  Unlike a typical Python class method, this is
+rigorously enforced – if you decorate a function as a <code class="docutils literal notranslate"><span class="pre">workflow.step</span></code>
+and the first argument is not named <code class="docutils literal notranslate"><span class="pre">state</span></code> a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> will be raised.</p>
+<p>Similar to the legacy ORCA-based implementation of ActivitySim, when called
+by the automated processes that orchestrate component execution, the names
+of all subsequent arguments should generally match objects that are expected
+to be already stored as keys in the <code class="docutils literal notranslate"><span class="pre">state</span></code> context, or have decorated
+constructors declared elsewhere in the imported codebase. However, if an
+argument is provided with a default value, then the default value is used
+unless it is explicitly overloaded in the function call; i.e. the default
+value in the function signature takes precedence over any value stored in the
+state’s context.</p>
+<p>The decorator will spin off a reference of the decorated function in the
+<code class="docutils literal notranslate"><span class="pre">_RUNNABLE_STEPS</span></code> class attribute for <code class="docutils literal notranslate"><span class="pre">State</span></code>, facilitating the automatic
+discovery and/or execution of this function via the
+<a class="reference internal" href="_generated2/activitysim.core.workflow.State.run.html#activitysim.core.workflow.State.run" title="activitysim.core.workflow.State.run"><span class="xref myst py py-meth"><code class="docutils literal notranslate"><span class="pre">State.run</span></code></span></a> mechanisms.
+The original function also remains available to import and use without
+changes.</p>
+<p>The decorated function may mutate the <code class="docutils literal notranslate"><span class="pre">state</span></code> argument by adding or removing
+things from the state’s context. When the return type annotation is “None”
+this mutation behavior is presumed to be baked in to the decorated function
+as by implication there is no other pathway to output a result, although that
+is not checked.</p>
+<p>Alternatively, the wrapped function can return a <code class="docutils literal notranslate"><span class="pre">Mapping[str,</span> <span class="pre">Any]</span></code> that
+will be used to update the state’s context. This happens automatically when
+the step is called via the <code class="docutils literal notranslate"><span class="pre">State.run</span></code> accessor, or can (must) be handled
+separately by the caller if the function is executed directly.</p>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.workflow.step.html#activitysim.core.workflow.step" title="activitysim.core.workflow.step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">step</span></code></a>([wrapped_func, step_name, cache, kind, ...])</p></td>
+<td><p>Decorator for ActivitySim model components and related functions.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 
 
@@ -406,11 +439,11 @@ declared elsewhere in the imported codebase.</p>
       </div>
     </a>
     <a class="right-next"
-       href="core-workflow-table.html"
+       href="_generated/activitysim.core.workflow.step.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Workflow Tables</p>
+        <p class="prev-next-title">step</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -425,6 +458,18 @@ declared elsewhere in the imported codebase.</p>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api">API</a><ul class="simple nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
@@ -457,7 +502,7 @@ declared elsewhere in the imported codebase.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev204+g598c06fe, documentation last updated Apr 25, 2023.<br/>
+ActivitySim 1.2.1.dev208+gd4741e65, documentation last updated Apr 25, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
