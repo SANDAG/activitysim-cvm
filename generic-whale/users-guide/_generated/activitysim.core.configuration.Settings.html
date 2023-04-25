@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css" />
   
@@ -43,6 +44,8 @@
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/design-tabs.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'users-guide/_generated/activitysim.core.configuration.Settings';</script>
     <script>
@@ -276,6 +279,7 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli-tools.html">Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook.html">Interactive Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Built-in Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../external-examples.html">External Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
@@ -361,7 +365,7 @@ the model.</p>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_for_variability</span> <span class="pre">(bool)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkpoint_format</span> <span class="pre">(Literal['hdf',</span> <span class="pre">'parquet'])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkpoints</span> <span class="pre">(Union[bool,</span> <span class="pre">list])</span></code></p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_method</span> <span class="pre">(str)</span></code></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_method</span> <span class="pre">(Literal['bytes',</span> <span class="pre">'uss',</span> <span class="pre">'hybrid_uss',</span> <span class="pre">'rss',</span> <span class="pre">'hybrid_rss'])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_size</span> <span class="pre">(int)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">chunk_training_mode</span> <span class="pre">(Literal['disabled',</span> <span class="pre">'training',</span> <span class="pre">'production',</span> <span class="pre">'adaptive'])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cleanup_pipeline_after_run</span> <span class="pre">(bool)</span></code></p></li>
@@ -450,9 +454,55 @@ list of models to checkpoint.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.Settings.chunk_method">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chunk_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.Settings.chunk_method" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chunk_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'bytes'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'uss'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'hybrid_uss'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rss'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'hybrid_rss'</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hybrid_uss'</span></em><a class="headerlink" href="#activitysim.core.configuration.Settings.chunk_method" title="Permalink to this definition">#</a></dt>
 <dd><p>Memory use measure to use for chunking.</p>
-<p>See <a class="reference internal" href="../../core.html#chunk-size"><span class="std std-ref">Chunk</span></a>.</p>
+<p>The following methods are supported to calculate memory overhead when chunking
+is enabled:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>“bytes”</dt><dd><p>expected rowsize based on actual size (as reported by numpy and
+pandas) of explicitly allocated data this can underestimate overhead due
+to transient data requirements of operations (e.g. merge, sort, transpose).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“uss”</dt><dd><p>expected rowsize based on change in (unique set size) (uss) both as
+a result of explicit data allocation, and readings by MemMonitor sniffer
+thread that measures transient uss during time-consuming numpy and pandas
+operations.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“hybrid_uss”</dt><dd><p>hybrid_uss avoids problems with pure uss, especially with
+small chunk sizes (e.g. initial training chunks) as numpy may recycle
+cached blocks and show no increase in uss even though data was allocated
+and logged.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“rss”</dt><dd><p>like uss, but for resident set size (rss), which is the portion of
+memory occupied by a process that is held in RAM.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“hybrid_rss”</dt><dd><p>like hybrid_uss, but for rss</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>RSS is reported by <a class="reference external" href="https://psutil.readthedocs.io/en/latest/index.html#psutil.Process.memory_info" title="(in psutil v5.9.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psutil.Process.memory_info()</span></code></a> and USS is reported by
+<a class="reference external" href="https://psutil.readthedocs.io/en/latest/index.html#psutil.Process.memory_full_info" title="(in psutil v5.9.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psutil.Process.memory_full_info()</span></code></a>.  USS is the memory which is private to
+a process and which would be freed if the process were terminated.  This is
+the metric that most closely matches the rather vague notion of memory
+“in use” (the meaning of which is difficult to pin down in operating systems
+with virtual memory where memory can (but sometimes can’t) be swapped or
+mapped to disk. Previous testing found <cite>hybrid_uss</cite> performs best and is most
+reliable and is therefore the default.</p>
+<p>For more, see <a class="reference internal" href="../../core.html#chunk-size"><span class="std std-ref">Chunk</span></a>.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -894,7 +944,7 @@ recoding).</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev201+gb1ef7c04, documentation last updated Apr 24, 2023.<br/>
+ActivitySim 1.2.1.dev204+g598c06fe, documentation last updated Apr 25, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

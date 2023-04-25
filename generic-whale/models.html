@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
     <link rel="stylesheet" type="text/css" href="_static/theme_overrides.css" />
   
@@ -43,6 +44,8 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
     <script src="_static/design-tabs.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'models';</script>
@@ -3565,7 +3568,7 @@ annotated with mode_choice logsum to select a destination from sample alternativ
 <span id="tour-frequency"></span><h3>Tour Frequency<a class="headerlink" href="#module-activitysim.abm.models.util.tour_frequency" title="Permalink to this headline">#</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.tour_frequency.create_joint_tours">
-<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.util.tour_frequency.</span></span><span class="sig-name descname"><span class="pre">create_joint_tours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tour_counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tour_category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'person_id'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.util.tour_frequency.create_joint_tours" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.util.tour_frequency.</span></span><span class="sig-name descname"><span class="pre">create_joint_tours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tour_counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tour_category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'person_id'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.util.tour_frequency.create_joint_tours" title="Permalink to this definition">#</a></dt>
 <dd><p>This method processes the tour_frequency column that comes
 out of the model of the same name and turns into a DataFrame that
 represents the tours that were generated</p>
@@ -3697,7 +3700,7 @@ made by the household.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.tour_frequency.process_joint_tours_frequency_composition">
-<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.util.tour_frequency.</span></span><span class="sig-name descname"><span class="pre">process_joint_tours_frequency_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition_alts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_persons</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.util.tour_frequency.process_joint_tours_frequency_composition" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.util.tour_frequency.</span></span><span class="sig-name descname"><span class="pre">process_joint_tours_frequency_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition_alts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_persons</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.util.tour_frequency.process_joint_tours_frequency_composition" title="Permalink to this definition">#</a></dt>
 <dd><p>This method processes the joint_tour_frequency_composition column that comes out of
 the model of the same name and turns into a DataFrame that represents the
 joint tours that were generated</p>
@@ -3838,7 +3841,7 @@ tours.tour_category   - one of ‘mandatory’, ‘non_mandatory’, ‘atwork�
 
 <dl class="py function">
 <dt class="sig sig-object py" id="activitysim.abm.models.util.tour_frequency.process_tours_frequency_composition">
-<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.util.tour_frequency.</span></span><span class="sig-name descname"><span class="pre">process_tours_frequency_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition_alts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tour_category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'person_id'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.util.tour_frequency.process_tours_frequency_composition" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.util.tour_frequency.</span></span><span class="sig-name descname"><span class="pre">process_tours_frequency_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_tour_frequency_composition_alts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tour_category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'person_id'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.util.tour_frequency.process_tours_frequency_composition" title="Permalink to this definition">#</a></dt>
 <dd><p>This method processes the joint_tour_frequency_composition column that comes
 out of the model of the same name and turns into a DataFrame that
 represents the tours that were generated</p>
@@ -4310,7 +4313,7 @@ DataFrame and the values are the index of the alts DataFrame.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev201+gb1ef7c04, documentation last updated Apr 24, 2023.<br/>
+ActivitySim 1.2.1.dev204+g598c06fe, documentation last updated Apr 25, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
