@@ -1,0 +1,7 @@
+﻿State.report.ordinal_distribution
+===========================================================
+
+
+.. currentmodule:: activitysim.core.workflow
+
+.. autoaccessormethod:: State.report.ordinal_distribution
