@@ -1,6 +1,0 @@
-﻿LogitNestSpec
-=============
-
-.. currentmodule:: activitysim.core.configuration.base
-
-.. autopydantic_model:: LogitNestSpec

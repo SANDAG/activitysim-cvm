@@ -1,6 +1,0 @@
-﻿LogitComponentSettings
-======================
-
-.. currentmodule:: activitysim.core.configuration.base
-
-.. autopydantic_model:: LogitComponentSettings

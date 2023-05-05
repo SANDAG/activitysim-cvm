@@ -47,7 +47,7 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/design-tabs.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'dev-guide/_generated/activitysim.core.configuration.base.LogitNestSpec';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'dev-guide/_generated/activitysim.core.configuration.logit.LogitNestSpec';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://camsys.github.io/activitysim/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.2.1';
@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Components" href="../components/index.html" />
-    <link rel="prev" title="PreprocessorSettings" href="activitysim.core.configuration.base.PreprocessorSettings.html" />
+    <link rel="prev" title="TemplatedLogitComponentSettings" href="activitysim.core.configuration.logit.TemplatedLogitComponentSettings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -361,37 +361,38 @@ document.write(`
   <section id="logitnestspec">
 <h1>LogitNestSpec<a class="headerlink" href="#logitnestspec" title="Permalink to this headline">#</a></h1>
 <dl class="py class pydantic_model">
-<dt class="sig sig-object py" id="activitysim.core.configuration.base.LogitNestSpec">
-<em class="property"><span class="pre">settings</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.configuration.base.</span></span><span class="sig-name descname"><span class="pre">LogitNestSpec</span></span><a class="headerlink" href="#activitysim.core.configuration.base.LogitNestSpec" title="Permalink to this definition">#</a></dt>
-<dd><p>Defines a nest in a nested logit model.</p>
+<dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitNestSpec">
+<em class="property"><span class="pre">settings</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.configuration.logit.</span></span><span class="sig-name descname"><span class="pre">LogitNestSpec</span></span><a class="headerlink" href="#activitysim.core.configuration.logit.LogitNestSpec" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Defines a nest in a nested logit model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Fields</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#activitysim.core.configuration.base.LogitNestSpec.alternatives" title="activitysim.core.configuration.base.LogitNestSpec.alternatives"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alternatives</span> <span class="pre">(list[activitysim.core.configuration.base.LogitNestSpec</span> <span class="pre">|</span> <span class="pre">str])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#activitysim.core.configuration.base.LogitNestSpec.coefficient" title="activitysim.core.configuration.base.LogitNestSpec.coefficient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coefficient</span> <span class="pre">(str)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#activitysim.core.configuration.base.LogitNestSpec.name" title="activitysim.core.configuration.base.LogitNestSpec.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.alternatives" title="activitysim.core.configuration.logit.LogitNestSpec.alternatives"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alternatives</span> <span class="pre">(list[activitysim.core.configuration.logit.LogitNestSpec</span> <span class="pre">|</span> <span class="pre">str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.coefficient" title="activitysim.core.configuration.logit.LogitNestSpec.coefficient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coefficient</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.name" title="activitysim.core.configuration.logit.LogitNestSpec.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str)</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="activitysim.core.configuration.base.LogitNestSpec.alternatives">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alternatives</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#activitysim.core.configuration.base.LogitNestSpec" title="activitysim.core.configuration.base.LogitNestSpec"><span class="pre">LogitNestSpec</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.base.LogitNestSpec.alternatives" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitNestSpec.alternatives">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alternatives</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec" title="activitysim.core.configuration.logit.LogitNestSpec"><span class="pre">LogitNestSpec</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitNestSpec.alternatives" title="Permalink to this definition">#</a></dt>
 <dd><p>The alternatives within this nest.</p>
 <p>These can be either the names of elemental alternatives, or <cite>LogitNestSpec</cite>
 definitions for more nests, or a mixture of these.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="activitysim.core.configuration.base.LogitNestSpec.coefficient">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.base.LogitNestSpec.coefficient" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitNestSpec.coefficient">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitNestSpec.coefficient" title="Permalink to this definition">#</a></dt>
 <dd><p>The named parameter to be used as the logsum coefficient.</p>
 <p>This named parameter should appear in the logit models’s <cite>COEFFICIENTS</cite>
 file.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="activitysim.core.configuration.base.LogitNestSpec.name">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.base.LogitNestSpec.name" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitNestSpec.name">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitNestSpec.name" title="Permalink to this definition">#</a></dt>
 <dd><p>A descriptive name for this nest.</p>
 </dd></dl>
 
@@ -411,12 +412,12 @@ file.</p>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="activitysim.core.configuration.base.PreprocessorSettings.html"
+       href="activitysim.core.configuration.logit.TemplatedLogitComponentSettings.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">PreprocessorSettings</p>
+        <p class="prev-next-title">TemplatedLogitComponentSettings</p>
       </div>
     </a>
     <a class="right-next"
@@ -442,7 +443,7 @@ file.</p>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/dev-guide/_generated/activitysim.core.configuration.base.LogitNestSpec.rst.txt">
+    <a href="../../_sources/dev-guide/_generated/activitysim.core.configuration.logit.LogitNestSpec.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
@@ -471,7 +472,7 @@ file.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev221+g16939e0b, documentation last updated May 04, 2023.<br/>
+ActivitySim 1.2.1.dev224+gaa1b058f, documentation last updated May 05, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

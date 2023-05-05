@@ -54,7 +54,7 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="LogitComponentSettings" href="_generated/activitysim.core.configuration.base.LogitComponentSettings.html" />
+    <link rel="next" title="PydanticReadable" href="_generated/activitysim.core.configuration.base.PydanticReadable.html" />
     <link rel="prev" title="Models" href="../models.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -357,20 +357,28 @@ document.write(`
                   
   <section id="component-configuration">
 <span id="component-config"></span><h1>Component Configuration<a class="headerlink" href="#component-configuration" title="Permalink to this headline">#</a></h1>
-<p>Individual components each have their own component-level configuration.</p>
+<p>Individual components each have their own component-level configuration. These
+configuration can include custom component-specific settings, as well as groups
+of settings from these boilerplate base classes:</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.base.LogitComponentSettings.html#activitysim.core.configuration.base.LogitComponentSettings" title="activitysim.core.configuration.base.LogitComponentSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogitComponentSettings</span></code></a></p></td>
-<td><p>Base configuration class for ActivitySim components that are logit models.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.base.PydanticReadable.html#activitysim.core.configuration.base.PydanticReadable" title="activitysim.core.configuration.base.PydanticReadable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PydanticReadable</span></code></a></p></td>
+<td><p>Base class for <a href="#id1"><span class="problematic" id="id2">`</span></a>pydantic.BaseModel`s readable from cascading config files.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.base.PreprocessorSettings.html#activitysim.core.configuration.base.PreprocessorSettings" title="activitysim.core.configuration.base.PreprocessorSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PreprocessorSettings</span></code></a></p></td>
 <td><p>Preprocessor instructions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.base.LogitNestSpec.html#activitysim.core.configuration.base.LogitNestSpec" title="activitysim.core.configuration.base.LogitNestSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogitNestSpec</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.logit.LogitComponentSettings.html#activitysim.core.configuration.logit.LogitComponentSettings" title="activitysim.core.configuration.logit.LogitComponentSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogitComponentSettings</span></code></a></p></td>
+<td><p>Base configuration class for ActivitySim components that are logit models.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.logit.TemplatedLogitComponentSettings.html#activitysim.core.configuration.logit.TemplatedLogitComponentSettings" title="activitysim.core.configuration.logit.TemplatedLogitComponentSettings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TemplatedLogitComponentSettings</span></code></a></p></td>
+<td><p>Base configuration for segmented logit models with a coefficient template.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="_generated/activitysim.core.configuration.logit.LogitNestSpec.html#activitysim.core.configuration.logit.LogitNestSpec" title="activitysim.core.configuration.logit.LogitNestSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogitNestSpec</span></code></a></p></td>
 <td><p>Defines a nest in a nested logit model.</p></td>
 </tr>
 </tbody>
@@ -398,11 +406,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="_generated/activitysim.core.configuration.base.LogitComponentSettings.html"
+       href="_generated/activitysim.core.configuration.base.PydanticReadable.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">LogitComponentSettings</p>
+        <p class="prev-next-title">PydanticReadable</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -449,7 +457,7 @@ document.write(`
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev221+g16939e0b, documentation last updated May 04, 2023.<br/>
+ActivitySim 1.2.1.dev224+gaa1b058f, documentation last updated May 05, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
