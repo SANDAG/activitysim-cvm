@@ -427,11 +427,11 @@ document.write(`
 <span id="component-transit-pass-ownership"></span><h1>Transit Pass Ownership<a class="headerlink" href="#transit-pass-ownership" title="Permalink to this heading">#</a></h1>
 <p>The transit fare discount is defined as persons who purchase or are
 provided a transit pass.  The transit fare discount consists of two submodels - this
-transit pass ownership model and a person :ref:<code class="docutils literal notranslate"><span class="pre">transit_pass_subsidy</span></code> model. The
+transit pass ownership model and a person <a class="reference internal" href="../../models.html#transit-pass-subsidy"><span class="std std-ref">transit_pass_subsidy</span></a> model. The
 result of this model can be used to condition downstream models such as the tour and trip
 mode choice models via fare discount adjustments.</p>
 <p>The main interface to the transit pass ownership model is the
-:py:func:<code class="docutils literal notranslate"><span class="pre">~activitysim.abm.models.transit_pass_ownership</span></code> function.  This
+<span class="xref myst">transit_pass_ownership</span> function.  This
 function is registered as an Inject step in the example Pipeline.</p>
 <p>This model generates only True or False outcomes, and is structured as a binary
 logit model.</p>
@@ -441,7 +441,6 @@ logit model.</p>
 <li><p><em>Configuration File</em>: <code class="docutils literal notranslate"><span class="pre">transit_pass_ownership.yaml</span></code></p></li>
 <li><p><em>Core Table</em>: <code class="docutils literal notranslate"><span class="pre">persons</span></code></p></li>
 <li><p><em>Result Field</em>: <code class="docutils literal notranslate"><span class="pre">transit_pass_ownership</span></code></p></li>
-<li><p><em>Skim Keys</em>: NA</p></li>
 </ul>
 </section>
 <section id="configuration">
@@ -542,7 +541,7 @@ logit model.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev324+gf415d437, documentation last updated Oct 30, 2023.<br/>
+ActivitySim 1.2.1.dev325+gb10c5382, documentation last updated Oct 30, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
