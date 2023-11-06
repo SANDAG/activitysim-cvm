@@ -4,19 +4,30 @@ Components
 
 .. toctree::
     :maxdepth: 1
-
    initialize
    initialize_los
    initialize_tours
    accessibility
    auto_ownership
+   vehicle_type_choice
+   telecommute_frequency
+   cdap
+   mandatory_tour_frequency
+   school_escorting
+   joint_tour_composition 
+   joint_tour_participation
+   joint_tour_destination   
+   joint_tour_scheduling
+   non_mandatory_tour_frequency
+   non_mandatory_destination
+   non_mandatory_scheduling  
+   mandatory_scheduling
    disaggregate_accessibility
-   free_parking
+   free_parking   
    school_location_choice
    transit_pass_ownership
    transit_pass_subsidy
    trip_destination
-   free_parking
    school_location_choice
    work_from_home
    work_location_choice
