@@ -1,0 +1,124 @@
+Traceback (most recent call last):
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+state.run.initialize_landuse()
+------------------
+
+----- stderr -----
+ERROR:root:===== ERROR IN initialize_landuse =====
+----- stderr -----
+ERROR:root:1 validation error for InitializeLanduseSettings
+annotate_tables -> 0
+  str type expected (type=type_error.str)
+Traceback (most recent call last):
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py", line 132, in initialize_landuse
+    model_settings = InitializeLanduseSettings.read_settings_file(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py", line 96, in read_settings_file
+    return filesystem.read_settings_file(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py", line 805, in read_settings_file
+    settings = validator_class.parse_obj(settings)
+  File "pydantic/main.py", line 526, in pydantic.main.BaseModel.parse_obj
+  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.__init__
+pydantic.error_wrappers.ValidationError: 1 validation error for InitializeLanduseSettings
+annotate_tables -> 0
+  str type expected (type=type_error.str)
+----- stderr -----
+ERROR:root:===== / =====
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValidationError[0m                           Traceback (most recent call last)
+Cell [0;32mIn[9], line 1[0m
+[0;32m----> 1[0m [43mstate[49m[38;5;241;43m.[39;49m[43mrun[49m[38;5;241;43m.[39;49m[43minitialize_landuse[49m[43m([49m[43m)[49m
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:199[0m, in [0;36mRunner.__getattr__.<locals>.f[0;34m(**kwargs)[0m
+[1;32m    197[0m [38;5;28;01mdef[39;00m [38;5;21mf[39m([38;5;241m*[39m[38;5;241m*[39mkwargs):
+[1;32m    198[0m     write_notebook_heading(item, [38;5;28mself[39m[38;5;241m.[39mheading_level)
+[0;32m--> 199[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mby_name[49m[43m([49m[43mitem[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:350[0m, in [0;36mRunner.by_name[0;34m(self, model_name, **kwargs)[0m
+[1;32m    348[0m             f[38;5;241m.[39mwrite(profiler[38;5;241m.[39moutput_html())
+[1;32m    349[0m     [38;5;28;01melse[39;00m:
+[0;32m--> 350[0m         [38;5;28mself[39m[38;5;241m.[39m_obj[38;5;241m.[39m_context [38;5;241m=[39m [43mrun_named_step[49m[43m([49m
+[1;32m    351[0m [43m            [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mstep_name[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_obj[49m[38;5;241;43m.[39;49m[43m_context[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
+[1;32m    352[0m [43m        [49m[43m)[49m
+[1;32m    354[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m:
+[1;32m    355[0m     [38;5;28mself[39m[38;5;241m.[39mt0 [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_log_elapsed_time([38;5;124mf[39m[38;5;124m"[39m[38;5;124mrun.[39m[38;5;132;01m{[39;00mmodel_name[38;5;132;01m}[39;00m[38;5;124m UNTIL ERROR[39m[38;5;124m"[39m, [38;5;28mself[39m[38;5;241m.[39mt0)
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:83[0m, in [0;36mrun_named_step[0;34m(name, context, **kwargs)[0m
+[1;32m     81[0m         logger[38;5;241m.[39merror([38;5;124mf[39m[38;5;124m"[39m[38;5;124m - [39m[38;5;132;01m{[39;00mn[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[1;32m     82[0m     [38;5;28;01mraise[39;00m
+[0;32m---> 83[0m [43mstep_func[49m[43m([49m[43mcontext[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     84[0m [38;5;28;01mreturn[39;00m context
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:367[0m, in [0;36mstep.__call__.<locals>.run_step[0;34m(context, **override_kwargs)[0m
+[1;32m    365[0m [38;5;28;01mtry[39;00m:
+[1;32m    366[0m     state[38;5;241m.[39mthis_step [38;5;241m=[39m [38;5;28mself[39m
+[0;32m--> 367[0m     outcome [38;5;241m=[39m [43merror_logging[49m[43m([49m[43mwrapped_func[49m[43m)[49m[43m([49m[43mstate[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m    368[0m [38;5;28;01mfinally[39;00m:
+[1;32m    369[0m     [38;5;28;01mdel[39;00m state[38;5;241m.[39mthis_step
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:46[0m, in [0;36merror_logging.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m     44[0m [38;5;28;01mdef[39;00m [38;5;21mwrapper[39m([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[1;32m     45[0m     [38;5;28;01mtry[39;00m:
+[0;32m---> 46[0m         [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     47[0m     [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m err:
+[1;32m     48[0m         logging[38;5;241m.[39merror([38;5;124mf[39m[38;5;124m"[39m[38;5;124m===== ERROR IN [39m[38;5;132;01m{[39;00mfunc[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m =====[39m[38;5;124m"[39m)
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py:132[0m, in [0;36minitialize_landuse[0;34m(state, model_settings, model_settings_file_name, trace_label)[0m
+[1;32m    130[0m [38;5;28;01mwith[39;00m chunk[38;5;241m.[39mchunk_log(state, trace_label, base[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mas[39;00m chunk_sizer:
+[1;32m    131[0m     [38;5;28;01mif[39;00m model_settings [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m--> 132[0m         model_settings [38;5;241m=[39m [43mInitializeLanduseSettings[49m[38;5;241;43m.[39;49m[43mread_settings_file[49m[43m([49m
+[1;32m    133[0m [43m            [49m[43mstate[49m[38;5;241;43m.[39;49m[43mfilesystem[49m[43m,[49m
+[1;32m    134[0m [43m            [49m[43mmodel_settings_file_name[49m[43m,[49m
+[1;32m    135[0m [43m            [49m[43mmandatory[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
+[1;32m    136[0m [43m        [49m[43m)[49m
+[1;32m    138[0m     annotate_tables(state, model_settings, trace_label, chunk_sizer)
+[1;32m    140[0m     [38;5;66;03m# instantiate accessibility (must be checkpointed to be be used to slice accessibility)[39;00m
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py:96[0m, in [0;36mPydanticReadable.read_settings_file[0;34m(cls, filesystem, file_name, mandatory)[0m
+[1;32m     38[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[1;32m     39[0m [38;5;124;03mLoad settings from one or more yaml files.[39;00m
+[1;32m     40[0m 
+[0;32m   (...)[0m
+[1;32m     93[0m [38;5;124;03mPydanticReadable or derived class[39;00m
+[1;32m     94[0m [38;5;124;03m"""[39;00m
+[1;32m     95[0m [38;5;66;03m# pass through to read_settings_file, requires validator_class and provides type hinting for IDE's[39;00m
+[0;32m---> 96[0m [38;5;28;01mreturn[39;00m [43mfilesystem[49m[38;5;241;43m.[39;49m[43mread_settings_file[49m[43m([49m
+[1;32m     97[0m [43m    [49m[43mfile_name[49m[43m,[49m
+[1;32m     98[0m [43m    [49m[43mmandatory[49m[43m,[49m
+[1;32m     99[0m [43m    [49m[43mvalidator_class[49m[38;5;241;43m=[39;49m[38;5;28;43mcls[39;49m[43m,[49m
+[1;32m    100[0m [43m[49m[43m)[49m
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py:805[0m, in [0;36mFileSystem.read_settings_file[0;34m(self, file_name, mandatory, include_stack, configs_dir_list, validator_class)[0m
+[1;32m    802[0m settings[38;5;241m.[39mpop([38;5;124m"[39m[38;5;124minclude_settings[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
+[1;32m    804[0m [38;5;28;01mif[39;00m validator_class [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m--> 805[0m     settings [38;5;241m=[39m [43mvalidator_class[49m[38;5;241;43m.[39;49m[43mparse_obj[49m[43m([49m[43msettings[49m[43m)[49m
+[1;32m    807[0m [38;5;28;01mif[39;00m include_stack:
+[1;32m    808[0m     [38;5;66;03m# if we were called recursively, return an updated list of source_file_paths[39;00m
+[1;32m    809[0m     [38;5;28;01mreturn[39;00m settings, source_file_paths
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:526[0m, in [0;36mpydantic.main.BaseModel.parse_obj[0;34m()[0m
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:341[0m, in [0;36mpydantic.main.BaseModel.__init__[0;34m()[0m
+
+[0;31mValidationError[0m: 1 validation error for InitializeLanduseSettings
+annotate_tables -> 0
+  str type expected (type=type_error.str)
+
