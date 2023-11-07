@@ -62,7 +62,7 @@
     <link rel="prev" title="Initialize Tours" href="initialize_tours.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -468,7 +468,7 @@ midday period (10 am to 3 pm), and the PM peak period (3 pm to 7 pm).</p>
 <li><p>nonMotorizedTotal, the accessibility by walking during all time periods to all employment</p></li>
 </ul>
 <p>The main interface to the accessibility model is the
-<span class="xref myst">compute_accessibility</span>
+<a class="reference internal" href="../../models.html#activitysim.abm.models.accessibility.compute_accessibility" title="activitysim.abm.models.accessibility.compute_accessibility"><span class="xref myst py py-func">compute_accessibility</span></a>
 function.  This function is registered as an Inject step in the example Pipeline.</p>
 <section id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">#</a></h2>
@@ -480,6 +480,42 @@ function.  This function is registered as an Inject step in the example Pipeline
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h2>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="activitysim.abm.models.accessibility.AccessibilitySettings">
+<em class="property"><span class="pre">settings</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.accessibility.</span></span><span class="sig-name descname"><span class="pre">AccessibilitySettings</span></span><a class="headerlink" href="#activitysim.abm.models.accessibility.AccessibilitySettings" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../_generated/activitysim.core.configuration.base.PydanticReadable.html#activitysim.core.configuration.base.PydanticReadable" title="activitysim.core.configuration.base.PydanticReadable"><code class="xref py py-class docutils literal notranslate"><span class="pre">PydanticReadable</span></code></a></p>
+<p>Settings for aggregate accessibility component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.accessibility.AccessibilitySettings.CONSTANTS" title="activitysim.abm.models.accessibility.AccessibilitySettings.CONSTANTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONSTANTS</span> <span class="pre">(dict[str,</span> <span class="pre">typing.Any])</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.accessibility.AccessibilitySettings.SPEC" title="activitysim.abm.models.accessibility.AccessibilitySettings.SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPEC</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.accessibility.AccessibilitySettings.land_use_columns" title="activitysim.abm.models.accessibility.AccessibilitySettings.land_use_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">land_use_columns</span> <span class="pre">(list[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.accessibility.AccessibilitySettings.source_file_paths" title="activitysim.abm.models.accessibility.AccessibilitySettings.source_file_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_file_paths</span> <span class="pre">(list[pathlib.Path])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.accessibility.AccessibilitySettings.CONSTANTS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CONSTANTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#activitysim.abm.models.accessibility.AccessibilitySettings.CONSTANTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.accessibility.AccessibilitySettings.SPEC">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPEC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'accessibility.csv'</span></em><a class="headerlink" href="#activitysim.abm.models.accessibility.AccessibilitySettings.SPEC" title="Permalink to this definition">#</a></dt>
+<dd><p>Filename for the accessibility specification (csv) file.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.accessibility.AccessibilitySettings.land_use_columns">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">land_use_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#activitysim.abm.models.accessibility.AccessibilitySettings.land_use_columns" title="Permalink to this definition">#</a></dt>
+<dd><p>Only include the these columns in the computational tables</p>
+<p>Memory usage is reduced by only listing the minimum columns needed by
+the SPEC, and nothing extra.</p>
+</dd></dl>
+
+</dd></dl>
+
 <section id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
@@ -576,7 +612,7 @@ function.  This function is registered as an Inject step in the example Pipeline
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

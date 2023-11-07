@@ -62,7 +62,7 @@
     <link rel="prev" title="TemplatedLogitComponentSettings" href="activitysim.core.configuration.logit.TemplatedLogitComponentSettings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -451,6 +451,11 @@ document.write(`
 <li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.name" title="activitysim.core.configuration.logit.LogitNestSpec.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str)</span></code></a></p></li>
 </ul>
 </dd>
+<dt class="field-even">Validators<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str" title="activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prefer_float_to_str</span></code></a> » <a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.coefficient" title="activitysim.core.configuration.logit.LogitNestSpec.coefficient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coefficient</span></code></a></p></li>
+</ul>
+</dd>
 </dl>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitNestSpec.alternatives">
@@ -466,6 +471,13 @@ definitions for more nests, or a mixture of these.</p>
 <dd><p>The named parameter to be used as the logsum coefficient.</p>
 <p>If given as a string, this named parameter should appear in the
 logit models’s <cite>COEFFICIENTS</cite> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str" title="activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prefer_float_to_str</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -474,9 +486,9 @@ logit models’s <cite>COEFFICIENTS</cite> file.</p>
 <dd><p>A descriptive name for this nest.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefer_float_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coefficient_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefer_float_to_str</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#activitysim.core.configuration.logit.LogitNestSpec.coefficient" title="activitysim.core.configuration.logit.LogitNestSpec.coefficient"><em class="xref py py-obj"><span class="pre">coefficient</span></em></a><a class="headerlink" href="#activitysim.core.configuration.logit.LogitNestSpec.prefer_float_to_str" title="Permalink to this definition">#</a></dt>
 <dd><p>Convert string values to float directly if possible.</p>
 </dd></dl>
 
@@ -552,7 +564,7 @@ logit models’s <cite>COEFFICIENTS</cite> file.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

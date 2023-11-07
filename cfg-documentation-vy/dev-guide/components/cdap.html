@@ -62,7 +62,7 @@
     <link rel="prev" title="Telecommute Frequency" href="telecommute_frequency.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -454,12 +454,12 @@ follows:</p>
 <li><p>select households of size 1, join all required person attributes, and then read and solve the automatically generated expressions</p></li>
 <li><p>repeat for households size 2, 3, 4, and 5. Each model is independent of one another.</p></li>
 </ul>
-<p>The main interface to the CDAP model is the <span class="xref myst">run_cdap</span>
+<p>The main interface to the CDAP model is the <a class="reference internal" href="../../models.html#activitysim.abm.models.util.cdap.run_cdap" title="activitysim.abm.models.util.cdap.run_cdap"><span class="xref myst py py-func">run_cdap</span></a>
 function.  This function is called by the Inject step <code class="docutils literal notranslate"><span class="pre">cdap_simulate</span></code> which is
 registered as an Inject step in the example Pipeline.  There are two cdap class definitions in
 ActivitySim.  The first is at :py:func:<code class="docutils literal notranslate"><span class="pre">~activitysim.abm.models.cdap</span></code> and contains the Inject
 wrapper for running it as part of the model pipeline.  The second is
-at <span class="xref myst">cdap</span> and contains CDAP model logic.</p>
+at <a class="reference internal" href="../../models.html#module-activitysim.abm.models.util.cdap" title="activitysim.abm.models.util.cdap"><span class="xref myst py py-mod">cdap</span></a> and contains CDAP model logic.</p>
 <section id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -480,6 +480,11 @@ at <span class="xref myst">cdap</span> and contains CDAP model logic.</p>
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.cdap">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.cdap.</span></span><span class="sig-name descname"><span class="pre">cdap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.cdap.cdap" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
 </section>
 
@@ -566,7 +571,7 @@ at <span class="xref myst">cdap</span> and contains CDAP model logic.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

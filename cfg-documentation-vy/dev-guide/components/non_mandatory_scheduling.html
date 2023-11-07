@@ -62,7 +62,7 @@
     <link rel="prev" title="Non-Mandatory Destination Choice" href="non_mandatory_destination.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -442,7 +442,7 @@ document.write(`
 period as well) for each non-mandatory tour.  This model uses person <a class="reference internal" href="../../core.html#time-windows"><span class="std std-ref">time_windows</span></a>.  Includes support
 for <a class="reference internal" href="../../models.html#representative-logsums"><span class="std std-ref">representative_logsums</span></a>.</p>
 <p>The main interface to the non-mandatory tour purpose scheduling model is the
-<span class="xref myst">non_mandatory_tour_scheduling</span>
+<a class="reference internal" href="../../models.html#activitysim.abm.models.non_mandatory_scheduling.non_mandatory_tour_scheduling" title="activitysim.abm.models.non_mandatory_scheduling.non_mandatory_tour_scheduling"><span class="xref myst py py-func">non_mandatory_tour_scheduling</span></a>
 function.  This function is registered as an Inject step in the example Pipeline.</p>
 <section id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">#</a></h2>
@@ -464,6 +464,12 @@ function.  This function is registered as an Inject step in the example Pipeline
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.non_mandatory_scheduling.non_mandatory_tour_scheduling">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.non_mandatory_scheduling.</span></span><span class="sig-name descname"><span class="pre">non_mandatory_tour_scheduling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">persons_merged</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tdd_alts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#activitysim.abm.models.non_mandatory_scheduling.non_mandatory_tour_scheduling" title="Permalink to this definition">#</a></dt>
+<dd><p>This model predicts the departure time and duration of each activity for non-mandatory tours</p>
+</dd></dl>
+
 </section>
 </section>
 
@@ -550,7 +556,7 @@ function.  This function is registered as an Inject step in the example Pipeline
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

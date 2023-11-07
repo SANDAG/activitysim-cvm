@@ -62,7 +62,7 @@
     <link rel="prev" title="Mandatory Tour Frequency" href="mandatory_tour_frequency.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -487,6 +487,27 @@ with the first alternative being no escorting. This file contains the following 
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.school_escorting.school_escorting">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.school_escorting.</span></span><span class="sig-name descname"><span class="pre">school_escorting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">households</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">households_merged</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">persons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#activitysim.abm.models.school_escorting.school_escorting" title="Permalink to this definition">#</a></dt>
+<dd><p>school escorting model</p>
+<p>The school escorting model determines whether children are dropped-off at or
+picked-up from school, simultaneously with the driver responsible for
+chauffeuring the children, which children are bundled together on half-tours,
+and the type of tour (pure escort versus rideshare).</p>
+<p>Run iteratively for an outbound choice, an inbound choice, and an outbound choice
+conditional on the inbound choice. The choices for inbound and outbound conditional
+are used to create school escort tours and trips.</p>
+<p>Updates / adds the following tables to the pipeline:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">households</span> <span class="k">with</span> <span class="n">school</span> <span class="n">escorting</span> <span class="n">choice</span>
+<span class="o">-</span> <span class="n">tours</span> <span class="n">including</span> <span class="n">pure</span> <span class="n">school</span> <span class="n">escorting</span>
+<span class="o">-</span> <span class="n">school_escort_tours</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">only</span> <span class="n">pure</span> <span class="n">school</span> <span class="n">escort</span> <span class="n">tours</span>
+<span class="o">-</span> <span class="n">school_escort_trips</span>
+<span class="o">-</span> <span class="n">timetable</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">joint</span> <span class="n">tours</span> <span class="n">scheduled</span> <span class="n">over</span> <span class="n">school</span> <span class="n">escort</span> <span class="n">tours</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 </section>
 
@@ -573,7 +594,7 @@ with the first alternative being no escorting. This file contains the following 
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

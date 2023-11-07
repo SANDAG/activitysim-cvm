@@ -62,7 +62,7 @@
     <link rel="prev" title="Write Trip Matrices" href="dev-guide/components/write_trip_matrices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -1201,6 +1201,298 @@ the locutor flag indicates that this sub process is the designated singleton spo
 <p>Network Level of Service (LOS) data access</p>
 <section id="id2">
 <h4>API<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<span class="target" id="module-activitysim.core.los"></span><dl class="py class">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.los.</span></span><span class="sig-name descname"><span class="pre">Network_LOS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">los_settings_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'network_los.yaml'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS" title="Permalink to this definition">#</a></dt>
+<dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singleton</span> <span class="nb">object</span> <span class="n">to</span> <span class="n">manage</span> <span class="n">skims</span> <span class="ow">and</span> <span class="n">skim</span><span class="o">-</span><span class="n">related</span> <span class="n">tables</span>
+
+<span class="n">los_settings_file_name</span><span class="p">:</span> <span class="nb">str</span>         <span class="c1"># e.g. &#39;network_los.yaml&#39;</span>
+<span class="n">skim_dtype_name</span><span class="p">:</span><span class="nb">str</span>                 <span class="c1"># e.g. &#39;float32&#39;</span>
+
+<span class="n">dict_factory_name</span><span class="p">:</span> <span class="nb">str</span>              <span class="c1"># e.g. &#39;NumpyArraySkimFactory&#39;</span>
+<span class="n">zone_system</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1"># str (ONE_ZONE, TWO_ZONE, or THREE_ZONE)</span>
+<span class="n">skim_time_periods</span> <span class="o">=</span> <span class="kc">None</span>            <span class="c1"># list of str e.g. [&#39;AM&#39;, &#39;MD&#39;, &#39;PM&#39;&#39;</span>
+
+<span class="n">skims_info</span><span class="p">:</span> <span class="nb">dict</span>                    <span class="c1"># dict of SkimInfo keyed by skim_tag</span>
+<span class="n">skim_buffers</span><span class="p">:</span> <span class="nb">dict</span>                  <span class="c1"># if multiprocessing, dict of multiprocessing.Array buffers keyed by skim_tag</span>
+<span class="n">skim_dicts</span><span class="p">:</span> <span class="n">dice</span>                    <span class="c1"># dict of SkimDict keyed by skim_tag</span>
+
+<span class="c1"># TWO_ZONE and THREE_ZONE</span>
+<span class="n">maz_taz_df</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span>        <span class="c1"># DataFrame with two columns, MAZ and TAZ, mapping MAZ to containing TAZ</span>
+<span class="n">maz_to_maz_df</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span>     <span class="c1"># maz_to_maz attributes for MazSkimDict sparse skims</span>
+                                    <span class="c1"># indexed by synthetic omaz/dmaz index for faster get_mazpairs lookup)</span>
+<span class="n">maz_ceiling</span><span class="p">:</span> <span class="nb">int</span>                    <span class="c1"># max maz_id + 1 (to compute synthetic omaz/dmaz index by get_mazpairs)</span>
+<span class="n">max_blend_distance</span><span class="p">:</span> <span class="nb">dict</span>            <span class="c1"># dict of int maz_to_maz max_blend_distance values keyed by skim_tag</span>
+
+<span class="c1"># THREE_ZONE only</span>
+<span class="n">tap_df</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="n">tap_lines_df</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span>      <span class="c1"># if specified in settings, list of transit lines served, indexed by TAP</span>
+                                    <span class="c1"># use to prune maz_to_tap_dfs to drop more distant TAPS with redundant service</span>
+                                    <span class="c1"># since a TAP can serve multiple lines, tap_lines_df TAP index is not unique</span>
+<span class="n">maz_to_tap_dfs</span><span class="p">:</span> <span class="nb">dict</span>                <span class="c1"># dict of maz_to_tap DataFrames indexed by access mode (e.g. &#39;walk&#39;, &#39;drive&#39;)</span>
+                                    <span class="c1"># maz_to_tap dfs have OMAZ and DMAZ columns plus additional attribute columns</span>
+<span class="n">tap_tap_uid</span><span class="p">:</span> <span class="n">TapTapUidCalculator</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.allocate_shared_skim_buffers">
+<span class="sig-name descname"><span class="pre">allocate_shared_skim_buffers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.allocate_shared_skim_buffers" title="Permalink to this definition">#</a></dt>
+<dd><p>Allocate multiprocessing.RawArray shared data buffers sized to hold data for the omx skims.
+Only called when multiprocessing - BEFORE load_data()</p>
+<p>Returns dict of allocated buffers so they can be added to mp_tasks can add them to dict of data
+to be shared with subprocesses.</p>
+<p>Note: we are only allocating storage, but not loading any skim data into it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>dict of multiprocessing.RawArray keyed by skim_tag</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.create_skim_dict">
+<span class="sig-name descname"><span class="pre">create_skim_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_override_offset_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.create_skim_dict" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a new SkimDict of type specified by skim_tag (e.g. ‘taz’, ‘maz’ or ‘tap’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_tag</strong><span class="classifier">str</span></dt><dd></dd>
+<dt><strong>_override_offset_int</strong><span class="classifier">int, optional</span></dt><dd><p>Override the offset int for this dictionary.  Use this to set that
+offset to zero when zone id’s have been pre-processed to be zero-based
+contiguous integers.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>SkimDict or subclass (e.g. MazSkimDict)</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.get_default_skim_dict">
+<span class="sig-name descname"><span class="pre">get_default_skim_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.get_default_skim_dict" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the default (non-transit) skim dict for the (1, 2, or 3) zone_system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>TAZ SkimDict for ONE_ZONE, MazSkimDict for TWO_ZONE and THREE_ZONE</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.get_maz_to_taz_series">
+<span class="sig-name descname"><span class="pre">get_maz_to_taz_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.get_maz_to_taz_series" title="Permalink to this definition">#</a></dt>
+<dd><p>pd.Series: Index is the MAZ, value is the corresponding TAZ</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.get_mazpairs">
+<span class="sig-name descname"><span class="pre">get_mazpairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omaz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmaz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.get_mazpairs" title="Permalink to this definition">#</a></dt>
+<dd><p>look up attribute values of maz od pairs in sparse maz_to_maz df</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>omaz: array-like list of omaz zone_ids</strong></dt><dd></dd>
+<dt><strong>dmaz: array-like list of omaz zone_ids</strong></dt><dd></dd>
+<dt><strong>attribute: str name of attribute column in maz_to_maz_df</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Numpy.ndarray: list of attribute values for od pairs</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.get_skim_dict">
+<span class="sig-name descname"><span class="pre">get_skim_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.get_skim_dict" title="Permalink to this definition">#</a></dt>
+<dd><p>Get SkimDict for the specified skim_tag (e.g. ‘taz’, ‘maz’, or ‘tap’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>SkimDict or subclass (e.g. MazSkimDict) or SkimDataset</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.get_tappairs3d">
+<span class="sig-name descname"><span class="pre">get_tappairs3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">otap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.get_tappairs3d" title="Permalink to this definition">#</a></dt>
+<dd><p>TAP skim lookup</p>
+<p>FIXME - why do we provide this for taps, but use skim wrappers for TAZ?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>otap: pandas.Series</strong></dt><dd><p>origin (boarding tap) zone_ids</p>
+</dd>
+<dt><strong>dtap: pandas.Series</strong></dt><dd><p>dest (aligting tap) zone_ids</p>
+</dd>
+<dt><strong>dim3: pandas.Series or str</strong></dt><dd><p>dim3 (e.g. tod) str</p>
+</dd>
+<dt><strong>key</strong></dt><dd><p>skim key (e.g. ‘IWAIT_SET1’)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Numpy.ndarray: list of tap skim values for odt tuples</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.load_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Load tables and skims from files specified in network_los settigns</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.load_settings">
+<span class="sig-name descname"><span class="pre">load_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.load_settings" title="Permalink to this definition">#</a></dt>
+<dd><p>Read setting file and initialize object variables (see class docstring for list of object variables)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.load_shared_data">
+<span class="sig-name descname"><span class="pre">load_shared_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_data_buffers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.load_shared_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Load omx skim data into shared_data buffers
+Only called when multiprocessing - BEFORE any models are run or any call to load_data()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shared_data_buffers: dict of multiprocessing.RawArray keyed by skim_tag</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.load_skim_info">
+<span class="sig-name descname"><span class="pre">load_skim_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.load_skim_info" title="Permalink to this definition">#</a></dt>
+<dd><p>read skim info from omx files into SkimInfo, and store in self.skims_info dict keyed by skim_tag</p>
+<p>ONE_ZONE and TWO_ZONE systems have only TAZ skims
+THREE_ZONE systems have both TAZ and TAP skims</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.map_maz_to_taz">
+<span class="sig-name descname"><span class="pre">map_maz_to_taz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.map_maz_to_taz" title="Permalink to this definition">#</a></dt>
+<dd><p>Convert MAZ’s to TAZ’s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>s</strong><span class="classifier">Array-like</span></dt><dd><p>Integer MAZ values</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>pd.Series</dt><dd><p>Integer TAZ values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.multiprocess">
+<span class="sig-name descname"><span class="pre">multiprocess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.multiprocess" title="Permalink to this definition">#</a></dt>
+<dd><p>return True if this is a multiprocessing run (even if it is a main or single-process subprocess)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>bool</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.omx_file_names">
+<span class="sig-name descname"><span class="pre">omx_file_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.omx_file_names" title="Permalink to this definition">#</a></dt>
+<dd><p>Return list of omx file names from network_los settings file for the specified skim_tag (e.g. ‘taz’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_tag: str (e.g. ‘taz’)</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>list of str</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.skim_time_period_label">
+<span class="sig-name descname"><span class="pre">skim_time_period_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillna</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.skim_time_period_label" title="Permalink to this definition">#</a></dt>
+<dd><p>convert time period times to skim time period labels (e.g. 9 -&gt; ‘AM’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>time_period</strong><span class="classifier">pandas Series</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas Series</dt><dd><p>string time period labels</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.zarr_file_name">
+<span class="sig-name descname"><span class="pre">zarr_file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.zarr_file_name" title="Permalink to this definition">#</a></dt>
+<dd><p>Return zarr directory name from network_los settings file for the specified skim_tag (e.g. ‘taz’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_tag: str (e.g. ‘taz’)</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.los.Network_LOS.zarr_pre_encoding">
+<span class="sig-name descname"><span class="pre">zarr_pre_encoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.los.Network_LOS.zarr_pre_encoding" title="Permalink to this definition">#</a></dt>
+<dd><p>Return digital encoding pre-processing before writing to zarr for the specified skim_tag (e.g. ‘taz’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_tag: str (e.g. ‘taz’)</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>list or None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 <section id="skims">
@@ -1208,6 +1500,189 @@ the locutor flag indicates that this sub process is the designated singleton spo
 <p>Skims data access</p>
 <section id="id3">
 <h4>API<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<span class="target" id="module-activitysim.core.skim_dict_factory"></span><dl class="py class">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.AbstractSkimFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.skim_dict_factory.</span></span><span class="sig-name descname"><span class="pre">AbstractSkimFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.AbstractSkimFactory" title="Permalink to this definition">#</a></dt>
+<dd><p>Provide access to skim data from store.</p>
+<dl class="simple">
+<dt>load_skim_info(skim_tag: str): dict</dt><dd><p>Read omx files for skim &lt;skim_tag&gt; (e.g. ‘TAZ’) and build skim_info dict</p>
+</dd>
+<dt>get_skim_data(skim_tag: str, skim_info: dict): SkimData</dt><dd><p>Read skim data from backing store and return it as a 3D ndarray quack-alike SkimData object</p>
+</dd>
+<dt>allocate_skim_buffer(skim_info, shared: bool): 1D array buffer sized for 3D SkimData</dt><dd><p>Allocate a ram skim buffer (ndarray or multiprocessing.Array) to use as frombuffer for SkimData</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.AbstractSkimFactory.allocate_skim_buffer">
+<span class="sig-name descname"><span class="pre">allocate_skim_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.AbstractSkimFactory.allocate_skim_buffer" title="Permalink to this definition">#</a></dt>
+<dd><p>For multiprocessing</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.AbstractSkimFactory.supports_shared_data_for_multiprocessing">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">supports_shared_data_for_multiprocessing</span></span><a class="headerlink" href="#activitysim.core.skim_dict_factory.AbstractSkimFactory.supports_shared_data_for_multiprocessing" title="Permalink to this definition">#</a></dt>
+<dd><p>Does subclass support shareable data for multiprocessing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>boolean</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.JitMemMapSkimData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.skim_dict_factory.</span></span><span class="sig-name descname"><span class="pre">JitMemMapSkimData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_cache_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skim_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.JitMemMapSkimData" title="Permalink to this definition">#</a></dt>
+<dd><p>SkimData subclass for just-in-time memmap.</p>
+<p>Since opening a memmap is fast, open the memmap read the data on demand and immediately close it.
+This essentially eliminates RAM usage, but it means we are loading the data every time we access the skim,
+which may be significantly slower, depending on patterns of usage.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.JitMemMapSkimData.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#activitysim.core.skim_dict_factory.JitMemMapSkimData.shape" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>list-like shape tuple as returned by numpy.shape</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.MemMapSkimFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.skim_dict_factory.</span></span><span class="sig-name descname"><span class="pre">MemMapSkimFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.MemMapSkimFactory" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy.memmap docs states: The memmap object can be used anywhere an ndarray is accepted.
+You might think that since memmap duck-types ndarray, we could simply wrap it in a SkimData object.</p>
+<p>But, as the numpy.memmap docs also say: “Memory-mapped files are used for accessing
+small segments of large files on disk, without reading the entire file into memory.”</p>
+<p>The words “small segments” are not accidental, because, as you gradually access all the parts
+of the memmapped array, memory usage increases as all the memory is loaded into RAM.</p>
+<p>Under this scenario, the MemMapSkimFactory operates as a just-in-time loader, with no net savings
+in RAM footprint (other than potentially avoiding loading any unused skims).</p>
+<p>Alternatively, since opening a memmap is fast, you could just open the memmap read the data on demand,
+and immediately close it. This essentially eliminates RAM usage, but it means you are loading the data
+every time you access the skim, which, depending on you patterns of usage, may or may not be acceptable.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.MemMapSkimFactory.get_skim_data">
+<span class="sig-name descname"><span class="pre">get_skim_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skim_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.MemMapSkimFactory.get_skim_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Read skim data from backing store and return it as a 3D ndarray quack-alike SkimData object
+(either a JitMemMapSkimData or a memmap backed SkimData object)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_tag: str</strong></dt><dd></dd>
+<dt><strong>skim_info: string</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>SkimData or subclass</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.NumpyArraySkimFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.skim_dict_factory.</span></span><span class="sig-name descname"><span class="pre">NumpyArraySkimFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.NumpyArraySkimFactory" title="Permalink to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.NumpyArraySkimFactory.allocate_skim_buffer">
+<span class="sig-name descname"><span class="pre">allocate_skim_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.NumpyArraySkimFactory.allocate_skim_buffer" title="Permalink to this definition">#</a></dt>
+<dd><p>Allocate a ram skim buffer to use as frombuffer for SkimData
+If shared is True, return a shareable multiprocessing.RawArray, otherwise a numpy.ndarray</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_info: dict</strong></dt><dd></dd>
+<dt><strong>shared: boolean</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>multiprocessing.RawArray or numpy.ndarray</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.NumpyArraySkimFactory.get_skim_data">
+<span class="sig-name descname"><span class="pre">get_skim_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skim_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.NumpyArraySkimFactory.get_skim_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Read skim data from backing store and return it as a 3D ndarray quack-alike SkimData object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_tag: str</strong></dt><dd></dd>
+<dt><strong>skim_info: dict</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>SkimData</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.NumpyArraySkimFactory.load_skims_to_buffer">
+<span class="sig-name descname"><span class="pre">load_skims_to_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skim_buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.NumpyArraySkimFactory.load_skims_to_buffer" title="Permalink to this definition">#</a></dt>
+<dd><p>Load skims from disk store (omx or cache) into ram skim buffer (multiprocessing.RawArray or numpy.ndarray)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>skim_info: doct</strong></dt><dd></dd>
+<dt><strong>skim_buffer: 1D buffer sized to hold all skims (multiprocessing.RawArray or numpy.ndarray)</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.NumpyArraySkimFactory.supports_shared_data_for_multiprocessing">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">supports_shared_data_for_multiprocessing</span></span><a class="headerlink" href="#activitysim.core.skim_dict_factory.NumpyArraySkimFactory.supports_shared_data_for_multiprocessing" title="Permalink to this definition">#</a></dt>
+<dd><p>Does subclass support shareable data for multiprocessing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>boolean</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.SkimData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.skim_dict_factory.</span></span><span class="sig-name descname"><span class="pre">SkimData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skim_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dict_factory.SkimData" title="Permalink to this definition">#</a></dt>
+<dd><p>A facade for 3D skim data exposing numpy indexing and shape
+The primary purpose is to document and police the api used to access skim data
+Subclasses using a different backing store to perform additional/alternative
+only need to implement the methods exposed here.</p>
+<p>For instance, to open/close memmapped files just in time, or to access backing data via an alternate api</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="activitysim.core.skim_dict_factory.SkimData.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#activitysim.core.skim_dict_factory.SkimData.shape" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>list-like shape tuple as returned by numpy.shape</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <span class="target" id="module-activitysim.core.skim_dictionary"></span><dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.skim_dictionary.DataFrameMatrix">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.skim_dictionary.</span></span><span class="sig-name descname"><span class="pre">DataFrameMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.skim_dictionary.DataFrameMatrix" title="Permalink to this definition">#</a></dt>
@@ -2155,6 +2630,95 @@ of alternatives is passed to the final choice model and the correction factor is
 included in the utility.</p>
 <section id="id7">
 <h4>API<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
+<span class="target" id="module-activitysim.core.interaction_sample"></span><dl class="py function">
+<dt class="sig sig-object py" id="activitysim.core.interaction_sample.interaction_sample">
+<span class="sig-prename descclassname"><span class="pre">activitysim.core.interaction_sample.</span></span><span class="sig-name descname"><span class="pre">interaction_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">choosers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternatives</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_zero_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_alt_losers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#activitysim.core.skim_dictionary.SkimWrapper" title="activitysim.core.skim_dictionary.SkimWrapper"><span class="pre">SkimWrapper</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="dev-guide/skim-dataset.html#activitysim.core.skim_dataset.DatasetWrapper" title="activitysim.core.skim_dataset.DatasetWrapper"><span class="pre">DatasetWrapper</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals_d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.interaction_sample.interaction_sample" title="Permalink to this definition">#</a></dt>
+<dd><p>Run a simulation in the situation in which alternatives must
+be merged with choosers because there are interaction terms or
+because alternatives are being sampled.</p>
+<p>optionally (if chunk_size &gt; 0) iterates over choosers in chunk_size chunks</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>state</strong><span class="classifier">State</span></dt><dd></dd>
+<dt><strong>choosers</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame of choosers</p>
+</dd>
+<dt><strong>alternatives</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>DataFrame of alternatives - will be merged with choosers and sampled</p>
+</dd>
+<dt><strong>spec</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>A Pandas DataFrame that gives the specification of the variables to
+compute and the coefficients for each variable.
+Variable specifications must be in the table index and the
+table should have only one column of coefficients.</p>
+</dd>
+<dt><strong>sample_size</strong><span class="classifier">int, optional</span></dt><dd><p>Sample alternatives with sample of given size.  By default is None,
+which does not sample alternatives.</p>
+</dd>
+<dt><strong>alt_col_name: str</strong></dt><dd><p>name to give the sampled_alternative column</p>
+</dd>
+<dt><strong>skims</strong><span class="classifier">SkimWrapper or DatasetWrapper or None</span></dt><dd><p>The skims object is used to contain multiple matrices of
+origin-destination impedances.  Make sure to also add it to the
+locals_d below in order to access it in expressions.  The <em>only</em> job
+of this method in regards to skims is to call set_df with the
+dataframe that comes back from interacting choosers with
+alternatives.  See the skims module for more documentation on how
+the skims object is intended to be used.</p>
+</dd>
+<dt><strong>locals_d</strong><span class="classifier">Dict</span></dt><dd><p>This is a dictionary of local variables that will be the environment
+for an evaluation of an expression that begins with &#64;</p>
+</dd>
+<dt><strong>chunk_size</strong><span class="classifier">int</span></dt><dd><p>if chunk_size &gt; 0 iterates over choosers in chunk_size chunks</p>
+</dd>
+<dt><strong>trace_label: str</strong></dt><dd><p>This is the label to be used  for trace log file entries and dump file names
+when household tracing enabled. No tracing occurs if label is empty or None.</p>
+</dd>
+<dt><strong>zone_layer</strong><span class="classifier">{‘taz’, ‘maz’}, default ‘taz’</span></dt><dd><p>Specify which zone layer of the skims is to be used.  You cannot use the
+‘maz’ zone layer in a one-zone model, but you can use the ‘taz’ layer in
+a two- or three-zone model (e.g. for destination pre-sampling).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>choices_df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame where index should match the index of the choosers DataFrame
+(except with sample_size rows for each choser row, one row for each alt sample)
+and columns alt_col_name, prob, rand, pick_count</p>
+<dl class="simple">
+<dt>&lt;alt_col_name&gt;:</dt><dd><p>alt identifier from alternatives[&lt;alt_col_name&gt;</p>
+</dd>
+<dt>prob: float</dt><dd><p>the probability of the chosen alternative</p>
+</dd>
+<dt>pick_count<span class="classifier">int</span></dt><dd><p>number of duplicate picks for chooser, alt</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.core.interaction_sample.make_sample_choices">
+<span class="sig-prename descclassname"><span class="pre">activitysim.core.interaction_sample.</span></span><span class="sig-name descname"><span class="pre">make_sample_choices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">choosers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternatives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternative_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_col_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_zero_probs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_sizer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.interaction_sample.make_sample_choices" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>choosers</strong></dt><dd></dd>
+<dt><strong>probs</strong><span class="classifier">pandas DataFrame</span></dt><dd><p>one row per chooser and one column per alternative</p>
+</dd>
+<dt><strong>alternatives</strong></dt><dd><p>dataframe with index containing alt ids</p>
+</dd>
+<dt><strong>sample_size</strong><span class="classifier">int</span></dt><dd><p>number of samples/choices to make</p>
+</dd>
+<dt><strong>alternative_count</strong></dt><dd></dd>
+<dt><strong>alt_col_name</strong><span class="classifier">str</span></dt><dd></dd>
+<dt><strong>trace_label</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"></dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 <section id="simulate">
@@ -3653,7 +4217,7 @@ look up the utilities in the precomputed tap_cache data (which is indexed by uid
 <span id="cache-api"></span><h3>Cache API<a class="headerlink" href="#module-activitysim.core.pathbuilder_cache" title="Permalink to this heading">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.pathbuilder_cache.TVPBCache">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.pathbuilder_cache.</span></span><span class="sig-name descname"><span class="pre">TVPBCache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">los.Network_LOS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid_calculator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.pathbuilder_cache.TVPBCache" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.pathbuilder_cache.</span></span><span class="sig-name descname"><span class="pre">TVPBCache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#activitysim.core.los.Network_LOS" title="activitysim.core.los.Network_LOS"><span class="pre">Network_LOS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid_calculator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.pathbuilder_cache.TVPBCache" title="Permalink to this definition">#</a></dt>
 <dd><p>Transit virtual path builder cache for three zone systems</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="activitysim.core.pathbuilder_cache.TVPBCache.allocate_data_buffer">
@@ -4741,7 +5305,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

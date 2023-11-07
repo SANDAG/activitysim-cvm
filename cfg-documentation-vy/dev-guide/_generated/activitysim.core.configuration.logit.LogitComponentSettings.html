@@ -62,7 +62,7 @@
     <link rel="prev" title="PreprocessorSettings" href="activitysim.core.configuration.base.PreprocessorSettings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -446,18 +446,23 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS" title="activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COEFFICIENTS</span> <span class="pre">()</span></code></a></p></li>
-<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS" title="activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONSTANTS</span> <span class="pre">()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS" title="activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COEFFICIENTS</span> <span class="pre">(pathlib.Path</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS" title="activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONSTANTS</span> <span class="pre">(dict[str,</span> <span class="pre">typing.Any])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE" title="activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGIT_TYPE</span> <span class="pre">(Literal['MNL',</span> <span class="pre">'NL'])</span></code></a></p></li>
-<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.NESTS" title="activitysim.core.configuration.logit.LogitComponentSettings.NESTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NESTS</span> <span class="pre">(LogitNestSpec</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.SPEC" title="activitysim.core.configuration.logit.LogitComponentSettings.SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPEC</span> <span class="pre">()</span></code></a></p></li>
-<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths" title="activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_file_paths</span> <span class="pre">()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.NESTS" title="activitysim.core.configuration.logit.LogitComponentSettings.NESTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NESTS</span> <span class="pre">(activitysim.core.configuration.logit.LogitNestSpec</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.SPEC" title="activitysim.core.configuration.logit.LogitComponentSettings.SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPEC</span> <span class="pre">(pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths" title="activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_file_paths</span> <span class="pre">(list[pathlib.Path])</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Validators<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl" title="activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nests_are_for_nl</span></code></a> » <a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.NESTS" title="activitysim.core.configuration.logit.LogitComponentSettings.NESTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NESTS</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">COEFFICIENTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">COEFFICIENTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.COEFFICIENTS" title="Permalink to this definition">#</a></dt>
 <dd><p>Coefficients filename.</p>
 <p>This is a CSV file giving named parameters for use in the utility expression.
 If it is not provided, then it is assumed that all model coefficients are
@@ -468,13 +473,13 @@ applications, but may be problematic if used with “estimation mode”.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CONSTANTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CONSTANTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.CONSTANTS" title="Permalink to this definition">#</a></dt>
 <dd><p>Named constants usable in the utility expressions.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LOGIT_TYPE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'MNL'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'NL'</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MNL'</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LOGIT_TYPE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'MNL'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'NL'</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MNL'</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE" title="Permalink to this definition">#</a></dt>
 <dd><p>Logit model mathematical form.</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -514,11 +519,18 @@ transit alternatives grouped together in a nest:</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DRIVE_TO_TRANSIT</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl" title="activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nests_are_for_nl</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.SPEC">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPEC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.SPEC" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPEC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.SPEC" title="Permalink to this definition">#</a></dt>
 <dd><p>Utility specification filename.</p>
 <p>This is sometimes alternatively called the utility expressions calculator
 (UEC). It is a CSV file giving all the functions for the terms of a
@@ -527,7 +539,7 @@ linear-in-parameters utility expression.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">source_file_paths</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">source_file_paths</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths" title="Permalink to this definition">#</a></dt>
 <dd><p>A list of source files from which these settings were loaded.</p>
 <p>This value should not be set by the user within the YAML settings files,
 instead it is populated as those files are loaded.  It is primarily
@@ -535,9 +547,9 @@ provided for debugging purposes, and does not actually affect the operation
 of any model.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nests_are_for_nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nests_are_for_nl</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.NESTS" title="activitysim.core.configuration.logit.LogitComponentSettings.NESTS"><em class="xref py py-obj"><span class="pre">NESTS</span></em></a><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.nests_are_for_nl" title="Permalink to this definition">#</a></dt>
 <dd><p>Checks that nests are provided if (and only if) <cite>LOGIT_TYPE</cite> is NL.</p>
 </dd></dl>
 
@@ -670,7 +682,7 @@ an empty dict or an all-default instance of the validator class.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

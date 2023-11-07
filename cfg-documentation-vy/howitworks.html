@@ -62,7 +62,7 @@
     <link rel="prev" title="Estimation" href="estimation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -467,7 +467,7 @@ on-demand loading. Next, the system loads the models list and starts the pipelin
 </div>
 <p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.pipeline.run()</span></code> method loops through the list of models, calls <code class="docutils literal notranslate"><span class="pre">inject.run([step_name])</span></code>,
 and manages the data pipeline.  The first disaggregate data processing step (or model) run is <code class="docutils literal notranslate"><span class="pre">initialize_households</span></code>, defined in
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.initialize</span></code>.  The <code class="docutils literal notranslate"><span class="pre">initialize_households</span></code> step is responsible for requesting reading of the raw
+<a class="reference internal" href="models.html#module-activitysim.abm.models.initialize" title="activitysim.abm.models.initialize"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.initialize</span></code></a>.  The <code class="docutils literal notranslate"><span class="pre">initialize_households</span></code> step is responsible for requesting reading of the raw
 households and persons into memory.</p>
 </section>
 <section id="initialize-households">
@@ -580,7 +580,7 @@ actually reads the input tables from the input HDF5 or CSV file using the <code 
 <h3>School Location<a class="headerlink" href="#school-location" title="Permalink to this heading">#</a></h3>
 <p>Now that the persons, households, and other data are in memory, and also annotated with additional fields
 for later calculations, the school location model can be run.  The school location model is defined
-in <code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.location_choice</span></code>.  As shown below, the school location model
+in <a class="reference internal" href="models.html#module-activitysim.abm.models.location_choice" title="activitysim.abm.models.location_choice"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.location_choice</span></code></a>.  As shown below, the school location model
 actually uses the <code class="docutils literal notranslate"><span class="pre">persons_merged</span></code> table, which includes joined household, land use, and accessibility
 tables as well.  The school location model also requires the network_los object, which is discussed next.
 Before running the generic iterate location choice function, the model reads the model settings file, which
@@ -625,7 +625,7 @@ The skims are lazy loaded under the name “skims” and are available in the ex
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The next step is to call the <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample.interaction_sample()</span></code> function which
+<p>The next step is to call the <a class="reference internal" href="core.html#activitysim.core.interaction_sample.interaction_sample" title="activitysim.core.interaction_sample.interaction_sample"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample.interaction_sample()</span></code></a> function which
 selects a sample of alternatives by running a MNL choice model simulation in which alternatives must be
 merged with choosers because there are interaction terms.  The choosers table, the alternatives table, the
 sample size, the model specification expressions file, the skims, the skims lookups, the chunk size, and the
@@ -649,12 +649,12 @@ running out of RAM when building the often large data tables. This method does a
 calls <a class="reference internal" href="core.html#activitysim.core.interaction_simulate.eval_interaction_utilities" title="activitysim.core.interaction_simulate.eval_interaction_utilities"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_simulate.eval_interaction_utilities()</span></code></a>, which loops through each
 expression in  the expression file and solves it at once for all records in the chunked chooser
 table using Python’s <code class="docutils literal notranslate"><span class="pre">eval</span></code>.</p>
-<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample.interaction_sample()</span></code> method is currently only a multinomial
+<p>The <a class="reference internal" href="core.html#activitysim.core.interaction_sample.interaction_sample" title="activitysim.core.interaction_sample.interaction_sample"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample.interaction_sample()</span></code></a> method is currently only a multinomial
 logit choice model.  The <a class="reference internal" href="core.html#activitysim.core.simulate.simple_simulate" title="activitysim.core.simulate.simple_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.simulate.simple_simulate()</span></code></a> method supports both MNL and NL as specified by
 the <code class="docutils literal notranslate"><span class="pre">LOGIT_TYPE</span></code> setting in the model settings YAML file.   The <code class="docutils literal notranslate"><span class="pre">auto_ownership.yaml</span></code> file for example specifies
 the <code class="docutils literal notranslate"><span class="pre">LOGIT_TYPE</span></code> as <code class="docutils literal notranslate"><span class="pre">MNL.</span></code></p>
 <p>If the expression is a skim matrix, then the entire column of chooser OD pairs is retrieved from the matrix (i.e. numpy array)
-in one vectorized step.  The <code class="docutils literal notranslate"><span class="pre">orig</span></code> and <code class="docutils literal notranslate"><span class="pre">dest</span></code> objects in <code class="docutils literal notranslate"><span class="pre">self.data[orig,</span> <span class="pre">dest]</span></code> in <code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.core.los</span></code> are vectors
+in one vectorized step.  The <code class="docutils literal notranslate"><span class="pre">orig</span></code> and <code class="docutils literal notranslate"><span class="pre">dest</span></code> objects in <code class="docutils literal notranslate"><span class="pre">self.data[orig,</span> <span class="pre">dest]</span></code> in <a class="reference internal" href="core.html#module-activitysim.core.los" title="activitysim.core.los"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.core.los</span></code></a> are vectors
 and selecting numpy array items with vector indexes returns a vector.  Trace data is also written out if configured (not shown below).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># evaluate expressions from the spec multiply by coefficients and sum</span>
 <span class="n">interaction_utilities</span><span class="p">,</span> <span class="n">trace_eval_results</span> \
@@ -836,8 +836,8 @@ to <a class="reference internal" href="models.html#shadow-pricing"><span class="
 <h3>Creating New Tables<a class="headerlink" href="#creating-new-tables" title="Permalink to this heading">#</a></h3>
 <p>In addition to calculating the mandatory tour frequency for a person, the model must also create mandatory tour records.
 Once the number of tours is known, then the next step is to create tours records for subsequent models.  This is done by the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.tour_frequency.process_tours()</span></code> function, which is called by the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency()</span></code> function, which adds the tours to
+<a class="reference internal" href="models.html#activitysim.abm.models.util.tour_frequency.process_tours" title="activitysim.abm.models.util.tour_frequency.process_tours"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.tour_frequency.process_tours()</span></code></a> function, which is called by the
+<a class="reference internal" href="models.html#activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency" title="activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency()</span></code></a> function, which adds the tours to
 the <code class="docutils literal notranslate"><span class="pre">tours</span></code> table managed in the data pipeline.  This is the same basic pattern used for creating new tables - tours, trips, etc.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@inject</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">mandatory_tour_frequency</span><span class="p">(</span><span class="n">persons_merged</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">trace_hh_id</span><span class="p">):</span>
@@ -5658,7 +5658,7 @@ The skims are float64 matrix.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

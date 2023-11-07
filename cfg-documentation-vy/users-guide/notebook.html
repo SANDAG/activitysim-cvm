@@ -62,7 +62,7 @@
     <link rel="prev" title="Command Line Tools" href="cli-tools.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -398,120 +398,6 @@ module.</p>
   warnings.warn(msg, NumbaDeprecationWarning)
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">activitysim.core</span> <span class="kn">import</span> <span class="n">workflow</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">activitysim</span> <span class="kn">import</span> <span class="n">abm</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">activitysim</span><span class="o">/</span><span class="n">abm</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># ActivitySim</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># See full license in LICENSE.txt.</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">activitysim.abm</span> <span class="kn">import</span> <span class="n">misc</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">tables</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">activitysim.core.steps</span> <span class="kn">import</span> <span class="n">output</span>  <span class="c1"># also contains workflow.step # noqa: F401</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">activitysim</span><span class="o">/</span><span class="n">abm</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># flake8: noqa</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># ActivitySim</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># See full license in LICENSE.txt.</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">accessibility</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">atwork_subtour_destination</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">atwork_subtour_frequency</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">atwork_subtour_mode_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">atwork_subtour_scheduling</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">auto_ownership</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">cdap</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">disaggregate_accessibility</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">free_parking</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">initialize</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">initialize_los</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">initialize_tours</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">joint_tour_composition</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">joint_tour_destination</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="n">joint_tour_frequency</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">joint_tour_participation</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">joint_tour_scheduling</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">joint_tour_frequency_composition</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">location_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="n">mandatory_scheduling</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">mandatory_tour_frequency</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">non_mandatory_destination</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">non_mandatory_scheduling</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">non_mandatory_tour_frequency</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="n">parking_location_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">school_escorting</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">stop_frequency</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">summarize</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span>     <span class="n">telecommute_frequency</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="n">tour_mode_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span>     <span class="n">tour_od_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="n">tour_scheduling_probabilistic</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span>     <span class="n">transit_pass_ownership</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span>     <span class="n">transit_pass_subsidy</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span>     <span class="n">trip_departure_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">41</span>     <span class="n">trip_destination</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">42</span>     <span class="n">trip_matrices</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">43</span>     <span class="n">trip_mode_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">44</span>     <span class="n">trip_purpose</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">45</span>     <span class="n">trip_purpose_and_destination</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">46</span>     <span class="n">trip_scheduling</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="n">trip_scheduling_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">48</span>     <span class="n">vehicle_allocation</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">49</span>     <span class="n">vehicle_type_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">50</span>     <span class="n">work_from_home</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">51</span> <span class="p">)</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">activitysim</span><span class="o">/</span><span class="n">abm</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">accessibility</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">12</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">activitysim.core</span> <span class="kn">import</span> <span class="n">assign</span><span class="p">,</span> <span class="n">chunk</span><span class="p">,</span> <span class="n">los</span><span class="p">,</span> <span class="n">workflow</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">activitysim.core.configuration.base</span> <span class="kn">import</span> <span class="n">PydanticReadable</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">activitysim</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">los</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">19</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span> <span class="nn">activitysim.core.cleaning</span> <span class="kn">import</span> <span class="n">recode_based_on_table</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">activitysim.core.configuration.network</span> <span class="kn">import</span> <span class="n">NetworkSettings</span><span class="p">,</span> <span class="n">TAZ_Settings</span>
-<span class="ne">---&gt; </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">activitysim.core.skim_dict_factory</span> <span class="kn">import</span> <span class="n">MemMapSkimFactory</span><span class="p">,</span> <span class="n">NumpyArraySkimFactory</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">activitysim.core.skim_dictionary</span> <span class="kn">import</span> <span class="n">NOT_IN_SKIM_ZONE_ID</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="n">skim_factories</span> <span class="o">=</span> <span class="p">{</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="s2">&quot;NumpyArraySkimFactory&quot;</span><span class="p">:</span> <span class="n">NumpyArraySkimFactory</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="s2">&quot;MemMapSkimFactory&quot;</span><span class="p">:</span> <span class="n">MemMapSkimFactory</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="p">}</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">activitysim</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">skim_dict_factory</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">13</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">import</span> <span class="nn">openmatrix</span> <span class="k">as</span> <span class="nn">omx</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">activitysim.core</span> <span class="kn">import</span> <span class="n">skim_dictionary</span><span class="p">,</span> <span class="n">util</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">openmatrix</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">tables</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">.File</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">docbuild</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.10</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">tables</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">24</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;PyTables, hierarchical datasets in Python.</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span><span class="sd"> </span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span><span class="sd"> :URL: http://www.pytables.org/</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span><span class="sd"> </span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="c1"># Necessary imports to get versions stored on the cython extension</span>
-<span class="ne">---&gt; </span><span class="mi">24</span> <span class="kn">from</span> <span class="nn">.utilsextension</span> <span class="kn">import</span> <span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="n">get_pytables_version</span><span class="p">,</span> <span class="n">get_hdf5_version</span><span class="p">,</span> <span class="n">blosc_compressor_list</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">blosc_compcode_to_compname_</span> <span class="k">as</span> <span class="n">blosc_compcode_to_compname</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">blosc_get_complib_info_</span> <span class="k">as</span> <span class="n">blosc_get_complib_info</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">__version__</span> <span class="o">=</span> <span class="n">get_pytables_version</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;The PyTables version number.&quot;&quot;&quot;</span>
-
-<span class="nn">File tables/utilsextension.pyx:169,</span> in <span class="ni">init tables.utilsextension</span><span class="nt">()</span>
-
-<span class="ne">ImportError</span>: cannot import name typeDict
-</pre></div>
-</div>
 </div>
 </div>
 <p>To work with a built-in example model, you can use the
@@ -520,6 +406,27 @@ function shortcut to get a model state to experiment with.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">create_example</span><span class="p">(</span><span class="s2">&quot;prototype_mtc&quot;</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="s2">&quot;/tmp/examples&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>copying data ...
+copying configs ...
+copying configs_mp ...
+copying output ...
+copying README.MD ...
+copied! new project files are in /tmp/examples/prototype_mtc
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
+ - rural_threshold
+ - distributed_vot_mu
+ - distributed_vot_sigma
+ - cbd_threshold
+ - urban_threshold
+ - household_median_value_of_time
+ - max_value_of_time
+ - min_value_of_time
 </pre></div>
 </div>
 </div>
@@ -537,6 +444,19 @@ function shortcut to get a model state to experiment with.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
+ - rural_threshold
+ - distributed_vot_mu
+ - distributed_vot_sigma
+ - cbd_threshold
+ - urban_threshold
+ - household_median_value_of_time
+ - max_value_of_time
+ - min_value_of_time
+</pre></div>
+</div>
+</div>
 </div>
 <section id="manipulating-settings">
 <h2>Manipulating Settings<a class="headerlink" href="#manipulating-settings" title="Permalink to this heading">#</a></h2>
@@ -547,6 +467,11 @@ households in our simulation sample.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">households_sample_size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100000
 </pre></div>
 </div>
 </div>
@@ -561,6 +486,11 @@ that setting:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5000
+</pre></div>
+</div>
+</div>
 </div>
 <p>The :ref:<code class="docutils literal notranslate"><span class="pre">Settings.households_sample_size</span></code> setting is required to be
 an integer. If we give it a floating point number instead, that value
@@ -569,6 +499,11 @@ will be coerced to an integer (by dropping the fractional part).</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">households_sample_size</span> <span class="o">=</span> <span class="mf">3500.8</span>
 <span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">households_sample_size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3500
 </pre></div>
 </div>
 </div>
@@ -591,6 +526,13 @@ will be coerced to an integer (by dropping the fractional part).</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 validation error for Settings
+households_sample_size
+  value is not a valid integer (type=type_error.integer)
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="model-execution">
@@ -602,6 +544,110 @@ call it as a method on <a class="reference internal" href="../dev-guide/_generat
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">initialize_landuse</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:root:===== ERROR IN initialize_landuse =====
+ERROR:root:1 validation error for InitializeLanduseSettings
+annotate_tables -&gt; 0
+  str type expected (type=type_error.str)
+Traceback (most recent call last):
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py&quot;, line 46, in wrapper
+    return func(*args, **kwargs)
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py&quot;, line 132, in initialize_landuse
+    model_settings = InitializeLanduseSettings.read_settings_file(
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py&quot;, line 96, in read_settings_file
+    return filesystem.read_settings_file(
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py&quot;, line 805, in read_settings_file
+    settings = validator_class.parse_obj(settings)
+  File &quot;pydantic/main.py&quot;, line 526, in pydantic.main.BaseModel.parse_obj
+  File &quot;pydantic/main.py&quot;, line 341, in pydantic.main.BaseModel.__init__
+pydantic.error_wrappers.ValidationError: 1 validation error for InitializeLanduseSettings
+annotate_tables -&gt; 0
+  str type expected (type=type_error.str)
+ERROR:root:===== / =====
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValidationError</span><span class="g g-Whitespace">                           </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">initialize_landuse</span><span class="p">()</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:199,</span> in <span class="ni">Runner.__getattr__.&lt;locals&gt;.f</span><span class="nt">(**kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span>     <span class="n">write_notebook_heading</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">heading_level</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">199</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:350,</span> in <span class="ni">Runner.by_name</span><span class="nt">(self, model_name, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">348</span>             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">profiler</span><span class="o">.</span><span class="n">output_html</span><span class="p">())</span>
+<span class="g g-Whitespace">    </span><span class="mi">349</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">350</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="n">run_named_step</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">351</span>             <span class="bp">self</span><span class="o">.</span><span class="n">step_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">_context</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">352</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">354</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">355</span>     <span class="bp">self</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_elapsed_time</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;run.</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> UNTIL ERROR&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t0</span><span class="p">)</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:83,</span> in <span class="ni">run_named_step</span><span class="nt">(name, context, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span>         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">raise</span>
+<span class="ne">---&gt; </span><span class="mi">83</span> <span class="n">step_func</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="k">return</span> <span class="n">context</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:367,</span> in <span class="ni">step.__call__.&lt;locals&gt;.run_step</span><span class="nt">(context, **override_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">366</span>     <span class="n">state</span><span class="o">.</span><span class="n">this_step</span> <span class="o">=</span> <span class="bp">self</span>
+<span class="ne">--&gt; </span><span class="mi">367</span>     <span class="n">outcome</span> <span class="o">=</span> <span class="n">error_logging</span><span class="p">(</span><span class="n">wrapped_func</span><span class="p">)(</span><span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">368</span> <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span>     <span class="k">del</span> <span class="n">state</span><span class="o">.</span><span class="n">this_step</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:46,</span> in <span class="ni">error_logging.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">46</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== ERROR IN </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py:132,</span> in <span class="ni">initialize_landuse</span><span class="nt">(state, model_settings, model_settings_file_name, trace_label)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span> <span class="k">with</span> <span class="n">chunk</span><span class="o">.</span><span class="n">chunk_log</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">trace_label</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">chunk_sizer</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>     <span class="k">if</span> <span class="n">model_settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">132</span>         <span class="n">model_settings</span> <span class="o">=</span> <span class="n">InitializeLanduseSettings</span><span class="o">.</span><span class="n">read_settings_file</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>             <span class="n">state</span><span class="o">.</span><span class="n">filesystem</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>             <span class="n">model_settings_file_name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span>             <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="n">annotate_tables</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">model_settings</span><span class="p">,</span> <span class="n">trace_label</span><span class="p">,</span> <span class="n">chunk_sizer</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="c1"># instantiate accessibility (must be checkpointed to be be used to slice accessibility)</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py:96,</span> in <span class="ni">PydanticReadable.read_settings_file</span><span class="nt">(cls, filesystem, file_name, mandatory)</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span><span class="sd"> Load settings from one or more yaml files.</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">     </span><span class="mi">93</span><span class="sd"> PydanticReadable or derived class</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="c1"># pass through to read_settings_file, requires validator_class and provides type hinting for IDE&#39;s</span>
+<span class="ne">---&gt; </span><span class="mi">96</span> <span class="k">return</span> <span class="n">filesystem</span><span class="o">.</span><span class="n">read_settings_file</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="n">file_name</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="n">mandatory</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="n">validator_class</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span> <span class="p">)</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py:805,</span> in <span class="ni">FileSystem.read_settings_file</span><span class="nt">(self, file_name, mandatory, include_stack, configs_dir_list, validator_class)</span>
+<span class="g g-Whitespace">    </span><span class="mi">802</span> <span class="n">settings</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;include_settings&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">804</span> <span class="k">if</span> <span class="n">validator_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">805</span>     <span class="n">settings</span> <span class="o">=</span> <span class="n">validator_class</span><span class="o">.</span><span class="n">parse_obj</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">807</span> <span class="k">if</span> <span class="n">include_stack</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">808</span>     <span class="c1"># if we were called recursively, return an updated list of source_file_paths</span>
+<span class="g g-Whitespace">    </span><span class="mi">809</span>     <span class="k">return</span> <span class="n">settings</span><span class="p">,</span> <span class="n">source_file_paths</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:526,</span> in <span class="ni">pydantic.main.BaseModel.parse_obj</span><span class="nt">()</span>
+
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:341,</span> in <span class="ni">pydantic.main.BaseModel.__init__</span><span class="nt">()</span>
+
+<span class="ne">ValidationError</span>: 1 validation error for InitializeLanduseSettings
+<span class="n">annotate_tables</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+  <span class="nb">str</span> <span class="nb">type</span> <span class="n">expected</span> <span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">type_error</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -775,7 +821,7 @@ that can generate histograms or nominal distributions of data features.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

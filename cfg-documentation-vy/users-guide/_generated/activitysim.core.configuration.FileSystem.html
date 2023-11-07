@@ -62,7 +62,7 @@
     <link rel="prev" title="MultiprocessStepSlice" href="activitysim.core.configuration.MultiprocessStepSlice.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 06, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
   </head>
   
   
@@ -390,13 +390,8 @@ document.write(`
 <em class="property"><span class="pre">settings</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.configuration.</span></span><span class="sig-name descname"><span class="pre">FileSystem</span></span><a class="headerlink" href="#activitysim.core.configuration.FileSystem" title="Permalink to this definition">#</a></dt>
 <dd><p>Manage finding and loading files for ActivitySim’s command line interface.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
-</ul>
-</dd>
-<dt class="field-even">Fields<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">cache_dir</span> <span class="pre">(pathlib.Path)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">configs_dir</span> <span class="pre">(tuple[pathlib.Path,</span> <span class="pre">...])</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_dir</span> <span class="pre">(tuple[pathlib.Path,</span> <span class="pre">...])</span></code></p></li>
@@ -405,13 +400,19 @@ document.write(`
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">profile_dir</span> <span class="pre">(pathlib.Path)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">settings_file_name</span> <span class="pre">(str)</span></code></p></li>
 <li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sharrow_cache_dir</span> <span class="pre">(pathlib.Path)</span></code></p></li>
-<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">working_dir</span> <span class="pre">(pathlib.Path)</span></code></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">working_dir</span> <span class="pre">(pydantic.types.DirectoryPath)</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Validators<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">configs_dirs_must_exist</span></code> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">configs_dir</span></code></p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_dirs_must_exist</span></code> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">data_dir</span></code></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.cache_dir">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cache_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.cache_dir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cache_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.cache_dir" title="Permalink to this definition">#</a></dt>
 <dd><p>Name of the output directory for general cache files.</p>
 <p>If not given, a directory named “cache” will be created inside
 the usual output directory.</p>
@@ -419,19 +420,33 @@ the usual output directory.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.configs_dir">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configs_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('configs',)</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.configs_dir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configs_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('configs',)</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.configs_dir" title="Permalink to this definition">#</a></dt>
 <dd><p>Name[s] of the config directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">configs_dirs_must_exist</span></code></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.data_dir">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('data',)</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.data_dir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('data',)</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.data_dir" title="Permalink to this definition">#</a></dt>
 <dd><p>Name of the data directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_dirs_must_exist</span></code></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.output_dir">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'output'</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.output_dir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'output'</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.output_dir" title="Permalink to this definition">#</a></dt>
 <dd><p>Name of the output directory.</p>
 <p>This directory will be created on access if it does not exist.</p>
 </dd></dl>
@@ -444,7 +459,7 @@ the usual output directory.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.profile_dir">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">profile_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.profile_dir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">profile_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.profile_dir" title="Permalink to this definition">#</a></dt>
 <dd><p>Name of the output directory for pyinstrument profiling files.</p>
 <p>If not given, a unique time-stamped directory will be created inside
 the usual output directory.</p>
@@ -457,7 +472,7 @@ the usual output directory.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.sharrow_cache_dir">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sharrow_cache_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.sharrow_cache_dir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sharrow_cache_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.sharrow_cache_dir" title="Permalink to this definition">#</a></dt>
 <dd><p>Name of the output directory for sharrow cache files.</p>
 <p>If not given, a directory named “__sharrowcache__” will be created inside
 the general cache directory.</p>
@@ -473,20 +488,20 @@ provided, the usual Python current working directory is used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Constraints<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_type</strong> = dir</p></li>
+<li><p><strong>format</strong> = directory-path</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.configs_dirs_must_exist">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configs_dirs_must_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configs_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.configuration.FileSystem.configs_dirs_must_exist" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configs_dirs_must_exist</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><em class="xref py py-obj"><span class="pre">configs_dir</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.configs_dirs_must_exist" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
+<dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="activitysim.core.configuration.FileSystem.data_dirs_must_exist">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dirs_must_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.configuration.FileSystem.data_dirs_must_exist" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_dirs_must_exist</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><em class="xref py py-obj"><span class="pre">data_dir</span></em><a class="headerlink" href="#activitysim.core.configuration.FileSystem.data_dirs_must_exist" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -940,7 +955,7 @@ so far to detect and prevent cycles.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev354+ga24d8e46, documentation last updated Nov 06, 2023.<br/>
+ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

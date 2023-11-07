@@ -15,125 +15,110 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from activitysim.core import workflow
-from activitysim import abm
+state.run.initialize_landuse()
 ------------------
 
 ----- stderr -----
-/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/numba/core/decorators.py:262: NumbaDeprecationWarning: [1mnumba.generated_jit is deprecated. Please see the documentation at: https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-generated-jit for more information and advice on a suitable replacement.[0m
-  warnings.warn(msg, NumbaDeprecationWarning)
+ERROR:root:===== ERROR IN initialize_landuse =====
+----- stderr -----
+ERROR:root:1 validation error for InitializeLanduseSettings
+annotate_tables -> 0
+  str type expected (type=type_error.str)
+Traceback (most recent call last):
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py", line 132, in initialize_landuse
+    model_settings = InitializeLanduseSettings.read_settings_file(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py", line 96, in read_settings_file
+    return filesystem.read_settings_file(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py", line 805, in read_settings_file
+    settings = validator_class.parse_obj(settings)
+  File "pydantic/main.py", line 526, in pydantic.main.BaseModel.parse_obj
+  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.__init__
+pydantic.error_wrappers.ValidationError: 1 validation error for InitializeLanduseSettings
+annotate_tables -> 0
+  str type expected (type=type_error.str)
+----- stderr -----
+ERROR:root:===== / =====
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mImportError[0m                               Traceback (most recent call last)
-Cell [0;32mIn[1], line 2[0m
-[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m [38;5;28;01mimport[39;00m workflow
-[0;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m [38;5;28;01mimport[39;00m abm
+[0;31mValidationError[0m                           Traceback (most recent call last)
+Cell [0;32mIn[9], line 1[0m
+[0;32m----> 1[0m [43mstate[49m[38;5;241;43m.[39;49m[43mrun[49m[38;5;241;43m.[39;49m[43minitialize_landuse[49m[43m([49m[43m)[49m
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/__init__.py:3[0m
-[1;32m      1[0m [38;5;66;03m# ActivitySim[39;00m
-[1;32m      2[0m [38;5;66;03m# See full license in LICENSE.txt.[39;00m
-[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mabm[39;00m [38;5;28;01mimport[39;00m misc, models, tables
-[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01msteps[39;00m [38;5;28;01mimport[39;00m output  [38;5;66;03m# also contains workflow.step # noqa: F401[39;00m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:199[0m, in [0;36mRunner.__getattr__.<locals>.f[0;34m(**kwargs)[0m
+[1;32m    197[0m [38;5;28;01mdef[39;00m [38;5;21mf[39m([38;5;241m*[39m[38;5;241m*[39mkwargs):
+[1;32m    198[0m     write_notebook_heading(item, [38;5;28mself[39m[38;5;241m.[39mheading_level)
+[0;32m--> 199[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mby_name[49m[43m([49m[43mitem[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/__init__.py:5[0m
-[1;32m      1[0m [38;5;66;03m# flake8: noqa[39;00m
-[1;32m      2[0m [38;5;66;03m# ActivitySim[39;00m
-[1;32m      3[0m [38;5;66;03m# See full license in LICENSE.txt.[39;00m
-[0;32m----> 5[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m [38;5;28;01mimport[39;00m (
-[1;32m      6[0m     accessibility,
-[1;32m      7[0m     atwork_subtour_destination,
-[1;32m      8[0m     atwork_subtour_frequency,
-[1;32m      9[0m     atwork_subtour_mode_choice,
-[1;32m     10[0m     atwork_subtour_scheduling,
-[1;32m     11[0m     auto_ownership,
-[1;32m     12[0m     cdap,
-[1;32m     13[0m     disaggregate_accessibility,
-[1;32m     14[0m     free_parking,
-[1;32m     15[0m     initialize,
-[1;32m     16[0m     initialize_los,
-[1;32m     17[0m     initialize_tours,
-[1;32m     18[0m     joint_tour_composition,
-[1;32m     19[0m     joint_tour_destination,
-[1;32m     20[0m     joint_tour_frequency,
-[1;32m     21[0m     joint_tour_participation,
-[1;32m     22[0m     joint_tour_scheduling,
-[1;32m     23[0m     joint_tour_frequency_composition,
-[1;32m     24[0m     location_choice,
-[1;32m     25[0m     mandatory_scheduling,
-[1;32m     26[0m     mandatory_tour_frequency,
-[1;32m     27[0m     non_mandatory_destination,
-[1;32m     28[0m     non_mandatory_scheduling,
-[1;32m     29[0m     non_mandatory_tour_frequency,
-[1;32m     30[0m     parking_location_choice,
-[1;32m     31[0m     school_escorting,
-[1;32m     32[0m     stop_frequency,
-[1;32m     33[0m     summarize,
-[1;32m     34[0m     telecommute_frequency,
-[1;32m     35[0m     tour_mode_choice,
-[1;32m     36[0m     tour_od_choice,
-[1;32m     37[0m     tour_scheduling_probabilistic,
-[1;32m     38[0m     transit_pass_ownership,
-[1;32m     39[0m     transit_pass_subsidy,
-[1;32m     40[0m     trip_departure_choice,
-[1;32m     41[0m     trip_destination,
-[1;32m     42[0m     trip_matrices,
-[1;32m     43[0m     trip_mode_choice,
-[1;32m     44[0m     trip_purpose,
-[1;32m     45[0m     trip_purpose_and_destination,
-[1;32m     46[0m     trip_scheduling,
-[1;32m     47[0m     trip_scheduling_choice,
-[1;32m     48[0m     vehicle_allocation,
-[1;32m     49[0m     vehicle_type_choice,
-[1;32m     50[0m     work_from_home,
-[1;32m     51[0m )
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:350[0m, in [0;36mRunner.by_name[0;34m(self, model_name, **kwargs)[0m
+[1;32m    348[0m             f[38;5;241m.[39mwrite(profiler[38;5;241m.[39moutput_html())
+[1;32m    349[0m     [38;5;28;01melse[39;00m:
+[0;32m--> 350[0m         [38;5;28mself[39m[38;5;241m.[39m_obj[38;5;241m.[39m_context [38;5;241m=[39m [43mrun_named_step[49m[43m([49m
+[1;32m    351[0m [43m            [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mstep_name[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_obj[49m[38;5;241;43m.[39;49m[43m_context[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
+[1;32m    352[0m [43m        [49m[43m)[49m
+[1;32m    354[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m:
+[1;32m    355[0m     [38;5;28mself[39m[38;5;241m.[39mt0 [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_log_elapsed_time([38;5;124mf[39m[38;5;124m"[39m[38;5;124mrun.[39m[38;5;132;01m{[39;00mmodel_name[38;5;132;01m}[39;00m[38;5;124m UNTIL ERROR[39m[38;5;124m"[39m, [38;5;28mself[39m[38;5;241m.[39mt0)
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/accessibility.py:12[0m
-[1;32m      9[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[1;32m     10[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
-[0;32m---> 12[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m [38;5;28;01mimport[39;00m assign, chunk, los, workflow
-[1;32m     13[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mconfiguration[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbase[39;00m [38;5;28;01mimport[39;00m PydanticReadable
-[1;32m     15[0m logger [38;5;241m=[39m logging[38;5;241m.[39mgetLogger([38;5;18m__name__[39m)
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:83[0m, in [0;36mrun_named_step[0;34m(name, context, **kwargs)[0m
+[1;32m     81[0m         logger[38;5;241m.[39merror([38;5;124mf[39m[38;5;124m"[39m[38;5;124m - [39m[38;5;132;01m{[39;00mn[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[1;32m     82[0m     [38;5;28;01mraise[39;00m
+[0;32m---> 83[0m [43mstep_func[49m[43m([49m[43mcontext[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     84[0m [38;5;28;01mreturn[39;00m context
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/los.py:19[0m
-[1;32m     17[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcleaning[39;00m [38;5;28;01mimport[39;00m recode_based_on_table
-[1;32m     18[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mconfiguration[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnetwork[39;00m [38;5;28;01mimport[39;00m NetworkSettings, TAZ_Settings
-[0;32m---> 19[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mskim_dict_factory[39;00m [38;5;28;01mimport[39;00m MemMapSkimFactory, NumpyArraySkimFactory
-[1;32m     20[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mskim_dictionary[39;00m [38;5;28;01mimport[39;00m NOT_IN_SKIM_ZONE_ID
-[1;32m     22[0m skim_factories [38;5;241m=[39m {
-[1;32m     23[0m     [38;5;124m"[39m[38;5;124mNumpyArraySkimFactory[39m[38;5;124m"[39m: NumpyArraySkimFactory,
-[1;32m     24[0m     [38;5;124m"[39m[38;5;124mMemMapSkimFactory[39m[38;5;124m"[39m: MemMapSkimFactory,
-[1;32m     25[0m }
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:367[0m, in [0;36mstep.__call__.<locals>.run_step[0;34m(context, **override_kwargs)[0m
+[1;32m    365[0m [38;5;28;01mtry[39;00m:
+[1;32m    366[0m     state[38;5;241m.[39mthis_step [38;5;241m=[39m [38;5;28mself[39m
+[0;32m--> 367[0m     outcome [38;5;241m=[39m [43merror_logging[49m[43m([49m[43mwrapped_func[49m[43m)[49m[43m([49m[43mstate[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m    368[0m [38;5;28;01mfinally[39;00m:
+[1;32m    369[0m     [38;5;28;01mdel[39;00m state[38;5;241m.[39mthis_step
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/skim_dict_factory.py:13[0m
-[1;32m     10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mabc[39;00m [38;5;28;01mimport[39;00m ABC
-[1;32m     12[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m---> 13[0m [38;5;28;01mimport[39;00m [38;5;21;01mopenmatrix[39;00m [38;5;28;01mas[39;00m [38;5;21;01momx[39;00m
-[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01mactivitysim[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m [38;5;28;01mimport[39;00m skim_dictionary, util
-[1;32m     17[0m logger [38;5;241m=[39m logging[38;5;241m.[39mgetLogger([38;5;18m__name__[39m)
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:46[0m, in [0;36merror_logging.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m     44[0m [38;5;28;01mdef[39;00m [38;5;21mwrapper[39m([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[1;32m     45[0m     [38;5;28;01mtry[39;00m:
+[0;32m---> 46[0m         [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     47[0m     [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m err:
+[1;32m     48[0m         logging[38;5;241m.[39merror([38;5;124mf[39m[38;5;124m"[39m[38;5;124m===== ERROR IN [39m[38;5;132;01m{[39;00mfunc[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m =====[39m[38;5;124m"[39m)
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/openmatrix/__init__.py:3[0m
-[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01m__future__[39;00m [38;5;28;01mimport[39;00m print_function
-[0;32m----> 3[0m [38;5;28;01mimport[39;00m [38;5;21;01mtables[39;00m
-[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[1;32m      6[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mFile[39;00m [38;5;28;01mimport[39;00m [38;5;241m*[39m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py:132[0m, in [0;36minitialize_landuse[0;34m(state, model_settings, model_settings_file_name, trace_label)[0m
+[1;32m    130[0m [38;5;28;01mwith[39;00m chunk[38;5;241m.[39mchunk_log(state, trace_label, base[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mas[39;00m chunk_sizer:
+[1;32m    131[0m     [38;5;28;01mif[39;00m model_settings [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m--> 132[0m         model_settings [38;5;241m=[39m [43mInitializeLanduseSettings[49m[38;5;241;43m.[39;49m[43mread_settings_file[49m[43m([49m
+[1;32m    133[0m [43m            [49m[43mstate[49m[38;5;241;43m.[39;49m[43mfilesystem[49m[43m,[49m
+[1;32m    134[0m [43m            [49m[43mmodel_settings_file_name[49m[43m,[49m
+[1;32m    135[0m [43m            [49m[43mmandatory[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
+[1;32m    136[0m [43m        [49m[43m)[49m
+[1;32m    138[0m     annotate_tables(state, model_settings, trace_label, chunk_sizer)
+[1;32m    140[0m     [38;5;66;03m# instantiate accessibility (must be checkpointed to be be used to slice accessibility)[39;00m
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/tables/__init__.py:24[0m
-[1;32m     13[0m [38;5;124;03m"""PyTables, hierarchical datasets in Python.[39;00m
-[1;32m     14[0m 
-[1;32m     15[0m [38;5;124;03m:URL: http://www.pytables.org/[39;00m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py:96[0m, in [0;36mPydanticReadable.read_settings_file[0;34m(cls, filesystem, file_name, mandatory)[0m
+[1;32m     38[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[1;32m     39[0m [38;5;124;03mLoad settings from one or more yaml files.[39;00m
+[1;32m     40[0m 
 [0;32m   (...)[0m
-[1;32m     19[0m 
-[1;32m     20[0m [38;5;124;03m"""[39;00m
-[1;32m     23[0m [38;5;66;03m# Necessary imports to get versions stored on the cython extension[39;00m
-[0;32m---> 24[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mutilsextension[39;00m [38;5;28;01mimport[39;00m (
-[1;32m     25[0m     get_pytables_version, get_hdf5_version, blosc_compressor_list,
-[1;32m     26[0m     blosc_compcode_to_compname_ [38;5;28;01mas[39;00m blosc_compcode_to_compname,
-[1;32m     27[0m     blosc_get_complib_info_ [38;5;28;01mas[39;00m blosc_get_complib_info)
-[1;32m     30[0m __version__ [38;5;241m=[39m get_pytables_version()
-[1;32m     31[0m [38;5;124;03m"""The PyTables version number."""[39;00m
+[1;32m     93[0m [38;5;124;03mPydanticReadable or derived class[39;00m
+[1;32m     94[0m [38;5;124;03m"""[39;00m
+[1;32m     95[0m [38;5;66;03m# pass through to read_settings_file, requires validator_class and provides type hinting for IDE's[39;00m
+[0;32m---> 96[0m [38;5;28;01mreturn[39;00m [43mfilesystem[49m[38;5;241;43m.[39;49m[43mread_settings_file[49m[43m([49m
+[1;32m     97[0m [43m    [49m[43mfile_name[49m[43m,[49m
+[1;32m     98[0m [43m    [49m[43mmandatory[49m[43m,[49m
+[1;32m     99[0m [43m    [49m[43mvalidator_class[49m[38;5;241;43m=[39;49m[38;5;28;43mcls[39;49m[43m,[49m
+[1;32m    100[0m [43m[49m[43m)[49m
 
-File [0;32mtables/utilsextension.pyx:169[0m, in [0;36minit tables.utilsextension[0;34m()[0m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py:805[0m, in [0;36mFileSystem.read_settings_file[0;34m(self, file_name, mandatory, include_stack, configs_dir_list, validator_class)[0m
+[1;32m    802[0m settings[38;5;241m.[39mpop([38;5;124m"[39m[38;5;124minclude_settings[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
+[1;32m    804[0m [38;5;28;01mif[39;00m validator_class [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m--> 805[0m     settings [38;5;241m=[39m [43mvalidator_class[49m[38;5;241;43m.[39;49m[43mparse_obj[49m[43m([49m[43msettings[49m[43m)[49m
+[1;32m    807[0m [38;5;28;01mif[39;00m include_stack:
+[1;32m    808[0m     [38;5;66;03m# if we were called recursively, return an updated list of source_file_paths[39;00m
+[1;32m    809[0m     [38;5;28;01mreturn[39;00m settings, source_file_paths
 
-[0;31mImportError[0m: cannot import name typeDict
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:526[0m, in [0;36mpydantic.main.BaseModel.parse_obj[0;34m()[0m
+
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:341[0m, in [0;36mpydantic.main.BaseModel.__init__[0;34m()[0m
+
+[0;31mValidationError[0m: 1 validation error for InitializeLanduseSettings
+annotate_tables -> 0
+  str type expected (type=type_error.str)
 
