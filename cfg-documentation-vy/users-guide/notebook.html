@@ -419,14 +419,14 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
- - rural_threshold
- - distributed_vot_mu
- - distributed_vot_sigma
  - cbd_threshold
- - urban_threshold
- - household_median_value_of_time
+ - distributed_vot_mu
  - max_value_of_time
  - min_value_of_time
+ - rural_threshold
+ - household_median_value_of_time
+ - distributed_vot_sigma
+ - urban_threshold
 </pre></div>
 </div>
 </div>
@@ -446,14 +446,14 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
- - rural_threshold
- - distributed_vot_mu
- - distributed_vot_sigma
  - cbd_threshold
- - urban_threshold
- - household_median_value_of_time
+ - distributed_vot_mu
  - max_value_of_time
  - min_value_of_time
+ - rural_threshold
+ - household_median_value_of_time
+ - distributed_vot_sigma
+ - urban_threshold
 </pre></div>
 </div>
 </div>
@@ -548,36 +548,66 @@ call it as a method on <a class="reference internal" href="../dev-guide/_generat
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:root:===== ERROR IN initialize_landuse =====
-ERROR:root:1 validation error for InitializeLanduseSettings
-annotate_tables -&gt; 0
-  str type expected (type=type_error.str)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[AnnotateTableSettings(source_file_paths=None, tablename=&#39;land_use&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_landuse&#39;, DF=&#39;land_use&#39;, TABLES=None), column_map=None)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This way of running also offers tab-completion in compatible environments,
+so you can type <code class="docutils literal notranslate"><span class="pre">state.run.ini&lt;tab&gt;</span></code> and see all the model components that
+have names starting with “ini”.</p>
+<p>Alternatively, you can pass a list of model component names, to run multiple
+components in a block together.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
+    <span class="s2">&quot;initialize_households&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;compute_accessibility&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;school_location&quot;</span><span class="p">,</span> 
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[AnnotateTableSettings(source_file_paths=None, tablename=&#39;persons&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_persons&#39;, DF=&#39;persons&#39;, TABLES=[&#39;households&#39;]), column_map=None), AnnotateTableSettings(source_file_paths=None, tablename=&#39;households&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_households&#39;, DF=&#39;households&#39;, TABLES=[&#39;persons&#39;, &#39;land_use&#39;]), column_map=None), AnnotateTableSettings(source_file_paths=None, tablename=&#39;persons&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_persons_after_hh&#39;, DF=&#39;persons&#39;, TABLES=[&#39;households&#39;]), column_map=None)]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:root:===== ERROR IN school_location =====
+ERROR:root:table school_destination_size has no loading function
 Traceback (most recent call last):
   File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py&quot;, line 46, in wrapper
     return func(*args, **kwargs)
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py&quot;, line 132, in initialize_landuse
-    model_settings = InitializeLanduseSettings.read_settings_file(
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py&quot;, line 96, in read_settings_file
-    return filesystem.read_settings_file(
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py&quot;, line 805, in read_settings_file
-    settings = validator_class.parse_obj(settings)
-  File &quot;pydantic/main.py&quot;, line 526, in pydantic.main.BaseModel.parse_obj
-  File &quot;pydantic/main.py&quot;, line 341, in pydantic.main.BaseModel.__init__
-pydantic.error_wrappers.ValidationError: 1 validation error for InitializeLanduseSettings
-annotate_tables -&gt; 0
-  str type expected (type=type_error.str)
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py&quot;, line 1165, in school_location
+    iterate_location_choice(
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py&quot;, line 925, in iterate_location_choice
+    spc = shadow_pricing.load_shadow_price_calculator(state, model_settings)
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py&quot;, line 1274, in load_shadow_price_calculator
+    spc = ShadowPriceCalculator(
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py&quot;, line 230, in __init__
+    self.desired_size = state.get_dataframe(size_table_name(self.model_selector))
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py&quot;, line 631, in get_dataframe
+    t = self._load_or_create_dataset(tablename, swallow_errors=False)
+  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py&quot;, line 557, in _load_or_create_dataset
+    raise ValueError(f&quot;table {table_name} has no loading function&quot;)
+ValueError: table school_destination_size has no loading function
 ERROR:root:===== / =====
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValidationError</span><span class="g g-Whitespace">                           </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">initialize_landuse</span><span class="p">()</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="s2">&quot;initialize_households&quot;</span><span class="p">,</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s2">&quot;compute_accessibility&quot;</span><span class="p">,</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="s2">&quot;school_location&quot;</span><span class="p">,</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="p">])</span>
 
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:199,</span> in <span class="ni">Runner.__getattr__.&lt;locals&gt;.f</span><span class="nt">(**kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">197</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span>     <span class="n">write_notebook_heading</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">heading_level</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">199</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:173,</span> in <span class="ni">Runner.__call__</span><span class="nt">(self, models, resume_after, memory_sidecar_process)</span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span>     <span class="n">memory_sidecar_process</span><span class="o">.</span><span class="n">set_event</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">172</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">tracing</span><span class="o">.</span><span class="n">print_elapsed_time</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">173</span> <span class="bp">self</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">trace_memory_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pipeline.run after </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">176</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_runtime</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="n">t1</span><span class="p">)</span>
 
 <span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:350,</span> in <span class="ni">Runner.by_name</span><span class="nt">(self, model_name, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">348</span>             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">profiler</span><span class="o">.</span><span class="n">output_html</span><span class="p">())</span>
@@ -608,62 +638,72 @@ ERROR:root:===== / =====
 <span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
 <span class="g g-Whitespace">     </span><span class="mi">48</span>         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== ERROR IN </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
 
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py:132,</span> in <span class="ni">initialize_landuse</span><span class="nt">(state, model_settings, model_settings_file_name, trace_label)</span>
-<span class="g g-Whitespace">    </span><span class="mi">130</span> <span class="k">with</span> <span class="n">chunk</span><span class="o">.</span><span class="n">chunk_log</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">trace_label</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">chunk_sizer</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">131</span>     <span class="k">if</span> <span class="n">model_settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">132</span>         <span class="n">model_settings</span> <span class="o">=</span> <span class="n">InitializeLanduseSettings</span><span class="o">.</span><span class="n">read_settings_file</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">133</span>             <span class="n">state</span><span class="o">.</span><span class="n">filesystem</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">134</span>             <span class="n">model_settings_file_name</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">135</span>             <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">136</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="n">annotate_tables</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">model_settings</span><span class="p">,</span> <span class="n">trace_label</span><span class="p">,</span> <span class="n">chunk_sizer</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="c1"># instantiate accessibility (must be checkpointed to be be used to slice accessibility)</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py:1165,</span> in <span class="ni">school_location</span><span class="nt">(state, persons_merged, persons, households, network_los, locutor, model_settings, model_settings_file_name, trace_label)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1162</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">benchmarking</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1163</span>     <span class="n">locutor</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="ne">-&gt; </span><span class="mi">1165</span> <span class="n">iterate_location_choice</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1166</span>     <span class="n">state</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1167</span>     <span class="n">model_settings</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1168</span>     <span class="n">persons_merged</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1169</span>     <span class="n">persons</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1170</span>     <span class="n">households</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1171</span>     <span class="n">network_los</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1172</span>     <span class="n">estimator</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1173</span>     <span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1174</span>     <span class="n">locutor</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1175</span>     <span class="n">trace_label</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1176</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1178</span> <span class="k">if</span> <span class="n">estimator</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1179</span>     <span class="n">estimator</span><span class="o">.</span><span class="n">end_estimation</span><span class="p">()</span>
 
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py:96,</span> in <span class="ni">PydanticReadable.read_settings_file</span><span class="nt">(cls, filesystem, file_name, mandatory)</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span><span class="sd"> Load settings from one or more yaml files.</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span><span class="sd"> PydanticReadable or derived class</span>
-<span class="g g-Whitespace">     </span><span class="mi">94</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="c1"># pass through to read_settings_file, requires validator_class and provides type hinting for IDE&#39;s</span>
-<span class="ne">---&gt; </span><span class="mi">96</span> <span class="k">return</span> <span class="n">filesystem</span><span class="o">.</span><span class="n">read_settings_file</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="n">file_name</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="n">mandatory</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="n">validator_class</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span> <span class="p">)</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py:925,</span> in <span class="ni">iterate_location_choice</span><span class="nt">(state, model_settings, persons_merged, persons, households, network_los, estimator, chunk_size, locutor, trace_label)</span>
+<span class="g g-Whitespace">    </span><span class="mi">919</span> <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">model_settings</span><span class="o">.</span><span class="n">SEGMENT_IDS</span>
+<span class="g g-Whitespace">    </span><span class="mi">921</span> <span class="k">assert</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">922</span>     <span class="n">chooser_segment_column</span> <span class="ow">in</span> <span class="n">persons_merged_df</span>
+<span class="g g-Whitespace">    </span><span class="mi">923</span> <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;CHOOSER_SEGMENT_COLUMN &#39;</span><span class="si">{</span><span class="n">chooser_segment_column</span><span class="si">}</span><span class="s2">&#39; not in persons_merged table.&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">925</span> <span class="n">spc</span> <span class="o">=</span> <span class="n">shadow_pricing</span><span class="o">.</span><span class="n">load_shadow_price_calculator</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">model_settings</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">926</span> <span class="n">max_iterations</span> <span class="o">=</span> <span class="n">spc</span><span class="o">.</span><span class="n">max_iterations</span>
+<span class="g g-Whitespace">    </span><span class="mi">927</span> <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">spc</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="ow">and</span> <span class="n">estimator</span><span class="p">)</span>
 
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py:805,</span> in <span class="ni">FileSystem.read_settings_file</span><span class="nt">(self, file_name, mandatory, include_stack, configs_dir_list, validator_class)</span>
-<span class="g g-Whitespace">    </span><span class="mi">802</span> <span class="n">settings</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;include_settings&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">804</span> <span class="k">if</span> <span class="n">validator_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">805</span>     <span class="n">settings</span> <span class="o">=</span> <span class="n">validator_class</span><span class="o">.</span><span class="n">parse_obj</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">807</span> <span class="k">if</span> <span class="n">include_stack</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">808</span>     <span class="c1"># if we were called recursively, return an updated list of source_file_paths</span>
-<span class="g g-Whitespace">    </span><span class="mi">809</span>     <span class="k">return</span> <span class="n">settings</span><span class="p">,</span> <span class="n">source_file_paths</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py:1274,</span> in <span class="ni">load_shadow_price_calculator</span><span class="nt">(state, model_settings)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1271</span>     <span class="n">shared_sp_choice_df</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1273</span> <span class="c1"># - ShadowPriceCalculator</span>
+<span class="ne">-&gt; </span><span class="mi">1274</span> <span class="n">spc</span> <span class="o">=</span> <span class="n">ShadowPriceCalculator</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1275</span>     <span class="n">state</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1276</span>     <span class="n">model_settings</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1277</span>     <span class="n">num_processes</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1278</span>     <span class="n">data</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1279</span>     <span class="n">lock</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1280</span>     <span class="n">data_choice</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1281</span>     <span class="n">lock_choice</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1282</span>     <span class="n">shared_sp_choice_df</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1283</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1285</span> <span class="k">return</span> <span class="n">spc</span>
 
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:526,</span> in <span class="ni">pydantic.main.BaseModel.parse_obj</span><span class="nt">()</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py:230,</span> in <span class="ni">ShadowPriceCalculator.__init__</span><span class="nt">(self, state, model_settings, num_processes, shared_data, shared_data_lock, shared_data_choice, shared_data_choice_lock, shared_sp_choice_df)</span>
+<span class="g g-Whitespace">    </span><span class="mi">227</span>     <span class="bp">self</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="c1"># - destination_size_table (desired_size)</span>
+<span class="ne">--&gt; </span><span class="mi">230</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">(</span><span class="n">size_table_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_selector</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">231</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span> <span class="k">assert</span> <span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span>     <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_monotonic_increasing</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span> <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">size_table_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_selector</span><span class="p">)</span><span class="si">}</span><span class="s2"> not is_monotonic_increasing&quot;</span>
 
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:341,</span> in <span class="ni">pydantic.main.BaseModel.__init__</span><span class="nt">()</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py:631,</span> in <span class="ni">State.get_dataframe</span><span class="nt">(self, tablename, columns, as_copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">629</span> <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tablename</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">630</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">631</span>     <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_or_create_dataset</span><span class="p">(</span><span class="n">tablename</span><span class="p">,</span> <span class="n">swallow_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">632</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">633</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">tablename</span><span class="p">)</span>
 
-<span class="ne">ValidationError</span>: 1 validation error for InitializeLanduseSettings
-<span class="n">annotate_tables</span> <span class="o">-&gt;</span> <span class="mi">0</span>
-  <span class="nb">str</span> <span class="nb">type</span> <span class="n">expected</span> <span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">type_error</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>This way of running also offers tab-completion in compatible environments,
-so you can type <code class="docutils literal notranslate"><span class="pre">state.run.ini&lt;tab&gt;</span></code> and see all the model components that
-have names starting with “ini”.</p>
-<p>Alternatively, you can pass a list of model component names, to run multiple
-components in a block together.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
-    <span class="s2">&quot;initialize_households&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;compute_accessibility&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;school_location&quot;</span><span class="p">,</span> 
-<span class="p">])</span>
+<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py:557,</span> in <span class="ni">State._load_or_create_dataset</span><span class="nt">(self, table_name, overwrite, swallow_errors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">555</span>     <span class="k">if</span> <span class="n">swallow_errors</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">556</span>         <span class="k">return</span>
+<span class="ne">--&gt; </span><span class="mi">557</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;table </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> has no loading function&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">558</span> <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;loading table </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">559</span> <span class="k">try</span><span class="p">:</span>
+
+<span class="ne">ValueError</span>: table school_destination_size has no loading function
 </pre></div>
 </div>
 </div>
@@ -821,7 +861,7 @@ that can generate histograms or nominal distributions of data features.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev362+g4f5d56df, documentation last updated Nov 07, 2023.<br/>
+ActivitySim 1.2.1.dev367+gac5ca477, documentation last updated Nov 07, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

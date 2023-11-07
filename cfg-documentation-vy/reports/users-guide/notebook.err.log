@@ -15,42 +15,54 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-state.run.initialize_landuse()
+state.run([
+    "initialize_households", 
+    "compute_accessibility", 
+    "school_location", 
+])
 ------------------
 
+----- stdout -----
+[AnnotateTableSettings(source_file_paths=None, tablename='persons', annotate=PreprocessorSettings(SPEC='annotate_persons', DF='persons', TABLES=['households']), column_map=None), AnnotateTableSettings(source_file_paths=None, tablename='households', annotate=PreprocessorSettings(SPEC='annotate_households', DF='households', TABLES=['persons', 'land_use']), column_map=None), AnnotateTableSettings(source_file_paths=None, tablename='persons', annotate=PreprocessorSettings(SPEC='annotate_persons_after_hh', DF='persons', TABLES=['households']), column_map=None)]
 ----- stderr -----
-ERROR:root:===== ERROR IN initialize_landuse =====
+ERROR:root:===== ERROR IN school_location =====
 ----- stderr -----
-ERROR:root:1 validation error for InitializeLanduseSettings
-annotate_tables -> 0
-  str type expected (type=type_error.str)
+ERROR:root:table school_destination_size has no loading function
 Traceback (most recent call last):
   File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py", line 46, in wrapper
     return func(*args, **kwargs)
-  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py", line 132, in initialize_landuse
-    model_settings = InitializeLanduseSettings.read_settings_file(
-  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py", line 96, in read_settings_file
-    return filesystem.read_settings_file(
-  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py", line 805, in read_settings_file
-    settings = validator_class.parse_obj(settings)
-  File "pydantic/main.py", line 526, in pydantic.main.BaseModel.parse_obj
-  File "pydantic/main.py", line 341, in pydantic.main.BaseModel.__init__
-pydantic.error_wrappers.ValidationError: 1 validation error for InitializeLanduseSettings
-annotate_tables -> 0
-  str type expected (type=type_error.str)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py", line 1165, in school_location
+    iterate_location_choice(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py", line 925, in iterate_location_choice
+    spc = shadow_pricing.load_shadow_price_calculator(state, model_settings)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py", line 1274, in load_shadow_price_calculator
+    spc = ShadowPriceCalculator(
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py", line 230, in __init__
+    self.desired_size = state.get_dataframe(size_table_name(self.model_selector))
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py", line 631, in get_dataframe
+    t = self._load_or_create_dataset(tablename, swallow_errors=False)
+  File "/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py", line 557, in _load_or_create_dataset
+    raise ValueError(f"table {table_name} has no loading function")
+ValueError: table school_destination_size has no loading function
 ----- stderr -----
 ERROR:root:===== / =====
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValidationError[0m                           Traceback (most recent call last)
-Cell [0;32mIn[9], line 1[0m
-[0;32m----> 1[0m [43mstate[49m[38;5;241;43m.[39;49m[43mrun[49m[38;5;241;43m.[39;49m[43minitialize_landuse[49m[43m([49m[43m)[49m
+[0;31mValueError[0m                                Traceback (most recent call last)
+Cell [0;32mIn[10], line 1[0m
+[0;32m----> 1[0m [43mstate[49m[38;5;241;43m.[39;49m[43mrun[49m[43m([49m[43m[[49m
+[1;32m      2[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43minitialize_households[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m
+[1;32m      3[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43mcompute_accessibility[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m
+[1;32m      4[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43mschool_location[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m
+[1;32m      5[0m [43m][49m[43m)[49m
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:199[0m, in [0;36mRunner.__getattr__.<locals>.f[0;34m(**kwargs)[0m
-[1;32m    197[0m [38;5;28;01mdef[39;00m [38;5;21mf[39m([38;5;241m*[39m[38;5;241m*[39mkwargs):
-[1;32m    198[0m     write_notebook_heading(item, [38;5;28mself[39m[38;5;241m.[39mheading_level)
-[0;32m--> 199[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mby_name[49m[43m([49m[43mitem[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:173[0m, in [0;36mRunner.__call__[0;34m(self, models, resume_after, memory_sidecar_process)[0m
+[1;32m    171[0m     memory_sidecar_process[38;5;241m.[39mset_event(model)
+[1;32m    172[0m t1 [38;5;241m=[39m tracing[38;5;241m.[39mprint_elapsed_time()
+[0;32m--> 173[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mby_name[49m[43m([49m[43mmodel[49m[43m)[49m
+[1;32m    174[0m [38;5;28mself[39m[38;5;241m.[39m_obj[38;5;241m.[39mtrace_memory_info([38;5;124mf[39m[38;5;124m"[39m[38;5;124mpipeline.run after [39m[38;5;132;01m{[39;00mmodel[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[1;32m    176[0m [38;5;28mself[39m[38;5;241m.[39mlog_runtime(model_name[38;5;241m=[39mmodel, start_time[38;5;241m=[39mt1)
 
 File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:350[0m, in [0;36mRunner.by_name[0;34m(self, model_name, **kwargs)[0m
 [1;32m    348[0m             f[38;5;241m.[39mwrite(profiler[38;5;241m.[39moutput_html())
@@ -81,44 +93,70 @@ File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/act
 [1;32m     47[0m     [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m err:
 [1;32m     48[0m         logging[38;5;241m.[39merror([38;5;124mf[39m[38;5;124m"[39m[38;5;124m===== ERROR IN [39m[38;5;132;01m{[39;00mfunc[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m =====[39m[38;5;124m"[39m)
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/initialize.py:132[0m, in [0;36minitialize_landuse[0;34m(state, model_settings, model_settings_file_name, trace_label)[0m
-[1;32m    130[0m [38;5;28;01mwith[39;00m chunk[38;5;241m.[39mchunk_log(state, trace_label, base[38;5;241m=[39m[38;5;28;01mTrue[39;00m) [38;5;28;01mas[39;00m chunk_sizer:
-[1;32m    131[0m     [38;5;28;01mif[39;00m model_settings [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-[0;32m--> 132[0m         model_settings [38;5;241m=[39m [43mInitializeLanduseSettings[49m[38;5;241;43m.[39;49m[43mread_settings_file[49m[43m([49m
-[1;32m    133[0m [43m            [49m[43mstate[49m[38;5;241;43m.[39;49m[43mfilesystem[49m[43m,[49m
-[1;32m    134[0m [43m            [49m[43mmodel_settings_file_name[49m[43m,[49m
-[1;32m    135[0m [43m            [49m[43mmandatory[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
-[1;32m    136[0m [43m        [49m[43m)[49m
-[1;32m    138[0m     annotate_tables(state, model_settings, trace_label, chunk_sizer)
-[1;32m    140[0m     [38;5;66;03m# instantiate accessibility (must be checkpointed to be be used to slice accessibility)[39;00m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py:1165[0m, in [0;36mschool_location[0;34m(state, persons_merged, persons, households, network_los, locutor, model_settings, model_settings_file_name, trace_label)[0m
+[1;32m   1162[0m [38;5;28;01mif[39;00m state[38;5;241m.[39msettings[38;5;241m.[39mbenchmarking:
+[1;32m   1163[0m     locutor [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+[0;32m-> 1165[0m [43miterate_location_choice[49m[43m([49m
+[1;32m   1166[0m [43m    [49m[43mstate[49m[43m,[49m
+[1;32m   1167[0m [43m    [49m[43mmodel_settings[49m[43m,[49m
+[1;32m   1168[0m [43m    [49m[43mpersons_merged[49m[43m,[49m
+[1;32m   1169[0m [43m    [49m[43mpersons[49m[43m,[49m
+[1;32m   1170[0m [43m    [49m[43mhouseholds[49m[43m,[49m
+[1;32m   1171[0m [43m    [49m[43mnetwork_los[49m[43m,[49m
+[1;32m   1172[0m [43m    [49m[43mestimator[49m[43m,[49m
+[1;32m   1173[0m [43m    [49m[43mstate[49m[38;5;241;43m.[39;49m[43msettings[49m[38;5;241;43m.[39;49m[43mchunk_size[49m[43m,[49m
+[1;32m   1174[0m [43m    [49m[43mlocutor[49m[43m,[49m
+[1;32m   1175[0m [43m    [49m[43mtrace_label[49m[43m,[49m
+[1;32m   1176[0m [43m[49m[43m)[49m
+[1;32m   1178[0m [38;5;28;01mif[39;00m estimator:
+[1;32m   1179[0m     estimator[38;5;241m.[39mend_estimation()
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/base.py:96[0m, in [0;36mPydanticReadable.read_settings_file[0;34m(cls, filesystem, file_name, mandatory)[0m
-[1;32m     38[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
-[1;32m     39[0m [38;5;124;03mLoad settings from one or more yaml files.[39;00m
-[1;32m     40[0m 
-[0;32m   (...)[0m
-[1;32m     93[0m [38;5;124;03mPydanticReadable or derived class[39;00m
-[1;32m     94[0m [38;5;124;03m"""[39;00m
-[1;32m     95[0m [38;5;66;03m# pass through to read_settings_file, requires validator_class and provides type hinting for IDE's[39;00m
-[0;32m---> 96[0m [38;5;28;01mreturn[39;00m [43mfilesystem[49m[38;5;241;43m.[39;49m[43mread_settings_file[49m[43m([49m
-[1;32m     97[0m [43m    [49m[43mfile_name[49m[43m,[49m
-[1;32m     98[0m [43m    [49m[43mmandatory[49m[43m,[49m
-[1;32m     99[0m [43m    [49m[43mvalidator_class[49m[38;5;241;43m=[39;49m[38;5;28;43mcls[39;49m[43m,[49m
-[1;32m    100[0m [43m[49m[43m)[49m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py:925[0m, in [0;36miterate_location_choice[0;34m(state, model_settings, persons_merged, persons, households, network_los, estimator, chunk_size, locutor, trace_label)[0m
+[1;32m    919[0m segment_ids [38;5;241m=[39m model_settings[38;5;241m.[39mSEGMENT_IDS
+[1;32m    921[0m [38;5;28;01massert[39;00m (
+[1;32m    922[0m     chooser_segment_column [38;5;129;01min[39;00m persons_merged_df
+[1;32m    923[0m ), [38;5;124mf[39m[38;5;124m"[39m[38;5;124mCHOOSER_SEGMENT_COLUMN [39m[38;5;124m'[39m[38;5;132;01m{[39;00mchooser_segment_column[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m not in persons_merged table.[39m[38;5;124m"[39m
+[0;32m--> 925[0m spc [38;5;241m=[39m [43mshadow_pricing[49m[38;5;241;43m.[39;49m[43mload_shadow_price_calculator[49m[43m([49m[43mstate[49m[43m,[49m[43m [49m[43mmodel_settings[49m[43m)[49m
+[1;32m    926[0m max_iterations [38;5;241m=[39m spc[38;5;241m.[39mmax_iterations
+[1;32m    927[0m [38;5;28;01massert[39;00m [38;5;129;01mnot[39;00m (spc[38;5;241m.[39muse_shadow_pricing [38;5;129;01mand[39;00m estimator)
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/configuration/filesystem.py:805[0m, in [0;36mFileSystem.read_settings_file[0;34m(self, file_name, mandatory, include_stack, configs_dir_list, validator_class)[0m
-[1;32m    802[0m settings[38;5;241m.[39mpop([38;5;124m"[39m[38;5;124minclude_settings[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
-[1;32m    804[0m [38;5;28;01mif[39;00m validator_class [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[0;32m--> 805[0m     settings [38;5;241m=[39m [43mvalidator_class[49m[38;5;241;43m.[39;49m[43mparse_obj[49m[43m([49m[43msettings[49m[43m)[49m
-[1;32m    807[0m [38;5;28;01mif[39;00m include_stack:
-[1;32m    808[0m     [38;5;66;03m# if we were called recursively, return an updated list of source_file_paths[39;00m
-[1;32m    809[0m     [38;5;28;01mreturn[39;00m settings, source_file_paths
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py:1274[0m, in [0;36mload_shadow_price_calculator[0;34m(state, model_settings)[0m
+[1;32m   1271[0m     shared_sp_choice_df [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[1;32m   1273[0m [38;5;66;03m# - ShadowPriceCalculator[39;00m
+[0;32m-> 1274[0m spc [38;5;241m=[39m [43mShadowPriceCalculator[49m[43m([49m
+[1;32m   1275[0m [43m    [49m[43mstate[49m[43m,[49m
+[1;32m   1276[0m [43m    [49m[43mmodel_settings[49m[43m,[49m
+[1;32m   1277[0m [43m    [49m[43mnum_processes[49m[43m,[49m
+[1;32m   1278[0m [43m    [49m[43mdata[49m[43m,[49m
+[1;32m   1279[0m [43m    [49m[43mlock[49m[43m,[49m
+[1;32m   1280[0m [43m    [49m[43mdata_choice[49m[43m,[49m
+[1;32m   1281[0m [43m    [49m[43mlock_choice[49m[43m,[49m
+[1;32m   1282[0m [43m    [49m[43mshared_sp_choice_df[49m[43m,[49m
+[1;32m   1283[0m [43m[49m[43m)[49m
+[1;32m   1285[0m [38;5;28;01mreturn[39;00m spc
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:526[0m, in [0;36mpydantic.main.BaseModel.parse_obj[0;34m()[0m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py:230[0m, in [0;36mShadowPriceCalculator.__init__[0;34m(self, state, model_settings, num_processes, shared_data, shared_data_lock, shared_data_choice, shared_data_choice_lock, shared_sp_choice_df)[0m
+[1;32m    227[0m     [38;5;28mself[39m[38;5;241m.[39muse_shadow_pricing [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+[1;32m    229[0m [38;5;66;03m# - destination_size_table (desired_size)[39;00m
+[0;32m--> 230[0m [38;5;28mself[39m[38;5;241m.[39mdesired_size [38;5;241m=[39m [43mstate[49m[38;5;241;43m.[39;49m[43mget_dataframe[49m[43m([49m[43msize_table_name[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mmodel_selector[49m[43m)[49m[43m)[49m
+[1;32m    231[0m [38;5;28mself[39m[38;5;241m.[39mdesired_size [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mdesired_size[38;5;241m.[39msort_index()
+[1;32m    233[0m [38;5;28;01massert[39;00m (
+[1;32m    234[0m     [38;5;28mself[39m[38;5;241m.[39mdesired_size[38;5;241m.[39mindex[38;5;241m.[39mis_monotonic_increasing
+[1;32m    235[0m ), [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00msize_table_name([38;5;28mself[39m[38;5;241m.[39mmodel_selector)[38;5;132;01m}[39;00m[38;5;124m not is_monotonic_increasing[39m[38;5;124m"[39m
 
-File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/pydantic/main.py:341[0m, in [0;36mpydantic.main.BaseModel.__init__[0;34m()[0m
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py:631[0m, in [0;36mState.get_dataframe[0;34m(self, tablename, columns, as_copy)[0m
+[1;32m    629[0m t [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_context[38;5;241m.[39mget(tablename, [38;5;28;01mNone[39;00m)
+[1;32m    630[0m [38;5;28;01mif[39;00m t [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m--> 631[0m     t [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_load_or_create_dataset[49m[43m([49m[43mtablename[49m[43m,[49m[43m [49m[43mswallow_errors[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m
+[1;32m    632[0m [38;5;28;01mif[39;00m t [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m    633[0m     [38;5;28;01mraise[39;00m [38;5;167;01mKeyError[39;00m(tablename)
 
-[0;31mValidationError[0m: 1 validation error for InitializeLanduseSettings
-annotate_tables -> 0
-  str type expected (type=type_error.str)
+File [0;32m/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py:557[0m, in [0;36mState._load_or_create_dataset[0;34m(self, table_name, overwrite, swallow_errors)[0m
+[1;32m    555[0m     [38;5;28;01mif[39;00m swallow_errors:
+[1;32m    556[0m         [38;5;28;01mreturn[39;00m
+[0;32m--> 557[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mtable [39m[38;5;132;01m{[39;00mtable_name[38;5;132;01m}[39;00m[38;5;124m has no loading function[39m[38;5;124m"[39m)
+[1;32m    558[0m logger[38;5;241m.[39mdebug([38;5;124mf[39m[38;5;124m"[39m[38;5;124mloading table [39m[38;5;132;01m{[39;00mtable_name[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[1;32m    559[0m [38;5;28;01mtry[39;00m:
+
+[0;31mValueError[0m: table school_destination_size has no loading function
 
