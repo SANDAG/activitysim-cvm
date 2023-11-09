@@ -62,7 +62,7 @@
     <link rel="prev" title="Joint Tour Scheduling" href="joint_tour_scheduling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 09, 2023"/>
   </head>
   
   
@@ -531,6 +531,40 @@ configured by the user) - these trips include escort, shopping, othmaint,
 othdiscr, eatout, and social trips in various combination.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.non_mandatory_tour_frequency.extend_tour_counts">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.non_mandatory_tour_frequency.</span></span><span class="sig-name descname"><span class="pre">extend_tour_counts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">persons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tour_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternatives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.non_mandatory_tour_frequency.extend_tour_counts" title="Permalink to this definition">#</a></dt>
+<dd><p>extend tour counts based on a probability table</p>
+<p>counts can only be extended if original count is between 1 and 4
+and tours can only be extended if their count is at the max possible
+(e.g. 2 for escort, 1 otherwise) so escort might be increased to 3 or 4
+and other tour types might be increased to 2 or 3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>persons: pandas dataframe</strong></dt><dd><p>(need this for join columns)</p>
+</dd>
+<dt><strong>tour_counts: pandas dataframe</strong></dt><dd><p>one row per person, once column per tour_type</p>
+</dd>
+<dt><strong>alternatives</strong></dt><dd><p>alternatives from nmtv interaction_simulate
+only need this to know max possible frequency for a tour type</p>
+</dd>
+<dt><strong>trace_label</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>extended tour_counts</dt><dd></dd>
+<dt>tour_counts looks like this:</dt><dd><p>escort  shopping  othmaint  othdiscr    eatout    social</p>
+</dd>
+<dt>parent_id</dt><dd></dd>
+<dt>2588676         2         0         0         1         1         0</dt><dd></dd>
+<dt>2588677         0         1         0         1         0         0</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -617,7 +651,7 @@ othdiscr, eatout, and social trips in various combination.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev367+gac5ca477, documentation last updated Nov 07, 2023.<br/>
+ActivitySim 1.2.1.dev368+g529a4df3, documentation last updated Nov 09, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

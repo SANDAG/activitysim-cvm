@@ -62,7 +62,7 @@
     <link rel="prev" title="Joint Tour Composition" href="joint_tour_composition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 09, 2023"/>
   </head>
   
   
@@ -601,6 +601,42 @@ of any model.</p>
 <dd><p>Predicts for each eligible person to participate or not participate in each joint tour.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.joint_tour_participation.participants_chooser">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.joint_tour_participation.</span></span><span class="sig-name descname"><span class="pre">participants_chooser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">choosers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.2)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.1.2)"><span class="pre">Series</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.1.2)"><span class="pre">Series</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#activitysim.abm.models.joint_tour_participation.participants_chooser" title="Permalink to this definition">#</a></dt>
+<dd><p>custom alternative to logit.make_choices for simulate.simple_simulate</p>
+<p>Choosing participants for mixed tours is trickier than adult or child tours becuase we
+need at least one adult and one child participant in a mixed tour. We call logit.make_choices
+and then check to see if the tour statisfies this requirement, and rechoose for any that
+fail until all are satisfied.</p>
+<p>In principal, this shold always occur eventually, but we fail after MAX_ITERATIONS,
+just in case there is some failure in program logic (haven’t seen this occur.)</p>
+<p>The return values are the same as logit.make_choices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>probs</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Rows for choosers and columns for the alternatives from which they
+are choosing. Values are expected to be valid probabilities across
+each row, e.g. they should sum to 1.</p>
+</dd>
+<dt><strong>choosers</strong><span class="classifier">pandas.dataframe</span></dt><dd><p>simple_simulate choosers df</p>
+</dd>
+<dt><strong>spec</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>simple_simulate spec df
+We only need spec so we can know the column index of the ‘participate’ alternative
+indicating that the participant has been chosen to participate in the tour</p>
+</dd>
+<dt><strong>trace_label</strong><span class="classifier">str</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>choices, rands</dt><dd><p>choices, rands as returned by logit.make_choices (in same order as probs)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -687,7 +723,7 @@ of any model.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev367+gac5ca477, documentation last updated Nov 07, 2023.<br/>
+ActivitySim 1.2.1.dev368+g529a4df3, documentation last updated Nov 09, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

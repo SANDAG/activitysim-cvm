@@ -60,7 +60,7 @@
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 07, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 09, 2023"/>
   </head>
   
   
@@ -550,6 +550,41 @@ type-based fields specified via the annotate_tours option.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.vehicle_allocation.annotate_vehicle_allocation">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.vehicle_allocation.</span></span><span class="sig-name descname"><span class="pre">annotate_vehicle_allocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_settings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.vehicle_allocation.annotate_vehicle_allocation" title="Permalink to this definition">#</a></dt>
+<dd><p>Add columns to the tours table in the pipeline according to spec.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>model_settings</strong><span class="classifier">dict</span></dt><dd></dd>
+<dt><strong>trace_label</strong><span class="classifier">str</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="activitysim.abm.models.vehicle_allocation.get_skim_dict">
+<span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.vehicle_allocation.</span></span><span class="sig-name descname"><span class="pre">get_skim_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choosers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.vehicle_allocation.get_skim_dict" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary of skim wrappers to use in expression writing.</p>
+<p>Skims have origin as home_zone_id and destination as the tour destination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>network_los</strong><span class="classifier">activitysim.core.los.Network_LOS object</span></dt><dd></dd>
+<dt><strong>choosers</strong><span class="classifier">pd.DataFrame</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>skims</strong><span class="classifier">dict</span></dt><dd><p>index is skim wrapper name, value is the skim wrapper</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -618,7 +653,7 @@ type-based fields specified via the annotate_tours option.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev367+gac5ca477, documentation last updated Nov 07, 2023.<br/>
+ActivitySim 1.2.1.dev368+g529a4df3, documentation last updated Nov 09, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
