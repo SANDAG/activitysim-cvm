@@ -62,7 +62,7 @@
     <link rel="prev" title="PreprocessorSettings" href="activitysim.core.configuration.base.PreprocessorSettings.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 09, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 13, 2023"/>
   </head>
   
   
@@ -451,6 +451,7 @@ document.write(`
 <li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE" title="activitysim.core.configuration.logit.LogitComponentSettings.LOGIT_TYPE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGIT_TYPE</span> <span class="pre">(Literal['MNL',</span> <span class="pre">'NL'])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.NESTS" title="activitysim.core.configuration.logit.LogitComponentSettings.NESTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NESTS</span> <span class="pre">(activitysim.core.configuration.logit.LogitNestSpec</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.SPEC" title="activitysim.core.configuration.logit.LogitComponentSettings.SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPEC</span> <span class="pre">(pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.sharrow_skip" title="activitysim.core.configuration.logit.LogitComponentSettings.sharrow_skip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sharrow_skip</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths" title="activitysim.core.configuration.logit.LogitComponentSettings.source_file_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_file_paths</span> <span class="pre">(list[pathlib.Path])</span></code></a></p></li>
 </ul>
 </dd>
@@ -535,6 +536,12 @@ transit alternatives grouped together in a nest:</p>
 <p>This is sometimes alternatively called the utility expressions calculator
 (UEC). It is a CSV file giving all the functions for the terms of a
 linear-in-parameters utility expression.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.core.configuration.logit.LogitComponentSettings.sharrow_skip">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sharrow_skip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#activitysim.core.configuration.logit.LogitComponentSettings.sharrow_skip" title="Permalink to this definition">#</a></dt>
+<dd><p>Skip sharrow when evaluating this component.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -682,7 +689,7 @@ an empty dict or an all-default instance of the validator class.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev368+g529a4df3, documentation last updated Nov 09, 2023.<br/>
+ActivitySim 1.2.1.dev404+gda00756a, documentation last updated Nov 13, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

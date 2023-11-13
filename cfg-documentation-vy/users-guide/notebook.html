@@ -62,7 +62,7 @@
     <link rel="prev" title="Command Line Tools" href="cli-tools.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 09, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 13, 2023"/>
   </head>
   
   
@@ -419,14 +419,14 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
+ - rural_threshold
  - cbd_threshold
+ - household_median_value_of_time
  - min_value_of_time
  - urban_threshold
- - rural_threshold
- - household_median_value_of_time
- - distributed_vot_mu
- - max_value_of_time
  - distributed_vot_sigma
+ - max_value_of_time
+ - distributed_vot_mu
 </pre></div>
 </div>
 </div>
@@ -446,14 +446,14 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
+ - rural_threshold
  - cbd_threshold
+ - household_median_value_of_time
  - min_value_of_time
  - urban_threshold
- - rural_threshold
- - household_median_value_of_time
- - distributed_vot_mu
- - max_value_of_time
  - distributed_vot_sigma
+ - max_value_of_time
+ - distributed_vot_mu
 </pre></div>
 </div>
 </div>
@@ -572,140 +572,6 @@ components in a block together.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[AnnotateTableSettings(source_file_paths=None, tablename=&#39;persons&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_persons&#39;, DF=&#39;persons&#39;, TABLES=[&#39;households&#39;]), column_map=None), AnnotateTableSettings(source_file_paths=None, tablename=&#39;households&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_households&#39;, DF=&#39;households&#39;, TABLES=[&#39;persons&#39;, &#39;land_use&#39;]), column_map=None), AnnotateTableSettings(source_file_paths=None, tablename=&#39;persons&#39;, annotate=PreprocessorSettings(SPEC=&#39;annotate_persons_after_hh&#39;, DF=&#39;persons&#39;, TABLES=[&#39;households&#39;]), column_map=None)]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR:root:===== ERROR IN school_location =====
-ERROR:root:table school_destination_size has no loading function
-Traceback (most recent call last):
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py&quot;, line 46, in wrapper
-    return func(*args, **kwargs)
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py&quot;, line 1165, in school_location
-    iterate_location_choice(
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py&quot;, line 925, in iterate_location_choice
-    spc = shadow_pricing.load_shadow_price_calculator(state, model_settings)
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py&quot;, line 1274, in load_shadow_price_calculator
-    spc = ShadowPriceCalculator(
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py&quot;, line 230, in __init__
-    self.desired_size = state.get_dataframe(size_table_name(self.model_selector))
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py&quot;, line 631, in get_dataframe
-    t = self._load_or_create_dataset(tablename, swallow_errors=False)
-  File &quot;/usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py&quot;, line 557, in _load_or_create_dataset
-    raise ValueError(f&quot;table {table_name} has no loading function&quot;)
-ValueError: table school_destination_size has no loading function
-ERROR:root:===== / =====
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">state</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="s2">&quot;initialize_households&quot;</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s2">&quot;compute_accessibility&quot;</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="s2">&quot;school_location&quot;</span><span class="p">,</span> 
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="p">])</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:173,</span> in <span class="ni">Runner.__call__</span><span class="nt">(self, models, resume_after, memory_sidecar_process)</span>
-<span class="g g-Whitespace">    </span><span class="mi">171</span>     <span class="n">memory_sidecar_process</span><span class="o">.</span><span class="n">set_event</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">tracing</span><span class="o">.</span><span class="n">print_elapsed_time</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">173</span> <span class="bp">self</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">174</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">trace_memory_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pipeline.run after </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">176</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_runtime</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="n">t1</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/runner.py:350,</span> in <span class="ni">Runner.by_name</span><span class="nt">(self, model_name, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">348</span>             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">profiler</span><span class="o">.</span><span class="n">output_html</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">349</span>     <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">350</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="n">run_named_step</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">351</span>             <span class="bp">self</span><span class="o">.</span><span class="n">step_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">_context</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">    </span><span class="mi">352</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">354</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">355</span>     <span class="bp">self</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_elapsed_time</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;run.</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> UNTIL ERROR&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t0</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:83,</span> in <span class="ni">run_named_step</span><span class="nt">(name, context, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span>         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">raise</span>
-<span class="ne">---&gt; </span><span class="mi">83</span> <span class="n">step_func</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="k">return</span> <span class="n">context</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:367,</span> in <span class="ni">step.__call__.&lt;locals&gt;.run_step</span><span class="nt">(context, **override_kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">366</span>     <span class="n">state</span><span class="o">.</span><span class="n">this_step</span> <span class="o">=</span> <span class="bp">self</span>
-<span class="ne">--&gt; </span><span class="mi">367</span>     <span class="n">outcome</span> <span class="o">=</span> <span class="n">error_logging</span><span class="p">(</span><span class="n">wrapped_func</span><span class="p">)(</span><span class="n">state</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">368</span> <span class="k">finally</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">369</span>     <span class="k">del</span> <span class="n">state</span><span class="o">.</span><span class="n">this_step</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/steps.py:46,</span> in <span class="ni">error_logging.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">45</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">46</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">48</span>         <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== ERROR IN </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py:1165,</span> in <span class="ni">school_location</span><span class="nt">(state, persons_merged, persons, households, network_los, locutor, model_settings, model_settings_file_name, trace_label)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1162</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">benchmarking</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1163</span>     <span class="n">locutor</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">-&gt; </span><span class="mi">1165</span> <span class="n">iterate_location_choice</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1166</span>     <span class="n">state</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1167</span>     <span class="n">model_settings</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1168</span>     <span class="n">persons_merged</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1169</span>     <span class="n">persons</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1170</span>     <span class="n">households</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1171</span>     <span class="n">network_los</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1172</span>     <span class="n">estimator</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1173</span>     <span class="n">state</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1174</span>     <span class="n">locutor</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1175</span>     <span class="n">trace_label</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1176</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1178</span> <span class="k">if</span> <span class="n">estimator</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1179</span>     <span class="n">estimator</span><span class="o">.</span><span class="n">end_estimation</span><span class="p">()</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/models/location_choice.py:925,</span> in <span class="ni">iterate_location_choice</span><span class="nt">(state, model_settings, persons_merged, persons, households, network_los, estimator, chunk_size, locutor, trace_label)</span>
-<span class="g g-Whitespace">    </span><span class="mi">919</span> <span class="n">segment_ids</span> <span class="o">=</span> <span class="n">model_settings</span><span class="o">.</span><span class="n">SEGMENT_IDS</span>
-<span class="g g-Whitespace">    </span><span class="mi">921</span> <span class="k">assert</span> <span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">922</span>     <span class="n">chooser_segment_column</span> <span class="ow">in</span> <span class="n">persons_merged_df</span>
-<span class="g g-Whitespace">    </span><span class="mi">923</span> <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;CHOOSER_SEGMENT_COLUMN &#39;</span><span class="si">{</span><span class="n">chooser_segment_column</span><span class="si">}</span><span class="s2">&#39; not in persons_merged table.&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">925</span> <span class="n">spc</span> <span class="o">=</span> <span class="n">shadow_pricing</span><span class="o">.</span><span class="n">load_shadow_price_calculator</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">model_settings</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">926</span> <span class="n">max_iterations</span> <span class="o">=</span> <span class="n">spc</span><span class="o">.</span><span class="n">max_iterations</span>
-<span class="g g-Whitespace">    </span><span class="mi">927</span> <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">spc</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="ow">and</span> <span class="n">estimator</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py:1274,</span> in <span class="ni">load_shadow_price_calculator</span><span class="nt">(state, model_settings)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1271</span>     <span class="n">shared_sp_choice_df</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1273</span> <span class="c1"># - ShadowPriceCalculator</span>
-<span class="ne">-&gt; </span><span class="mi">1274</span> <span class="n">spc</span> <span class="o">=</span> <span class="n">ShadowPriceCalculator</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1275</span>     <span class="n">state</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1276</span>     <span class="n">model_settings</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1277</span>     <span class="n">num_processes</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1278</span>     <span class="n">data</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1279</span>     <span class="n">lock</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1280</span>     <span class="n">data_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1281</span>     <span class="n">lock_choice</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1282</span>     <span class="n">shared_sp_choice_df</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1283</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1285</span> <span class="k">return</span> <span class="n">spc</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/abm/tables/shadow_pricing.py:230,</span> in <span class="ni">ShadowPriceCalculator.__init__</span><span class="nt">(self, state, model_settings, num_processes, shared_data, shared_data_lock, shared_data_choice, shared_data_choice_lock, shared_sp_choice_df)</span>
-<span class="g g-Whitespace">    </span><span class="mi">227</span>     <span class="bp">self</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="c1"># - destination_size_table (desired_size)</span>
-<span class="ne">--&gt; </span><span class="mi">230</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">(</span><span class="n">size_table_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_selector</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">233</span> <span class="k">assert</span> <span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span>     <span class="bp">self</span><span class="o">.</span><span class="n">desired_size</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_monotonic_increasing</span>
-<span class="g g-Whitespace">    </span><span class="mi">235</span> <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">size_table_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_selector</span><span class="p">)</span><span class="si">}</span><span class="s2"> not is_monotonic_increasing&quot;</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py:631,</span> in <span class="ni">State.get_dataframe</span><span class="nt">(self, tablename, columns, as_copy)</span>
-<span class="g g-Whitespace">    </span><span class="mi">629</span> <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tablename</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">630</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">631</span>     <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_or_create_dataset</span><span class="p">(</span><span class="n">tablename</span><span class="p">,</span> <span class="n">swallow_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">632</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">633</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">tablename</span><span class="p">)</span>
-
-<span class="nn">File /usr/share/miniconda3/envs/docbuild/lib/python3.10/site-packages/activitysim/core/workflow/state.py:557,</span> in <span class="ni">State._load_or_create_dataset</span><span class="nt">(self, table_name, overwrite, swallow_errors)</span>
-<span class="g g-Whitespace">    </span><span class="mi">555</span>     <span class="k">if</span> <span class="n">swallow_errors</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">556</span>         <span class="k">return</span>
-<span class="ne">--&gt; </span><span class="mi">557</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;table </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> has no loading function&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">558</span> <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;loading table </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">559</span> <span class="k">try</span><span class="p">:</span>
-
-<span class="ne">ValueError</span>: table school_destination_size has no loading function
-</pre></div>
-</div>
 </div>
 </div>
 <p>Note that when running interactively like this, it is up to the user to
@@ -731,6 +597,119 @@ method can give us access to data tables as a pandas DataFrame.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>auPkRetail</th>
+      <th>auPkTotal</th>
+      <th>auOpRetail</th>
+      <th>auOpTotal</th>
+      <th>trPkRetail</th>
+      <th>trPkTotal</th>
+      <th>trOpRetail</th>
+      <th>trOpTotal</th>
+      <th>nmRetail</th>
+      <th>nmTotal</th>
+    </tr>
+    <tr>
+      <th>zone_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9.316494</td>
+      <td>12.615176</td>
+      <td>9.307437</td>
+      <td>12.607849</td>
+      <td>7.764263</td>
+      <td>11.145248</td>
+      <td>7.693086</td>
+      <td>11.037286</td>
+      <td>8.137361</td>
+      <td>11.726242</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9.316898</td>
+      <td>12.613461</td>
+      <td>9.304627</td>
+      <td>12.604209</td>
+      <td>7.511301</td>
+      <td>10.950046</td>
+      <td>7.427060</td>
+      <td>10.763102</td>
+      <td>8.142717</td>
+      <td>11.724186</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9.293217</td>
+      <td>12.580014</td>
+      <td>9.286242</td>
+      <td>12.574902</td>
+      <td>7.340975</td>
+      <td>10.787608</td>
+      <td>7.252678</td>
+      <td>10.574954</td>
+      <td>8.050369</td>
+      <td>11.478913</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9.357350</td>
+      <td>12.630894</td>
+      <td>9.348249</td>
+      <td>12.623586</td>
+      <td>7.873327</td>
+      <td>11.224171</td>
+      <td>7.814365</td>
+      <td>11.135416</td>
+      <td>8.371198</td>
+      <td>11.775231</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9.343551</td>
+      <td>12.585069</td>
+      <td>9.333262</td>
+      <td>12.574554</td>
+      <td>7.589356</td>
+      <td>11.082550</td>
+      <td>7.549557</td>
+      <td>11.027965</td>
+      <td>8.318059</td>
+      <td>11.431764</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>We can use that DataFrame to do any Python analysis, summarization,
 or visualization that we like, using all the normal Python libraries
@@ -746,6 +725,73 @@ that can work with DataFrames.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+  #altair-viz-692cb85d49004b1ba14c09df4b17a49f.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-692cb85d49004b1ba14c09df4b17a49f.vega-embed details,
+  #altair-viz-692cb85d49004b1ba14c09df4b17a49f.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-692cb85d49004b1ba14c09df4b17a49f"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-692cb85d49004b1ba14c09df4b17a49f") {
+      outputDiv = document.getElementById("altair-viz-692cb85d49004b1ba14c09df4b17a49f");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.15.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.15.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ecd0ff36dda040c608a4463799ff5bd2"}, "mark": {"type": "circle", "size": 100}, "encoding": {"x": {"field": "auPkRetail", "scale": {"zero": false}, "type": "quantitative"}, "y": {"field": "auPkTotal", "scale": {"zero": false}, "type": "quantitative"}}, "params": [{"name": "param_1", "select": {"type": "interval", "encodings": ["x", "y"]}, "bind": "scales"}], "$schema": "https://vega.github.io/schema/vega-lite/v5.15.1.json", "datasets": {"data-ecd0ff36dda040c608a4463799ff5bd2": [{"auPkRetail": 9.316494246422568, "auPkTotal": 12.61517574315289, "auOpRetail": 9.30743678664037, "auOpTotal": 12.607849392261432, "trPkRetail": 7.764263497215065, "trPkTotal": 11.145248189788484, "trOpRetail": 7.69308601648347, "trOpTotal": 11.037285956909018, "nmRetail": 8.137360927784435, "nmTotal": 11.72624220917462}, {"auPkRetail": 9.316897918969254, "auPkTotal": 12.61346094178568, "auOpRetail": 9.304626990654363, "auOpTotal": 12.604208995044406, "trPkRetail": 7.511300904234602, "trPkTotal": 10.950045514776265, "trOpRetail": 7.427060033663283, "trOpTotal": 10.76310190871255, "nmRetail": 8.142716869603856, "nmTotal": 11.724185979755147}, {"auPkRetail": 9.293216972412948, "auPkTotal": 12.580014459851448, "auOpRetail": 9.286241654126094, "auOpTotal": 12.574901923298121, "trPkRetail": 7.340975248764847, "trPkTotal": 10.78760844956674, "trOpRetail": 7.252677859156825, "trOpTotal": 10.574953610768503, "nmRetail": 8.050369141519473, "nmTotal": 11.478912551444546}, {"auPkRetail": 9.357349507455009, "auPkTotal": 12.630894215587896, "auOpRetail": 9.34824855856986, "auOpTotal": 12.623585760796873, "trPkRetail": 7.8733268245042565, "trPkTotal": 11.22417118506541, "trOpRetail": 7.814365228731915, "trOpTotal": 11.135415935503294, "nmRetail": 8.371197500397228, "nmTotal": 11.7752306986044}, {"auPkRetail": 9.343550555725637, "auPkTotal": 12.585069455568574, "auOpRetail": 9.333262167175757, "auOpTotal": 12.574553584249722, "trPkRetail": 7.589355611211902, "trPkTotal": 11.082549740994516, "trOpRetail": 7.549557403733535, "trOpTotal": 11.02796499800084, "nmRetail": 8.318059258671834, "nmTotal": 11.431764411398849}, {"auPkRetail": 9.271350280266805, "auPkTotal": 12.523449297481994, "auOpRetail": 9.265762312325014, "auOpTotal": 12.519697722182595, "trPkRetail": 7.313872482530061, "trPkTotal": 10.504310979906819, "trOpRetail": 7.068341268659587, "trOpTotal": 10.25178992198404, "nmRetail": 7.83824123593578, "nmTotal": 11.023737612069544}, {"auPkRetail": 9.29319438854463, "auPkTotal": 12.528401453550224, "auOpRetail": 9.286372808530611, "auOpTotal": 12.520416143845779, "trPkRetail": 7.641910047999711, "trPkTotal": 10.805002738627607, "trOpRetail": 7.607878383964711, "trOpTotal": 10.752509699164879, "nmRetail": 8.016914788053809, "nmTotal": 11.10880473926608}, {"auPkRetail": 9.267844254343885, "auPkTotal": 12.49714602566128, "auOpRetail": 9.262133093242994, "auOpTotal": 12.489886062198453, "trPkRetail": 7.54693384078048, "trPkTotal": 10.834136328674168, "trOpRetail": 7.501423798794656, "trOpTotal": 10.77932009280521, "nmRetail": 7.981950488551539, "nmTotal": 11.052152831140146}, {"auPkRetail": 9.189502970549922, "auPkTotal": 12.426036497501059, "auOpRetail": 9.18403503221456, "auOpTotal": 12.415459798818294, "trPkRetail": 7.1887514829393275, "trPkTotal": 10.303186204562111, "trOpRetail": 7.149056558862683, "trOpTotal": 10.260609520047622, "nmRetail": 7.415629777091658, "nmTotal": 10.758663414411654}, {"auPkRetail": 9.186004126767736, "auPkTotal": 12.403890115167114, "auOpRetail": 9.180762007450875, "auOpTotal": 12.39634439278583, "trPkRetail": 7.379335812398483, "trPkTotal": 10.548674760263005, "trOpRetail": 7.306521923298712, "trOpTotal": 10.495921687099003, "nmRetail": 7.567826158130381, "nmTotal": 10.694411506898852}, {"auPkRetail": 9.320092663930184, "auPkTotal": 12.519242155343258, "auOpRetail": 9.315095032027857, "auOpTotal": 12.511758193169229, "trPkRetail": 7.455701967440772, "trPkTotal": 10.87560132590152, "trOpRetail": 7.348368031699475, "trOpTotal": 10.762777837534243, "nmRetail": 8.228286574614595, "nmTotal": 11.171156624491507}, {"auPkRetail": 9.351590564549332, "auPkTotal": 12.600777209765274, "auOpRetail": 9.340287123569157, "auOpTotal": 12.590072566154266, "trPkRetail": 7.945965142396818, "trPkTotal": 11.20437497188151, "trOpRetail": 7.846325586111904, "trOpTotal": 11.074533951389993, "nmRetail": 8.420517844196304, "nmTotal": 11.61897257056201}, {"auPkRetail": 9.347595785718323, "auPkTotal": 12.610940363517232, "auOpRetail": 9.337328586879362, "auOpTotal": 12.60159046628016, "trPkRetail": 7.767893952496161, "trPkTotal": 11.121006481369408, "trOpRetail": 7.691841587260776, "trOpTotal": 11.012476509709911, "nmRetail": 8.422746480387373, "nmTotal": 11.742390105950426}, {"auPkRetail": 9.327287575225915, "auPkTotal": 12.61272183638518, "auOpRetail": 9.319522377122373, "auOpTotal": 12.605842846570052, "trPkRetail": 7.982914455823258, "trPkTotal": 11.205704183942983, "trOpRetail": 7.914738300790072, "trOpTotal": 11.09630521314994, "nmRetail": 8.293606227119808, "nmTotal": 11.73659301352507}, {"auPkRetail": 9.284935168568785, "auPkTotal": 12.581337458176352, "auOpRetail": 9.27779827535493, "auOpTotal": 12.57546325604843, "trPkRetail": 7.656614098578269, "trPkTotal": 10.9970755596348, "trOpRetail": 7.574397447118308, "trOpTotal": 10.914272265432203, "nmRetail": 8.00048744376541, "nmTotal": 11.541814464299403}, {"auPkRetail": 9.312158663142275, "auPkTotal": 12.554715353239278, "auOpRetail": 9.309851535862029, "auOpTotal": 12.554250345219318, "trPkRetail": 7.016153642361786, "trPkTotal": 10.534220861272349, "trOpRetail": 6.945206169705918, "trOpTotal": 10.442447057629572, "nmRetail": 8.247303259214123, "nmTotal": 11.373742452328104}, {"auPkRetail": 9.252513241068934, "auPkTotal": 12.480891476278531, "auOpRetail": 9.25151293367599, "auOpTotal": 12.47931539012377, "trPkRetail": 6.661199575340683, "trPkTotal": 9.84475302896639, "trOpRetail": 6.562683873514392, "trOpTotal": 9.735317917445975, "nmRetail": 7.667141682301395, "nmTotal": 10.785216325380155}, {"auPkRetail": 9.249360247756258, "auPkTotal": 12.438990592515587, "auOpRetail": 9.248961615230405, "auOpTotal": 12.440034822845453, "trPkRetail": 7.085929678533842, "trPkTotal": 10.252687951615647, "trOpRetail": 6.9977559941155825, "trOpTotal": 10.137302150915072, "nmRetail": 7.596636098405335, "nmTotal": 10.414585329688187}, {"auPkRetail": 9.169029469573758, "auPkTotal": 12.357455424191105, "auOpRetail": 9.169914328186714, "auOpTotal": 12.359583892671727, "trPkRetail": 6.088623501170164, "trPkTotal": 9.295992033901246, "trOpRetail": 5.9074690665597505, "trOpTotal": 9.10121719553157, "nmRetail": 7.088693449393891, "nmTotal": 9.8650009995902}, {"auPkRetail": 9.221742596618885, "auPkTotal": 12.420066329040457, "auOpRetail": 9.218863350318259, "auOpTotal": 12.41597698216911, "trPkRetail": 6.63665285998053, "trPkTotal": 9.801904452298267, "trOpRetail": 6.590820450001259, "trOpTotal": 9.753201500136925, "nmRetail": 7.49419708276564, "nmTotal": 10.367677840955208}, {"auPkRetail": 9.321915722714706, "auPkTotal": 12.515866528079302, "auOpRetail": 9.325176439957023, "auOpTotal": 12.518960672606589, "trPkRetail": 7.4289965576337975, "trPkTotal": 10.580037608031049, "trOpRetail": 7.342733628487911, "trOpTotal": 10.454321465284288, "nmRetail": 8.108435987481963, "nmTotal": 11.011608265602703}, {"auPkRetail": 9.229652192356095, "auPkTotal": 12.543187236023256, "auOpRetail": 9.219600134334192, "auOpTotal": 12.535205058018846, "trPkRetail": 7.150923913256277, "trPkTotal": 10.713897541538804, "trOpRetail": 6.941083933766704, "trOpTotal": 10.463984535369464, "nmRetail": 7.637908292039161, "nmTotal": 11.319586649838495}, {"auPkRetail": 9.116149708261213, "auPkTotal": 12.433017916414748, "auOpRetail": 9.107848447001038, "auOpTotal": 12.426054885294798, "trPkRetail": 6.211644503927987, "trPkTotal": 9.770780596054532, "trOpRetail": 6.1182229539325945, "trOpTotal": 9.687798719977543, "nmRetail": 6.887639592088898, "nmTotal": 10.656699626013532}, {"auPkRetail": 9.243796729875907, "auPkTotal": 12.550974057334248, "auOpRetail": 9.23008642020084, "auOpTotal": 12.541349602973465, "trPkRetail": 7.322741788274842, "trPkTotal": 10.850763510641398, "trOpRetail": 7.115121241312532, "trOpTotal": 10.577146926988949, "nmRetail": 7.713627680945117, "nmTotal": 11.346711466451557}, {"auPkRetail": 9.198261982819503, "auPkTotal": 12.494596320746052, "auOpRetail": 9.191437063620823, "auOpTotal": 12.490871930253187, "trPkRetail": 7.29664609502182, "trPkTotal": 10.729604503562992, "trOpRetail": 7.18036563628942, "trOpTotal": 10.549488538701693, "nmRetail": 7.616518018582319, "nmTotal": 11.016222759405112}]}}, {"mode": "vega-lite"});
+</script></div></div>
 </div>
 <p>ActivitySim also includes a few convenient reporting functions,
 that can generate histograms or nominal distributions of data features.</p>
@@ -755,6 +801,19 @@ that can generate histograms or nominal distributions of data features.</p>
     <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;persons&quot;</span><span class="p">,</span> 
     <span class="n">column_name</span><span class="o">=</span><span class="s2">&quot;distance_to_school&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">state</span><span class="o">.</span><span class="n">report</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;persons&quot;</span><span class="p">,</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">column_name</span><span class="o">=</span><span class="s2">&quot;distance_to_school&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="p">)</span>
+
+<span class="ne">AttributeError</span>: &#39;Reporting&#39; object has no attribute &#39;histogram&#39;
 </pre></div>
 </div>
 </div>
@@ -861,7 +920,7 @@ that can generate histograms or nominal distributions of data features.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev368+g529a4df3, documentation last updated Nov 09, 2023.<br/>
+ActivitySim 1.2.1.dev404+gda00756a, documentation last updated Nov 13, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
