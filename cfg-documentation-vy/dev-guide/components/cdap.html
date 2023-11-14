@@ -62,7 +62,7 @@
     <link rel="prev" title="Telecommute Frequency" href="telecommute_frequency.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 13, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 14, 2023"/>
   </head>
   
   
@@ -470,6 +470,79 @@ at <a class="reference internal" href="../../models.html#module-activitysim.abm.
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h2>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings">
+<em class="property"><span class="pre">settings</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.abm.models.cdap.</span></span><span class="sig-name descname"><span class="pre">CdapSettings</span></span><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../_generated/activitysim.core.configuration.base.PydanticReadable.html#activitysim.core.configuration.base.PydanticReadable" title="activitysim.core.configuration.base.PydanticReadable"><code class="xref py py-class docutils literal notranslate"><span class="pre">PydanticReadable</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.ADD_JOINT_TOUR_UTILITY" title="activitysim.abm.models.cdap.CdapSettings.ADD_JOINT_TOUR_UTILITY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ADD_JOINT_TOUR_UTILITY</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.COEFFICIENTS" title="activitysim.abm.models.cdap.CdapSettings.COEFFICIENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COEFFICIENTS</span> <span class="pre">(pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.CONSTANTS" title="activitysim.abm.models.cdap.CdapSettings.CONSTANTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONSTANTS</span> <span class="pre">(dict[str,</span> <span class="pre">typing.Any])</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.FIXED_RELATIVE_PROPORTIONS_SPEC" title="activitysim.abm.models.cdap.CdapSettings.FIXED_RELATIVE_PROPORTIONS_SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FIXED_RELATIVE_PROPORTIONS_SPEC</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.INDIV_AND_HHSIZE1_SPEC" title="activitysim.abm.models.cdap.CdapSettings.INDIV_AND_HHSIZE1_SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INDIV_AND_HHSIZE1_SPEC</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.INTERACTION_COEFFICIENTS" title="activitysim.abm.models.cdap.CdapSettings.INTERACTION_COEFFICIENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INTERACTION_COEFFICIENTS</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.JOINT_TOUR_COEFFICIENTS" title="activitysim.abm.models.cdap.CdapSettings.JOINT_TOUR_COEFFICIENTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JOINT_TOUR_COEFFICIENTS</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.PERSON_TYPE_MAP" title="activitysim.abm.models.cdap.CdapSettings.PERSON_TYPE_MAP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PERSON_TYPE_MAP</span> <span class="pre">(dict[str,</span> <span class="pre">list[int]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.annotate_households" title="activitysim.abm.models.cdap.CdapSettings.annotate_households"><code class="xref py py-obj docutils literal notranslate"><span class="pre">annotate_households</span> <span class="pre">(activitysim.core.configuration.base.PreprocessorSettings</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.annotate_persons" title="activitysim.abm.models.cdap.CdapSettings.annotate_persons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">annotate_persons</span> <span class="pre">(activitysim.core.configuration.base.PreprocessorSettings</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../models.html#activitysim.abm.models.cdap.CdapSettings.source_file_paths" title="activitysim.abm.models.cdap.CdapSettings.source_file_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_file_paths</span> <span class="pre">(list[pathlib.Path])</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.ADD_JOINT_TOUR_UTILITY">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ADD_JOINT_TOUR_UTILITY</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.ADD_JOINT_TOUR_UTILITY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.COEFFICIENTS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">COEFFICIENTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.COEFFICIENTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.CONSTANTS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CONSTANTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.CONSTANTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.FIXED_RELATIVE_PROPORTIONS_SPEC">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FIXED_RELATIVE_PROPORTIONS_SPEC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdap_fixed_relative_proportions.csv'</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.FIXED_RELATIVE_PROPORTIONS_SPEC" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.INDIV_AND_HHSIZE1_SPEC">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">INDIV_AND_HHSIZE1_SPEC</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.INDIV_AND_HHSIZE1_SPEC" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.INTERACTION_COEFFICIENTS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">INTERACTION_COEFFICIENTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdap_interaction_coefficients.csv'</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.INTERACTION_COEFFICIENTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.JOINT_TOUR_COEFFICIENTS">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">JOINT_TOUR_COEFFICIENTS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cdap_joint_tour_coefficients.csv'</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.JOINT_TOUR_COEFFICIENTS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.PERSON_TYPE_MAP">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PERSON_TYPE_MAP</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.PERSON_TYPE_MAP" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.annotate_households">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">annotate_households</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_generated/activitysim.core.configuration.base.PreprocessorSettings.html#activitysim.core.configuration.base.PreprocessorSettings" title="activitysim.core.configuration.base.PreprocessorSettings"><span class="pre">PreprocessorSettings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.annotate_households" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.cdap.CdapSettings.annotate_persons">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">annotate_persons</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_generated/activitysim.core.configuration.base.PreprocessorSettings.html#activitysim.core.configuration.base.PreprocessorSettings" title="activitysim.core.configuration.base.PreprocessorSettings"><span class="pre">PreprocessorSettings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.abm.models.cdap.CdapSettings.annotate_persons" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <section id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
@@ -577,7 +650,7 @@ simply applies those utilities using the simulation framework.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev404+gda00756a, documentation last updated Nov 13, 2023.<br/>
+ActivitySim 1.2.1.dev408+g2c0b7004, documentation last updated Nov 14, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
