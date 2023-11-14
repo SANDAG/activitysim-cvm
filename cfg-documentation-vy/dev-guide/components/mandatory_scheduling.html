@@ -443,9 +443,12 @@ start and end period as well) for each mandatory tour.   The primary drivers in 
 accessibility-based parameters such as the mode choice logsum for the departure/arrival hour
 combination, demographics, and time pattern characteristics such as the time windows available
 from previously scheduled tours. This model uses person :ref:<code class="docutils literal notranslate"><span class="pre">time_windows</span></code>.</p>
-<section id="note">
-<h2>note:<a class="headerlink" href="#note" title="Permalink to this heading">#</a></h2>
-<p>For <code class="docutils literal notranslate"><span class="pre">prototype_mtc</span></code>, the modeled time periods for all submodels are hourly from 3 am to 3 am the next day, and any times before 5 am are shifted to time period 5, and any times after 11 pm are shifted to time period 23.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">prototype_mtc</span></code>, the modeled time periods for all submodels are hourly from 3 am to
+3 am the next day, and any times before 5 am are shifted to time period 5, and any times
+after 11 pm are shifted to time period 23.</p>
+</div>
 <p>If <code class="docutils literal notranslate"><span class="pre">tour_departure_and_duration_segments.csv</span></code> is included in the configs, then the model
 will use these representative start and end time periods when calculating mode choice logsums
 instead of the specific start and end combinations for each alternative to reduce runtime.  This
@@ -457,7 +460,6 @@ significant runtime.</p>
 <p>The main interface to the mandatory tour purpose scheduling model is the
 <a class="reference internal" href="../../models.html#activitysim.abm.models.mandatory_scheduling.mandatory_tour_scheduling" title="activitysim.abm.models.mandatory_scheduling.mandatory_tour_scheduling"><span class="xref myst py py-func">mandatory_tour_scheduling</span></a>
 function.  This function is registered as an Inject step in the example Pipeline</p>
-</section>
 <section id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -530,7 +532,6 @@ logit model.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note">note:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structure">Structure</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
 </ul>
@@ -570,7 +571,7 @@ logit model.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev408+g2c0b7004, documentation last updated Nov 14, 2023.<br/>
+ActivitySim 1.2.1.dev413+gf357115e, documentation last updated Nov 14, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
