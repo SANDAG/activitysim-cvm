@@ -60,7 +60,7 @@
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 14, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
   </head>
   
   
@@ -364,11 +364,11 @@ households would be assigned the non-household vehicle option since there are no
 A vehicle is selected for each occupancy level set by the user such that different tour modes that have different occupancies could see different operating
 characteristics. The output of the vehicle allocation model is appended to the tour table with column names <span class="xref myst">vehicle_occup_{occupancy}</span> and the values are
 the vehicle type selected.</p>
-<p>In <a class="reference internal" href="../../examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>, three occupancy levels are used: 1, 2, and 3.5.  The auto operating cost
+<p>In <a class="reference internal" href="../../users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>, three occupancy levels are used: 1, 2, and 3.5.  The auto operating cost
 for occupancy level 1 is used in the drive alone mode and drive to transit modes. Occupancy levels 2 and 3.5 are used for shared
 ride 2 and shared ride 3+ auto operating costs, respectively.  Auto operating costs are selected in the mode choice pre-processors by selecting the allocated
 vehicle type data from the vehicles table. If the allocated vehicle type was the non-household vehicle, the auto operating costs uses
-the previous default value from <a class="reference internal" href="../../examples.html#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>. All trips and atwork subtours use the auto operating cost of the parent tour.  Functionality
+the previous default value from <a class="reference internal" href="../../users-guide/example_models.html#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>. All trips and atwork subtours use the auto operating cost of the parent tour.  Functionality
 was added in tour and atwork subtour mode choice to annotate the tour table and create a <code class="docutils literal notranslate"><span class="pre">selected_vehicle</span></code> which denotes the actual vehicle used.
 If the tour mode does not include a vehicle, then the <code class="docutils literal notranslate"><span class="pre">selected_vehicle</span></code> entry is left blank.</p>
 <p>The current implementation does not account for possible use of the household vehicles by other household members.  Thus, it is possible for a
@@ -667,7 +667,7 @@ type-based fields specified via the annotate_tours option.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev413+gf357115e, documentation last updated Nov 14, 2023.<br/>
+ActivitySim 1.2.1.dev430+gbdd56c0a, documentation last updated Nov 20, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

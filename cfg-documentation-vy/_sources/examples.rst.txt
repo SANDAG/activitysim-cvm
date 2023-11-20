@@ -64,7 +64,7 @@ The current examples are:
    contains example commands to create and run several versions of the examples.  See also :ref:`adding_agency_examples` for more
    information on agency example models.
 
-.. _prototype_mtc :
+
 
 prototype_mtc
 -------------
@@ -1484,7 +1484,7 @@ Example
 See example commands in `example_manifest.yaml <https://github.com/ActivitySim/activitysim/blob/main/activitysim/examples/example_manifest.yaml>`_
 for running prototype_arc.  For optimal performance, configure multiprocessing and chunk_size based on machine hardware.
 
-.. _production_semcog :
+
 
 production_semcog
 ----------------

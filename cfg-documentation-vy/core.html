@@ -62,7 +62,7 @@
     <link rel="prev" title="Write Trip Matrices" href="dev-guide/components/write_trip_matrices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 14, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
   </head>
   
   
@@ -2289,7 +2289,7 @@ method (q.v.) may be used to globally reseed all random streams.</p>
 </section>
 </section>
 <section id="tracing">
-<h3>Tracing<a class="headerlink" href="#tracing" title="Permalink to this heading">#</a></h3>
+<span id="trace"></span><h3>Tracing<a class="headerlink" href="#tracing" title="Permalink to this heading">#</a></h3>
 <p>Household tracer.  If a household trace ID is specified, then ActivitySim will output a
 comprehensive set of trace files for all calculations for all household members:</p>
 <ul class="simple">
@@ -2556,7 +2556,7 @@ coefficients as columns.  Broadly speaking, there are currently four types of mo
 <ul class="simple">
 <li><p>Simple <a class="reference internal" href="#simulate"><span class="std std-ref">Simulate</span></a> choice model - select from a fixed set of choices defined in the specification file, such as the example above.</p></li>
 <li><p><a class="reference internal" href="#simulate-with-interaction"><span class="std std-ref">Simulate with Interaction</span></a> choice model - combine the choice expressions with the choice alternatives files since the alternatives are not listed in the expressions file.  The <a class="reference internal" href="models.html#non-mandatory-tour-destination-choice"><span class="std std-ref">Non-Mandatory Tour Destination Choice</span></a> model implements this approach.</p></li>
-<li><p>Combinatorial choice model - first generate a set of alternatives based on a combination of alternatives across choosers, and then make choices.  The <a class="reference internal" href="models.html#cdap"><span class="std std-ref">Coordinated Daily Activity Pattern</span></a> model implements this approach.</p></li>
+<li><p>Combinatorial choice model - first generate a set of alternatives based on a combination of alternatives across choosers, and then make choices.  The <a class="reference internal" href="models.html#id41"><span class="std std-ref">CDAP</span></a> model implements this approach.</p></li>
 </ul>
 </section>
 <section id="id6">
@@ -5305,7 +5305,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev413+gf357115e, documentation last updated Nov 14, 2023.<br/>
+ActivitySim 1.2.1.dev430+gbdd56c0a, documentation last updated Nov 20, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

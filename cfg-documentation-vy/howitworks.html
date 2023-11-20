@@ -58,11 +58,11 @@
         </script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Developers" href="dev-guide/index.html" />
-    <link rel="prev" title="Estimation" href="estimation.html" />
+    <link rel="next" title="Example Models" href="users-guide/example_models.html" />
+    <link rel="prev" title="DigitalEncoding" href="users-guide/_generated/activitysim.core.configuration.DigitalEncoding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 14, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
   </head>
   
   
@@ -314,15 +314,14 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users-guide/cli-tools.html">Command Line Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users-guide/notebook.html">Interactive Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Built-in Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users-guide/external-examples.html">External Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users-guide/configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimation.html">Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/modelsetup.html">Model Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/ways_to_run.html">Ways to Run the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/model_anatomy.html">Anatomy of a Model</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">How the System Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/example_models.html">Example Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/other_examples.html">Other Example Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/model_dev.html">Model Development</a></li>
 </ul>
 </div>
 </nav></div>
@@ -576,240 +575,6 @@ actually reads the input tables from the input HDF5 or CSV file using the <code 
 </pre></div>
 </div>
 </section>
-<section id="school-location">
-<h3>School Location<a class="headerlink" href="#school-location" title="Permalink to this heading">#</a></h3>
-<p>Now that the persons, households, and other data are in memory, and also annotated with additional fields
-for later calculations, the school location model can be run.  The school location model is defined
-in <a class="reference internal" href="models.html#module-activitysim.abm.models.location_choice" title="activitysim.abm.models.location_choice"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.location_choice</span></code></a>.  As shown below, the school location model
-actually uses the <code class="docutils literal notranslate"><span class="pre">persons_merged</span></code> table, which includes joined household, land use, and accessibility
-tables as well.  The school location model also requires the network_los object, which is discussed next.
-Before running the generic iterate location choice function, the model reads the model settings file, which
-defines various settings, including the expression files, sample size, mode choice logsum
-calculation settings, time periods for skim lookups, shadow pricing settings, etc.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#persons.py</span>
-<span class="c1"># another common merge for persons</span>
-<span class="nd">@inject</span><span class="o">.</span><span class="n">table</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">persons_merged</span><span class="p">(</span><span class="n">persons</span><span class="p">,</span> <span class="n">households</span><span class="p">,</span> <span class="n">land_use</span><span class="p">,</span> <span class="n">accessibility</span><span class="p">):</span>
-     <span class="k">return</span> <span class="n">inject</span><span class="o">.</span><span class="n">merge_tables</span><span class="p">(</span><span class="n">persons</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tables</span><span class="o">=</span><span class="p">[</span><span class="n">persons</span><span class="p">,</span> <span class="n">households</span><span class="p">,</span> <span class="n">land_use</span><span class="p">,</span> <span class="n">accessibility</span><span class="p">])</span>
-
-<span class="c1">#location_choice.py</span>
-<span class="nd">@inject</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">school_location</span><span class="p">(</span>
-     <span class="n">persons_merged</span><span class="p">,</span> <span class="n">persons</span><span class="p">,</span> <span class="n">households</span><span class="p">,</span>
-     <span class="n">network_los</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">trace_hh_id</span><span class="p">,</span> <span class="n">locutor</span>
-     <span class="p">):</span>
-
-  <span class="n">trace_label</span> <span class="o">=</span> <span class="s1">&#39;school_location&#39;</span>
-  <span class="n">model_settings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">read_model_settings</span><span class="p">(</span><span class="s1">&#39;school_location.yaml&#39;</span><span class="p">)</span>
-
-  <span class="n">iterate_location_choice</span><span class="p">(</span>
-     <span class="n">model_settings</span><span class="p">,</span>
-     <span class="n">persons_merged</span><span class="p">,</span> <span class="n">persons</span><span class="p">,</span> <span class="n">households</span><span class="p">,</span>
-     <span class="n">network_los</span><span class="p">,</span>
-     <span class="n">chunk_size</span><span class="p">,</span> <span class="n">trace_hh_id</span><span class="p">,</span> <span class="n">locutor</span><span class="p">,</span> <span class="n">trace_label</span>
-</pre></div>
-</div>
-<p>Deep inside the method calls, the skim matrix lookups required for this model are configured via <code class="docutils literal notranslate"><span class="pre">network_los</span></code>. The following
-code sets the keys for looking up the skim values for this model. In this case there is a <code class="docutils literal notranslate"><span class="pre">TAZ</span></code> column
-in the households table that is renamed to <cite>TAZ_chooser`</cite> and a <code class="docutils literal notranslate"><span class="pre">TAZ</span></code> in the alternatives generation code.
-The skims are lazy loaded under the name “skims” and are available in the expressions using the <code class="docutils literal notranslate"><span class="pre">&#64;skims</span></code> expression.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create wrapper with keys for this lookup - in this case there is a home_zone_id in the choosers</span>
-<span class="c1"># and a zone_id in the alternatives which get merged during interaction</span>
-<span class="c1"># (logit.interaction_dataset suffixes duplicate chooser column with &#39;_chooser&#39;)</span>
-<span class="c1"># the skims will be available under the name &quot;skims&quot; for any @ expressions</span>
-<span class="n">skim_dict</span> <span class="o">=</span> <span class="n">network_los</span><span class="o">.</span><span class="n">get_default_skim_dict</span><span class="p">()</span>
-<span class="n">skims</span> <span class="o">=</span> <span class="n">skim_dict</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="s1">&#39;home_zone_id&#39;</span><span class="p">,</span> <span class="s1">&#39;zone_id&#39;</span><span class="p">)</span>
-
-<span class="n">locals_d</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;skims&#39;</span><span class="p">:</span> <span class="n">skims</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The next step is to call the <a class="reference internal" href="core.html#activitysim.core.interaction_sample.interaction_sample" title="activitysim.core.interaction_sample.interaction_sample"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample.interaction_sample()</span></code></a> function which
-selects a sample of alternatives by running a MNL choice model simulation in which alternatives must be
-merged with choosers because there are interaction terms.  The choosers table, the alternatives table, the
-sample size, the model specification expressions file, the skims, the skims lookups, the chunk size, and the
-trace labels are passed in.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#interaction_sample</span>
-<span class="n">choices</span> <span class="o">=</span> <span class="n">interaction_sample</span><span class="p">(</span>
-   <span class="n">choosers</span><span class="p">,</span>
-   <span class="n">alternatives</span><span class="p">,</span>
-   <span class="n">sample_size</span><span class="o">=</span><span class="n">sample_size</span><span class="p">,</span>
-   <span class="n">alt_col_name</span><span class="o">=</span><span class="n">alt_dest_col_name</span><span class="p">,</span>
-   <span class="n">spec</span><span class="o">=</span><span class="n">spec_for_segment</span><span class="p">(</span><span class="n">model_spec</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">),</span>
-   <span class="n">skims</span><span class="o">=</span><span class="n">skims</span><span class="p">,</span>
-   <span class="n">locals_d</span><span class="o">=</span><span class="n">locals_d</span><span class="p">,</span>
-   <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
-   <span class="n">trace_label</span><span class="o">=</span><span class="n">trace_label</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This function solves the utilities, calculates probabilities, draws random numbers, selects choices with
-replacement, and returns the choices. This is done in a for loop of chunks of chooser records in order to avoid
-running out of RAM when building the often large data tables. This method does a lot, and eventually
-calls <a class="reference internal" href="core.html#activitysim.core.interaction_simulate.eval_interaction_utilities" title="activitysim.core.interaction_simulate.eval_interaction_utilities"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_simulate.eval_interaction_utilities()</span></code></a>, which loops through each
-expression in  the expression file and solves it at once for all records in the chunked chooser
-table using Python’s <code class="docutils literal notranslate"><span class="pre">eval</span></code>.</p>
-<p>The <a class="reference internal" href="core.html#activitysim.core.interaction_sample.interaction_sample" title="activitysim.core.interaction_sample.interaction_sample"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample.interaction_sample()</span></code></a> method is currently only a multinomial
-logit choice model.  The <a class="reference internal" href="core.html#activitysim.core.simulate.simple_simulate" title="activitysim.core.simulate.simple_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.simulate.simple_simulate()</span></code></a> method supports both MNL and NL as specified by
-the <code class="docutils literal notranslate"><span class="pre">LOGIT_TYPE</span></code> setting in the model settings YAML file.   The <code class="docutils literal notranslate"><span class="pre">auto_ownership.yaml</span></code> file for example specifies
-the <code class="docutils literal notranslate"><span class="pre">LOGIT_TYPE</span></code> as <code class="docutils literal notranslate"><span class="pre">MNL.</span></code></p>
-<p>If the expression is a skim matrix, then the entire column of chooser OD pairs is retrieved from the matrix (i.e. numpy array)
-in one vectorized step.  The <code class="docutils literal notranslate"><span class="pre">orig</span></code> and <code class="docutils literal notranslate"><span class="pre">dest</span></code> objects in <code class="docutils literal notranslate"><span class="pre">self.data[orig,</span> <span class="pre">dest]</span></code> in <a class="reference internal" href="core.html#module-activitysim.core.los" title="activitysim.core.los"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.core.los</span></code></a> are vectors
-and selecting numpy array items with vector indexes returns a vector.  Trace data is also written out if configured (not shown below).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># evaluate expressions from the spec multiply by coefficients and sum</span>
-<span class="n">interaction_utilities</span><span class="p">,</span> <span class="n">trace_eval_results</span> \
-    <span class="o">=</span> <span class="n">eval_interaction_utilities</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">interaction_df</span><span class="p">,</span> <span class="n">locals_d</span><span class="p">,</span> <span class="n">trace_label</span><span class="p">,</span> <span class="n">trace_rows</span><span class="p">)</span>
-
-<span class="c1"># reshape utilities (one utility column and one row per row in model_design)</span>
-<span class="c1"># to a dataframe with one row per chooser and one column per alternative</span>
-<span class="n">utilities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">interaction_utilities</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">choosers</span><span class="p">),</span> <span class="n">alternative_count</span><span class="p">),</span>
-    <span class="n">index</span><span class="o">=</span><span class="n">choosers</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-<span class="c1"># convert to probabilities (utilities exponentiated and normalized to probs)</span>
-<span class="c1"># probs is same shape as utilities, one row per chooser and one column for alternative</span>
-<span class="n">probs</span> <span class="o">=</span> <span class="n">logit</span><span class="o">.</span><span class="n">utils_to_probs</span><span class="p">(</span><span class="n">utilities</span><span class="p">,</span> <span class="n">allow_zero_probs</span><span class="o">=</span><span class="n">allow_zero_probs</span><span class="p">,</span>
-                             <span class="n">trace_label</span><span class="o">=</span><span class="n">trace_label</span><span class="p">,</span> <span class="n">trace_choosers</span><span class="o">=</span><span class="n">choosers</span><span class="p">)</span>
-
-<span class="n">choices_df</span> <span class="o">=</span> <span class="n">make_sample_choices</span><span class="p">(</span>
-    <span class="n">choosers</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">alternatives</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">alternative_count</span><span class="p">,</span> <span class="n">alt_col_name</span><span class="p">,</span>
-    <span class="n">allow_zero_probs</span><span class="o">=</span><span class="n">allow_zero_probs</span><span class="p">,</span> <span class="n">trace_label</span><span class="o">=</span><span class="n">trace_label</span><span class="p">)</span>
-
-<span class="c1"># pick_count is number of duplicate picks</span>
-<span class="n">pick_group</span> <span class="o">=</span> <span class="n">choices_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">choosers</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">alt_col_name</span><span class="p">])</span>
-
-<span class="c1"># number each item in each group from 0 to the length of that group - 1.</span>
-<span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;pick_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pick_group</span><span class="o">.</span><span class="n">cumcount</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># flag duplicate rows after first</span>
-<span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;pick_dup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;pick_count&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
-<span class="c1"># add reverse cumcount to get total pick_count (conveniently faster than groupby.count + merge)</span>
-<span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;pick_count&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">pick_group</span><span class="o">.</span><span class="n">cumcount</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-
-<span class="c1"># drop the duplicates</span>
-<span class="n">choices_df</span> <span class="o">=</span> <span class="n">choices_df</span><span class="p">[</span><span class="o">~</span><span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;pick_dup&#39;</span><span class="p">]]</span>
-<span class="k">del</span> <span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;pick_dup&#39;</span><span class="p">]</span>
-
-<span class="k">return</span> <span class="n">choices_df</span>
-</pre></div>
-</div>
-<p>The model creates the <code class="docutils literal notranslate"><span class="pre">location_sample_df</span></code> table using the choices above.  This table is
-then used for the next model step - solving the logsums for the sample.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># - location_logsums</span>
-<span class="n">location_sample_df</span> <span class="o">=</span> <span class="n">run_location_logsums</span><span class="p">(</span>
-           <span class="n">segment_name</span><span class="p">,</span>
-           <span class="n">choosers</span><span class="p">,</span>
-           <span class="n">network_los</span><span class="p">,</span>
-           <span class="n">location_sample_df</span><span class="p">,</span>
-           <span class="n">model_settings</span><span class="p">,</span>
-           <span class="n">chunk_size</span><span class="p">,</span>
-           <span class="n">trace_hh_id</span><span class="p">,</span>
-           <span class="n">tracing</span><span class="o">.</span><span class="n">extend_trace_label</span><span class="p">(</span><span class="n">trace_label</span><span class="p">,</span> <span class="s1">&#39;logsums.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">segment_name</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>The next steps are similar to what the sampling model does, except this time the sampled locations
-table is the choosers and the model is calculating and adding the tour mode choice logsums using the
-logsums settings and expression files.  The resulting logsums are added to the chooser table as the
-<code class="docutils literal notranslate"><span class="pre">mode_choice_logsum</span></code> column.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#inside run_location_logsums() defined in location_choice.py</span>
-<span class="n">logsums</span> <span class="o">=</span> <span class="n">logsum</span><span class="o">.</span><span class="n">compute_logsums</span><span class="p">(</span>
-   <span class="n">choosers</span><span class="p">,</span>
-   <span class="n">tour_purpose</span><span class="p">,</span>
-   <span class="n">logsum_settings</span><span class="p">,</span> <span class="n">model_settings</span><span class="p">,</span>
-   <span class="n">network_los</span><span class="p">,</span>
-   <span class="n">chunk_size</span><span class="p">,</span>
-   <span class="n">trace_label</span><span class="p">)</span>
-
-<span class="n">location_sample_df</span><span class="p">[</span><span class="s1">&#39;mode_choice_logsum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logsums</span>
-</pre></div>
-</div>
-<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.logsums.compute_logsums()</span></code> method goes through a similar series
-of steps as the interaction_sample function but ends up calling
-<code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.simulate.simple_simulate_logsums()</span></code> since it supports nested logit models, which
-are required for the mode choice logsum calculation.  The
-<code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.simulate.simple_simulate_logsums()</span></code> returns a vector of logsums (instead of a vector
-choices).</p>
-<p>The final school location choice model operates on the <code class="docutils literal notranslate"><span class="pre">location_sample_df</span></code> table created
-above and is called as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># - location_simulate</span>
-<span class="n">choices</span> <span class="o">=</span> \
-    <span class="n">run_location_simulate</span><span class="p">(</span>
-        <span class="n">segment_name</span><span class="p">,</span>
-        <span class="n">choosers</span><span class="p">,</span>
-        <span class="n">location_sample_df</span><span class="p">,</span>
-        <span class="n">network_los</span><span class="p">,</span>
-        <span class="n">dest_size_terms</span><span class="p">,</span>
-        <span class="n">model_settings</span><span class="p">,</span>
-        <span class="n">chunk_size</span><span class="p">,</span>
-        <span class="n">tracing</span><span class="o">.</span><span class="n">extend_trace_label</span><span class="p">(</span><span class="n">trace_label</span><span class="p">,</span> <span class="s1">&#39;simulate.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">segment_name</span><span class="p">))</span>
-
-<span class="n">choices_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The operations executed by this model are very similar to the earlier models, except
-this time the sampled locations table is the choosers and the model selects one alternative for
-each chooser using the school location simulate expression files and the
-<a class="reference internal" href="core.html#activitysim.core.interaction_sample_simulate.interaction_sample_simulate" title="activitysim.core.interaction_sample_simulate.interaction_sample_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample_simulate.interaction_sample_simulate()</span></code></a> function.</p>
-<p>Back in <code class="docutils literal notranslate"><span class="pre">iterate_location_choice()</span></code>, the model adds the choices as a column to the <code class="docutils literal notranslate"><span class="pre">persons</span></code> table and adds
-additional output columns using a postprocessor table annotation if specified in the settings file.  Refer
-to <a class="reference internal" href="models.html#table-annotation"><span class="std std-ref">Estimation</span></a> for more information and the <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.expressions.assign_columns()</span></code>
-function.  The overall school location model is run within a shadow pricing iterative loop as shown below.  Refer
-to <a class="reference internal" href="models.html#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a> for more information.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in iterate_location_choice() in location_choice.py</span>
-      <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iterations</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-
-     <span class="k">if</span> <span class="n">spc</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="ow">and</span> <span class="n">iteration</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-         <span class="n">spc</span><span class="o">.</span><span class="n">update_shadow_prices</span><span class="p">()</span>
-
-     <span class="n">choices</span> <span class="o">=</span> <span class="n">run_location_choice</span><span class="p">(</span>
-         <span class="n">persons_merged_df</span><span class="p">,</span>
-         <span class="n">network_los</span><span class="p">,</span>
-         <span class="n">spc</span><span class="p">,</span>
-         <span class="n">model_settings</span><span class="p">,</span>
-         <span class="n">chunk_size</span><span class="p">,</span> <span class="n">trace_hh_id</span><span class="p">,</span>
-         <span class="n">trace_label</span><span class="o">=</span><span class="n">tracing</span><span class="o">.</span><span class="n">extend_trace_label</span><span class="p">(</span><span class="n">trace_label</span><span class="p">,</span> <span class="s1">&#39;i</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">iteration</span><span class="p">))</span>
-
-     <span class="n">choices_df</span> <span class="o">=</span> <span class="n">choices</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s1">&#39;dest_choice&#39;</span><span class="p">)</span>
-     <span class="n">choices_df</span><span class="p">[</span><span class="s1">&#39;segment_id&#39;</span><span class="p">]</span> <span class="o">=</span> \
-         <span class="n">persons_merged_df</span><span class="p">[</span><span class="n">chooser_segment_column</span><span class="p">]</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">choices_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-     <span class="n">spc</span><span class="o">.</span><span class="n">set_choices</span><span class="p">(</span><span class="n">choices_df</span><span class="p">)</span>
-
-     <span class="k">if</span> <span class="n">locutor</span><span class="p">:</span>
-         <span class="n">spc</span><span class="o">.</span><span class="n">write_trace_files</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
-
-     <span class="k">if</span> <span class="n">spc</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="ow">and</span> <span class="n">spc</span><span class="o">.</span><span class="n">check_fit</span><span class="p">(</span><span class="n">iteration</span><span class="p">):</span>
-         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> converged after iteration </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">trace_label</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,))</span>
-         <span class="k">break</span>
-
- <span class="c1"># - shadow price table</span>
- <span class="k">if</span> <span class="n">locutor</span><span class="p">:</span>
-     <span class="k">if</span> <span class="n">spc</span><span class="o">.</span><span class="n">use_shadow_pricing</span> <span class="ow">and</span> <span class="s1">&#39;SHADOW_PRICE_TABLE&#39;</span> <span class="ow">in</span> <span class="n">model_settings</span><span class="p">:</span>
-         <span class="n">inject</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">model_settings</span><span class="p">[</span><span class="s1">&#39;SHADOW_PRICE_TABLE&#39;</span><span class="p">],</span> <span class="n">spc</span><span class="o">.</span><span class="n">shadow_prices</span><span class="p">)</span>
-     <span class="k">if</span> <span class="s1">&#39;MODELED_SIZE_TABLE&#39;</span> <span class="ow">in</span> <span class="n">model_settings</span><span class="p">:</span>
-         <span class="n">inject</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">model_settings</span><span class="p">[</span><span class="s1">&#39;MODELED_SIZE_TABLE&#39;</span><span class="p">],</span> <span class="n">spc</span><span class="o">.</span><span class="n">modeled_size</span><span class="p">)</span>
-
- <span class="n">dest_choice_column_name</span> <span class="o">=</span> <span class="n">model_settings</span><span class="p">[</span><span class="s1">&#39;DEST_CHOICE_COLUMN_NAME&#39;</span><span class="p">]</span>
- <span class="n">tracing</span><span class="o">.</span><span class="n">print_summary</span><span class="p">(</span><span class="n">dest_choice_column_name</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">value_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
- <span class="n">persons_df</span> <span class="o">=</span> <span class="n">persons</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
-
- <span class="c1"># We only chose school locations for the subset of persons who go to school</span>
- <span class="c1"># so we backfill the empty choices with -1 to code as no school location</span>
- <span class="n">NO_DEST_TAZ</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
- <span class="n">persons_df</span><span class="p">[</span><span class="n">dest_choice_column_name</span><span class="p">]</span> <span class="o">=</span> \
-     <span class="n">choices</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">persons_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">NO_DEST_TAZ</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
- <span class="c1"># - annotate persons table</span>
- <span class="k">if</span> <span class="s1">&#39;annotate_persons&#39;</span> <span class="ow">in</span> <span class="n">model_settings</span><span class="p">:</span>
-     <span class="n">expressions</span><span class="o">.</span><span class="n">assign_columns</span><span class="p">(</span>
-         <span class="n">df</span><span class="o">=</span><span class="n">persons_df</span><span class="p">,</span>
-         <span class="n">model_settings</span><span class="o">=</span><span class="n">model_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;annotate_persons&#39;</span><span class="p">),</span>
-         <span class="n">trace_label</span><span class="o">=</span><span class="n">tracing</span><span class="o">.</span><span class="n">extend_trace_label</span><span class="p">(</span><span class="n">trace_label</span><span class="p">,</span> <span class="s1">&#39;annotate_persons&#39;</span><span class="p">))</span>
-
-     <span class="n">pipeline</span><span class="o">.</span><span class="n">replace_table</span><span class="p">(</span><span class="s2">&quot;persons&quot;</span><span class="p">,</span> <span class="n">persons_df</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 <section id="finishing-up">
 <h3>Finishing Up<a class="headerlink" href="#finishing-up" title="Permalink to this heading">#</a></h3>
 <p>The last models to be run by the data pipeline are:</p>
@@ -824,211 +589,12 @@ to <a class="reference internal" href="models.html#shadow-pricing"><span class="
 </ul>
 </section>
 </section>
-<section id="additional-notes">
-<h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Permalink to this heading">#</a></h2>
-<p>The rest of the microsimulation models operate in a similar fashion with a few notable additions:</p>
-<ul class="simple">
-<li><p>creating new tables</p></li>
-<li><p>vectorized 3D skims indexing</p></li>
-<li><p>aggregate (OD-level) accessibilities model</p></li>
-</ul>
-<section id="creating-new-tables">
-<h3>Creating New Tables<a class="headerlink" href="#creating-new-tables" title="Permalink to this heading">#</a></h3>
-<p>In addition to calculating the mandatory tour frequency for a person, the model must also create mandatory tour records.
-Once the number of tours is known, then the next step is to create tours records for subsequent models.  This is done by the
-<a class="reference internal" href="models.html#activitysim.abm.models.util.tour_frequency.process_tours" title="activitysim.abm.models.util.tour_frequency.process_tours"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.tour_frequency.process_tours()</span></code></a> function, which is called by the
-<a class="reference internal" href="models.html#activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency" title="activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.mandatory_tour_frequency.mandatory_tour_frequency()</span></code></a> function, which adds the tours to
-the <code class="docutils literal notranslate"><span class="pre">tours</span></code> table managed in the data pipeline.  This is the same basic pattern used for creating new tables - tours, trips, etc.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@inject</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">mandatory_tour_frequency</span><span class="p">(</span><span class="n">persons_merged</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">trace_hh_id</span><span class="p">):</span>
-
-  <span class="n">choosers</span><span class="p">[</span><span class="s1">&#39;mandatory_tour_frequency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">choices</span>
-    <span class="n">mandatory_tours</span> <span class="o">=</span> <span class="n">process_mandatory_tours</span><span class="p">(</span>
-      <span class="n">persons</span><span class="o">=</span><span class="n">choosers</span><span class="p">,</span>
-      <span class="n">mandatory_tour_frequency_alts</span><span class="o">=</span><span class="n">alternatives</span>
-  <span class="p">)</span>
-
-  <span class="n">tours</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">extend_table</span><span class="p">(</span><span class="s2">&quot;tours&quot;</span><span class="p">,</span> <span class="n">mandatory_tours</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="vectorized-3d-skim-indexing">
-<h3>Vectorized 3D Skim Indexing<a class="headerlink" href="#vectorized-3d-skim-indexing" title="Permalink to this heading">#</a></h3>
-<p>The mode choice model uses a collection of skims with a third dimension, which in this case
-is time period.  Setting up the 3D index for skims is done as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">skim_dict</span> <span class="o">=</span> <span class="n">network_los</span><span class="o">.</span><span class="n">get_default_skim_dict</span><span class="p">()</span>
-
-<span class="c1"># setup skim keys</span>
-<span class="n">orig_col_name</span> <span class="o">=</span> <span class="s1">&#39;home_zone_id&#39;</span>
-<span class="n">dest_col_name</span> <span class="o">=</span> <span class="s1">&#39;destination&#39;</span>
-
-<span class="n">out_time_col_name</span> <span class="o">=</span> <span class="s1">&#39;start&#39;</span>
-<span class="n">in_time_col_name</span> <span class="o">=</span> <span class="s1">&#39;end&#39;</span>
-<span class="n">odt_skim_stack_wrapper</span> <span class="o">=</span> <span class="n">skim_dict</span><span class="o">.</span><span class="n">wrap_3d</span><span class="p">(</span><span class="n">orig_key</span><span class="o">=</span><span class="n">orig_col_name</span><span class="p">,</span> <span class="n">dest_key</span><span class="o">=</span><span class="n">dest_col_name</span><span class="p">,</span>
-                                           <span class="n">dim3_key</span><span class="o">=</span><span class="s1">&#39;out_period&#39;</span><span class="p">)</span>
-<span class="n">dot_skim_stack_wrapper</span> <span class="o">=</span> <span class="n">skim_dict</span><span class="o">.</span><span class="n">wrap_3d</span><span class="p">(</span><span class="n">orig_key</span><span class="o">=</span><span class="n">dest_col_name</span><span class="p">,</span> <span class="n">dest_key</span><span class="o">=</span><span class="n">orig_col_name</span><span class="p">,</span>
-                                           <span class="n">dim3_key</span><span class="o">=</span><span class="s1">&#39;in_period&#39;</span><span class="p">)</span>
-<span class="n">odr_skim_stack_wrapper</span> <span class="o">=</span> <span class="n">skim_dict</span><span class="o">.</span><span class="n">wrap_3d</span><span class="p">(</span><span class="n">orig_key</span><span class="o">=</span><span class="n">orig_col_name</span><span class="p">,</span> <span class="n">dest_key</span><span class="o">=</span><span class="n">dest_col_name</span><span class="p">,</span>
-                                           <span class="n">dim3_key</span><span class="o">=</span><span class="s1">&#39;in_period&#39;</span><span class="p">)</span>
-<span class="n">dor_skim_stack_wrapper</span> <span class="o">=</span> <span class="n">skim_dict</span><span class="o">.</span><span class="n">wrap_3d</span><span class="p">(</span><span class="n">orig_key</span><span class="o">=</span><span class="n">dest_col_name</span><span class="p">,</span> <span class="n">dest_key</span><span class="o">=</span><span class="n">orig_col_name</span><span class="p">,</span>
-                                           <span class="n">dim3_key</span><span class="o">=</span><span class="s1">&#39;out_period&#39;</span><span class="p">)</span>
-<span class="n">od_skim_stack_wrapper</span> <span class="o">=</span> <span class="n">skim_dict</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">orig_col_name</span><span class="p">,</span> <span class="n">dest_col_name</span><span class="p">)</span>
-
-<span class="n">skims</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;odt_skims&quot;</span><span class="p">:</span> <span class="n">odt_skim_stack_wrapper</span><span class="p">,</span>
-    <span class="s2">&quot;dot_skims&quot;</span><span class="p">:</span> <span class="n">dot_skim_stack_wrapper</span><span class="p">,</span>
-    <span class="s2">&quot;od_skims&quot;</span><span class="p">:</span> <span class="n">od_skim_stack_wrapper</span><span class="p">,</span>
-    <span class="s1">&#39;orig_col_name&#39;</span><span class="p">:</span> <span class="n">orig_col_name</span><span class="p">,</span>
-    <span class="s1">&#39;dest_col_name&#39;</span><span class="p">:</span> <span class="n">dest_col_name</span><span class="p">,</span>
-    <span class="s1">&#39;out_time_col_name&#39;</span><span class="p">:</span> <span class="n">out_time_col_name</span><span class="p">,</span>
-    <span class="s1">&#39;in_time_col_name&#39;</span><span class="p">:</span> <span class="n">in_time_col_name</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>When model expressions such as <code class="docutils literal notranslate"><span class="pre">&#64;odt_skims['WLK_LOC_WLK_TOTIVT']</span></code> are solved,
-the <code class="docutils literal notranslate"><span class="pre">WLK_LOC_WLK_TOTIVT</span></code> skim matrix values for all chooser table origins, destinations, and
-out_periods can be retrieved in one vectorized request.</p>
-<p>All the skims are preloaded (cached) by the pipeline manager at the beginning of the model
-run in order to avoid repeatedly reading the skims from the OMX files on disk.  This saves
-significant model runtime.</p>
-<p>See <a class="reference internal" href="core.html#los-in-detail"><span class="std std-ref">LOS</span></a> for more information on skim handling.</p>
-</section>
-<section id="accessibilities-model">
-<h3>Accessibilities Model<a class="headerlink" href="#accessibilities-model" title="Permalink to this heading">#</a></h3>
-<p>Unlike the microsimulation models, which operate on a table of choosers, the accessibilities model is
-an aggregate model that calculates accessibility measures by origin zone to all destination zones.  This
-model could be implemented with a matrix library such as numpy since it involves a series of matrix
-and vector operations.  However, all the other ActivitySim AB models - the
-microsimulation models - are implemented with pandas.DataFrame tables, and so this would be a
-different approach for just this model.  The benefits of keeping with the same table approach to
-data setup, expression management, and solving means ActivitySim has one expression syntax, is
-easier to understand and document, and is more efficiently implemented.</p>
-<p>As illustrated below, in order to convert the
-accessibility calculation into a table operation, a table of OD pairs is first built using numpy
-<code class="docutils literal notranslate"><span class="pre">repeat</span></code> and <code class="docutils literal notranslate"><span class="pre">tile</span></code> functions.  Once constructed, the additional data columns are added to the
-table in order to solve the accessibility calculations.  The skim data is also added in column form.
-After solving the expressions for each OD pair row, the accessibility module aggregates the results
-to origin zone and write them to the datastore.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create OD dataframe</span>
-  <span class="n">od_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-      <span class="n">data</span><span class="o">=</span><span class="p">{</span>
-          <span class="s1">&#39;orig&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">land_use_df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">zone_count</span><span class="p">),</span>
-          <span class="s1">&#39;dest&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">land_use_df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">zone_count</span><span class="p">)</span>
-      <span class="p">}</span>
-  <span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="multiprocessing">
-<span id="index-0"></span><span id="id2"></span><h2>Multiprocessing<a class="headerlink" href="#multiprocessing" title="Permalink to this heading">#</a></h2>
-<p>Most models can be implemented as a series of independent vectorized operations on pandas DataFrames and
-numpy arrays. These vectorized operations are much faster than sequential Python because they are
-implemented by native code (compiled C) and are to some extent multi-threaded. But the benefits of
-numpy multi-processing are limited because they only apply to atomic numpy or pandas calls, and as
-soon as control returns to Python it is single-threaded and slow.</p>
-<p>Multi-threading is not an attractive strategy to get around the Python performance problem because
-of the limitations imposed by Python’s global interpreter lock (GIL). Rather than struggling with
-Python multi-threading, ActivitySim uses the
-Python <a class="reference external" href="https://docs.python.org/2/library/multiprocessing.html">multiprocessing</a> library to parallelize
-most models.</p>
-<p>ActivitySim’s modular and extensible architecture makes it possible to not hardwire the multiprocessing
-architecture. The specification of which models should be run in parallel, how many processers
-should be used, and the segmentation of the data between processes are all specified in the
-settings config file.</p>
-<section id="mutliprocessing-configuration">
-<h3>Mutliprocessing Configuration<a class="headerlink" href="#mutliprocessing-configuration" title="Permalink to this heading">#</a></h3>
-<p>The multiprocess_steps setting below indicate that the simulation should be broken into three steps.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">models</span><span class="p">:</span>
-  <span class="c1">### mp_initialize step</span>
-  <span class="o">-</span> <span class="n">initialize_landuse</span>
-  <span class="o">-</span> <span class="n">compute_accessibility</span>
-  <span class="o">-</span> <span class="n">initialize_households</span>
-  <span class="c1">### mp_households step</span>
-  <span class="o">-</span> <span class="n">school_location</span>
-  <span class="o">-</span> <span class="n">workplace_location</span>
-  <span class="o">-</span> <span class="n">auto_ownership_simulate</span>
-  <span class="o">-</span> <span class="n">free_parking</span>
-  <span class="c1">### mp_summarize step</span>
-  <span class="o">-</span> <span class="n">write_tables</span>
-
-<span class="n">multiprocess_steps</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">mp_initialize</span>
-    <span class="n">begin</span><span class="p">:</span> <span class="n">initialize_landuse</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">mp_households</span>
-    <span class="n">begin</span><span class="p">:</span> <span class="n">school_location</span>
-    <span class="n">num_processes</span><span class="p">:</span> <span class="mi">2</span>
-    <span class="nb">slice</span><span class="p">:</span>
-      <span class="n">tables</span><span class="p">:</span>
-        <span class="o">-</span> <span class="n">households</span>
-        <span class="o">-</span> <span class="n">persons</span>
-  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">mp_summarize</span>
-    <span class="n">begin</span><span class="p">:</span> <span class="n">write_tables</span>
-</pre></div>
-</div>
-<p>The first multiprocess_step, <code class="docutils literal notranslate"><span class="pre">mp_initialize</span></code>, begins with the initialize landuse step and is
-implicity single-process because there is no ‘slice’ key indicating how to apportion the tables.
-This first step includes all models listed in the ‘models’ setting up until the first step
-in the next multiprocess_steps.</p>
-<p>The second multiprocess_step, <code class="docutils literal notranslate"><span class="pre">mp_households</span></code>, starts with the school location model and continues
-through auto ownership. The ‘slice’ info indicates that the tables should be sliced by
-<code class="docutils literal notranslate"><span class="pre">households</span></code>, and that <code class="docutils literal notranslate"><span class="pre">persons</span></code> is a dependent table and so <code class="docutils literal notranslate"><span class="pre">persons</span></code> with a ref_col (foreign key
-column with the same name as the <code class="docutils literal notranslate"><span class="pre">Households</span></code> table index) referencing a household record should be
-taken to ‘belong’ to that household. Similarly, any other table that either share an index
-(i.e. having the same name) with either the <code class="docutils literal notranslate"><span class="pre">households</span></code> or <code class="docutils literal notranslate"><span class="pre">persons</span></code> table, or have a ref_col to
-either of their indexes, should also be considered a dependent table.</p>
-<p>The num_processes setting of 2 indicates that the pipeline should be split in two, and half of the
-households should be apportioned into each subprocess pipeline, and all dependent tables should
-likewise be apportioned accordingly. All other tables (e.g. <code class="docutils literal notranslate"><span class="pre">land_use</span></code>) that do share an index (name)
-or have a ref_col should be considered mirrored and be included in their entirety.</p>
-<p>The primary table is sliced by num_processes-sized strides. (e.g. for num_processes == 2, the
-sub-processes get every second record starting at offsets 0 and 1 respectively. All other dependent
-tables slices are based (directly or indirectly) on this primary stride segmentation of the primary
-table index.</p>
-<p>Two separate sub-process are launched (num_processes == 2) and each passed the name of their
-apportioned pipeline file. They execute independently and if they terminate successfully, their
-contents are then coalesced into a single pipeline file whose tables should then be essentially
-the same as it had been generated by a single process.</p>
-<p>We assume that any new tables that are created by the sub-processes are directly dependent on the
-previously primary tables or are mirrored. Thus we can coalesce the sub-process pipelines by
-concatenating the primary and dependent tables and simply retaining any copy of the mirrored tables
-(since they should all be identical.)</p>
-<p>The third multiprocess_step, <code class="docutils literal notranslate"><span class="pre">mp_summarize</span></code>, then is handled in single-process mode and runs the
-<code class="docutils literal notranslate"><span class="pre">write_tables</span></code> model, writing the results, but also leaving the tables in the pipeline, with
-essentially the same tables and results as if the whole simulation had been run as a single process.</p>
-</section>
-<section id="shared-data">
-<h3>Shared Data<a class="headerlink" href="#shared-data" title="Permalink to this heading">#</a></h3>
-<p>Although multiprocessing subprocesses each have their apportioned pipeline, they also share some
-data passed to them by the parent process:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>read-only shared data such as skim matrices</p></li>
-<li><p>read-write shared memory when needed.  For example when school and work modeled destinations by zone are compared to target zone sizes (as calculated by the size terms).</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="outputs">
-<h3>Outputs<a class="headerlink" href="#outputs" title="Permalink to this heading">#</a></h3>
-<p>When multiprocessing is run, the following additional outputs are created, which are useful for understanding how multiprocessing works:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>run_list.txt - which contains the expanded model run list with additional annotation for single and multiprocessed steps</p></li>
-<li><p>Log files for each multiprocess step and process, for example <code class="docutils literal notranslate"><span class="pre">mp_households_0-activitysim.log</span></code> and <code class="docutils literal notranslate"><span class="pre">mp_households_1-activitysim.log</span></code></p></li>
-<li><p>Pipeline file for each multiprocess step and process, for example <code class="docutils literal notranslate"><span class="pre">mp_households_0-pipeline.h5</span></code></p></li>
-<li><p>mem.csv - memory used for each step</p></li>
-<li><p>breadcrumbs.yaml - multiprocess global info</p></li>
-</ul>
-</div></blockquote>
-<p>See the <a class="reference internal" href="core.html#multiprocessing-in-detail"><span class="std std-ref">Multiprocessing</span></a> section for more detail.</p>
-<span class="target" id="index-1"></span><span class="target" id="index-2"></span></section>
-</section>
 <section id="data-schema">
-<span id="index-3"></span><h2>Data Schema<a class="headerlink" href="#data-schema" title="Permalink to this heading">#</a></h2>
+<h2>Data Schema<a class="headerlink" href="#data-schema" title="Permalink to this heading">#</a></h2>
 <p>The ActivitySim data schema depends on the sub-models implemented.  The data schema listed below is for
 the primary TM1 example model.  These tables and skims are defined in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.tables</span></code> package.</p>
-<span class="target" id="index-4"></span><span class="target" id="index-5"></span><span class="target" id="index-6"></span><span class="target" id="index-7"></span><span class="target" id="index-8"></span><span class="target" id="index-9"></span><span class="target" id="index-10"></span><span class="target" id="index-11"></span><section id="data-tables">
-<span id="index-12"></span><h3>Data Tables<a class="headerlink" href="#data-tables" title="Permalink to this heading">#</a></h3>
+<span class="target" id="index-0"></span><span class="target" id="index-1"></span><span class="target" id="index-2"></span><span class="target" id="index-3"></span><span class="target" id="index-4"></span><span class="target" id="index-5"></span><span class="target" id="index-6"></span><span class="target" id="index-7"></span><section id="data-tables">
+<span id="index-8"></span><h3>Data Tables<a class="headerlink" href="#data-tables" title="Permalink to this heading">#</a></h3>
 <p>The following tables are currently implemented:</p>
 <blockquote>
 <div><ul class="simple">
@@ -1052,8 +618,8 @@ the primary TM1 example model.  These tables and skims are defined in the <code 
 </ul>
 </div></blockquote>
 </section>
-<section id="id3">
-<h3>Data Schema<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<section id="id2">
+<h3>Data Schema<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>The following table lists the pipeline data tables, each final field, the data type, the step that created it, and the
 number of columns and rows in the table at the time of creation.  The <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\make_pipeline_output.py</span></code> script
 uses the information stored in the pipeline file to create the table below for a small sample of households.</p>
@@ -3002,9 +2568,9 @@ uses the information stored in the pipeline file to create the table below for a
 </tr>
 </tbody>
 </table>
-<span class="target" id="index-13"></span><span class="target" id="index-14"></span></section>
+<span class="target" id="index-9"></span><span class="target" id="index-10"></span></section>
 <section id="skims">
-<span id="index-15"></span><span id="id4"></span><h3>Skims<a class="headerlink" href="#skims" title="Permalink to this heading">#</a></h3>
+<span id="index-11"></span><span id="id3"></span><h3>Skims<a class="headerlink" href="#skims" title="Permalink to this heading">#</a></h3>
 <p>The skims class defines Inject injectables to access the skim matrices.  The skims class reads the
 skims from the omx_file on disk.  The injectables and omx_file for the example are listed below.
 The skims are float64 matrix.</p>
@@ -5554,6 +5120,14 @@ The skims are float64 matrix.</p>
 </table>
 </section>
 </section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this heading">#</a></h2>
+<p>TODO: Add link to component documentation</p>
+</section>
+<section id="changing-the-sample-size">
+<h2>Changing the Sample Size<a class="headerlink" href="#changing-the-sample-size" title="Permalink to this heading">#</a></h2>
+<p>TODO: Add content</p>
+</section>
 </section>
 
 
@@ -5567,20 +5141,20 @@ The skims are float64 matrix.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="estimation.html"
+       href="users-guide/_generated/activitysim.core.configuration.DigitalEncoding.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Estimation</p>
+        <p class="prev-next-title">DigitalEncoding</p>
       </div>
     </a>
     <a class="right-next"
-       href="dev-guide/index.html"
+       href="users-guide/example_models.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Developers</p>
+        <p class="prev-next-title">Example Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -5602,28 +5176,17 @@ The skims are float64 matrix.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-flow">Execution Flow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-households">Initialize Households</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#school-location">School Location</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finishing-up">Finishing Up</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notes">Additional Notes</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-new-tables">Creating New Tables</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vectorized-3d-skim-indexing">Vectorized 3D Skim Indexing</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessibilities-model">Accessibilities Model</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiprocessing">Multiprocessing</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mutliprocessing-configuration">Mutliprocessing Configuration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-data">Shared Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outputs">Outputs</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-schema">Data Schema</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-tables">Data Tables</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Data Schema</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Data Schema</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skims">Skims</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#changing-the-sample-size">Changing the Sample Size</a></li>
 </ul>
   </nav></div>
 
@@ -5658,7 +5221,7 @@ The skims are float64 matrix.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev413+gf357115e, documentation last updated Nov 14, 2023.<br/>
+ActivitySim 1.2.1.dev430+gbdd56c0a, documentation last updated Nov 20, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
