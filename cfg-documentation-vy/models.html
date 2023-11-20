@@ -437,7 +437,7 @@ document.write(`
   <section id="models">
 <span id="index-0"></span><span id="id1"></span><h1>Models<a class="headerlink" href="#models" title="Permalink to this heading">#</a></h1>
 <p>The currently implemented example ActivitySim AB models are described below.  See the example
-model <a class="reference internal" href="users-guide/example_models.html#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>, <a class="reference internal" href="users-guide/other_examples.html#arc-sub-model-spec-files"><span class="std std-ref">Example ARC Sub-Model Specification Files</span></a>, and <a class="reference internal" href="examples.html#semcog-sub-model-spec-files"><span class="std std-ref">Example SEMCOG Sub-Model Specification Files</span></a> for more information.</p>
+model <a class="reference internal" href="users-guide/example_models.html#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>, <a class="reference internal" href="examples.html#arc-sub-model-spec-files"><span class="std std-ref">Example ARC Sub-Model Specification Files</span></a>, and <a class="reference internal" href="examples.html#semcog-sub-model-spec-files"><span class="std std-ref">Example SEMCOG Sub-Model Specification Files</span></a> for more information.</p>
 <section id="initialize">
 <span id="initialize-tours"></span><span id="initialize-households"></span><span id="initialize-landuse"></span><h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this heading">#</a></h2>
 <p>The initialize model isn’t really a model, but rather a few data processing steps in the data pipeline.
@@ -2084,7 +2084,7 @@ user flexibility to compile and share a single vehicle type data file containing
 different scenario years.</p></li>
 <li><p>Optional additional settings that work the same in other models are constants, expression preprocessor, and annotate tables.</p></li>
 </ul>
-<p>Input vehicle type data included in <a class="reference internal" href="users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> came from a variety of sources. The number of vehicle makes, models, MPG, and
+<p>Input vehicle type data included in <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> came from a variety of sources. The number of vehicle makes, models, MPG, and
 electric vehicle range was sourced from the Enivornmental Protection Agency (EPA).  Additional data on vehicle costs were derived from the
 National Household Travel Survey. Auto operating costs in the vehicle type data file were a sum of fuel costs and maintenance costs.
 Fuel costs were calculated from MPG assuming a $3.00 cost for a gallon of gas. When MPG was not available to calculate fuel costs,
@@ -2095,11 +2095,11 @@ Motorcycles were assigned the small sedan maintenance costs since they were not 
 Maintenance costs were not varied by vehicle year. (According to
 <a class="reference external" href="https://www.bls.gov/opub/btn/volume-3/pdf/americans-aging-autos.pdf">data from the U.S. Bureau of Labor Statistics</a>,
 there was no consistent relationship between vehicle age and maintenance costs.)</p>
-<p>Using the above methodology, the average auto operating costs of vehicles output from <a class="reference internal" href="users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> was 18.4 cents.
+<p>Using the above methodology, the average auto operating costs of vehicles output from <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> was 18.4 cents.
 This value is very close to the auto operating cost of 18.3 cents used in <a class="reference internal" href="users-guide/example_models.html#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>.
 Non-household vehicles in prototype_mtc_extended use the auto operating cost of 18.3 cents used in prototype_mtc.
 Users are encouraged to make their own assumptions and calculate auto operating costs as they see fit.</p>
-<p>The distribution of fuel type probabilities included in <a class="reference internal" href="users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> are computed directly from the National Household Travel Survey data
+<p>The distribution of fuel type probabilities included in <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> are computed directly from the National Household Travel Survey data
 and include the entire US. Therefore, there is “lumpiness” in probabilities due to poor statistics in the data for some vehicle types.
 The user is encouraged to adjust the probabilities to their modeling region and “smooth” them for more consistent results.</p>
 <p>Further discussion of output results and model sensitivities can be found <a class="reference external" href="https://github.com/ActivitySim/activitysim/wiki/Project-Meeting-2022.05.05">here</a>.</p>
@@ -3059,7 +3059,7 @@ Each of these files is specified in the school_escorting.yaml file along with th
 <p>There is also a constants section in the school_escorting.yaml file which contain two constants.
 One which sets the maximum time bin difference to match school and work tours for ride sharing
 and another to set the number of minutes per time bin.
-In the <a class="reference internal" href="users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> example, these are set to 1 and 60 respectively.</p>
+In the <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a> example, these are set to 1 and 60 respectively.</p>
 <p>After a school escorting alternative is chosen for the inbound and outbound direction, the model will
 create the tours and trips associated with the decision.  Pure escort tours are created,
 and the mandatory tour start and end times are changed to match the school escort bundle start and end times.
@@ -3164,7 +3164,7 @@ changes in the following model configuration files for models downstream of the 
 escort tours determined in the non-mandatory tour frequency model. Thus, when including the school escort model and
 accounting for these tours explicitly, extra care should be taken not to double count them in the non-mandatory
 tour frequency model. The non-mandatory tour frequency model should be re-evaluated and likely changed to decrease
-the number of escort tours generated by that model.  This was not implemented in the <a class="reference internal" href="users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>
+the number of escort tours generated by that model.  This was not implemented in the <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>
 implementation due to a lack of data surrounding the number of escort tours in the region.</p>
 <span class="target" id="module-activitysim.abm.models.school_escorting"></span><dl class="py class pydantic_model">
 <dt class="sig sig-object py" id="activitysim.abm.models.school_escorting.SchoolEscortSettings">
@@ -4155,7 +4155,7 @@ households would be assigned the non-household vehicle option since there are no
 A vehicle is selected for each occupancy level set by the user such that different tour modes that have different occupancies could see different operating
 characteristics. The output of the vehicle allocation model is appended to the tour table with column names <code class="docutils literal notranslate"><span class="pre">vehicle_occup_{occupancy}</span></code> and the values are
 the vehicle type selected.</p>
-<p>In <a class="reference internal" href="users-guide/other_examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>, three occupancy levels are used: 1, 2, and 3.5.  The auto operating cost
+<p>In <a class="reference internal" href="examples.html#prototype-mtc-extended"><span class="std std-ref">prototype_mtc_extended</span></a>, three occupancy levels are used: 1, 2, and 3.5.  The auto operating cost
 for occupancy level 1 is used in the drive alone mode and drive to transit modes. Occupancy levels 2 and 3.5 are used for shared
 ride 2 and shared ride 3+ auto operating costs, respectively.  Auto operating costs are selected in the mode choice pre-processors by selecting the allocated
 vehicle type data from the vehicles table. If the allocated vehicle type was the non-household vehicle, the auto operating costs uses
@@ -5079,7 +5079,7 @@ be based on the subtour start time for outbound trips and will resume again for 
 By indexing the probabilities based on time remaining and scheduling relative to the previous trip, scheduling trips in relative
 mode will not fail.  Note also that relative scheduling mode requires the use of logic
 version 2 (see warning about logic versions, below).</p>
-<p>An example of trip scheduling in relative mode is included in the <a class="reference internal" href="users-guide/other_examples.html#prototype-mwcog"><span class="std std-ref">prototype_mwcog</span></a> example.  In this example, trip
+<p>An example of trip scheduling in relative mode is included in the <a class="reference internal" href="examples.html#prototype-mwcog"><span class="std std-ref">prototype_mwcog</span></a> example.  In this example, trip
 scheduling probabilities are indexed by the following columns:</p>
 <blockquote>
 <div><ul class="simple">
@@ -7670,7 +7670,7 @@ DataFrame and the values are the index of the alts DataFrame.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev430+gbdd56c0a, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
