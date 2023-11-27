@@ -837,9 +837,1957 @@ can be aggregated into travel demand matrices for network loading.</p>
 of MTC households, persons, and OMX skims are on the ActivitySim <a class="reference external" href="https://github.com/rsginc/activitysim_resources">resources repository</a>.</p>
 <p>Additional details on these files is available in the original <a class="reference external" href="https://github.com/BayAreaMetro/modeling-website/wiki/DataDictionary">Travel Model 1 repository</a>,
 although many of the files described there are not used in ActivitySim.</p>
+<section id="data-schema">
+<h5>Data Schema<a class="headerlink" href="#data-schema" title="Permalink to this heading">#</a></h5>
+<p>The following table lists the pipeline data tables, field names, the data types and other details associated with each table in the model:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Table</p></th>
+<th class="head"><p>Field</p></th>
+<th class="head"><p>DType</p></th>
+<th class="head"><p>Creator</p></th>
+<th class="head"><p>NCol</p></th>
+<th class="head"><p>NRow</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>accessibility</p></td>
+<td><p>auPkRetail</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>accessibility</p></td>
+<td><p>auPkTotal</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>accessibility</p></td>
+<td><p>auOpRetail</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>accessibility</p></td>
+<td><p>auOpTotal</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>accessibility</p></td>
+<td><p>trPkRetail</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>accessibility</p></td>
+<td><p>trPkTotal</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>accessibility</p></td>
+<td><p>trOpRetail</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>accessibility</p></td>
+<td><p>trOpTotal</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>accessibility</p></td>
+<td><p>nmRetail</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>accessibility</p></td>
+<td><p>nmTotal</p></td>
+<td><p>float32</p></td>
+<td><p>compute_accessibility</p></td>
+<td><p>10</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>TAZ</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>SERIALNO</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>PUMA5</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>income</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hhsize</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>HHT</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>UNITTYPE</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>NOC</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>BLDGSZ</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>TENURE</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>VEHICL</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hinccat1</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hinccat2</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hhagecat</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hsizecat</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hfamily</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hunittype</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hNOCcat</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hwrkrcat</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>h0004</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>h0511</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>h1215</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>h1617</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>h1824</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>h2534</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>h3549</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>h5064</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>h6579</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>h80up</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_workers</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hwork_f</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hwork_p</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>huniv</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hnwork</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hretire</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hpresch</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hschpred</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hschdriv</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>htypdwel</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hownrent</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hadnwst</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hadwpst</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hadkids</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>bucketBin</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>originalPUMA</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hmultiunit</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>chunk_id</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>income_in_thousands</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>income_segment</p></td>
+<td><p>int32</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>median_value_of_time</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>hh_value_of_time</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_non_workers</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_drivers</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_adults</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_children</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_young_children</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_children_5_to_15</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_children_16_to_17</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_college_age</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_young_adults</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>non_family</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>family</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>home_is_urban</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>home_is_rural</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>auto_ownership</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>65</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>hh_work_auto_savings_ratio</p></td>
+<td><p>float32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>66</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_under16_not_at_school</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_travel_active</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_travel_active_adults</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_travel_active_preschoolers</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_travel_active_children</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>num_travel_active_non_presch</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>participates_in_jtf_model</p></td>
+<td><p>int8</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>73</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>households</p></td>
+<td><p>joint_tour_frequency</p></td>
+<td><p>object</p></td>
+<td><p>joint_tour_frequency</p></td>
+<td><p>75</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>households</p></td>
+<td><p>num_hh_joint_tours</p></td>
+<td><p>int8</p></td>
+<td><p>joint_tour_frequency</p></td>
+<td><p>75</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>joint_tour_participants</p></td>
+<td><p>tour_id</p></td>
+<td><p>int64</p></td>
+<td><p>joint_tour_participation</p></td>
+<td><p>4</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-even"><td><p>joint_tour_participants</p></td>
+<td><p>household_id</p></td>
+<td><p>int64</p></td>
+<td><p>joint_tour_participation</p></td>
+<td><p>4</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-odd"><td><p>joint_tour_participants</p></td>
+<td><p>person_id</p></td>
+<td><p>int64</p></td>
+<td><p>joint_tour_participation</p></td>
+<td><p>4</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-even"><td><p>joint_tour_participants</p></td>
+<td><p>participant_num</p></td>
+<td><p>int64</p></td>
+<td><p>joint_tour_participation</p></td>
+<td><p>4</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>DISTRICT</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>SD</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>county_id</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>TOTHH</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>HHPOP</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>TOTPOP</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>EMPRES</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>SFDU</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>MFDU</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>HHINCQ1</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>HHINCQ2</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>HHINCQ3</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>HHINCQ4</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>TOTACRE</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>RESACRE</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>CIACRE</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>SHPOP62P</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>TOTEMP</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>AGE0004</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>AGE0519</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>AGE2044</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>AGE4564</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>AGE65P</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>RETEMPN</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>FPSEMPN</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>HEREMPN</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>OTHEMPN</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>AGREMPN</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>MWTEMPN</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>PRKCST</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>OPRKCST</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>area_type</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>HSENROLL</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>COLLFTE</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>COLLPTE</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>TOPOLOGY</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>TERMINAL</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>ZERO</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>hhlds</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>sftaz</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>gqpop</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>household_density</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>land_use</p></td>
+<td><p>employment_density</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>land_use</p></td>
+<td><p>density_index</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_landuse</p></td>
+<td><p>44</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>4</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>5</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>6</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>7</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>8</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>9</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>10</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>11</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>12</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>13</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>14</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>15</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>16</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>17</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>18</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>19</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>20</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>21</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>22</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>person_windows</p></td>
+<td><p>23</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>person_windows</p></td>
+<td><p>24</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>21</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>household_id</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>age</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>RELATE</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>ESR</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>GRADE</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>PNUM</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>PAUG</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>DDP</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>sex</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>WEEKS</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>HOURS</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>MSP</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>POVERTY</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>EARNS</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>pagecat</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>pemploy</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>pstudent</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>ptype</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>padkid</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>age_16_to_19</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>age_16_p</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>adult</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>male</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>female</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>has_non_worker</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>has_retiree</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>has_preschool_kid</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>has_driving_kid</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>has_school_kid</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>has_full_time</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>has_part_time</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>has_university</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>student_is_employed</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>nonstudent_to_school</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>is_student</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>is_gradeschool</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>is_highschool</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>is_university</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>school_segment</p></td>
+<td><p>int8</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>is_worker</p></td>
+<td><p>bool</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>home_taz</p></td>
+<td><p>int64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>value_of_time</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>42</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>school_taz</p></td>
+<td><p>int32</p></td>
+<td><p>school_location</p></td>
+<td><p>45</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>distance_to_school</p></td>
+<td><p>float32</p></td>
+<td><p>school_location</p></td>
+<td><p>45</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>roundtrip_auto_time_to_school</p></td>
+<td><p>float32</p></td>
+<td><p>school_location</p></td>
+<td><p>45</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>workplace_taz</p></td>
+<td><p>int32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>distance_to_work</p></td>
+<td><p>float32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>workplace_in_cbd</p></td>
+<td><p>bool</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>work_zone_area_type</p></td>
+<td><p>float64</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>roundtrip_auto_time_to_work</p></td>
+<td><p>float32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>work_auto_savings</p></td>
+<td><p>float32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>work_auto_savings_ratio</p></td>
+<td><p>float32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>52</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>free_parking_at_work</p></td>
+<td><p>bool</p></td>
+<td><p>free_parking</p></td>
+<td><p>53</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>cdap_activity</p></td>
+<td><p>object</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>59</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>cdap_rank</p></td>
+<td><p>int64</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>59</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>travel_active</p></td>
+<td><p>bool</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>59</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>under16_not_at_school</p></td>
+<td><p>bool</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>59</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>has_preschool_kid_at_home</p></td>
+<td><p>bool</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>59</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>has_school_kid_at_home</p></td>
+<td><p>bool</p></td>
+<td><p>cdap_simulate</p></td>
+<td><p>59</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>object</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>64</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>work_and_school_and_worker</p></td>
+<td><p>bool</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>64</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>work_and_school_and_student</p></td>
+<td><p>bool</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>64</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>num_mand</p></td>
+<td><p>int8</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>64</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>num_work_tours</p></td>
+<td><p>int8</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>64</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>num_joint_tours</p></td>
+<td><p>int8</p></td>
+<td><p>joint_tour_participation</p></td>
+<td><p>65</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>num_non_mand</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>num_escort_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>num_eatout_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>num_shop_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>num_maint_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>num_discr_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>persons</p></td>
+<td><p>num_social_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>persons</p></td>
+<td><p>num_non_escort_tours</p></td>
+<td><p>int8</p></td>
+<td><p>non_mandatory_tour_frequency</p></td>
+<td><p>74</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-even"><td><p>school_destination_size</p></td>
+<td><p>gradeschool</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>3</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>school_destination_size</p></td>
+<td><p>highschool</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>3</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>school_destination_size</p></td>
+<td><p>university</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>3</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>school_modeled_size</p></td>
+<td><p>gradeschool</p></td>
+<td><p>int32</p></td>
+<td><p>school_location</p></td>
+<td><p>3</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>school_modeled_size</p></td>
+<td><p>highschool</p></td>
+<td><p>int32</p></td>
+<td><p>school_location</p></td>
+<td><p>3</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>school_modeled_size</p></td>
+<td><p>university</p></td>
+<td><p>int32</p></td>
+<td><p>school_location</p></td>
+<td><p>3</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>person_id</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>tour_type</p></td>
+<td><p>object</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>tour_type_count</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>tour_type_num</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>tour_num</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>tour_count</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>tour_category</p></td>
+<td><p>object</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>number_of_participants</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>destination</p></td>
+<td><p>int32</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>origin</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>household_id</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_frequency</p></td>
+<td><p>11</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>start</p></td>
+<td><p>int8</p></td>
+<td><p>mandatory_tour_scheduling</p></td>
+<td><p>15</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>end</p></td>
+<td><p>int8</p></td>
+<td><p>mandatory_tour_scheduling</p></td>
+<td><p>15</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>duration</p></td>
+<td><p>int8</p></td>
+<td><p>mandatory_tour_scheduling</p></td>
+<td><p>15</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>tdd</p></td>
+<td><p>int64</p></td>
+<td><p>mandatory_tour_scheduling</p></td>
+<td><p>15</p></td>
+<td><p>153</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>composition</p></td>
+<td><p>object</p></td>
+<td><p>joint_tour_composition</p></td>
+<td><p>16</p></td>
+<td><p>159</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>tour_mode</p></td>
+<td><p>object</p></td>
+<td><p>tour_mode_choice_simulate</p></td>
+<td><p>17</p></td>
+<td><p>319</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>atwork_subtour_frequency</p></td>
+<td><p>object</p></td>
+<td><p>atwork_subtour_frequency</p></td>
+<td><p>19</p></td>
+<td><p>344</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>parent_tour_id</p></td>
+<td><p>float64</p></td>
+<td><p>atwork_subtour_frequency</p></td>
+<td><p>19</p></td>
+<td><p>344</p></td>
+</tr>
+<tr class="row-odd"><td><p>tours</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>object</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>21</p></td>
+<td><p>344</p></td>
+</tr>
+<tr class="row-even"><td><p>tours</p></td>
+<td><p>primary_purpose</p></td>
+<td><p>object</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>21</p></td>
+<td><p>344</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>person_id</p></td>
+<td><p>int64</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>trips</p></td>
+<td><p>household_id</p></td>
+<td><p>int64</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>tour_id</p></td>
+<td><p>int64</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>trips</p></td>
+<td><p>primary_purpose</p></td>
+<td><p>object</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>trip_num</p></td>
+<td><p>int64</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>trips</p></td>
+<td><p>outbound</p></td>
+<td><p>bool</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>trip_count</p></td>
+<td><p>int64</p></td>
+<td><p>stop_frequency</p></td>
+<td><p>7</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>trips</p></td>
+<td><p>purpose</p></td>
+<td><p>object</p></td>
+<td><p>trip_purpose</p></td>
+<td><p>8</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>destination</p></td>
+<td><p>int32</p></td>
+<td><p>trip_destination</p></td>
+<td><p>11</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>trips</p></td>
+<td><p>origin</p></td>
+<td><p>int32</p></td>
+<td><p>trip_destination</p></td>
+<td><p>11</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>failed</p></td>
+<td><p>bool</p></td>
+<td><p>trip_destination</p></td>
+<td><p>11</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>trips</p></td>
+<td><p>depart</p></td>
+<td><p>float64</p></td>
+<td><p>trip_scheduling</p></td>
+<td><p>11</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-odd"><td><p>trips</p></td>
+<td><p>trip_mode</p></td>
+<td><p>object</p></td>
+<td><p>trip_mode_choice</p></td>
+<td><p>12</p></td>
+<td><p>859</p></td>
+</tr>
+<tr class="row-even"><td><p>workplace_destination_size</p></td>
+<td><p>work_high</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>workplace_destination_size</p></td>
+<td><p>work_low</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>workplace_destination_size</p></td>
+<td><p>work_med</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>workplace_destination_size</p></td>
+<td><p>work_veryhigh</p></td>
+<td><p>float64</p></td>
+<td><p>initialize_households</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>workplace_modeled_size</p></td>
+<td><p>work_high</p></td>
+<td><p>int32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>workplace_modeled_size</p></td>
+<td><p>work_low</p></td>
+<td><p>int32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-even"><td><p>workplace_modeled_size</p></td>
+<td><p>work_med</p></td>
+<td><p>int32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+<tr class="row-odd"><td><p>workplace_modeled_size</p></td>
+<td><p>work_veryhigh</p></td>
+<td><p>int32</p></td>
+<td><p>workplace_location</p></td>
+<td><p>4</p></td>
+<td><p>1454</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="households">
-<h4>Households<a class="headerlink" href="#households" title="Permalink to this heading">#</a></h4>
+<h5>Households<a class="headerlink" href="#households" title="Permalink to this heading">#</a></h5>
 <p>The households table contains the following synthetic population columns:</p>
 <ul class="simple">
 <li><p>household_id: numeric ID of this household, used in persons table to join with household characteristics</p></li>
@@ -852,7 +2800,7 @@ although many of the files described there are not used in ActivitySim.</p>
 <li><p>sample_rate</p></li>
 </ul>
 <section id="household-types">
-<h5>Household types<a class="headerlink" href="#household-types" title="Permalink to this heading">#</a></h5>
+<h6>Household types<a class="headerlink" href="#household-types" title="Permalink to this heading">#</a></h6>
 <p>These are household types defined by the Census Bureau and used in <a class="reference external" href="https://censusreporter.org/tables/B11001/">ACS table B11001</a>.</p>
 <table class="table">
 <thead>
@@ -890,7 +2838,7 @@ although many of the files described there are not used in ActivitySim.</p>
 </section>
 </section>
 <section id="persons">
-<h4>Persons<a class="headerlink" href="#persons" title="Permalink to this heading">#</a></h4>
+<h5>Persons<a class="headerlink" href="#persons" title="Permalink to this heading">#</a></h5>
 <p>This table describes attributes of the persons that constitute each household. This file contains the following columns:</p>
 <ul class="simple">
 <li><p>person_id: Unique integer identifier for each person. This value is globally unique, i.e.
@@ -904,7 +2852,7 @@ no two individuals have the same person ID, even if they are in different househ
 <li><p>ptype: Person type (see person type segmentation above)</p></li>
 </ul>
 <section id="employment-status">
-<h5>Employment status<a class="headerlink" href="#employment-status" title="Permalink to this heading">#</a></h5>
+<h6>Employment status<a class="headerlink" href="#employment-status" title="Permalink to this heading">#</a></h6>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Code</p></th>
@@ -928,7 +2876,7 @@ no two individuals have the same person ID, even if they are in different househ
 </table>
 </section>
 <section id="student-status">
-<h5>Student status<a class="headerlink" href="#student-status" title="Permalink to this heading">#</a></h5>
+<h6>Student status<a class="headerlink" href="#student-status" title="Permalink to this heading">#</a></h6>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Code</p></th>
@@ -947,6 +2895,7 @@ no two individuals have the same person ID, even if they are in different househ
 </tr>
 </tbody>
 </table>
+</section>
 </section>
 </section>
 <section id="land-use">
@@ -978,8 +2927,6 @@ no two individuals have the same person ID, even if they are in different househ
 <li><p>COLLPTE: College students enrolled part-time at colleges in this TAZ</p></li>
 <li><p>TERMINAL: Average time to travel from automobile storage location to origin/destination (floating-point minutes)</p></li>
 </ul>
-<section id="counties">
-<h5>Counties<a class="headerlink" href="#counties" title="Permalink to this heading">#</a></h5>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Code</p></th>
@@ -1016,9 +2963,6 @@ no two individuals have the same person ID, even if they are in different househ
 </tr>
 </tbody>
 </table>
-</section>
-<section id="area-types">
-<h5>Area types<a class="headerlink" href="#area-types" title="Permalink to this heading">#</a></h5>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Code</p></th>
@@ -1057,7 +3001,6 @@ Cube to OMX using the <code class="docutils literal notranslate"><span class="pr
 <p>The prototype_mtc_sf inputs were created by the <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\create_sf_example.py</span></code> script, which creates the land use, synthetic population, and
 skim inputs for a subset of user-defined zones.</p>
 </div>
-</section>
 </section>
 <section id="configuration">
 <h4>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h4>
@@ -1832,21 +3775,20 @@ in order to load the extensions folder.</p>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs">Inputs</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#households">Households</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#household-types">Household types</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs">Inputs</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#data-schema">Data Schema</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#households">Households</a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#household-types">Household types</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#persons">Persons</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#employment-status">Employment status</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#student-status">Student status</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#persons">Persons</a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#employment-status">Employment status</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#student-status">Student status</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#land-use">Land use</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#counties">Counties</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#area-types">Area types</a></li>
 </ul>
 </li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#land-use">Land use</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sub-model-specification-files">Sub-Model Specification Files</a></li>
 </ul>
@@ -1914,7 +3856,7 @@ in order to load the extensions folder.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
+ActivitySim 1.2.1.dev445+gff559a26, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

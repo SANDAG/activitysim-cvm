@@ -417,7 +417,12 @@ that generates inputs needed for ActivitySim and processes outputs of ActivitySi
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ways_to_run.html">Ways to Run the Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ways_to_run.html#options-to-execute-a-model">Options to Execute a Model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ways_to_run.html#using-the-command-line-interface">Using the Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ways_to_run.html#using-the-command-line-interface">Using the Command Line Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ways_to_run.html#create">Create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ways_to_run.html#run">Run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ways_to_run.html#running-the-primary-example-using-cli">Running the Primary Example using CLI</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="ways_to_run.html#using-jupyter-notebook">Using Jupyter Notebook</a></li>
 </ul>
 </li>
@@ -435,7 +440,11 @@ that generates inputs needed for ActivitySim and processes outputs of ActivitySi
 <li class="toctree-l2"><a class="reference internal" href="model_anatomy.html#input-data">Input Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model_anatomy.html#zone-system">Zone System</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="model_anatomy.html#examples">Examples</a></li>
-<li class="toctree-l3"><a class="reference internal" href="model_anatomy.html#settings">Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_anatomy.html#settings">Settings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model_anatomy.html#two-zone">Two Zone</a></li>
+<li class="toctree-l4"><a class="reference internal" href="model_anatomy.html#three-zone">Three Zone</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="model_anatomy.html#outputs">Outputs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model_anatomy.html#presampling">Presampling</a></li>
 </ul>
@@ -500,16 +509,49 @@ that generates inputs needed for ActivitySim and processes outputs of ActivitySi
 <li class="toctree-l1"><a class="reference internal" href="example_models.html">Example Models</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="example_models.html#prototype-mtc">prototype_mtc</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="example_models.html#introduction">Introduction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_models.html#model-design">Model Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_models.html#setup">Setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_models.html#running-the-model">Running the model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_models.html#outputs">Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_models.html#model-design">Model Design</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#zone-system">Zone System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#decision-making-units">Decision-making units</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#person-type-segmentation">Person type segmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#activity-type-segmentation">Activity type segmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#treatment-of-time">Treatment of time</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#trip-modes">Trip modes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#sub-models">Sub-models</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_models.html#setup">Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#inputs">Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#land-use">Land use</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#sub-model-specification-files">Sub-Model Specification Files</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_models.html#running-the-model">Running the model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#multiprocessing">Multiprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#configuring-chunking">Configuring chunking</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_models.html#outputs">Outputs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#logging">Logging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#trip-matrices">Trip Matrices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#tracing">Tracing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#writing-logsums">Writing Logsums</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="example_models.html#production-semcog">production_semcog</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="example_models.html#id4">Introduction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_models.html#id5">Model Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="example_models.html#id8">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="example_models.html#id5">Model Design</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#id6">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#id7">Zone System</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="example_models.html#id8">Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="example_models.html#id9">Inputs</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="example_models.html#id10">Running the Model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="example_models.html#id11">Outputs</a></li>
 </ul>
@@ -600,7 +642,7 @@ that generates inputs needed for ActivitySim and processes outputs of ActivitySi
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
+ActivitySim 1.2.1.dev445+gff559a26, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
