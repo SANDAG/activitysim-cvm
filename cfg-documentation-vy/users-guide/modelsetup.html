@@ -62,7 +62,7 @@
     <link rel="prev" title="Users Guide" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
   </head>
   
   
@@ -393,7 +393,7 @@ assumes the user is more experienced in running travel demand models and profici
 used ActivitySim or has not used recent versions of ActivitySim. More detailed instructions for installing
 and running ActivitySim are also available in this Users Guide.</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#pre-packaged-installer"><span class="std std-ref">Pre-packaged Installer</span></a></p></li>
+<li><p>Use the <a class="reference internal" href="#pre-packaged-installer"><span class="std std-ref">Pre-packaged Installer</span></a></p></li>
 <li><p>Placeholder (Edit model input files, configs, as needed)</p></li>
 <li><p>Placeholder (Run from command line or Jupyter notebook)</p></li>
 </ul>
@@ -408,14 +408,14 @@ and running ActivitySim are also available in this Users Guide.</p>
 <li><p>The number of households to be simulated for disaggregate model steps</p></li>
 <li><p>The number of model zones (for each zone system) for aggregate model steps</p></li>
 <li><p>The number and size of network skims by mode and time-of-day</p></li>
-<li><p>The number of zone systems, see <a class="reference internal" href="../examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a></p></li>
+<li><p>The number of zone systems, see <a class="reference internal" href="model_anatomy.html#zone-system"><span class="std std-ref">Zone System</span></a></p></li>
 <li><p>The desired runtimes</p></li>
 </ul>
 <p>ActivitySim framework models use a significant amount of RAM since they store data in-memory to reduce
 data access time in order to minimize runtime.  For example, the prototype MTC example model has 2.7 million
 households, 7.5 million people, 1475 zones, 826 network skims and has been run between one hour and one day depending
 on the amount of RAM and number of processors allocated.  See <a class="reference internal" href="ways_to_run.html#multiprocessing"><span class="std std-ref">Multiprocessing</span></a> and <a class="reference internal" href="../core.html#chunk-size"><span class="std std-ref">Chunk</span></a> for more information.</p>
-<p>As an example, the SEMCOG ABM (&lt;todo: insert reference&gt;) runs on a windows machine, with the minimum and recommended system specification as follows:</p>
+<p>As an example, the SEMCOG ABM, a model that follows a 2-Zone system runs on a windows machine, with the minimum and recommended system specification as follows:</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Minimum Specification:</dt><dd><ul>
@@ -709,7 +709,7 @@ check the current active environment with <code class="docutils literal notransl
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

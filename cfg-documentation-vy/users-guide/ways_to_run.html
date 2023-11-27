@@ -62,7 +62,7 @@
     <link rel="prev" title="Model Setup" href="modelsetup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
   </head>
   
   
@@ -562,7 +562,8 @@ specified multiple times. Directories listed first take precedence.</p>
 </section>
 <section id="running-select-components-of-the-model">
 <h2>Running Select Components of the Model<a class="headerlink" href="#running-select-components-of-the-model" title="Permalink to this heading">#</a></h2>
-<p>&lt;Todo: Placeholder section for linking to component documentation and configuration&gt;</p>
+<p>ActivitySim can be run for all components in any model implementation, or a select set of components. If running the model for a subset of model components, the upstream model components would need to have been run first. For example, if you want to rerun just tour mode choice, all of the steps before tour mode choice would need to have been run.
+To select the model components to run, edit the &lt;todo&gt; XXXX file by doing XXXX.</p>
 </section>
 <section id="advanced-configuration">
 <h2>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permalink to this heading">#</a></h2>
@@ -682,8 +683,8 @@ data passed to them by the parent process:</p>
 <span class="target" id="index-1"></span><span class="target" id="index-2"></span></section>
 <section id="sharrow">
 <span id="index-3"></span><h3>Sharrow<a class="headerlink" href="#sharrow" title="Permalink to this heading">#</a></h3>
-<p><a href="#id3"><span class="problematic" id="id4">:ref:`Sharrow &lt;https://activitysim.github.io/sharrow/intro.html&gt;`__</span></a> is a Python library designed to decrease run-time for ActivitySim models. The sharrow package is an extension of <em>numba</em>, and offers access to data formatting and a just-in-time compiler specifically for converting ActivitySim-style “specification” files into optimized, runnable functions that can significantly reduce the amount of run-time. The idea is to pay the cost of compiling these specification files only once, and then re-use the optimized results many times. If there is a change to the utility functions, machine, core, or the user deletes the cached files, this will automatically trigger a recompiling process.</p>
-<p>Please refer to <a href="#id5"><span class="problematic" id="id6">:ref:`Sharrow installation &lt;https://activitysim.github.io/sharrow/intro.html#installation&gt;`__</span></a> for details on how to install Sharrow. Demonstrative examples of how to use Sharrow features can be found in the <a href="#id7"><span class="problematic" id="id8">:ref:`Sharrow user guide &lt;https://activitysim.github.io/sharrow/walkthrough/index.html&gt;`__</span></a>.</p>
+<p><a class="reference external" href="https://activitysim.github.io/sharrow/intro.html">Sharrow</a> is a Python library designed to decrease run-time for ActivitySim models. The sharrow package is an extension of <em>numba</em>, and offers access to data formatting and a just-in-time compiler specifically for converting ActivitySim-style “specification” files into optimized, runnable functions that can significantly reduce the amount of run-time. The idea is to pay the cost of compiling these specification files only once, and then re-use the optimized results many times. If there is a change to the utility functions, machine, core, or the user deletes the cached files, this will automatically trigger a recompiling process.</p>
+<p>Please refer to <a class="reference external" href="https://activitysim.github.io/sharrow/intro.html#installation">Sharrow installation</a> for details on how to install Sharrow. Demonstrative examples of how to use Sharrow features can be found in the <a class="reference external" href="https://activitysim.github.io/sharrow/walkthrough/index.html">Sharrow user guide</a>.</p>
 </section>
 <section id="tracing">
 <h3>Tracing<a class="headerlink" href="#tracing" title="Permalink to this heading">#</a></h3>
@@ -808,7 +809,7 @@ help debug data and/or logic errors.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

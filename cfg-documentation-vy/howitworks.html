@@ -62,7 +62,7 @@
     <link rel="prev" title="DigitalEncoding" href="users-guide/_generated/activitysim.core.configuration.DigitalEncoding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
   </head>
   
   
@@ -384,7 +384,8 @@ document.write(`
 <p>This page describes how the software works, how multiprocessing works, and the primary example model data schema.  The code snippets below may not exactly match the latest version of the software, but they are close enough to illustrate how the system works.</p>
 <section id="execution-flow">
 <span id="id1"></span><h2>Execution Flow<a class="headerlink" href="#execution-flow" title="Permalink to this heading">#</a></h2>
-<p>The example model run starts by running the steps in <a class="reference internal" href="examples.html#example-run"><span class="std std-ref">Running the example</span></a>.</p>
+<p>An example model run starts by running the steps in <a class="reference internal" href="examples.html#example-run"><span class="std std-ref">Running the example</span></a>. The following flow chart represents steps of ActivitySim, but specific implementations will have different individual model components in their execution.</p>
+<img alt="_images/example_flowchart.png" src="_images/example_flowchart.png" />
 <section id="initialization">
 <h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this heading">#</a></h3>
 <p>The first significant step of the <code class="docutils literal notranslate"><span class="pre">run</span></code> command is:</p>
@@ -575,6 +576,10 @@ actually reads the input tables from the input HDF5 or CSV file using the <code 
 </pre></div>
 </div>
 </section>
+<section id="running-model-components">
+<h3>Running Model Components<a class="headerlink" href="#running-model-components" title="Permalink to this heading">#</a></h3>
+<p>The next steps include running the model components specific to the individual implementation that you are running and as specified in the <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code> file.</p>
+</section>
 <section id="finishing-up">
 <h3>Finishing Up<a class="headerlink" href="#finishing-up" title="Permalink to this heading">#</a></h3>
 <p>The last models to be run by the data pipeline are:</p>
@@ -591,8 +596,7 @@ actually reads the input tables from the input HDF5 or CSV file using the <code 
 </section>
 <section id="data-schema">
 <h2>Data Schema<a class="headerlink" href="#data-schema" title="Permalink to this heading">#</a></h2>
-<p>The ActivitySim data schema depends on the sub-models implemented.  The data schema listed below is for
-the primary TM1 example model.  These tables and skims are defined in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.tables</span></code> package.</p>
+<p>The ActivitySim data schema depends on the specific implementation of ActivitySim. This section includes information on example data that is likely to be included in most implementations. These tables and skims are defined in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.tables</span></code> package. For the best information, documentation developed for a specific implementation of ActivitySim is recommended.</p>
 <span class="target" id="index-0"></span><span class="target" id="index-1"></span><span class="target" id="index-2"></span><span class="target" id="index-3"></span><span class="target" id="index-4"></span><span class="target" id="index-5"></span><span class="target" id="index-6"></span><span class="target" id="index-7"></span><section id="data-tables">
 <span id="index-8"></span><h3>Data Tables<a class="headerlink" href="#data-tables" title="Permalink to this heading">#</a></h3>
 <p>The following tables are currently implemented:</p>
@@ -613,16 +617,16 @@ the primary TM1 example model.  These tables and skims are defined in the <code 
 <li><p>constants - various constants used throughout the model system, such as person type codes</p></li>
 <li><p>shadow pricing - shadow price calculator and associated utility methods, see <a class="reference internal" href="models.html#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a></p></li>
 <li><p>size terms - created by reading the <code class="docutils literal notranslate"><span class="pre">destination_choice_size_terms.csv</span></code> input file.  Index - <code class="docutils literal notranslate"><span class="pre">segment</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.size_terms.py</span></code>)</p></li>
-<li><p>skims - see <a class="reference internal" href="#skims"><span class="std std-ref">Skims</span></a></p></li>
+<li><p>skims - each model runs requires skims, but how the skims are defined can vary significantly depending on the ActivitySim implementation. The skims class defines Inject injectables to access the skim matrices. The skims class reads the skims from the omx_file on disk.</p></li>
 <li><p>table dictionary - stores which tables should be registered as random number generator channels for restartability of the pipeline</p></li>
 </ul>
 </div></blockquote>
 </section>
 <section id="id2">
 <h3>Data Schema<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
-<p>The following table lists the pipeline data tables, each final field, the data type, the step that created it, and the
+<p>Each ActivitySim model includes pipeline data tables, field names, data type, the step that created it, and the
 number of columns and rows in the table at the time of creation.  The <code class="docutils literal notranslate"><span class="pre">other_resources\scripts\make_pipeline_output.py</span></code> script
-uses the information stored in the pipeline file to create the table below for a small sample of households.</p>
+uses the information stored in the pipeline file to create a table specific to the implementation.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Table</p></th>
@@ -2571,8 +2575,7 @@ uses the information stored in the pipeline file to create the table below for a
 <span class="target" id="index-9"></span><span class="target" id="index-10"></span></section>
 <section id="skims">
 <span id="index-11"></span><span id="id3"></span><h3>Skims<a class="headerlink" href="#skims" title="Permalink to this heading">#</a></h3>
-<p>The skims class defines Inject injectables to access the skim matrices.  The skims class reads the
-skims from the omx_file on disk.  The injectables and omx_file for the example are listed below.
+<p>The injectables and omx_file for the example are listed below.
 The skims are float64 matrix.</p>
 <p>Skims are named &lt;PATH TYPE&gt;_&lt;MEASURE&gt;__&lt;TIME PERIOD&gt;:</p>
 <ul class="simple">
@@ -5122,7 +5125,7 @@ The skims are float64 matrix.</p>
 </section>
 <section id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this heading">#</a></h2>
-<p>TODO: Add link to component documentation</p>
+<p>Individual models and components are defined and described in the Developers Guide. Please refer to the <a class="reference internal" href="dev-guide/components/index.html#dev-components"><span class="std std-ref">Components</span></a> section.</p>
 </section>
 <section id="changing-the-sample-size">
 <h2>Changing the Sample Size<a class="headerlink" href="#changing-the-sample-size" title="Permalink to this heading">#</a></h2>
@@ -5176,6 +5179,7 @@ The skims are float64 matrix.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-flow">Execution Flow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">Initialization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-households">Initialize Households</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-model-components">Running Model Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finishing-up">Finishing Up</a></li>
 </ul>
 </li>
@@ -5221,7 +5225,7 @@ The skims are float64 matrix.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

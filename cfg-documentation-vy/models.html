@@ -63,7 +63,7 @@
     <link rel="prev" title="Software Development" href="development.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
   </head>
   
   
@@ -963,7 +963,7 @@ destination.</p>
 </dd>
 </dl>
 <p>These steps are repeated until shadow pricing convergence criteria are satisfied or a max number of iterations is reached.  See <a class="reference internal" href="#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a>.</p>
-<p>School location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>School location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="users-guide/model_anatomy.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interfaces to the model is the <a class="reference internal" href="#activitysim.abm.models.location_choice.school_location" title="activitysim.abm.models.location_choice.school_location"><code class="xref py py-func docutils literal notranslate"><span class="pre">school_location()</span></code></a> function.
 This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="users-guide/example_models.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how to write logsums for estimation.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">persons</span></code> | Result Field: <code class="docutils literal notranslate"><span class="pre">school_taz</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">TAZ,</span> <span class="pre">alt_dest,</span> <span class="pre">AM</span> <span class="pre">time</span> <span class="pre">period,</span> <span class="pre">MD</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
@@ -987,7 +987,7 @@ which describe the quantity of work opportunities in each possible destination.<
 </dd>
 </dl>
 <p>These steps are repeated until shadow pricing convergence criteria are satisfied or a max number of iterations is reached.  See <a class="reference internal" href="#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a>.</p>
-<p>Work location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Work location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="users-guide/model_anatomy.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interfaces to the model is the <a class="reference internal" href="#activitysim.abm.models.location_choice.workplace_location" title="activitysim.abm.models.location_choice.workplace_location"><code class="xref py py-func docutils literal notranslate"><span class="pre">workplace_location()</span></code></a> function.
 This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="users-guide/example_models.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how to write logsums for estimation.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">persons</span></code> | Result Field: <code class="docutils literal notranslate"><span class="pre">workplace_taz</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">TAZ,</span> <span class="pre">alt_dest,</span> <span class="pre">AM</span> <span class="pre">time</span> <span class="pre">period,</span> <span class="pre">PM</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
@@ -3840,7 +3840,7 @@ the primary destination.</p>
 </ul>
 </dd>
 </dl>
-<p>Joint tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Joint tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="users-guide/model_anatomy.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interface to the model is the <a class="reference internal" href="#activitysim.abm.models.joint_tour_destination.joint_tour_destination" title="activitysim.abm.models.joint_tour_destination.joint_tour_destination"><code class="xref py py-func docutils literal notranslate"><span class="pre">joint_tour_destination()</span></code></a>
 function.  This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="users-guide/example_models.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a> for how
 to write logsums for estimation.</p>
@@ -4116,7 +4116,7 @@ othdiscr, eatout, and social trips in various combination.</p>
 <p>The non-mandatory tour destination choice model chooses a destination zone for
 non-mandatory tours.  The three step (sample, logsums, final choice) process also used for
 mandatory tour destination choice is used for non-mandatory tour destination choice.</p>
-<p>Non-mandatory tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>Non-mandatory tour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="users-guide/model_anatomy.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>The main interface to the non-mandatory tour destination choice model is the
 <a class="reference internal" href="#activitysim.abm.models.non_mandatory_destination.non_mandatory_tour_destination" title="activitysim.abm.models.non_mandatory_destination.non_mandatory_tour_destination"><code class="xref py py-func docutils literal notranslate"><span class="pre">non_mandatory_tour_destination()</span></code></a>
 function.  This function is registered as an Inject step in the example Pipeline.  See <a class="reference internal" href="users-guide/example_models.html#writing-logsums"><span class="std std-ref">Writing Logsums</span></a>
@@ -4653,7 +4653,7 @@ configured by the user).</p>
 <li><p>simulate - starts with the table created above and chooses a final location, this time with the mode choice logsum included.</p></li>
 </ul>
 </div></blockquote>
-<p>At-work subtour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="examples.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
+<p>At-work subtour location choice for <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a> models uses <a class="reference internal" href="users-guide/model_anatomy.html#presampling"><span class="std std-ref">Presampling</span></a> by default.</p>
 <p>Core Table: <code class="docutils literal notranslate"><span class="pre">tours</span></code> | Result Table: <code class="docutils literal notranslate"><span class="pre">destination</span></code> | Skims Keys: <code class="docutils literal notranslate"><span class="pre">workplace_taz,</span> <span class="pre">alt_dest,</span> <span class="pre">MD</span> <span class="pre">time</span> <span class="pre">period</span></code></p>
 <p>The main interface to the at-work subtour destination model is the
 <a class="reference internal" href="dev-guide/components/atwork_subtour_destination.html#activitysim.abm.models.atwork_subtour_destination.atwork_subtour_destination" title="activitysim.abm.models.atwork_subtour_destination.atwork_subtour_destination"><code class="xref py py-func docutils literal notranslate"><span class="pre">atwork_subtour_destination()</span></code></a>
@@ -7670,7 +7670,7 @@ DataFrame and the values are the index of the alts DataFrame.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

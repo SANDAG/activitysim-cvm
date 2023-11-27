@@ -62,7 +62,7 @@
     <link rel="prev" title="Visualization" href="visualization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
   </head>
   
   
@@ -381,7 +381,7 @@ document.write(`
                   
   <span class="target" id="index-0"></span><section id="example-models">
 <span id="examples"></span><span id="example"></span><span id="index-1"></span><h1>Example Models<a class="headerlink" href="#example-models" title="Permalink to this heading">#</a></h1>
-<p>This page describes the example models included with ActivitySim. There are three
+<p>There are many example models available through ActivitySim’s github repositories. There are three
 basic types of example model:</p>
 <ul class="simple">
 <li><p>“production” examples are calibrated and validated by the relevant agency, and
@@ -405,7 +405,7 @@ have not been calibrated nor validated in any meaningful way. These examples
 are early stage development models used for testing purposes, and users are
 strongly cautioned not to use them for any policy or planning purpose.</p></li>
 </ul>
-<p>The current examples are:</p>
+<p>The current examples avaiable include:</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Example</p></th>
@@ -478,12 +478,10 @@ strongly cautioned not to use them for any policy or planning purpose.</p></li>
 contains example commands to create and run several versions of the examples.  See also <a class="reference internal" href="../development.html#adding-agency-examples"><span class="std std-ref">Adding Agency Examples</span></a> for more
 information on agency example models.</p>
 </div>
-<p>This page describes 2 example models, namely,
-* prototype_mtc &lt;placeholder&gt;
-* placeholder</p>
-<p>The other examples are described in the &lt;todo placeholder&gt; section</p>
+<p>This page describes, in more detail, a couple of example models included with ActivitySim from the MTC and SEMCOG regions.
+.. _prototype_mtc :</p>
 <section id="prototype-mtc">
-<span id="id1"></span><h2>prototype_mtc<a class="headerlink" href="#prototype-mtc" title="Permalink to this heading">#</a></h2>
+<h2>prototype_mtc<a class="headerlink" href="#prototype-mtc" title="Permalink to this heading">#</a></h2>
 <section id="introduction">
 <h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h3>
 <p>The initial example implemented in ActivitySim was prototype_mtc.  This section described the prototype_mtc
@@ -1444,7 +1442,7 @@ discussed below. See <a class="reference internal" href="ways_to_run.html#multip
 </div>
 </section>
 <section id="configuring-chunking">
-<span id="id2"></span><h4>Configuring chunking<a class="headerlink" href="#configuring-chunking" title="Permalink to this heading">#</a></h4>
+<span id="id1"></span><h4>Configuring chunking<a class="headerlink" href="#configuring-chunking" title="Permalink to this heading">#</a></h4>
 <p>To configure chunking, ActivitySim must first be trained to determine reasonable chunking settings given the
 model setup and machine.  The steps to configure chunking are:</p>
 <ul class="simple">
@@ -1673,7 +1671,7 @@ assignment.  The matrices are configured and coded according to the expressions 
 trip annotation file.  See <a class="reference internal" href="../models.html#write-trip-matrices"><span class="std std-ref">Write Trip Matrices</span></a> for more information.</p>
 </section>
 <section id="tracing">
-<span id="id3"></span><h4>Tracing<a class="headerlink" href="#tracing" title="Permalink to this heading">#</a></h4>
+<span id="id2"></span><h4>Tracing<a class="headerlink" href="#tracing" title="Permalink to this heading">#</a></h4>
 <p>There are two types of tracing in ActivtiySim: household and origin-destination (OD) pair.  If a household trace ID
 is specified, then ActivitySim will output a comprehensive set (i.e. hundreds) of trace files for all
 calculations for all household members:</p>
@@ -1689,7 +1687,7 @@ file:</p>
 help debug data and/or logic errors.</p>
 </section>
 <section id="writing-logsums">
-<span id="id4"></span><h4>Writing Logsums<a class="headerlink" href="#writing-logsums" title="Permalink to this heading">#</a></h4>
+<span id="id3"></span><h4>Writing Logsums<a class="headerlink" href="#writing-logsums" title="Permalink to this heading">#</a></h4>
 <p>The tour and trip destination and mode choice models calculate logsums but do not persist them by default.
 Mode and destination choice logsums are essential for re-estimating these models and can therefore be
 saved to the pipeline if desired.  To save the tour and trip destination and mode choice model logsums, include
@@ -1739,8 +1737,8 @@ only be activated when writing logsums for a small set of households for model e
 <p class="admonition-title">Note</p>
 <p>This example is in development</p>
 </div>
-<section id="id5">
-<h3>Introduction<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<section id="id4">
+<h3>Introduction<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>The production_semcog model is a two-zone ActivitySim added which added a <a class="reference internal" href="../models.html#work-from-home"><span class="std std-ref">Work From Home</span></a>, <a class="reference internal" href="../models.html#telecommute-frequency"><span class="std std-ref">Telecommute Frequency</span></a>, <a class="reference internal" href="../models.html#transit-pass-subsidy"><span class="std std-ref">Transit Pass Subsidy</span></a>
 and <a class="reference internal" href="../models.html#transit-pass-ownership"><span class="std std-ref">Transit Pass Ownership</span></a> submodel.  These submodel specification files are below, and are in addition to the <a class="reference internal" href="#prototype-mtc"><span class="std std-ref">prototype_mtc</span></a>
 submodel <a class="reference internal" href="#sub-model-spec-files"><span class="std std-ref">Sub-Model Specification Files</span></a>.  These submodels were added to prototype_semcog as extensions, which is a way for users to add
@@ -1748,31 +1746,31 @@ submodels within their model setup as opposed to formally adding them to the act
 the <cite>models</cite> settings.  However, the model must be run with the <cite>simulation.py</cite> script instead of the command line interface
 in order to load the extensions folder.</p>
 </section>
+<section id="id5">
+<h3>Model Design<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <section id="id6">
-<h3>Model Design<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
-<section id="id7">
-<h4>Overview<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
+<h4>Overview<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h4>
 <p>The below figure shows the ActivitySim struture of the SEMCOG model:</p>
 <img alt="../_images/semcog_model_struct.png" src="../_images/semcog_model_struct.png" />
 <p>These submodels were added to prototype_semcog as extensions, which is a way for users to add submodels within their model setup as opposed to formally adding them to the activitysim package. Extension submodels are run through the models settings. However, the model must be run with the simulation.py script instead of the command line interface in order to load the extensions folder.</p>
 </section>
-<section id="id8">
-<h4>Zone System<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h4>
+<section id="id7">
+<h4>Zone System<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
 <p>The SEMCOG model implemented the 2-zone ActivitySim structure. &lt;todo: More details?&gt;</p>
 </section>
 </section>
+<section id="id8">
+<h3>Setup<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <section id="id9">
-<h3>Setup<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
-<section id="id10">
-<h4>Inputs<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h4>
+<h4>Inputs<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
 <p>ActivitySim-related inputs include: All-street network, synthetic population, and MAZ land use data: this set of inputs are read in by the ActivitySim framework to first create the MAZ-MAZ walk and bike skims, MAZ-stop transit access/egress skims, and then run the activity-based model for the region.</p>
 </section>
 </section>
-<section id="id11">
-<h3>Running the Model<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<section id="id10">
+<h3>Running the Model<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 </section>
-<section id="id12">
-<h3>Outputs<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<section id="id11">
+<h3>Outputs<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 </section>
 </section>
 </section>
@@ -1868,18 +1866,18 @@ in order to load the extensions folder.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#production-semcog">production_semcog</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Introduction</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Model Design</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Overview</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Zone System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Introduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Model Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Overview</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Zone System</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Inputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Inputs</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Running the Model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Running the Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Outputs</a></li>
 </ul>
 </li>
 </ul>
@@ -1916,7 +1914,7 @@ in order to load the extensions folder.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

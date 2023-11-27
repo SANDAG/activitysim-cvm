@@ -62,7 +62,7 @@
     <link rel="prev" title="Write Trip Matrices" href="dev-guide/components/write_trip_matrices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 20, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
   </head>
   
   
@@ -2441,7 +2441,7 @@ plus the ‘log’ and ‘trace’ directories will be scrubbed.</p>
 </section>
 </section>
 <section id="utility-expressions">
-<span id="expressions"></span><h2>Utility Expressions<a class="headerlink" href="#utility-expressions" title="Permalink to this heading">#</a></h2>
+<span id="util-expressions"></span><h2>Utility Expressions<a class="headerlink" href="#utility-expressions" title="Permalink to this heading">#</a></h2>
 <p>Much of the power of ActivitySim comes from being able to specify Python, pandas, and
 numpy expressions for calculations. Refer to the pandas help for a general
 introduction to expressions.  ActivitySim provides two ways to evaluate expressions:</p>
@@ -2559,8 +2559,8 @@ coefficients as columns.  Broadly speaking, there are currently four types of mo
 <li><p>Combinatorial choice model - first generate a set of alternatives based on a combination of alternatives across choosers, and then make choices.  The <a class="reference internal" href="models.html#id41"><span class="std std-ref">CDAP</span></a> model implements this approach.</p></li>
 </ul>
 </section>
-<section id="id6">
-<h3>Expressions<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<section id="expressions">
+<h3>Expressions<a class="headerlink" href="#expressions" title="Permalink to this heading">#</a></h3>
 <p>The expressions class is often used for pre- and post-processor table annotation, which read a CSV file of expression, calculate
 a number of additional table fields, and join the fields to the target table.  An example table annotation expressions
 file is found in the example configuration files for households for the CDAP model -
@@ -2628,8 +2628,8 @@ calculated as follows:</p>
 <p>As the alternative is oversampled, its utility goes up for final selection.  The unique set
 of alternatives is passed to the final choice model and the correction factor is
 included in the utility.</p>
-<section id="id7">
-<h4>API<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
+<section id="id6">
+<h4>API<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.interaction_sample"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.interaction_sample.interaction_sample">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.interaction_sample.</span></span><span class="sig-name descname"><span class="pre">interaction_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">choosers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.3)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternatives</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.3)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.1.3)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_col_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_zero_probs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_alt_losers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#activitysim.core.skim_dictionary.SkimWrapper" title="activitysim.core.skim_dictionary.SkimWrapper"><span class="pre">SkimWrapper</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="dev-guide/skim-dataset.html#activitysim.core.skim_dataset.DatasetWrapper" title="activitysim.core.skim_dataset.DatasetWrapper"><span class="pre">DatasetWrapper</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals_d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.interaction_sample.interaction_sample" title="Permalink to this definition">#</a></dt>
@@ -2722,11 +2722,11 @@ and columns alt_col_name, prob, rand, pick_count</p>
 </section>
 </section>
 <section id="simulate">
-<span id="id8"></span><h3>Simulate<a class="headerlink" href="#simulate" title="Permalink to this heading">#</a></h3>
+<span id="id7"></span><h3>Simulate<a class="headerlink" href="#simulate" title="Permalink to this heading">#</a></h3>
 <p>Methods for expression handling, solving, choosing (i.e. making choices) from a fixed set of choices
 defined in the specification file.</p>
-<section id="id9">
-<h4>API<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
+<section id="id8">
+<h4>API<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.simulate"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.simulate.compute_base_probabilities">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.simulate.</span></span><span class="sig-name descname"><span class="pre">compute_base_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nested_probabilities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.simulate.compute_base_probabilities" title="Permalink to this definition">#</a></dt>
@@ -3149,11 +3149,11 @@ properties and no need to sample from alternatives.</p>
 </section>
 </section>
 <section id="simulate-with-interaction">
-<span id="id10"></span><h3>Simulate with Interaction<a class="headerlink" href="#simulate-with-interaction" title="Permalink to this heading">#</a></h3>
+<span id="id9"></span><h3>Simulate with Interaction<a class="headerlink" href="#simulate-with-interaction" title="Permalink to this heading">#</a></h3>
 <p>Methods for expression handling, solving, choosing (i.e. making choices),
 with interaction with the chooser table.</p>
-<section id="id11">
-<h4>API<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h4>
+<section id="id10">
+<h4>API<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.interaction_simulate"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.interaction_simulate.eval_interaction_utilities">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.interaction_simulate.</span></span><span class="sig-name descname"><span class="pre">eval_interaction_utilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals_d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_alt_losers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone_layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.interaction_simulate.eval_interaction_utilities" title="Permalink to this definition">#</a></dt>
@@ -3256,8 +3256,8 @@ choices are simulated in the standard Monte Carlo fashion</p>
 <h3>Simulate with Sampling and Interaction<a class="headerlink" href="#simulate-with-sampling-and-interaction" title="Permalink to this heading">#</a></h3>
 <p>Methods for expression handling, solving, sampling (i.e. making multiple choices),
 and choosing (i.e. making choices), with interaction with the chooser table.</p>
-<section id="id12">
-<h4>API<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h4>
+<section id="id11">
+<h4>API<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.interaction_sample_simulate"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.interaction_sample_simulate.interaction_sample_simulate">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.interaction_sample_simulate.</span></span><span class="sig-name descname"><span class="pre">interaction_sample_simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">choosers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alternatives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choice_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_zero_probs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_prob_choice_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_alt_losers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">want_logsums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals_d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_choice_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.interaction_sample_simulate.interaction_sample_simulate" title="Permalink to this definition">#</a></dt>
@@ -3328,8 +3328,8 @@ choices[‘logsum’] : float logsum of choice utilities across alternatives</p>
 <p>Alternative version of the expression evaluators in <a class="reference internal" href="#module-activitysim.core.simulate" title="activitysim.core.simulate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.core.simulate</span></code></a> that supports temporary variable assignment.
 Temporary variables are identified in the expressions as starting with “_”, such as “_hh_density_bin”.  These
 fields are not saved to the data pipeline store.  This feature is used by the <a class="reference internal" href="models.html#accessibility"><span class="std std-ref">Accessibility</span></a> model.</p>
-<section id="id13">
-<h4>API<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h4>
+<section id="id12">
+<h4>API<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.assign"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.assign.assign_variables">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.assign.</span></span><span class="sig-name descname"><span class="pre">assign_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_expressions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trace_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.assign.assign_variables" title="Permalink to this definition">#</a></dt>
@@ -3472,8 +3472,8 @@ as the expressions and data handling described in the <a class="reference intern
 <li><p>specify the nesting structure via the NESTS setting in the model configuration YAML file.  An example nested logit NESTS entry can be found in <code class="docutils literal notranslate"><span class="pre">example/configs/tour_mode_choice.yaml</span></code></p></li>
 <li><p>call <code class="docutils literal notranslate"><span class="pre">simulate.simple_simulate()</span></code>.  The <code class="docutils literal notranslate"><span class="pre">simulate.interaction_simulate()</span></code> functionality is not yet supported for NL.</p></li>
 </ul>
-<section id="id14">
-<h4>API<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h4>
+<section id="id13">
+<h4>API<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.logit"></span><dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.logit.Nest">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.logit.</span></span><span class="sig-name descname"><span class="pre">Nest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.logit.Nest" title="Permalink to this definition">#</a></dt>
@@ -3684,8 +3684,8 @@ Each column is coded as follows:</p>
 </ul>
 <p>A good example of a time window expression is <code class="docutils literal notranslate"><span class="pre">&#64;tt.previous_tour_ends(df.person_id,</span> <span class="pre">df.start)</span></code>.  This
 uses the person id and the tour start period to check if a previous tour ends in the same time period.</p>
-<section id="id15">
-<h3>API<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<section id="id14">
+<h3>API<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <span class="target" id="module-activitysim.core.timetable"></span><dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.timetable.TimeTable">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.timetable.</span></span><span class="sig-name descname"><span class="pre">TimeTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">windows_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tdd_alts_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.timetable.TimeTable" title="Permalink to this definition">#</a></dt>
@@ -4093,7 +4093,7 @@ unavailable after scheduling this window.</p>
 </section>
 </section>
 <section id="transit-virtual-path-builder">
-<span id="id16"></span><h2>Transit Virtual Path Builder<a class="headerlink" href="#transit-virtual-path-builder" title="Permalink to this heading">#</a></h2>
+<span id="id15"></span><h2>Transit Virtual Path Builder<a class="headerlink" href="#transit-virtual-path-builder" title="Permalink to this heading">#</a></h2>
 <p>Transit virtual path builder (TVPB) for three zone system (see <a class="reference internal" href="examples.html#multiple-zone-systems"><span class="std std-ref">placeholder_multiple_zone</span></a>) transit path utility calculations.
 TAP to TAP skims and walk access and egress times between MAZs and TAPs are input to the
 demand model.  ActivitySim then assembles the total transit path utility based on the user specified TVPB
@@ -4118,8 +4118,8 @@ each chunk of multiprocessed choosers.</p>
 <p>A model with TVPB can take considerably longer to run than a traditional TAZ based model since it does an order of magnitude more
 calculations.  Thus, it is important to be mindful of your approach to your network model as well, especially the number of TAPs
 accessible to each MAZ, which is the key determinant of runtime.</p>
-<section id="id17">
-<h3>API<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
+<section id="id16">
+<h3>API<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
 <span class="target" id="module-activitysim.core.pathbuilder"></span><dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.pathbuilder.TransitVirtualPathBuilder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.pathbuilder.</span></span><span class="sig-name descname"><span class="pre">TransitVirtualPathBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_los</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.pathbuilder.TransitVirtualPathBuilder" title="Permalink to this definition">#</a></dt>
@@ -4320,7 +4320,7 @@ btap and atap will be in dataframe, but the other attributes may be either df co
 </section>
 </section>
 <section id="visualization">
-<span id="id18"></span><h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this heading">#</a></h2>
+<span id="id17"></span><h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this heading">#</a></h2>
 <p>Visualization capabilities are provided with SimWrapper, a standalone browser-based software that creates interactive, graphical visualizations of ActivitySim outputs. SimWrapper builds graphs and other visualization components from CSV summary tables that are produced by the <em>summarize</em> model step. Once the model run is complete, Simwrapper can be started and stopped at any time, independent of ActivitySim to visualize outputs. The tool currently allows users to view dashboards for multiple model runs side-by-side in the browser. The ability to compute and visualize the differences between two model runs is a planned future enhancement.</p>
 <p>To use set up the summarize model to produce tables for SimWrapper, add <code class="docutils literal notranslate"><span class="pre">summarize</span></code> to the list of models in <code class="docutils literal notranslate"><span class="pre">configs_mp/settings.yaml</span></code> and add the following files to the <cite>config</cite> directory:</p>
 <ul class="simple">
@@ -4475,7 +4475,7 @@ However, panning and zooming on any one map object controls all maps on both sid
 </section>
 </section>
 <section id="helpers">
-<span id="id19"></span><h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this heading">#</a></h2>
+<span id="id18"></span><h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this heading">#</a></h2>
 <section id="chunk">
 <span id="chunk-in-detail"></span><span id="chunk-size"></span><span id="index-0"></span><h3>Chunk<a class="headerlink" href="#chunk" title="Permalink to this heading">#</a></h3>
 <p>Chunking management.</p>
@@ -4554,8 +4554,8 @@ is therefore the default.</p>
 <li><p>keep_chunk_logs: True - whether to preserve or delete subprocess chunk logs when they are consolidated at end of multiprocess run</p></li>
 <li><p>keep_mem_logs: True - whether to preserve or delete subprocess mem logs when they are consolidated at end of multiprocess run</p></li>
 </ul>
-<section id="id20">
-<h4>API<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h4>
+<section id="id19">
+<h4>API<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.chunk"></span><dl class="py class">
 <dt class="sig sig-object py" id="activitysim.core.chunk.ChunkHistorian">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">activitysim.core.chunk.</span></span><span class="sig-name descname"><span class="pre">ChunkHistorian</span></span><a class="headerlink" href="#activitysim.core.chunk.ChunkHistorian" title="Permalink to this definition">#</a></dt>
@@ -4696,8 +4696,8 @@ as choosers, we can use cumulative pick_counts to identify boundaries of sets of
 <section id="utilities">
 <h3>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading">#</a></h3>
 <p>Vectorized helper functions</p>
-<section id="id21">
-<h4>API<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h4>
+<section id="id20">
+<h4>API<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.util"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.util.assign_in_place">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.util.</span></span><span class="sig-name descname"><span class="pre">assign_in_place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.util.assign_in_place" title="Permalink to this definition">#</a></dt>
@@ -4919,8 +4919,8 @@ helpful in expression files that compute counts (e.g. num_work_tours)</p>
 <section id="config">
 <h3>Config<a class="headerlink" href="#config" title="Permalink to this heading">#</a></h3>
 <p>Helper functions for configuring a model run</p>
-<section id="id22">
-<h4>API<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h4>
+<section id="id21">
+<h4>API<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.config"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.config.filter_warnings">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.config.</span></span><span class="sig-name descname"><span class="pre">filter_warnings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.config.filter_warnings" title="Permalink to this definition">#</a></dt>
@@ -5002,8 +5002,8 @@ helpful in expression files that compute counts (e.g. num_work_tours)</p>
 <section id="mem">
 <h3>Mem<a class="headerlink" href="#mem" title="Permalink to this heading">#</a></h3>
 <p>Helper functions for tracking memory usage</p>
-<section id="id23">
-<h4>API<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h4>
+<section id="id22">
+<h4>API<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.mem"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.mem.consolidate_logs">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.mem.</span></span><span class="sig-name descname"><span class="pre">consolidate_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.mem.consolidate_logs" title="Permalink to this definition">#</a></dt>
@@ -5025,8 +5025,8 @@ helpful in expression files that compute counts (e.g. num_work_tours)</p>
 <section id="output">
 <h3>Output<a class="headerlink" href="#output" title="Permalink to this heading">#</a></h3>
 <p>Write output files and track skim usage.</p>
-<section id="id24">
-<h4>API<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h4>
+<section id="id23">
+<h4>API<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.steps.output"></span><dl class="py function">
 <dt class="sig sig-object py" id="activitysim.core.steps.output.previous_write_data_dictionary">
 <span class="sig-prename descclassname"><span class="pre">activitysim.core.steps.output.</span></span><span class="sig-name descname"><span class="pre">previous_write_data_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="dev-guide/_generated/activitysim.core.workflow.State.html#activitysim.core.workflow.State" title="activitysim.core.workflow.state.State"><span class="pre">State</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.core.steps.output.previous_write_data_dictionary" title="Permalink to this definition">#</a></dt>
@@ -5198,42 +5198,42 @@ if no output_tables list is specified, then all checkpointed tables will be writ
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-expressions">Utility Expressions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conventions">Conventions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-expressions-file">Example Expressions File</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Expressions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expressions">Expressions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-with-interaction">Sampling with Interaction</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate">Simulate</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-with-interaction">Simulate with Interaction</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-with-sampling-and-interaction">Simulate with Sampling and Interaction</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assign">Assign</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">API</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choice-models">Choice Models</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logit">Logit</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">API</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#person-time-windows">Person Time Windows</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">API</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">API</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transit-virtual-path-builder">Transit Virtual Path Builder</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">API</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">API</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-activitysim.core.pathbuilder_cache">Cache API</a></li>
 </ul>
 </li>
@@ -5249,23 +5249,23 @@ if no output_tables list is specified, then all checkpointed tables will be writ
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpers">Helpers</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunk">Chunk</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utilities">Utilities</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#config">Config</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mem">Mem</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output">Output</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">API</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">API</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
@@ -5305,7 +5305,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev433+g9cb94005, documentation last updated Nov 20, 2023.<br/>
+ActivitySim 1.2.1.dev442+g939e637d, documentation last updated Nov 27, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
