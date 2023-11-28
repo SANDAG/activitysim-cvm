@@ -62,7 +62,7 @@
     <link rel="prev" title="Ways to Run the Model" href="ways_to_run.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 28, 2023"/>
   </head>
   
   
@@ -540,7 +540,7 @@ same so the blending can happen on-the-fly or else a value of 0 is returned.</p>
 <p>In addition to the extra two zone system settings and inputs above, the following additional settings and inputs are required for a three zone system model.  Examples values are illustrated below.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">settings.yaml</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">models</span></code> - add initialize_los and initialize_tvpb to load network LOS inputs / skims and pre-compute TAP to TAP utilities for TVPB.  See <a class="reference internal" href="../models.html#initialize-los"><span class="std std-ref">Initialize LOS</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models</span></code> - add initialize_los and initialize_tvpb to load network LOS inputs / skims and pre-compute TAP to TAP utilities for TVPB.  See <span class="xref std std-ref">initialize_los</span>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">want_dest_choice_presampling</span></code> - enable presampling for multizone systems, which means first select a TAZ using the sampling model and then select a microzone within the TAZ based on the microzone share of TAZ size term.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">models</span><span class="p">:</span>
@@ -680,7 +680,7 @@ model as for a one zone system model.  However, the one key additional bit of
 information for a three zone system model is the boarding TAP, alighting TAP, and
 transit skim set is added to the relevant chooser table (e.g. tours and trips) when the
 chosen mode is transit.  Logging and tracing also work for two and three zone models,
-including tracing of the TVPB calculations. The <a class="reference internal" href="../models.html#write-trip-matrices"><span class="std std-ref">Write Trip Matrices</span></a> step writes
+including tracing of the TVPB calculations. The <span class="xref std std-ref">write_trip_matrices</span> step writes
 both TAZ and TAP level matrices depending on the configured number of zone systems.</p>
 </section>
 <section id="presampling">
@@ -875,7 +875,7 @@ library.  The following key log files are created with a model run:</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev446+g5bec1f9d, documentation last updated Nov 27, 2023.<br/>
+ActivitySim 1.2.1.dev447+gfcc99f80, documentation last updated Nov 28, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

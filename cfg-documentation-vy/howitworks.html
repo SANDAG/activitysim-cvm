@@ -62,7 +62,7 @@
     <link rel="prev" title="DigitalEncoding" href="users-guide/_generated/activitysim.core.configuration.DigitalEncoding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 28, 2023"/>
   </head>
   
   
@@ -467,7 +467,7 @@ on-demand loading. Next, the system loads the models list and starts the pipelin
 </div>
 <p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.pipeline.run()</span></code> method loops through the list of models, calls <code class="docutils literal notranslate"><span class="pre">inject.run([step_name])</span></code>,
 and manages the data pipeline.  The first disaggregate data processing step (or model) run is <code class="docutils literal notranslate"><span class="pre">initialize_households</span></code>, defined in
-<a class="reference internal" href="models.html#module-activitysim.abm.models.initialize" title="activitysim.abm.models.initialize"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.initialize</span></code></a>.  The <code class="docutils literal notranslate"><span class="pre">initialize_households</span></code> step is responsible for requesting reading of the raw
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.initialize</span></code>.  The <code class="docutils literal notranslate"><span class="pre">initialize_households</span></code> step is responsible for requesting reading of the raw
 households and persons into memory.</p>
 </section>
 <section id="initialize-households">
@@ -481,7 +481,7 @@ households and persons into memory.</p>
    <span class="n">annotate_tables</span><span class="p">(</span><span class="n">model_settings</span><span class="p">,</span> <span class="n">trace_label</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This step reads the <code class="docutils literal notranslate"><span class="pre">initialize_households.yaml</span></code> config file, which defines the <a class="reference internal" href="models.html#table-annotation"><span class="std std-ref">Estimation</span></a> below.  Each table
+<p>This step reads the <code class="docutils literal notranslate"><span class="pre">initialize_households.yaml</span></code> config file, which defines the <span class="xref std std-ref">table_annotation</span> below.  Each table
 annotation applies the expressions specified in the annotate spec to the relevant table.  For example, the <code class="docutils literal notranslate"><span class="pre">persons</span></code> table
 is annotated with the results of the expressions in <code class="docutils literal notranslate"><span class="pre">annotate_persons.csv</span></code>.  If the table is not already in memory, then
 inject goes looking for it as explained below.</p>
@@ -615,7 +615,7 @@ actually reads the input tables from the input HDF5 or CSV file using the <code 
 <div><ul class="simple">
 <li><p>input store - reads input data tables from the input data store</p></li>
 <li><p>constants - various constants used throughout the model system, such as person type codes</p></li>
-<li><p>shadow pricing - shadow price calculator and associated utility methods, see <a class="reference internal" href="models.html#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a></p></li>
+<li><p>shadow pricing - shadow price calculator and associated utility methods, see <span class="xref std std-ref">shadow_pricing</span></p></li>
 <li><p>size terms - created by reading the <code class="docutils literal notranslate"><span class="pre">destination_choice_size_terms.csv</span></code> input file.  Index - <code class="docutils literal notranslate"><span class="pre">segment</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.size_terms.py</span></code>)</p></li>
 <li><p>skims - each model runs requires skims, but how the skims are defined can vary significantly depending on the ActivitySim implementation. The skims class defines Inject injectables to access the skim matrices. The skims class reads the skims from the omx_file on disk.</p></li>
 <li><p>table dictionary - stores which tables should be registered as random number generator channels for restartability of the pipeline</p></li>
@@ -3280,7 +3280,7 @@ The skims are float64 matrix.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev446+g5bec1f9d, documentation last updated Nov 27, 2023.<br/>
+ActivitySim 1.2.1.dev447+gfcc99f80, documentation last updated Nov 28, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

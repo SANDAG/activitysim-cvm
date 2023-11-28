@@ -62,7 +62,7 @@
     <link rel="prev" title="Write Trip Matrices" href="dev-guide/components/write_trip_matrices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 28, 2023"/>
   </head>
   
   
@@ -327,7 +327,6 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="dev-guide/workflows.html">Workflows</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dev-guide/logging.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Software Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dev-guide/component-configs.html">Component Configuration</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="dev-guide/components/index.html">Components</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="dev-guide/components/initialize.html">Initialize</a></li>
@@ -2501,7 +2500,7 @@ introduction to expressions.  ActivitySim provides two ways to evaluate expressi
 </tr>
 </tbody>
 </table>
-<p>In the <a class="reference internal" href="models.html#tour-mode-choice"><span class="std std-ref">Tour Mode Choice</span></a> model expression file example shown below, the <code class="docutils literal notranslate"><span class="pre">&#64;c_ivt*(&#64;odt_skims['SOV_TIME']</span> <span class="pre">+</span> <span class="pre">dot_skims['SOV_TIME'])</span></code>
+<p>In the <span class="xref std std-ref">tour_mode_choice</span> model expression file example shown below, the <code class="docutils literal notranslate"><span class="pre">&#64;c_ivt*(&#64;odt_skims['SOV_TIME']</span> <span class="pre">+</span> <span class="pre">dot_skims['SOV_TIME'])</span></code>
 expression is travel time for the tour origin to destination at the tour start time plus the tour destination to tour origin at the tour end time.
 The <code class="docutils literal notranslate"><span class="pre">odt_skims</span></code> and <code class="docutils literal notranslate"><span class="pre">dot_skims</span></code> objects are setup ahead-of-time to refer to the relevant skims for this model.  The <code class="docutils literal notranslate"><span class="pre">&#64;c_ivt</span></code> comes from the
 tour mode choice coefficient file.  The tour mode choice model is a nested logit (NL) model and the nesting structure (including nesting
@@ -2554,8 +2553,8 @@ in the example destination choice model, the size terms expressions file has mar
 coefficients as columns.  Broadly speaking, there are currently four types of model expression configurations:</p>
 <ul class="simple">
 <li><p>Simple <a class="reference internal" href="#simulate"><span class="std std-ref">Simulate</span></a> choice model - select from a fixed set of choices defined in the specification file, such as the example above.</p></li>
-<li><p><a class="reference internal" href="#simulate-with-interaction"><span class="std std-ref">Simulate with Interaction</span></a> choice model - combine the choice expressions with the choice alternatives files since the alternatives are not listed in the expressions file.  The <a class="reference internal" href="models.html#non-mandatory-tour-destination-choice"><span class="std std-ref">Non-Mandatory Tour Destination Choice</span></a> model implements this approach.</p></li>
-<li><p>Combinatorial choice model - first generate a set of alternatives based on a combination of alternatives across choosers, and then make choices.  The <a class="reference internal" href="models.html#id41"><span class="std std-ref">CDAP</span></a> model implements this approach.</p></li>
+<li><p><a class="reference internal" href="#simulate-with-interaction"><span class="std std-ref">Simulate with Interaction</span></a> choice model - combine the choice expressions with the choice alternatives files since the alternatives are not listed in the expressions file.  The <span class="xref std std-ref">non_mandatory_tour_destination_choice</span> model implements this approach.</p></li>
+<li><p>Combinatorial choice model - first generate a set of alternatives based on a combination of alternatives across choosers, and then make choices.  The <span class="xref std std-ref">cdap</span> model implements this approach.</p></li>
 </ul>
 </section>
 <section id="expressions">
@@ -3326,7 +3325,7 @@ choices[‘logsum’] : float logsum of choice utilities across alternatives</p>
 <h3>Assign<a class="headerlink" href="#assign" title="Permalink to this heading">#</a></h3>
 <p>Alternative version of the expression evaluators in <a class="reference internal" href="#module-activitysim.core.simulate" title="activitysim.core.simulate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.core.simulate</span></code></a> that supports temporary variable assignment.
 Temporary variables are identified in the expressions as starting with “_”, such as “_hh_density_bin”.  These
-fields are not saved to the data pipeline store.  This feature is used by the <a class="reference internal" href="models.html#accessibility"><span class="std std-ref">Accessibility</span></a> model.</p>
+fields are not saved to the data pipeline store.  This feature is used by the <a class="reference internal" href="dev-guide/components/accessibility.html#accessibility"><span class="std std-ref">Accessibility</span></a> model.</p>
 <section id="id12">
 <h4>API<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h4>
 <span class="target" id="module-activitysim.core.assign"></span><dl class="py function">
@@ -4106,7 +4105,7 @@ expression files for the respective components:</p>
 destination MAZ pair and selects the user defined N best paths to represent the transit mode.  After selecting N best paths, the logsum across
 N best paths is calculated and exposed to the mode choice models and a random number is drawn and a path is chosen. The boarding TAP,
 alighting TAP, and TAP to TAP skim set for the chosen path is saved to the chooser table.</p>
-<p>The initialize TVPB submodel (see <a class="reference internal" href="models.html#initialize-los"><span class="std std-ref">Initialize LOS</span></a>) pre-computes TAP to TAP total utilities for the user defined attribute_segments,
+<p>The initialize TVPB submodel (see <span class="xref std std-ref">initialize_los</span>) pre-computes TAP to TAP total utilities for the user defined attribute_segments,
 which are typically demographic segment (for example household income bin), time-of-day, and access/egress mode.  This submodel can be
 run in both single process and multiprocess mode, with single process excellent for development/debugging and multiprocess excellent
 for application.  ActivitySim saves the pre-calculated TAP to TAP total utilities to a memory mapped cache file for reuse by downstream models
@@ -5304,7 +5303,7 @@ if no output_tables list is specified, then all checkpointed tables will be writ
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev446+g5bec1f9d, documentation last updated Nov 27, 2023.<br/>
+ActivitySim 1.2.1.dev447+gfcc99f80, documentation last updated Nov 28, 2023.<br/>
 </p></div>
       
         <div class="footer-item">

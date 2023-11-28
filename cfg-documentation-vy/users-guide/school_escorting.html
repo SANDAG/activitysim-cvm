@@ -60,7 +60,7 @@
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 27, 2023"/>
+    <meta name="docbuild:last-update" content="Nov 28, 2023"/>
   </head>
   
   
@@ -360,7 +360,7 @@ document.write(`
 <h1>School Location<a class="headerlink" href="#school-location" title="Permalink to this heading">#</a></h1>
 <p>Now that the persons, households, and other data are in memory, and also annotated with additional fields
 for later calculations, the school location model can be run.  The school location model is defined
-in <a class="reference internal" href="../models.html#module-activitysim.abm.models.location_choice" title="activitysim.abm.models.location_choice"><code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.location_choice</span></code></a>.  As shown below, the school location model
+in <code class="xref py py-mod docutils literal notranslate"><span class="pre">activitysim.abm.models.location_choice</span></code>.  As shown below, the school location model
 actually uses the <code class="docutils literal notranslate"><span class="pre">persons_merged</span></code> table, which includes joined household, land use, and accessibility
 tables as well.  The school location model also requires the network_los object, which is discussed next.
 Before running the generic iterate location choice function, the model reads the model settings file, which
@@ -531,9 +531,9 @@ each chooser using the school location simulate expression files and the
 <a class="reference internal" href="../core.html#activitysim.core.interaction_sample_simulate.interaction_sample_simulate" title="activitysim.core.interaction_sample_simulate.interaction_sample_simulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.core.interaction_sample_simulate.interaction_sample_simulate()</span></code></a> function.</p>
 <p>Back in <code class="docutils literal notranslate"><span class="pre">iterate_location_choice()</span></code>, the model adds the choices as a column to the <code class="docutils literal notranslate"><span class="pre">persons</span></code> table and adds
 additional output columns using a postprocessor table annotation if specified in the settings file.  Refer
-to <a class="reference internal" href="../models.html#table-annotation"><span class="std std-ref">Estimation</span></a> for more information and the <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.expressions.assign_columns()</span></code>
+to <span class="xref std std-ref">table_annotation</span> for more information and the <code class="xref py py-func docutils literal notranslate"><span class="pre">activitysim.abm.models.util.expressions.assign_columns()</span></code>
 function.  The overall school location model is run within a shadow pricing iterative loop as shown below.  Refer
-to <a class="reference internal" href="../models.html#shadow-pricing"><span class="std std-ref">Shadow Pricing</span></a> for more information.</p>
+to <span class="xref std std-ref">shadow_pricing</span> for more information.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in iterate_location_choice() in location_choice.py</span>
       <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iterations</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
 
@@ -641,7 +641,7 @@ to <a class="reference internal" href="../models.html#shadow-pricing"><span clas
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev446+g5bec1f9d, documentation last updated Nov 27, 2023.<br/>
+ActivitySim 1.2.1.dev447+gfcc99f80, documentation last updated Nov 28, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
