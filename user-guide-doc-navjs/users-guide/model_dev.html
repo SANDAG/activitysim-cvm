@@ -62,7 +62,7 @@
     <link rel="prev" title="How the System Works" href="../howitworks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Dec 13, 2023"/>
+    <meta name="docbuild:last-update" content="Dec 15, 2023"/>
   </head>
   
   
@@ -415,7 +415,7 @@ combination of functionality means:</p>
 <section id="workflow">
 <h3>Workflow<a class="headerlink" href="#workflow" title="Permalink to this heading">#</a></h3>
 <p>The general workflow for estimating models is shown in the following figures and explained in more detail below.</p>
-<img alt="users-guide/images/estimation_tools.jpg" src="users-guide/images/estimation_tools.jpg" />
+<img alt="../_images/estimation_tools.jpg" src="../_images/estimation_tools.jpg" />
 <ul class="simple">
 <li><p>The user converts their household travel survey into ActivitySim format households, persons, tours, joint tour participants, and trip tables.  The households and persons tables must have the same fields as the synthetic population input tables since the surveyed households and persons will be run through the same set of submodels as the simulated households and persons.</p></li>
 <li><p>The ActivitySim estimation example <code class="docutils literal notranslate"><span class="pre">scripts\infer.py</span></code> module reads the ActivitySim format household travel survey files and checks for inconsistencies in the input tables versus the model design + calculates additional fields such as the household joint tour frequency based on the trips and joint tour participants table.  Survey households and persons observed choices much match the model design (i.e. a person cannot have more work tours than the model allows).</p></li>
@@ -423,7 +423,7 @@ combination of functionality means:</p>
 <li><p>The relevant EDBs are read and transformed into the format required by the model estimation tool (i.e. larch) and then the coefficients are re-estimated. The <code class="docutils literal notranslate"><span class="pre">activitysim.estimation.larch</span></code> library is included for integration with larch and there is a Jupyter Notebook estimation example for each core submodel.  No changes to the model specification are made in the process.</p></li>
 <li><p>The user can then update the ActivitySim model coefficients file(s) for the estimated submodel and re-run the model in simulation mode.  The user may want to use the restartable pipeline feature of ActivitySim to just run the submodel of interest.</p></li>
 </ul>
-<img alt="users-guide/images/estimation_example.jpg" src="users-guide/images/estimation_example.jpg" />
+<img alt="../_images/estimation_example.jpg" src="../_images/estimation_example.jpg" />
 </section>
 <section id="example">
 <span id="estimation-example"></span><h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
@@ -1079,7 +1079,7 @@ have the same initial value are converted to have the same name
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev450+g75703b1c, documentation last updated Dec 13, 2023.<br/>
+ActivitySim 1.2.1.dev452+g6b351a7f, documentation last updated Dec 15, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
