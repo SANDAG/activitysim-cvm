@@ -62,7 +62,7 @@
     <link rel="prev" title="Users Guide" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Dec 15, 2023"/>
+    <meta name="docbuild:last-update" content="Dec 22, 2023"/>
   </head>
   
   
@@ -322,6 +322,7 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ways_to_run.html">Ways to Run the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_primary_example.html">Run the Primary Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_anatomy.html">Anatomy of a Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howitworks.html">How the System Works</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_dev.html">Model Development</a></li>
@@ -424,10 +425,8 @@ and running ActivitySim are also available in this Users Guide.</p>
 <li><p>The desired runtimes</p></li>
 </ul>
 <p>ActivitySim framework models use a significant amount of RAM since they store data in-memory to reduce
-data access time in order to minimize runtime.  For example, the prototype MTC example model has 2.7 million
-households, 7.5 million people, 1475 zones, 826 network skims and has been run between one hour and one day depending
-on the amount of RAM and number of processors allocated.  See <a class="reference internal" href="ways_to_run.html#multiprocessing"><span class="std std-ref">Multiprocessing</span></a> and <a class="reference internal" href="../core.html#chunk-size"><span class="std std-ref">Chunk</span></a> for more information.</p>
-<p>As an example, the SEMCOG ABM, a model that follows a 2-Zone system runs on a windows machine, with the minimum and recommended system specification as follows:</p>
+data access time in order to minimize runtime.</p>
+<p>For example, the SEMCOG ABM, a model that follows a 2-Zone system runs on a windows machine, with the minimum and recommended system specification as follows:</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Minimum Specification:</dt><dd><ul>
@@ -450,6 +449,24 @@ on the amount of RAM and number of processors allocated.  See <a class="referenc
 </dl>
 </li>
 </ul>
+<p>As another example, the prototype MTC example model - which has 2.7 million households, 7.5 million people, 1475 zones, 826 network skims - has a runtime between one hour and one day depending on the amount of RAM and number of processors allocated.</p>
+<p>ActivitySim has features that makes it possible to customize model runs or improve model runtimes based on the available hardware resources and requirements. A few ways to do this are listed below:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="ways_to_run.html#chunking-ways-to-run"><span class="std std-ref">Chunking</span></a> allows the user to run eligible steps in parallel. This can be turned on/off.</p></li>
+<li><p><a class="reference internal" href="ways_to_run.html#multi-proc-ways-to-run"><span class="std std-ref">Multiprocessing</span></a> allows the user to segment processing into discrete sets of data. This will increase the runtime but allow for lower RAM requirements. This feature can also be turned on/off.</p></li>
+<li><p><a class="reference internal" href="ways_to_run.html#sharrow-ways-to-run"><span class="std std-ref">Sharrow</span></a> is a Python library designed to decrease run-time for ActivitySim models by creating an optimized compiled version of the model. This can also be turned on/off.</p></li>
+<li><p><a class="reference internal" href="ways_to_run.html#tracing-ways-to-run"><span class="std std-ref">Tracing</span></a> allows the user to access information throughout the model run for a specified number of households/persons/zones. Enabling this feature will increase run-time and memory usage. It is recommended that this feature be turned off for typical model application.</p></li>
+<li><dl class="simple">
+<dt>Optimization of data types including:</dt><dd><ul>
+<li><p>Converting string variables to pandas categoricals. ActivitySim releases <em>&lt;placeholder for version number&gt;</em> and higher have this capability.</p></li>
+<li><p>Converting higher byte integer variables to lower byte integer variables (such as reducing ‘num tours’ from int64 to int8).</p></li>
+<li><p>Converting higher byte float variables to lower bytes. ActivitySim releases X.X.X and higher have this capability as a switch and defaults to turning this feature off.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Steps for enabling/disabling these options are included in the <a class="reference internal" href="ways_to_run.html#advanced-configuration"><span class="std std-ref">Advanced Configuration</span></a> sub-section, under <a class="reference internal" href="ways_to_run.html#ways-to-run-the-model"><span class="std std-ref">Ways to Run the Model</span></a> page of this Users’ Guide.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In general, more CPU cores and RAM will result in faster run times.
@@ -723,7 +740,7 @@ check the current active environment with <code class="docutils literal notransl
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev452+g6b351a7f, documentation last updated Dec 15, 2023.<br/>
+ActivitySim 1.2.1.dev455+ge4f30036, documentation last updated Dec 22, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
