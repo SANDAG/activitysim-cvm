@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -51,18 +51,18 @@
     <script src="../_static/design-tabs.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'users-guide/model_anatomy';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.14.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://camsys.github.io/activitysim/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.2.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Settings" href="_generated/activitysim.core.configuration.Settings.html" />
-    <link rel="prev" title="Ways to Run the Model" href="ways_to_run.html" />
+    <link rel="next" title="How the System Works" href="../howitworks.html" />
+    <link rel="prev" title="Run the Primary Example" href="run_primary_example.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 28, 2023"/>
+    <meta name="docbuild:last-update" content="Dec 28, 2023"/>
   </head>
   
   
@@ -124,6 +124,7 @@
   <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -143,7 +144,8 @@
     
     <div class="me-auto navbar-header-items__center">
       
-        <div class="navbar-item"><nav class="navbar-nav">
+        <div class="navbar-item">
+<nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
      aria-level="1"
@@ -175,6 +177,7 @@
       
         <div class="navbar-item navbar-persistent--container">
           
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -217,6 +220,7 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -250,7 +254,8 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item"><nav class="navbar-nav">
+          <div class="navbar-item">
+<nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
      aria-level="1"
@@ -310,12 +315,14 @@ document.write(`
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="modelsetup.html">Model Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ways_to_run.html">Ways to Run the Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_primary_example.html">Run the Primary Example</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Anatomy of a Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howitworks.html">How the System Works</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_dev.html">Model Development</a></li>
@@ -381,17 +388,32 @@ document.write(`
                   
   <section id="anatomy-of-a-model">
 <h1>Anatomy of a Model<a class="headerlink" href="#anatomy-of-a-model" title="Permalink to this heading">#</a></h1>
-<section id="input-data">
-<h2>Input Data<a class="headerlink" href="#input-data" title="Permalink to this heading">#</a></h2>
+<span class="target" id="index-0"></span><span class="target" id="index-1"></span><span class="target" id="index-2"></span><span class="target" id="index-3"></span><span class="target" id="index-4"></span><span class="target" id="index-5"></span><span class="target" id="index-6"></span><span class="target" id="index-7"></span><section id="input-data">
+<span id="index-8"></span><h2>Input Data<a class="headerlink" href="#input-data" title="Permalink to this heading">#</a></h2>
 <p>In order to run any model, the user needs the input files in the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder as identified in the <code class="docutils literal notranslate"><span class="pre">configs\settings.yaml</span></code>
 file and the <code class="docutils literal notranslate"><span class="pre">configs\network_los.yaml</span></code> file.</p>
-<p>Common inputs include</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">households</span></code> - Synthetic households for the region.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">persons</span></code> - Synthetic population person records with socio-demographics details.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">zone</span> <span class="pre">based</span> <span class="pre">land</span> <span class="pre">use</span> <span class="pre">data</span></code>: Includes total population, employments, area types, etc. data for the region.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">skims</span></code>: OMX matrix file containing skim matrices for the zone system of the region.</p></li>
+<p>The following tables are currently implemented:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>households - household attributes for each household being simulated.  Index: <code class="docutils literal notranslate"><span class="pre">household_id</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.households.py</span></code>)</p></li>
+<li><p>landuse - zonal land use (such as population and employment) attributes. Index: <code class="docutils literal notranslate"><span class="pre">zone_id</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.landuse.py</span></code>)</p></li>
+<li><p>persons - person attributes for each person being simulated.  Index: <code class="docutils literal notranslate"><span class="pre">person_id</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.persons.py</span></code>)</p></li>
+<li><p>time windows - manages person time windows throughout the simulation.  See <a class="reference internal" href="../core.html#time-windows"><span class="std std-ref">Person Time Windows</span></a>.  Index:  <code class="docutils literal notranslate"><span class="pre">person_id</span></code> (see the person_windows table create decorator in <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.time_windows.py</span></code>)</p></li>
+<li><p>tours - tour attributes for each tour (mandatory, non-mandatory, joint, and atwork-subtour) being simulated.  Index:  <code class="docutils literal notranslate"><span class="pre">tour_id</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.models.util.tour_frequency.py</span></code>)</p></li>
+<li><p>trips - trip attributes for each trip being simulated.  Index: <code class="docutils literal notranslate"><span class="pre">trip_id</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.models.stop_frequency.py</span></code>)</p></li>
 </ul>
+</div></blockquote>
+<p>A few additional tables are also used, which are not really tables, but classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>input store - reads input data tables from the input data store</p></li>
+<li><p>constants - various constants used throughout the model system, such as person type codes</p></li>
+<li><p>shadow pricing - shadow price calculator and associated utility methods, see <span class="xref std std-ref">shadow_pricing</span></p></li>
+<li><p>size terms - created by reading the <code class="docutils literal notranslate"><span class="pre">destination_choice_size_terms.csv</span></code> input file.  Index - <code class="docutils literal notranslate"><span class="pre">segment</span></code> (see <code class="docutils literal notranslate"><span class="pre">activitysim.abm.tables.size_terms.py</span></code>)</p></li>
+<li><p>skims - each model runs requires skims, but how the skims are defined can vary significantly depending on the ActivitySim implementation. The skims class defines Inject injectables to access the skim matrices. The skims class reads the skims from the omx_file on disk.</p></li>
+<li><p>table dictionary - stores which tables should be registered as random number generator channels for restartability of the pipeline</p></li>
+</ul>
+</div></blockquote>
 </section>
 <section id="zone-system">
 <span id="zone-systems"></span><h2>Zone System<a class="headerlink" href="#zone-system" title="Permalink to this heading">#</a></h2>
@@ -781,23 +803,23 @@ library.  The following key log files are created with a model run:</p>
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
-       href="ways_to_run.html"
+       href="run_primary_example.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Ways to Run the Model</p>
+        <p class="prev-next-title">Run the Primary Example</p>
       </div>
     </a>
     <a class="right-next"
-       href="_generated/activitysim.core.configuration.Settings.html"
+       href="../howitworks.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Settings</p>
+        <p class="prev-next-title">How the System Works</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -811,6 +833,7 @@ library.  The following key log files are created with a model run:</p>
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
+
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
@@ -829,15 +852,9 @@ library.  The following key log files are created with a model run:</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-settings">Top Level Settings</a><ul class="simple nav section-nav flex-column">
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-system">File System</a><ul class="simple nav section-nav flex-column">
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-level-of-service">Network Level of Service</a><ul class="simple nav section-nav flex-column">
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-settings">Top Level Settings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-system">File System</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-level-of-service">Network Level of Service</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-specifications">Utility Specifications</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Outputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging">Logging</a></li>
@@ -845,6 +862,7 @@ library.  The following key log files are created with a model run:</p>
   </nav></div>
 
   <div class="sidebar-secondary-item">
+
   <div class="tocsection sourcelink">
     <a href="../_sources/users-guide/model_anatomy.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
@@ -865,8 +883,8 @@ library.  The following key log files are created with a model run:</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -875,10 +893,11 @@ library.  The following key log files are created with a model run:</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev448+ga46c737f, documentation last updated Nov 28, 2023.<br/>
+ActivitySim 1.2.1.dev479+g3e07dbef, documentation last updated Dec 28, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
+
   <p class="sphinx-version">
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     <br/>
@@ -891,8 +910,9 @@ ActivitySim 1.2.1.dev448+ga46c737f, documentation last updated Nov 28, 2023.<br/
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.3.
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
 </p></div>
       
     </div>

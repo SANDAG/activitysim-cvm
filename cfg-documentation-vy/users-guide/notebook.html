@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -51,7 +51,7 @@
     <script src="../_static/design-tabs.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'users-guide/notebook';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.14.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.14.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://camsys.github.io/activitysim/switcher.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.2.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
@@ -60,7 +60,7 @@
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Nov 28, 2023"/>
+    <meta name="docbuild:last-update" content="Dec 28, 2023"/>
   </head>
   
   
@@ -122,6 +122,7 @@
   <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -141,7 +142,8 @@
     
     <div class="me-auto navbar-header-items__center">
       
-        <div class="navbar-item"><nav class="navbar-nav">
+        <div class="navbar-item">
+<nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
      aria-level="1"
@@ -173,6 +175,7 @@
       
         <div class="navbar-item navbar-persistent--container">
           
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -215,6 +218,7 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -248,7 +252,8 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item"><nav class="navbar-nav">
+          <div class="navbar-item">
+<nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
      aria-level="1"
@@ -395,14 +400,14 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
- - distributed_vot_sigma
- - household_median_value_of_time
  - min_value_of_time
  - max_value_of_time
- - rural_threshold
- - cbd_threshold
- - urban_threshold
  - distributed_vot_mu
+ - rural_threshold
+ - distributed_vot_sigma
+ - household_median_value_of_time
+ - urban_threshold
+ - cbd_threshold
 </pre></div>
 </div>
 </div>
@@ -422,14 +427,14 @@ copied! new project files are in /tmp/examples/prototype_mtc
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found the following unexpected settings:
- - distributed_vot_sigma
- - household_median_value_of_time
  - min_value_of_time
  - max_value_of_time
- - rural_threshold
- - cbd_threshold
- - urban_threshold
  - distributed_vot_mu
+ - rural_threshold
+ - distributed_vot_sigma
+ - household_median_value_of_time
+ - urban_threshold
+ - cbd_threshold
 </pre></div>
 </div>
 </div>
@@ -704,28 +709,28 @@ that can work with DataFrames.</p>
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-d5849c64ccce46c68b1069b9558cc239.vega-embed {
+  #altair-viz-2beac85aca4e46ecb980a1dc4d791d4e.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-d5849c64ccce46c68b1069b9558cc239.vega-embed details,
-  #altair-viz-d5849c64ccce46c68b1069b9558cc239.vega-embed details summary {
+  #altair-viz-2beac85aca4e46ecb980a1dc4d791d4e.vega-embed details,
+  #altair-viz-2beac85aca4e46ecb980a1dc4d791d4e.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-d5849c64ccce46c68b1069b9558cc239"></div>
+<div id="altair-viz-2beac85aca4e46ecb980a1dc4d791d4e"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-d5849c64ccce46c68b1069b9558cc239") {
-      outputDiv = document.getElementById("altair-viz-d5849c64ccce46c68b1069b9558cc239");
+    if (outputDiv.id !== "altair-viz-2beac85aca4e46ecb980a1dc4d791d4e") {
+      outputDiv = document.getElementById("altair-viz-2beac85aca4e46ecb980a1dc4d791d4e");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.15.1?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.16.3?noext",
       "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
     };
 
@@ -761,12 +766,12 @@ that can work with DataFrames.</p>
       require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
       maybeLoadScript("vega", "5")
-        .then(() => maybeLoadScript("vega-lite", "5.15.1"))
+        .then(() => maybeLoadScript("vega-lite", "5.16.3"))
         .then(() => maybeLoadScript("vega-embed", "6"))
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ecd0ff36dda040c608a4463799ff5bd2"}, "mark": {"type": "circle", "size": 100}, "encoding": {"x": {"field": "auPkRetail", "scale": {"zero": false}, "type": "quantitative"}, "y": {"field": "auPkTotal", "scale": {"zero": false}, "type": "quantitative"}}, "params": [{"name": "param_1", "select": {"type": "interval", "encodings": ["x", "y"]}, "bind": "scales"}], "$schema": "https://vega.github.io/schema/vega-lite/v5.15.1.json", "datasets": {"data-ecd0ff36dda040c608a4463799ff5bd2": [{"auPkRetail": 9.316494246422568, "auPkTotal": 12.61517574315289, "auOpRetail": 9.30743678664037, "auOpTotal": 12.607849392261432, "trPkRetail": 7.764263497215065, "trPkTotal": 11.145248189788484, "trOpRetail": 7.69308601648347, "trOpTotal": 11.037285956909018, "nmRetail": 8.137360927784435, "nmTotal": 11.72624220917462}, {"auPkRetail": 9.316897918969254, "auPkTotal": 12.61346094178568, "auOpRetail": 9.304626990654363, "auOpTotal": 12.604208995044406, "trPkRetail": 7.511300904234602, "trPkTotal": 10.950045514776265, "trOpRetail": 7.427060033663283, "trOpTotal": 10.76310190871255, "nmRetail": 8.142716869603856, "nmTotal": 11.724185979755147}, {"auPkRetail": 9.293216972412948, "auPkTotal": 12.580014459851448, "auOpRetail": 9.286241654126094, "auOpTotal": 12.574901923298121, "trPkRetail": 7.340975248764847, "trPkTotal": 10.78760844956674, "trOpRetail": 7.252677859156825, "trOpTotal": 10.574953610768503, "nmRetail": 8.050369141519473, "nmTotal": 11.478912551444546}, {"auPkRetail": 9.357349507455009, "auPkTotal": 12.630894215587896, "auOpRetail": 9.34824855856986, "auOpTotal": 12.623585760796873, "trPkRetail": 7.8733268245042565, "trPkTotal": 11.22417118506541, "trOpRetail": 7.814365228731915, "trOpTotal": 11.135415935503294, "nmRetail": 8.371197500397228, "nmTotal": 11.7752306986044}, {"auPkRetail": 9.343550555725637, "auPkTotal": 12.585069455568574, "auOpRetail": 9.333262167175757, "auOpTotal": 12.574553584249722, "trPkRetail": 7.589355611211902, "trPkTotal": 11.082549740994516, "trOpRetail": 7.549557403733535, "trOpTotal": 11.02796499800084, "nmRetail": 8.318059258671834, "nmTotal": 11.431764411398849}, {"auPkRetail": 9.271350280266805, "auPkTotal": 12.523449297481994, "auOpRetail": 9.265762312325014, "auOpTotal": 12.519697722182595, "trPkRetail": 7.313872482530061, "trPkTotal": 10.504310979906819, "trOpRetail": 7.068341268659587, "trOpTotal": 10.25178992198404, "nmRetail": 7.83824123593578, "nmTotal": 11.023737612069544}, {"auPkRetail": 9.29319438854463, "auPkTotal": 12.528401453550224, "auOpRetail": 9.286372808530611, "auOpTotal": 12.520416143845779, "trPkRetail": 7.641910047999711, "trPkTotal": 10.805002738627607, "trOpRetail": 7.607878383964711, "trOpTotal": 10.752509699164879, "nmRetail": 8.016914788053809, "nmTotal": 11.10880473926608}, {"auPkRetail": 9.267844254343885, "auPkTotal": 12.49714602566128, "auOpRetail": 9.262133093242994, "auOpTotal": 12.489886062198453, "trPkRetail": 7.54693384078048, "trPkTotal": 10.834136328674168, "trOpRetail": 7.501423798794656, "trOpTotal": 10.77932009280521, "nmRetail": 7.981950488551539, "nmTotal": 11.052152831140146}, {"auPkRetail": 9.189502970549922, "auPkTotal": 12.426036497501059, "auOpRetail": 9.18403503221456, "auOpTotal": 12.415459798818294, "trPkRetail": 7.1887514829393275, "trPkTotal": 10.303186204562111, "trOpRetail": 7.149056558862683, "trOpTotal": 10.260609520047622, "nmRetail": 7.415629777091658, "nmTotal": 10.758663414411654}, {"auPkRetail": 9.186004126767736, "auPkTotal": 12.403890115167114, "auOpRetail": 9.180762007450875, "auOpTotal": 12.39634439278583, "trPkRetail": 7.379335812398483, "trPkTotal": 10.548674760263005, "trOpRetail": 7.306521923298712, "trOpTotal": 10.495921687099003, "nmRetail": 7.567826158130381, "nmTotal": 10.694411506898852}, {"auPkRetail": 9.320092663930184, "auPkTotal": 12.519242155343258, "auOpRetail": 9.315095032027857, "auOpTotal": 12.511758193169229, "trPkRetail": 7.455701967440772, "trPkTotal": 10.87560132590152, "trOpRetail": 7.348368031699475, "trOpTotal": 10.762777837534243, "nmRetail": 8.228286574614595, "nmTotal": 11.171156624491507}, {"auPkRetail": 9.351590564549332, "auPkTotal": 12.600777209765274, "auOpRetail": 9.340287123569157, "auOpTotal": 12.590072566154266, "trPkRetail": 7.945965142396818, "trPkTotal": 11.20437497188151, "trOpRetail": 7.846325586111904, "trOpTotal": 11.074533951389993, "nmRetail": 8.420517844196304, "nmTotal": 11.61897257056201}, {"auPkRetail": 9.347595785718323, "auPkTotal": 12.610940363517232, "auOpRetail": 9.337328586879362, "auOpTotal": 12.60159046628016, "trPkRetail": 7.767893952496161, "trPkTotal": 11.121006481369408, "trOpRetail": 7.691841587260776, "trOpTotal": 11.012476509709911, "nmRetail": 8.422746480387373, "nmTotal": 11.742390105950426}, {"auPkRetail": 9.327287575225915, "auPkTotal": 12.61272183638518, "auOpRetail": 9.319522377122373, "auOpTotal": 12.605842846570052, "trPkRetail": 7.982914455823258, "trPkTotal": 11.205704183942983, "trOpRetail": 7.914738300790072, "trOpTotal": 11.09630521314994, "nmRetail": 8.293606227119808, "nmTotal": 11.73659301352507}, {"auPkRetail": 9.284935168568785, "auPkTotal": 12.581337458176352, "auOpRetail": 9.27779827535493, "auOpTotal": 12.57546325604843, "trPkRetail": 7.656614098578269, "trPkTotal": 10.9970755596348, "trOpRetail": 7.574397447118308, "trOpTotal": 10.914272265432203, "nmRetail": 8.00048744376541, "nmTotal": 11.541814464299403}, {"auPkRetail": 9.312158663142275, "auPkTotal": 12.554715353239278, "auOpRetail": 9.309851535862029, "auOpTotal": 12.554250345219318, "trPkRetail": 7.016153642361786, "trPkTotal": 10.534220861272349, "trOpRetail": 6.945206169705918, "trOpTotal": 10.442447057629572, "nmRetail": 8.247303259214123, "nmTotal": 11.373742452328104}, {"auPkRetail": 9.252513241068934, "auPkTotal": 12.480891476278531, "auOpRetail": 9.25151293367599, "auOpTotal": 12.47931539012377, "trPkRetail": 6.661199575340683, "trPkTotal": 9.84475302896639, "trOpRetail": 6.562683873514392, "trOpTotal": 9.735317917445975, "nmRetail": 7.667141682301395, "nmTotal": 10.785216325380155}, {"auPkRetail": 9.249360247756258, "auPkTotal": 12.438990592515587, "auOpRetail": 9.248961615230405, "auOpTotal": 12.440034822845453, "trPkRetail": 7.085929678533842, "trPkTotal": 10.252687951615647, "trOpRetail": 6.9977559941155825, "trOpTotal": 10.137302150915072, "nmRetail": 7.596636098405335, "nmTotal": 10.414585329688187}, {"auPkRetail": 9.169029469573758, "auPkTotal": 12.357455424191105, "auOpRetail": 9.169914328186714, "auOpTotal": 12.359583892671727, "trPkRetail": 6.088623501170164, "trPkTotal": 9.295992033901246, "trOpRetail": 5.9074690665597505, "trOpTotal": 9.10121719553157, "nmRetail": 7.088693449393891, "nmTotal": 9.8650009995902}, {"auPkRetail": 9.221742596618885, "auPkTotal": 12.420066329040457, "auOpRetail": 9.218863350318259, "auOpTotal": 12.41597698216911, "trPkRetail": 6.63665285998053, "trPkTotal": 9.801904452298267, "trOpRetail": 6.590820450001259, "trOpTotal": 9.753201500136925, "nmRetail": 7.49419708276564, "nmTotal": 10.367677840955208}, {"auPkRetail": 9.321915722714706, "auPkTotal": 12.515866528079302, "auOpRetail": 9.325176439957023, "auOpTotal": 12.518960672606589, "trPkRetail": 7.4289965576337975, "trPkTotal": 10.580037608031049, "trOpRetail": 7.342733628487911, "trOpTotal": 10.454321465284288, "nmRetail": 8.108435987481963, "nmTotal": 11.011608265602703}, {"auPkRetail": 9.229652192356095, "auPkTotal": 12.543187236023256, "auOpRetail": 9.219600134334192, "auOpTotal": 12.535205058018846, "trPkRetail": 7.150923913256277, "trPkTotal": 10.713897541538804, "trOpRetail": 6.941083933766704, "trOpTotal": 10.463984535369464, "nmRetail": 7.637908292039161, "nmTotal": 11.319586649838495}, {"auPkRetail": 9.116149708261213, "auPkTotal": 12.433017916414748, "auOpRetail": 9.107848447001038, "auOpTotal": 12.426054885294798, "trPkRetail": 6.211644503927987, "trPkTotal": 9.770780596054532, "trOpRetail": 6.1182229539325945, "trOpTotal": 9.687798719977543, "nmRetail": 6.887639592088898, "nmTotal": 10.656699626013532}, {"auPkRetail": 9.243796729875907, "auPkTotal": 12.550974057334248, "auOpRetail": 9.23008642020084, "auOpTotal": 12.541349602973465, "trPkRetail": 7.322741788274842, "trPkTotal": 10.850763510641398, "trOpRetail": 7.115121241312532, "trOpTotal": 10.577146926988949, "nmRetail": 7.713627680945117, "nmTotal": 11.346711466451557}, {"auPkRetail": 9.198261982819503, "auPkTotal": 12.494596320746052, "auOpRetail": 9.191437063620823, "auOpTotal": 12.490871930253187, "trPkRetail": 7.29664609502182, "trPkTotal": 10.729604503562992, "trOpRetail": 7.18036563628942, "trOpTotal": 10.549488538701693, "nmRetail": 7.616518018582319, "nmTotal": 11.016222759405112}]}}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ecd0ff36dda040c608a4463799ff5bd2"}, "mark": {"type": "circle", "size": 100}, "encoding": {"x": {"field": "auPkRetail", "scale": {"zero": false}, "type": "quantitative"}, "y": {"field": "auPkTotal", "scale": {"zero": false}, "type": "quantitative"}}, "params": [{"name": "param_1", "select": {"type": "interval", "encodings": ["x", "y"]}, "bind": "scales"}], "$schema": "https://vega.github.io/schema/vega-lite/v5.16.3.json", "datasets": {"data-ecd0ff36dda040c608a4463799ff5bd2": [{"auPkRetail": 9.316494246422568, "auPkTotal": 12.61517574315289, "auOpRetail": 9.30743678664037, "auOpTotal": 12.607849392261432, "trPkRetail": 7.764263497215065, "trPkTotal": 11.145248189788484, "trOpRetail": 7.69308601648347, "trOpTotal": 11.037285956909018, "nmRetail": 8.137360927784435, "nmTotal": 11.72624220917462}, {"auPkRetail": 9.316897918969254, "auPkTotal": 12.61346094178568, "auOpRetail": 9.304626990654363, "auOpTotal": 12.604208995044406, "trPkRetail": 7.511300904234602, "trPkTotal": 10.950045514776265, "trOpRetail": 7.427060033663283, "trOpTotal": 10.76310190871255, "nmRetail": 8.142716869603856, "nmTotal": 11.724185979755147}, {"auPkRetail": 9.293216972412948, "auPkTotal": 12.580014459851448, "auOpRetail": 9.286241654126094, "auOpTotal": 12.574901923298121, "trPkRetail": 7.340975248764847, "trPkTotal": 10.78760844956674, "trOpRetail": 7.252677859156825, "trOpTotal": 10.574953610768503, "nmRetail": 8.050369141519473, "nmTotal": 11.478912551444546}, {"auPkRetail": 9.357349507455009, "auPkTotal": 12.630894215587896, "auOpRetail": 9.34824855856986, "auOpTotal": 12.623585760796873, "trPkRetail": 7.8733268245042565, "trPkTotal": 11.22417118506541, "trOpRetail": 7.814365228731915, "trOpTotal": 11.135415935503294, "nmRetail": 8.371197500397228, "nmTotal": 11.7752306986044}, {"auPkRetail": 9.343550555725637, "auPkTotal": 12.585069455568574, "auOpRetail": 9.333262167175757, "auOpTotal": 12.574553584249722, "trPkRetail": 7.589355611211902, "trPkTotal": 11.082549740994516, "trOpRetail": 7.549557403733535, "trOpTotal": 11.02796499800084, "nmRetail": 8.318059258671834, "nmTotal": 11.431764411398849}, {"auPkRetail": 9.271350280266805, "auPkTotal": 12.523449297481994, "auOpRetail": 9.265762312325014, "auOpTotal": 12.519697722182595, "trPkRetail": 7.313872482530061, "trPkTotal": 10.504310979906819, "trOpRetail": 7.068341268659587, "trOpTotal": 10.25178992198404, "nmRetail": 7.83824123593578, "nmTotal": 11.023737612069544}, {"auPkRetail": 9.29319438854463, "auPkTotal": 12.528401453550224, "auOpRetail": 9.286372808530611, "auOpTotal": 12.520416143845779, "trPkRetail": 7.641910047999711, "trPkTotal": 10.805002738627607, "trOpRetail": 7.607878383964711, "trOpTotal": 10.752509699164879, "nmRetail": 8.016914788053809, "nmTotal": 11.10880473926608}, {"auPkRetail": 9.267844254343885, "auPkTotal": 12.49714602566128, "auOpRetail": 9.262133093242994, "auOpTotal": 12.489886062198453, "trPkRetail": 7.54693384078048, "trPkTotal": 10.834136328674168, "trOpRetail": 7.501423798794656, "trOpTotal": 10.77932009280521, "nmRetail": 7.981950488551539, "nmTotal": 11.052152831140146}, {"auPkRetail": 9.189502970549922, "auPkTotal": 12.426036497501059, "auOpRetail": 9.18403503221456, "auOpTotal": 12.415459798818294, "trPkRetail": 7.1887514829393275, "trPkTotal": 10.303186204562111, "trOpRetail": 7.149056558862683, "trOpTotal": 10.260609520047622, "nmRetail": 7.415629777091658, "nmTotal": 10.758663414411654}, {"auPkRetail": 9.186004126767736, "auPkTotal": 12.403890115167114, "auOpRetail": 9.180762007450875, "auOpTotal": 12.39634439278583, "trPkRetail": 7.379335812398483, "trPkTotal": 10.548674760263005, "trOpRetail": 7.306521923298712, "trOpTotal": 10.495921687099003, "nmRetail": 7.567826158130381, "nmTotal": 10.694411506898852}, {"auPkRetail": 9.320092663930184, "auPkTotal": 12.519242155343258, "auOpRetail": 9.315095032027857, "auOpTotal": 12.511758193169229, "trPkRetail": 7.455701967440772, "trPkTotal": 10.87560132590152, "trOpRetail": 7.348368031699475, "trOpTotal": 10.762777837534243, "nmRetail": 8.228286574614595, "nmTotal": 11.171156624491507}, {"auPkRetail": 9.351590564549332, "auPkTotal": 12.600777209765274, "auOpRetail": 9.340287123569157, "auOpTotal": 12.590072566154266, "trPkRetail": 7.945965142396818, "trPkTotal": 11.20437497188151, "trOpRetail": 7.846325586111904, "trOpTotal": 11.074533951389993, "nmRetail": 8.420517844196304, "nmTotal": 11.61897257056201}, {"auPkRetail": 9.347595785718323, "auPkTotal": 12.610940363517232, "auOpRetail": 9.337328586879362, "auOpTotal": 12.60159046628016, "trPkRetail": 7.767893952496161, "trPkTotal": 11.121006481369408, "trOpRetail": 7.691841587260776, "trOpTotal": 11.012476509709911, "nmRetail": 8.422746480387373, "nmTotal": 11.742390105950426}, {"auPkRetail": 9.327287575225915, "auPkTotal": 12.61272183638518, "auOpRetail": 9.319522377122373, "auOpTotal": 12.605842846570052, "trPkRetail": 7.982914455823258, "trPkTotal": 11.205704183942983, "trOpRetail": 7.914738300790072, "trOpTotal": 11.09630521314994, "nmRetail": 8.293606227119808, "nmTotal": 11.73659301352507}, {"auPkRetail": 9.284935168568785, "auPkTotal": 12.581337458176352, "auOpRetail": 9.27779827535493, "auOpTotal": 12.57546325604843, "trPkRetail": 7.656614098578269, "trPkTotal": 10.9970755596348, "trOpRetail": 7.574397447118308, "trOpTotal": 10.914272265432203, "nmRetail": 8.00048744376541, "nmTotal": 11.541814464299403}, {"auPkRetail": 9.312158663142275, "auPkTotal": 12.554715353239278, "auOpRetail": 9.309851535862029, "auOpTotal": 12.554250345219318, "trPkRetail": 7.016153642361786, "trPkTotal": 10.534220861272349, "trOpRetail": 6.945206169705918, "trOpTotal": 10.442447057629572, "nmRetail": 8.247303259214123, "nmTotal": 11.373742452328104}, {"auPkRetail": 9.252513241068934, "auPkTotal": 12.480891476278531, "auOpRetail": 9.25151293367599, "auOpTotal": 12.47931539012377, "trPkRetail": 6.661199575340683, "trPkTotal": 9.84475302896639, "trOpRetail": 6.562683873514392, "trOpTotal": 9.735317917445975, "nmRetail": 7.667141682301395, "nmTotal": 10.785216325380155}, {"auPkRetail": 9.249360247756258, "auPkTotal": 12.438990592515587, "auOpRetail": 9.248961615230405, "auOpTotal": 12.440034822845453, "trPkRetail": 7.085929678533842, "trPkTotal": 10.252687951615647, "trOpRetail": 6.9977559941155825, "trOpTotal": 10.137302150915072, "nmRetail": 7.596636098405335, "nmTotal": 10.414585329688187}, {"auPkRetail": 9.169029469573758, "auPkTotal": 12.357455424191105, "auOpRetail": 9.169914328186714, "auOpTotal": 12.359583892671727, "trPkRetail": 6.088623501170164, "trPkTotal": 9.295992033901246, "trOpRetail": 5.9074690665597505, "trOpTotal": 9.10121719553157, "nmRetail": 7.088693449393891, "nmTotal": 9.8650009995902}, {"auPkRetail": 9.221742596618885, "auPkTotal": 12.420066329040457, "auOpRetail": 9.218863350318259, "auOpTotal": 12.41597698216911, "trPkRetail": 6.63665285998053, "trPkTotal": 9.801904452298267, "trOpRetail": 6.590820450001259, "trOpTotal": 9.753201500136925, "nmRetail": 7.49419708276564, "nmTotal": 10.367677840955208}, {"auPkRetail": 9.321915722714706, "auPkTotal": 12.515866528079302, "auOpRetail": 9.325176439957023, "auOpTotal": 12.518960672606589, "trPkRetail": 7.4289965576337975, "trPkTotal": 10.580037608031049, "trOpRetail": 7.342733628487911, "trOpTotal": 10.454321465284288, "nmRetail": 8.108435987481963, "nmTotal": 11.011608265602703}, {"auPkRetail": 9.229652192356095, "auPkTotal": 12.543187236023256, "auOpRetail": 9.219600134334192, "auOpTotal": 12.535205058018846, "trPkRetail": 7.150923913256277, "trPkTotal": 10.713897541538804, "trOpRetail": 6.941083933766704, "trOpTotal": 10.463984535369464, "nmRetail": 7.637908292039161, "nmTotal": 11.319586649838495}, {"auPkRetail": 9.116149708261213, "auPkTotal": 12.433017916414748, "auOpRetail": 9.107848447001038, "auOpTotal": 12.426054885294798, "trPkRetail": 6.211644503927987, "trPkTotal": 9.770780596054532, "trOpRetail": 6.1182229539325945, "trOpTotal": 9.687798719977543, "nmRetail": 6.887639592088898, "nmTotal": 10.656699626013532}, {"auPkRetail": 9.243796729875907, "auPkTotal": 12.550974057334248, "auOpRetail": 9.23008642020084, "auOpTotal": 12.541349602973465, "trPkRetail": 7.322741788274842, "trPkTotal": 10.850763510641398, "trOpRetail": 7.115121241312532, "trOpTotal": 10.577146926988949, "nmRetail": 7.713627680945117, "nmTotal": 11.346711466451557}, {"auPkRetail": 9.198261982819503, "auPkTotal": 12.494596320746052, "auOpRetail": 9.191437063620823, "auOpTotal": 12.490871930253187, "trPkRetail": 7.29664609502182, "trPkTotal": 10.729604503562992, "trOpRetail": 7.18036563628942, "trOpTotal": 10.549488538701693, "nmRetail": 7.616518018582319, "nmTotal": 11.016222759405112}]}}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
 <p>ActivitySim also includes a few convenient reporting functions,
@@ -824,7 +829,7 @@ that can generate histograms or nominal distributions of data features.</p>
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -836,6 +841,7 @@ that can generate histograms or nominal distributions of data features.</p>
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
+
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
@@ -848,6 +854,7 @@ that can generate histograms or nominal distributions of data features.</p>
   </nav></div>
 
   <div class="sidebar-secondary-item">
+
   <div class="tocsection sourcelink">
     <a href="../_sources/users-guide/notebook.ipynb.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
@@ -868,8 +875,8 @@ that can generate histograms or nominal distributions of data features.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -878,10 +885,11 @@ that can generate histograms or nominal distributions of data features.</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.2.1.dev448+ga46c737f, documentation last updated Nov 28, 2023.<br/>
+ActivitySim 1.2.1.dev479+g3e07dbef, documentation last updated Dec 28, 2023.<br/>
 </p></div>
       
         <div class="footer-item">
+
   <p class="sphinx-version">
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     <br/>
@@ -894,8 +902,9 @@ ActivitySim 1.2.1.dev448+ga46c737f, documentation last updated Nov 28, 2023.<br/
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.3.
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.4.
 </p></div>
       
     </div>
