@@ -40,7 +40,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=58c79ce1"></script>
+    <script src="../../_static/documentation_options.js?v=5ac5670e"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -59,7 +59,7 @@
     <link rel="prev" title="Accessibility" href="accessibility.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Mar 08, 2024"/>
+    <meta name="docbuild:last-update" content="Mar 18, 2024"/>
   </head>
   
   
@@ -455,6 +455,8 @@ The primary model components are household demographics, zonal density, and acce
 <li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.LOGIT_TYPE" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.LOGIT_TYPE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOGIT_TYPE</span> <span class="pre">()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.NESTS" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.NESTS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NESTS</span> <span class="pre">()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.SPEC" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.SPEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPEC</span> <span class="pre">()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.annotate_households" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.annotate_households"><code class="xref py py-obj docutils literal notranslate"><span class="pre">annotate_households</span> <span class="pre">(PreprocessorSettings</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.preprocessor" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.preprocessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">preprocessor</span> <span class="pre">(PreprocessorSettings</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.sharrow_skip" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.sharrow_skip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sharrow_skip</span> <span class="pre">()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.source_file_paths" title="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.source_file_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_file_paths</span> <span class="pre">()</span></code></a></p></li>
 </ul>
@@ -531,6 +533,16 @@ linear-in-parameters utility expression.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.annotate_households">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">annotate_households</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_generated/activitysim.core.configuration.base.PreprocessorSettings.html#activitysim.core.configuration.base.PreprocessorSettings" title="activitysim.core.configuration.base.PreprocessorSettings"><span class="pre">PreprocessorSettings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.annotate_households" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.preprocessor">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">preprocessor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_generated/activitysim.core.configuration.base.PreprocessorSettings.html#activitysim.core.configuration.base.PreprocessorSettings" title="activitysim.core.configuration.base.PreprocessorSettings"><span class="pre">PreprocessorSettings</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.preprocessor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.sharrow_skip">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sharrow_skip</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.sharrow_skip" title="Link to this definition">#</a></dt>
 <dd><p>Skip sharrow when evaluating this component.</p>
@@ -550,12 +562,6 @@ of any model.</p>
 <dt class="sig sig-object py" id="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.nests_are_for_nl">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nests_are_for_nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.nests_are_for_nl" title="Link to this definition">#</a></dt>
 <dd><p>Checks that nests are provided if (and only if) <cite>LOGIT_TYPE</cite> is NL.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="activitysim.abm.models.auto_ownership.AutoOwnershipSettings.model_computed_fields">
-<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.model_computed_fields" title="Link to this definition">#</a></dt>
-<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
 </dd></dl>
 
 </dd></dl>
@@ -634,10 +640,11 @@ with given characteristics owns</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.LOGIT_TYPE"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.LOGIT_TYPE</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.NESTS"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.NESTS</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.SPEC"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.SPEC</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.annotate_households"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.annotate_households</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.preprocessor"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.preprocessor</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.sharrow_skip"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.sharrow_skip</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.source_file_paths"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.source_file_paths</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.nests_are_for_nl"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.nests_are_for_nl()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#activitysim.abm.models.auto_ownership.AutoOwnershipSettings.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">AutoOwnershipSettings.model_computed_fields</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
@@ -682,7 +689,7 @@ with given characteristics owns</p>
       
         <div class="footer-item"><!-- This will display the version of the docs -->
 <p class="last-updated">
-ActivitySim 1.3.0b2.dev27+g6d817bea, documentation last updated Mar 08, 2024.<br/>
+ActivitySim 1.3.0b2.dev36+g4c766b6b, documentation last updated Mar 18, 2024.<br/>
 </p></div>
       
         <div class="footer-item">
