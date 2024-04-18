@@ -201,6 +201,9 @@ class ComputeSettings(PydanticBase):
     for more information.
     """
 
+    protect_columns: list[str] = []
+    """Protect these columns from being dropped from the chooser table."""
+
     def should_skip(self, subcomponent: str) -> bool:
         """Check if sharrow should be skipped for a particular subcomponent."""
         if isinstance(self.sharrow_skip, dict):

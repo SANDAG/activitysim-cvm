@@ -1533,6 +1533,9 @@ def _simple_simulate(
 
     sharrow_enabled = state.settings.sharrow
 
+    if compute_settings is None:
+        compute_settings = ComputeSettings()
+
     # if tracing is not enabled, drop unused columns
     # if not estimation mode, drop unused columns
     if (not have_trace_targets) and (estimator is None):
@@ -1543,6 +1546,7 @@ def _simple_simulate(
             locals_d,
             custom_chooser,
             sharrow_enabled=sharrow_enabled,
+            additional_columns=compute_settings.protect_columns,
         )
 
     if nest_spec is None:
