@@ -535,7 +535,7 @@ class Settings(PydanticBase, extra="allow", validate_assignment=True):
     neither integral to that component nor necessarily stable over replication.
     """
 
-    dask_scheduler: str = "syncronous"
+    dask_scheduler: Literal["synchronous", "threads", "processes"] = "synchronous"
     """
     Dask scheduler to use for parallelization.
 
