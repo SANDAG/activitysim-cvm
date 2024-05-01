@@ -535,6 +535,13 @@ class Settings(PydanticBase, extra="allow", validate_assignment=True):
     neither integral to that component nor necessarily stable over replication.
     """
 
+    dask_scheduler: str = "syncronous"
+    """
+    Dask scheduler to use for parallelization.
+
+    Currently, this is used only for loading skims.
+    """
+
     write_raw_tables: bool = False
     """
     Dump input tables back to disk immediately after loading them.

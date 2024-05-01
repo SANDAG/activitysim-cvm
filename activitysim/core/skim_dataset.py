@@ -869,7 +869,9 @@ def load_skim_dataset_to_shared_memory(state, skim_tag="taz") -> xr.Dataset:
         return d
     else:
         logger.info("writing skims to shared memory")
-        return d.shm.to_shared_memory(backing, mode="r")
+        return d.shm.to_shared_memory(
+            backing, mode="r", dask_scheduler=state.settings.dask_scheduler
+        )
 
 
 @workflow.cached_object
